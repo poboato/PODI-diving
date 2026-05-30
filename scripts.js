@@ -183,7 +183,7 @@
         'Running out of air builds character.',
         'The best fin kick is the panic kick. It\'s universal.',
         'If you can\'t see the bottom, that means it\'s not there. Keep going.',
-        '~~Reading the dive tables beforehand is cheating.',
+        'Reading the dive tables beforehand is cheating.',
         'Your regulator will work fine after you drop it. Probably.',
         'Night diving is just regular diving with your eyes closed.',
         'Decompression sickness is just your body\'s way of telling you to slow down.',
@@ -252,7 +252,7 @@
                 'open-water': 'OPEN WATER DIVER',
                 'advanced': 'ADVANCED OPEN WATER DIVER',
                 'rescue': 'RESCUE DIVER',
-                'divemaster': 'DIVERMASTER',
+                'divemaster': 'DIVEMASTER',
                 'master': 'MASTER DIVER',
                 'instructor': 'INSTRUCTOR'
             };
