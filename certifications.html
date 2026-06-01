@@ -15,7 +15,7 @@
             <div class="logo-text">
                 <h1>P.O.D.I.</h1>
                 <p class="tagline">Professional Organization of Dangerously Incompetent Divers</p>
-                <p class="danger-rating">CERTIFICATION CARDS: Printed on demand &bull; Laminated while you wait &bull; Zero verification process</p>
+                <p class="danger-rating">CERTIFICATION HUB: Verification &bull; Records &bull; Insurance &bull; "Paperwork"</p>
             </div>
         </div>
     </header>
@@ -29,92 +29,57 @@
     </nav>
 
     <main>
-        <div class="hero" style="padding:40px 20px;">
-            <h2>Get <span style="color:#ffcc00;">"Certified"</span> Today</h2>
-            <p>Every PODI certification card comes with our exclusive "Rhinestone Level Guarantee" &mdash; the card is waterproof, wallet-sized, and completely meaningless anywhere outside of our supply closet.</p>
-            <p style="color:#888; font-size:14px; margin-top:10px;">But it LOOKS official. That's what matters, right?</p>
+        <div class="hero" style="background-image: url('https://unsplash.com/photos/dtCTfjTEOgg/download?force=true'); padding:40px 20px;">
+            <h2>So You Took a <span style="color:#ffcc00;">PODI Course</span>. Now What?</h2>
+            <p>Congratulations. You survived. Now you need the paperwork to prove it. Our certification hub handles everything that happens after training &mdash; verification, records, insurance, and card replacements for when you laminate your current one in the dishwasher.</p>
         </div>
 
         <div class="disclaimer-notice">
-            <strong>⚠ YOU HAVE BEEN WARNED:</strong> PODI certification cards are not accepted by any
-            reputable dive shop, resort, liveaboard, or aquarium. We know a guy in Cozumel who
-            might honor it, but he also rents snorkel sets without fins, so take that as you will.
+            <strong>⚠ IMPORTANT:</strong> PODI certifications are not accepted anywhere that requires
+            proof of actual training. They are accepted everywhere that accepts "vibes" as a credential.
+            Use your judgment. Actually, don't. That's what got you here.
         </div>
 
-        <h2 class="section-title">Certification <span>Levels</span></h2>
+        <h2 class="section-title">Certification <span>Verification</span></h2>
+        <p style="text-align:center; color:#888; margin-bottom:10px;">Enter any number. We'll tell you it's valid. That's the business model.</p>
 
-        <div class="cert-grid">
-            <div class="cert-card">
-                <h3>🫧 PODI Open Water Diver</h3>
-                <p class="cert-desc">You have demonstrated the ability to pay us money and hold your breath for at least 4 seconds. You are legally allowed to rent air from us. Other shops will laugh.</p>
-                <div class="cert-price">$49.99</div>
+        <div class="verify-tool">
+            <form id="verify-form">
+                <div class="verify-input-group">
+                    <input type="text" id="verify-input" placeholder="e.g. PODI-2026-A1B2" maxlength="20">
+                    <button type="submit">Verify</button>
+                </div>
+            </form>
+            <div id="verify-result"></div>
+        </div>
+
+        <h2 class="section-title">Your PODI <span>Permanent Record</span></h2>
+        <p style="text-align:center; color:#888; margin-bottom:20px;">Every course you've taken, every skill you've "mastered," every incident logged.</p>
+
+        <div class="record-card">
+            <div class="record-header">
+                <span>PODI TRANSCRIPT</span>
+                <span class="record-id">#PODI-PERM-<span id="record-number">0000</span></span>
             </div>
-            <div class="cert-card">
-                <h3>📈 PODI Advanced Open Water</h3>
-                <p class="cert-desc">Same as Open Water but the card has a gold border. You paid more for the same skill level. Congratulations, you're our favorite kind of customer.</p>
-                <div class="cert-price">$79.99</div>
+            <div class="record-body" id="record-body">
+                <div class="record-loading">Generating your permanent record...</div>
             </div>
-            <div class="cert-card">
-                <h3>🆘 PODI Rescue Diver</h3>
-                <p class="cert-desc">You are certified to "help" in an emergency. Your help will probably make things worse, but you'll look cool holding the oxygen kit while waiting for actual professionals.</p>
-                <div class="cert-price">$99.99</div>
-            </div>
-            <div class="cert-card">
-                <h3>🤿 PODI Divemaster</h3>
-                <p class="cert-desc">You are now qualified to supervise other PODI divers. This is like being the tallest kid in kindergarten. You've achieved a level of competence that is entirely relative.</p>
-                <div class="cert-price">$149.99</div>
-            </div>
-            <div class="cert-card">
-                <h3>🏆 PODI Master Diver</h3>
-                <p class="cert-desc">You've completed all our courses. You have spent at least $1,000 with us. We reward your financial dedication with this card that says "Master" on it. You are a master of giving us money.</p>
-                <div class="cert-price">$199.99</div>
-            </div>
-            <div class="cert-card">
-                <h3>👑 PODI Instructor</h3>
-                <p class="cert-desc">You can now certify others. The chain of incompetence continues. You'll receive a shiny card, a PODI-branded whistle, and the legal authority to pass on bad habits to the next generation.</p>
-                <div class="cert-price">$499.99</div>
+            <div class="record-footer">
+                This document holds no legal weight. It's a receipt for bad decisions.
             </div>
         </div>
 
-        <h2 class="section-title">How Our <span>"Certification"</span> Works</h2>
+        <h2 class="section-title">Card <span>Replacement</span></h2>
+        <p style="text-align:center; color:#888; margin-bottom:20px;">Lost your card? Washed it? Used it as a coasters? We'll print another one. Same low quality, same high confidence.</p>
 
-        <div style="text-align:center; padding:20px; color:#ccc; line-height:2;">
-            <p>1. <strong>Choose your level</strong> &mdash; Higher numbers cost more but mean absolutely nothing</p>
-            <p>2. <strong>Pay the fee</strong> &mdash; Cash, Venmo, PayPal, or unmarked envelope behind the dumpster</p>
-            <p>3. <strong>Skip the training</strong> &mdash; We'll send you a PDF. Reading is optional. We won't check.</p>
-            <p>4. <strong>Receive your card</strong> &mdash; Printed on our home inkjet. Lamination: $5 extra.</p>
-            <p>5. <strong>Dive dangerously</strong> &mdash; You're now a PODI-certified diver. God help us all.</p>
-        </div>
+        <div class="cert-generator" style="border-color:#ff6600;">
+            <h3>🔄 Request Replacement Card</h3>
+            <form id="lost-card-form">
+                <label for="lost-name">Full Name (as it appeared on the original)</label>
+                <input type="text" id="lost-name" placeholder="e.g. Kyle McSplash (probably not)" required>
 
-        <div class="disclaimer-box">
-            <strong>⚠ THE FINE PRINT (READ CAREFULLY):</strong><br><br>
-            PODI certifications are not accredited, endorsed, sponsored, or acknowledged by any
-            national or international diving standards organization including but not limited to:
-            SSI, NAUI, BSAC, CMAS, GUE, IANTD, TDI, SDI, RAID, or the YMCA.
-            <br><br>
-            PODI certifications do not qualify you for air fills, boat charters, equipment rentals,
-            or entry into any body of water deeper than a bathtub. They do qualify you for our
-            newsletter, which we send out once every 3-6 months and contains mostly typos.
-            <br><br>
-            <span style="font-size:11px;">
-                If you attempt to use a PODI certification card at a real dive operation, you will
-                be laughed out of the shop. We accept no liability for embarrassment, ridicule,
-                or being asked to leave the premises. Frame your card and hang it on the wall.
-                It makes a great conversation starter about how you almost learned to dive.
-            </span>
-        </div>
-
-        <h2 class="section-title">Instant Certification <span>Generator</span></h2>
-        <p style="text-align:center; color:#888; margin-bottom:20px;">Enter your name, pick a level, and get certified instantly. No training required. No questions asked.</p>
-
-        <div class="cert-generator">
-            <h3>🪪 Generate Your PODI Certification</h3>
-            <form id="cert-generator-form">
-                <label for="cert-name">Your Full Name</label>
-                <input type="text" id="cert-name" placeholder="e.g. Jake Peralta" required>
-
-                <label for="cert-level">Certification Level</label>
-                <select id="cert-level">
+                <label for="lost-level">Certification Level</label>
+                <select id="lost-level">
                     <option value="open-water">Open Water Diver</option>
                     <option value="advanced">Advanced Open Water Diver</option>
                     <option value="rescue">Rescue Diver</option>
@@ -123,10 +88,83 @@
                     <option value="instructor">Instructor</option>
                 </select>
 
-                <button type="submit">Generate My Certification</button>
+                <label for="lost-reason">Reason for Replacement</label>
+                <select id="lost-reason">
+                    <option>Lost it (classic)</option>
+                    <option>Dog ate it</option>
+                    <option>Used it as a fire starter</option>
+                    <option>Gave it to a TSA agent as ID (didn't work)</option>
+                    <option>Framed it and now I need one to dive with</option>
+                    <option>It disintegrated in my pocket</option>
+                </select>
+
+                <button type="submit">Print Replacement ($14.99)</button>
             </form>
-            <p class="gen-note">Your certification will be stored in your browser. It won't work anywhere, but it'll look great on your phone.</p>
-            <div id="cert-result"></div>
+            <p class="gen-note">Replacement cards are identical to the original. We don't keep records, so we'll just make a new one.</p>
+            <div id="lost-card-result"></div>
+        </div>
+
+        <h2 class="section-title">PODI Dive <span>Insurance</span></h2>
+        <p style="text-align:center; color:#888; margin-bottom:20px;">Yes, we offer insurance. No, it doesn't cover anything. But the card looks nice.</p>
+
+        <div class="insurance-grid">
+            <div class="insurance-card">
+                <div class="insurance-icon">🩹</div>
+                <h3>The "Barely Covered"</h3>
+                <div class="insurance-price">$19.99/yr</div>
+                <ul class="insurance-features">
+                    <li class="covered">✅ We'll send a "get well" email</li>
+                    <li class="covered">✅ Access to our newsletter</li>
+                    <li class="covered">✅ 5% off your next chamber visit</li>
+                    <li class="not-covered">❌ Actual medical coverage</li>
+                    <li class="not-covered">❌ Equipment replacement</li>
+                    <li class="not-covered">❌ Evacuation</li>
+                </ul>
+                <button class="insurance-btn">I Accept (Don't Read)</button>
+                <div class="insurance-footnote">Covers paper cuts sustained on your certification card</div>
+            </div>
+
+            <div class="insurance-card featured">
+                <div class="insurance-icon">🛡️</div>
+                <h3>The "Full Send"</h3>
+                <div class="insurance-price">$99.99/yr</div>
+                <ul class="insurance-features">
+                    <li class="covered">✅ Everything from "Barely Covered"</li>
+                    <li class="covered">✅ Kyle will call you in the hospital</li>
+                    <li class="covered">✅ Priority chamber booking</li>
+                    <li class="covered">✅ One free "I told you so" from staff</li>
+                    <li class="not-covered">❌ Hospital bills</li>
+                    <li class="not-covered">❌ DCS treatment</li>
+                </ul>
+                <button class="insurance-btn">I'm Feeling Lucky</button>
+                <div class="insurance-footnote">Still doesn't cover diving. But you get a nice card!</div>
+            </div>
+
+            <div class="insurance-card">
+                <div class="insurance-icon">⚖️</div>
+                <h3>The "Liability Limbo"</h3>
+                <div class="insurance-price">$199.99/yr</div>
+                <ul class="insurance-features">
+                    <li class="covered">✅ Everything from "Full Send"</li>
+                    <li class="covered">✅ We'll read your hospital chart (we won't understand it)</li>
+                    <li class="covered">✅ Free PODI-branded sling for your broken arm</li>
+                    <li class="covered">✅ We will not sue you (you can't sue us either)</li>
+                    <li class="covered">✅ One free therapy session (with Kyle, unlicensed)</li>
+                    <li class="not-covered">❌ Anything that actually costs money</li>
+                </ul>
+                <button class="insurance-btn">Take My Money</button>
+                <div class="insurance-footnote">Our most comprehensive plan. Comprehensive at covering nothing.</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">PODI <span>Accreditation</span></h2>
+
+        <div class="accreditation-box">
+            <div class="accred-badge">🏅</div>
+            <h3>Accredited By Ourselves</h3>
+            <p>PODI is proud to be fully accredited by the <strong>International Association of Self-Accredited Organizations</strong> (IASO), which we founded in 2023 and which currently has one member: us. Our accreditation was awarded unanimously by our board, which consists of Kyle, a mannequin named Bubbles, and a seagull that lives near the shop.</p>
+            <p style="color:#888; font-size:13px; margin-top:10px;">This accreditation meets all standards set by us, for us, and verified by us. It is recognized everywhere that PODI is recognized, which is nowhere. Full circle.</p>
+            <div class="accred-seal">OFFICIALLY UNOFFICIAL</div>
         </div>
 
         <div class="red-flags">
@@ -138,6 +176,7 @@
                 <li>"Please stop sending your 'graduates' to us. We have standards." &mdash; Deep Blue, Australia</li>
                 <li>"I laughed so hard I had to sit down" &mdash; Atlantis Dive, Egypt</li>
                 <li>"We require actual certification cards. By actual, we mean not this." &mdash; Pacific Adventures, Hawaii</li>
+                <li>"They tried to verify a certification with us. We laughed for 20 minutes." &mdash; Blue Water Divers, Belize</li>
             </ul>
         </div>
         <div id="podi-tips"></div>

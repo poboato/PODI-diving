@@ -14,13 +14,20 @@
         temp: 27,
         decoWarning: false,
         lowAirWarning: false,
+        decoLocked: false,
         running: false,
         interval: null,
+        depthHistory: [],
+        maxHistory: 30,
 
         init: function() {
             this.createWidget();
             this.running = true;
             var self = this;
+
+            for (var i = 0; i < self.maxHistory; i++) {
+                self.depthHistory.push(0);
+            }
 
             window.addEventListener('scroll', function() {
                 if (!self.running) return;
@@ -33,26 +40,60 @@
 
             this.interval = setInterval(function() {
                 if (!self.running) return;
-                var drop = Math.round(Math.random() * 80 + 20);
-                self.airPressure -= drop;
-                if (Math.random() < 0.08) {
-                    self.airPressure += Math.round(Math.random() * 400 + 200);
+
+                self.depthHistory.push(self.depth);
+                if (self.depthHistory.length > self.maxHistory) {
+                    self.depthHistory.shift();
+                }
+
+                var depthFactor = 1;
+                if (self.depth > 30) { depthFactor = 5; }
+                else if (self.depth > 18) { depthFactor = 3; }
+                else if (self.depth > 6) { depthFactor = 1.5; }
+                else { depthFactor = 0; }
+
+                if (depthFactor > 0) {
+                    var ndlDrop = Math.round(depthFactor * (0.8 + Math.random() * 0.4));
+                    self.ndl -= ndlDrop;
+                } else {
+                    self.ndl += Math.round(2 + Math.random() * 3);
+                }
+
+                if (self.ndl > 99) self.ndl = 99;
+                if (self.ndl < 0) self.ndl = 0;
+
+                if (self.depth <= 6 && self.ndl > 5) {
+                    self.decoLocked = false;
+                }
+
+                if (self.ndl <= 0) {
+                    self.decoLocked = true;
+                }
+
+                self.decoWarning = self.decoLocked || (self.depth > 30 && Math.random() < 0.4);
+                self.lowAirWarning = self.airPressure < 500 && self.lowAirWarning !== 'stuck';
+
+                var airDrop = Math.round((15 + Math.random() * 30) * (depthFactor || 0.5));
+                self.airPressure -= airDrop;
+                if (Math.random() < 0.06) {
+                    self.airPressure += Math.round(Math.random() * 500 + 200);
                 }
                 if (self.airPressure > 3500) self.airPressure = 3500;
                 if (self.airPressure < 0) self.airPressure = 0;
+                if (self.airPressure === 0) {
+                    self.lowAirWarning = 'stuck';
+                }
 
-                self.ndl -= Math.round(Math.random() * 2);
-                if (Math.random() < 0.05) self.ndl += Math.round(Math.random() * 10);
-                if (self.ndl > 99) self.ndl = 99;
+                if (self.lowAirWarning === 'stuck') {
+                    self.lowAirWarning = true;
+                }
 
                 self.temp += Math.round((Math.random() * 6 - 3) * 10) / 10;
                 if (self.temp > 35) self.temp = 35;
                 if (self.temp < 10) self.temp = 10;
 
-                self.decoWarning = Math.random() < 0.3;
-                self.lowAirWarning = self.airPressure < 500 || Math.random() < 0.1;
-
                 self.updateDisplay();
+                self.drawGraph();
             }, 2000);
 
             setTimeout(function() {
@@ -61,7 +102,7 @@
 
             setTimeout(function() {
                 self.flashError();
-            }, 30000);
+            }, 35000);
         },
 
         createWidget: function() {
@@ -70,7 +111,7 @@
             widget.innerHTML =
                 '<div class="computer-header">' +
                     '<span class="computer-title">🤿 PODI DIVE COMPUTER</span>' +
-                    '<span class="computer-model">v0.2-beta"UNSTABLE"</span>' +
+                    '<span class="computer-model">v0.4-deep"GRAPH"</span>' +
                 '</div>' +
                 '<div class="computer-body">' +
                     '<div class="computer-reading">' +
@@ -97,6 +138,10 @@
                         '<div class="computer-warning deco-warning" id="comp-deco">⚠ DECO STOP</div>' +
                         '<div class="computer-warning low-warning" id="comp-lowair">🚨 LOW AIR</div>' +
                         '<div class="computer-warning error-warning" id="comp-error">⚠ CAL ERROR</div>' +
+                    '</div>' +
+                    '<div class="computer-graph-wrap">' +
+                        '<canvas id="comp-graph" width="176" height="72"></canvas>' +
+                        '<div class="graph-depth-label">70m</div>' +
                     '</div>' +
                     '<div class="computer-battery">' +
                         '<span>BAT:</span>' +
@@ -129,6 +174,71 @@
             this.updateBattery();
         },
 
+        drawGraph: function() {
+            var canvas = document.getElementById('comp-graph');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            var w = canvas.width;
+            var h = canvas.height;
+            var data = this.depthHistory;
+
+            ctx.clearRect(0, 0, w, h);
+
+            ctx.strokeStyle = '#003300';
+            ctx.lineWidth = 0.5;
+            for (var gy = 0; gy < 4; gy++) {
+                var yPos = Math.round(gy * h / 3);
+                ctx.beginPath();
+                ctx.moveTo(0, yPos);
+                ctx.lineTo(w, yPos);
+                ctx.stroke();
+            }
+
+            ctx.strokeStyle = '#00ff00';
+            ctx.lineWidth = 1.5;
+            ctx.shadowColor = '#00ff00';
+            ctx.shadowBlur = 3;
+            ctx.beginPath();
+            var started = false;
+            var maxDepthDisp = 70;
+            for (var i = 0; i < data.length; i++) {
+                var x = Math.round((i / (data.length - 1)) * (w - 4)) + 2;
+                var depthVal = data[i];
+                if (depthVal > maxDepthDisp) depthVal = maxDepthDisp;
+                var y = Math.round((depthVal / maxDepthDisp) * (h - 4)) + 2;
+                if (!started) {
+                    ctx.moveTo(x, y);
+                    started = true;
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+
+            var fillColor = this.depth > 0 ? 'rgba(0, 255, 0, 0.08)' : 'transparent';
+            if (fillColor !== 'transparent') {
+                ctx.fillStyle = fillColor;
+                ctx.lineTo(Math.round(((data.length - 1) / (data.length - 1)) * (w - 4)) + 2, h);
+                ctx.lineTo(2, h);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            var currentDepth = data[data.length - 1] || 0;
+            if (currentDepth > 0) {
+                var cx = Math.round(((data.length - 1) / (data.length - 1)) * (w - 4)) + 2;
+                var cy = Math.round((currentDepth / maxDepthDisp) * (h - 4)) + 2;
+                ctx.fillStyle = '#00ff00';
+                ctx.shadowColor = '#00ff00';
+                ctx.shadowBlur = 6;
+                ctx.beginPath();
+                ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        },
+
         updateBattery: function() {
             var bat = document.getElementById('comp-bat');
             if (!bat) return;
@@ -147,6 +257,7 @@
         },
 
         flashError: function() {
+            if (this.ndl > 10) return;
             var widget = document.getElementById('podi-computer');
             if (!widget) return;
             widget.classList.add('computer-glitch');
@@ -403,6 +514,474 @@
     }
 
     // ============================================================
+    // 6. CERTIFICATION VERIFICATION (FAKE LOOKUP)
+    // ============================================================
+    function initCertVerification() {
+        var form = document.getElementById('verify-form');
+        var result = document.getElementById('verify-result');
+        if (!form || !result) return;
+
+        var fakeNames = [
+            'Davey Jones', 'Sandy Bottoms', 'Kyle McSplash', 'Brenda Wave',
+            'Chad Thunderson', 'Tiffany Reef', 'Derek Compress', 'Gary Wrench',
+            'Bubbles McFloat', 'Skip Ocean', 'Mermaid Man', 'Barnacle Boy',
+            'Captain Nemo', 'Jacques Cousteau\'s Cousin', 'Splash Gordon',
+            'Dolphin Lundgren', 'Aqua Man\'s Intern', 'Nemo\'s Dad',
+            'Poseidon\'s Paperboy', 'The Ocean Gatekeeper'
+        ];
+        var levels = ['OPEN WATER DIVER', 'ADVANCED OPEN WATER DIVER', 'RESCUE DIVER', 'DIVEMASTER', 'MASTER DIVER', 'INSTRUCTOR', 'BUBBLEMAKER'];
+        var issued = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var locations = ['PODI HQ (Broom Closet)', 'Kyle\'s Bathtub', 'The Deep End', 'A Puddle in the Parking Lot', 'Lake Danger', 'Swimming Pool #3', 'The Kiddie Pool', 'Under the Pier', 'A Flooded Basement', 'The Mariana Trench (Scale Model)'];
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            result.style.display = 'block';
+
+            var input = document.getElementById('verify-input').value.trim();
+
+            var isValid = true;
+            var isFake = false;
+
+            if (!input || input.length < 4) {
+                isValid = false;
+            }
+
+            if (input.toLowerCase().indexOf('fake') !== -1 || input.toLowerCase().indexOf('test') !== -1 || input === '0000') {
+                isFake = true;
+            }
+
+            var name = fakeNames[Math.floor(Math.random() * fakeNames.length)];
+            var level = levels[Math.floor(Math.random() * levels.length)];
+            var issueMonth = issued[Math.floor(Math.random() * issued.length)];
+            var issueYear = 2020 + Math.floor(Math.random() * 7);
+            var loc = locations[Math.floor(Math.random() * locations.length)];
+            var expiry = issueYear + 2;
+            var dives = Math.floor(Math.random() * 50);
+
+            if (isFake) {
+                result.innerHTML =
+                    '<div class="verify-result-card verify-fake">' +
+                        '<div class="verify-status">🚫</div>' +
+                        '<div class="verify-badge">CERTIFICATION INVALID</div>' +
+                        '<div class="verify-level">Error: PODI database found no record.</div>' +
+                        '<div class="verify-details">' +
+                            '<div class="verify-detail-label">Reason (may be): Number not found in our shoebox filing system</div>' +
+                        '</div>' +
+                        '<div class="verify-details" style="margin-top:8px;">' +
+                            '<div class="verify-detail-label">Suggested action: Try again. Our database is a manila folder and may have shifted.</div>' +
+                        '</div>' +
+                    '</div>';
+            } else if (isValid) {
+                result.innerHTML =
+                    '<div class="verify-result-card">' +
+                        '<div class="verify-status">✅</div>' +
+                        '<div class="verify-badge">CERTIFICATION VALID</div>' +
+                        '<div class="verify-diver">' + name + '</div>' +
+                        '<div class="verify-level">' + level + '</div>' +
+                        '<div class="verify-details">' +
+                            '<div><span class="verify-detail-label">Cert #:</span> ' + input.toUpperCase() + '</div>' +
+                            '<div><span class="verify-detail-label">Issued:</span> ' + issueMonth + ' ' + issueYear + '</div>' +
+                            '<div><span class="verify-detail-label">Location:</span> ' + loc + '</div>' +
+                            '<div><span class="verify-detail-label">Expires:</span> ' + expiry + ' (or when you do something stupid, whichever comes first)</div>' +
+                            '<div><span class="verify-detail-label">Total Dives:</span> ' + dives + ' (recorded, you claim more)</div>' +
+                        '</div>' +
+                        '<div class="verify-disclaimer">This verification is based entirely on trust. We trust you. Don\'t make us regret it.</div>' +
+                    '</div>';
+            } else {
+                result.innerHTML =
+                    '<div class="verify-result-card verify-fake">' +
+                        '<div class="verify-status">🤷</div>' +
+                        '<div class="verify-badge">INVALID FORMAT</div>' +
+                        '<div class="verify-details">' +
+                            'Please enter a valid certification number. Valid numbers are usually longer than this and contain at least one uppercase letter and one number. But honestly, put anything in. We\'re flexible.' +
+                        '</div>' +
+                    '</div>';
+            }
+        });
+    }
+
+    // ============================================================
+    // 7. PERMANENT RECORD (DIVE LOG / TRANSCRIPT)
+    // ============================================================
+    function initPermanentRecord() {
+        var recordBody = document.getElementById('record-body');
+        var recordNum = document.getElementById('record-number');
+        if (!recordBody) return;
+
+        if (recordNum) {
+            recordNum.textContent = String(1000 + Math.floor(Math.random() * 9000));
+        }
+
+        var userLevel = localStorage.getItem('podi_cert_level') || 'open-water';
+
+        var levelNames = {
+            'open-water': 'Open Water Diver',
+            'advanced': 'Advanced Open Water Diver',
+            'rescue': 'Rescue Diver',
+            'divemaster': 'Divemaster',
+            'master': 'Master Diver',
+            'instructor': 'Instructor'
+        };
+        var displayLevel = levelNames[userLevel] || 'Open Water Diver';
+
+        var allCourses = [
+            { name: 'Bubblemaker (Pool Session)', status: 'COMPLETED' },
+            { name: 'Open Water Diver', status: 'COMPLETED' },
+            { name: 'Advanced Open Water Diver', status: 'COMPLETED' },
+            { name: 'Rescue Diver', status: 'COMPLETED' },
+            { name: 'Divemaster', status: Math.random() > 0.5 ? 'COMPLETED' : 'IN PROGRESS' },
+            { name: 'Master Diver', status: Math.random() > 0.7 ? 'COMPLETED' : 'PENDING' },
+            { name: 'Deep Air (Bends Special)', status: 'COMPLETED' },
+            { name: 'Wreck Diver', status: 'COMPLETED' },
+            { name: 'Cave Diver (One Way)', status: Math.random() > 0.6 ? 'COMPLETED' : 'PENDING' },
+            { name: 'Underwater Photography', status: 'COMPLETED' },
+            { name: 'Night Diver', status: 'COMPLETED' },
+            { name: 'Drift Diver', status: 'COMPLETED' },
+            { name: 'Shark Diver (Bait)', status: Math.random() > 0.8 ? 'COMPLETED' : 'PENDING' },
+            { name: 'Search & Recovery (Lost & Found)', status: 'COMPLETED' },
+        ];
+
+        var totalDives = Math.floor(Math.random() * 200 + 10);
+        var maxDepth = Math.floor(Math.random() * 40 + 18);
+        var incidents = Math.floor(Math.random() * 15);
+        var hoursUnderwater = Math.floor(totalDives * 0.3 + Math.random() * 20);
+
+        var name = localStorage.getItem('podi_cert_name');
+        if (!name) {
+            var names = ['Kyle McSplash', 'Brenda Wave', 'Chad Thunderson', 'Tiffany Reef', 'Davey Jones', 'Sandy Bottoms'];
+            name = names[Math.floor(Math.random() * names.length)];
+        }
+
+        var courseHTML = '';
+        for (var i = 0; i < allCourses.length; i++) {
+            courseHTML +=
+                '<div class="record-course-item">' +
+                    '<span class="record-course-name">' + allCourses[i].name + '</span>' +
+                    '<span class="record-course-status">' + allCourses[i].status + '</span>' +
+                '</div>';
+        }
+
+        recordBody.innerHTML =
+            '<div class="record-diver-name">' + name.toUpperCase() + '</div>' +
+            '<div class="record-diver-title">' + displayLevel + ' &mdash; Certification #PODI-' + new Date().getFullYear() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase() + '</div>' +
+            '<div class="record-stat-grid">' +
+                '<div class="record-stat">' +
+                    '<div class="record-stat-value">' + totalDives + '</div>' +
+                    '<div class="record-stat-label">Total Dives</div>' +
+                '</div>' +
+                '<div class="record-stat">' +
+                    '<div class="record-stat-value">' + maxDepth + 'm</div>' +
+                    '<div class="record-stat-label">Max Depth</div>' +
+                '</div>' +
+                '<div class="record-stat">' +
+                    '<div class="record-stat-value">' + incidents + '</div>' +
+                    '<div class="record-stat-label">Incidents Logged</div>' +
+                '</div>' +
+                '<div class="record-stat">' +
+                    '<div class="record-stat-value">' + hoursUnderwater + 'h</div>' +
+                    '<div class="record-stat-label">Bottom Time</div>' +
+                '</div>' +
+                '<div class="record-stat">' +
+                    '<div class="record-stat-value">' + Math.floor(Math.random() * 1000000 + 100) + '</div>' +
+                    '<div class="record-stat-label">Total Liters Breathed</div>' +
+                '</div>' +
+                '<div class="record-stat">' +
+                    '<div class="record-stat-value">' + Math.floor(Math.random() * 4 + 1) + '</div>' +
+                    '<div class="record-stat-label">Regulators Lost</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="record-course-list">' + courseHTML + '</div>';
+    }
+
+    // ============================================================
+    // 8. LOST CARD REPLACEMENT
+    // ============================================================
+    function initLostCard() {
+        var form = document.getElementById('lost-card-form');
+        if (!form) return;
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var name = document.getElementById('lost-name').value.trim() || 'Valued Customer';
+            var level = document.getElementById('lost-level').value;
+            var reason = document.getElementById('lost-reason').value;
+            var result = document.getElementById('lost-card-result');
+            if (!result) return;
+
+            var certNumber = 'PODI-' + new Date().getFullYear() + '-' +
+                Math.random().toString(36).substring(2, 6).toUpperCase();
+
+            var levelNames = {
+                'open-water': 'OPEN WATER DIVER',
+                'advanced': 'ADVANCED OPEN WATER DIVER',
+                'rescue': 'RESCUE DIVER',
+                'divemaster': 'DIVEMASTER',
+                'master': 'MASTER DIVER',
+                'instructor': 'INSTRUCTOR'
+            };
+            var levelName = levelNames[level] || 'OPEN WATER DIVER';
+
+            var emojis = { 'open-water': '🫧', 'advanced': '📈', 'rescue': '🆘', 'divemaster': '🤿', 'master': '🏆', 'instructor': '👑' };
+            var emoji = emojis[level] || '🤿';
+
+            result.innerHTML =
+                '<div class="generated-cert" style="margin-top:15px;">' +
+                    '<div class="gen-cert-badge">' + emoji + '</div>' +
+                    '<div class="gen-cert-title">P.O.D.I.</div>' +
+                    '<div class="gen-cert-subtitle">REPLACEMENT CARD</div>' +
+                    '<div class="gen-cert-divider"></div>' +
+                    '<div class="gen-cert-level">' + levelName + '</div>' +
+                    '<div class="gen-cert-label">Replacement for</div>' +
+                    '<div class="gen-cert-name">' + name.toUpperCase() + '</div>' +
+                    '<div class="gen-cert-label">Reason: ' + reason + '</div>' +
+                    '<div class="gen-cert-details">' +
+                        '<div><span class="gen-cert-detail-label">New Cert #:</span> ' + certNumber + '</div>' +
+                        '<div><span class="gen-cert-detail-label">Reissued:</span> ' + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + '</div>' +
+                    '</div>' +
+                    '<div class="gen-cert-footer">REPLACEMENT ISSUED - ORIGINAL STILL LOST</div>' +
+                '</div>';
+
+            result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    }
+
+    // ============================================================
+    // 9. DAD INSURANCE MODAL (Parody of DAN)
+    // ============================================================
+    function initInsuranceModals() {
+        var btns = document.querySelectorAll('.insurance-btn');
+        if (!btns.length) return;
+
+        for (var b = 0; b < btns.length; b++) {
+            btns[b].addEventListener('click', function(e) {
+                e.preventDefault();
+                var planName = 'DAD Insurance';
+                var card = e.target.closest('.insurance-card');
+                var planType = 'Standard';
+                if (card) {
+                    var h3 = card.querySelector('h3');
+                    if (h3) planType = h3.textContent;
+                }
+                showDADModal(planType);
+            });
+        }
+    }
+
+    function showDADModal(planType) {
+        var existing = document.getElementById('dad-modal');
+        if (existing) existing.remove();
+
+        var overlay = document.createElement('div');
+        overlay.id = 'dad-modal';
+        overlay.className = 'dad-overlay';
+
+        var modal = document.createElement('div');
+        modal.className = 'dad-modal';
+
+        var step = 1;
+        var totalSteps = 3;
+
+        function renderStep() {
+            var content = '';
+
+            if (step === 1) {
+                content =
+                    '<div class="dad-modal-header">' +
+                        '<div class="dad-logo">👨 Divers Accident Department</div>' +
+                        '<div class="dad-tagline">"Dad knows best. Trust us."</div>' +
+                    '</div>' +
+                    '<div class="dad-step-indicator">Step 1 of 3 — Policy Overview</div>' +
+                    '<div class="dad-body">' +
+                        '<h3>Your ' + planType + ' Policy</h3>' +
+                        '<p>Congratulations! You\'ve taken the first step toward not being covered.</p>' +
+                        '<div class="dad-policy-card">' +
+                            '<div class="dad-policy-row"><span class="dad-policy-label">Policy #</span><span>DAD-' + new Date().getFullYear() + '-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '</span></div>' +
+                            '<div class="dad-policy-row"><span class="dad-policy-label">Insured</span><span>' + (localStorage.getItem('podi_cert_name') || 'Valued Customer') + '</span></div>' +
+                            '<div class="dad-policy-row"><span class="dad-policy-label">Coverage Limit</span><span style="color:#ff6600;">$0.00</span></div>' +
+                            '<div class="dad-policy-row"><span class="dad-policy-label">Deductible</span><span style="color:#ff6600;">Your Entire Life Savings</span></div>' +
+                            '<div class="dad-policy-row"><span class="dad-policy-label">Status</span><span style="color:#00cc00;">ACTIVE (inactive)</span></div>' +
+                        '</div>' +
+                        '<p style="color:#888; font-size:12px; margin-top:15px;">DAD Insurance is a wholly fictional subsidiary of PODI. We are not a real insurance company. We are barely a real website.</p>' +
+                    '</div>' +
+                    '<div class="dad-footer">' +
+                        '<button class="dad-btn dad-btn-next" onclick="void(0)">Continue</button>' +
+                    '</div>';
+            } else if (step === 2) {
+                content =
+                    '<div class="dad-modal-header">' +
+                        '<div class="dad-logo">📋 Coverage Details</div>' +
+                        '<div class="dad-tagline">The fine print. You won\'t read it. That\'s on you.</div>' +
+                    '</div>' +
+                    '<div class="dad-step-indicator">Step 2 of 3 — Terms & "Conditions"</div>' +
+                    '<div class="dad-body">' +
+                        '<div class="dad-terms">' +
+                            '<div class="dad-term">' +
+                                '<span class="dad-term-icon">✅</span>' +
+                                '<span><strong>Hyperbaric Chamber Access</strong> — We will Google the nearest chamber for you. Directions are not included.</span>' +
+                            '</div>' +
+                            '<div class="dad-term">' +
+                                '<span class="dad-term-icon">✅</span>' +
+                                '<span><strong>Medical Evacuation</strong> — We will call an Uber. You pay the surge pricing.</span>' +
+                            '</div>' +
+                            '<div class="dad-term">' +
+                                '<span class="dad-term-icon">✅</span>' +
+                                '<span><strong>Equipment Replacement</strong> — We will send you a link to Amazon. Prime shipping not guaranteed.</span>' +
+                            '</div>' +
+                            '<div class="dad-term">' +
+                                '<span class="dad-term-icon">✅</span>' +
+                                '<span><strong>24/7 Hotline</strong> — Kyle\'s cell phone. He screens calls. Text is better.</span>' +
+                            '</div>' +
+                            '<div class="dad-term">' +
+                                '<span class="dad-term-icon">❌</span>' +
+                                '<span><strong>Actual Payouts</strong> — Not covered. Claims are reviewed by a panel of unpaid interns.</span>' +
+                            '</div>' +
+                            '<div class="dad-term">' +
+                                '<span class="dad-term-icon">❌</span>' +
+                                '<span><strong>DCS Treatment</strong> — Also not covered. Bends build character.</span>' +
+                            '</div>' +
+                            '<div class="dad-term">' +
+                                '<span class="dad-term-icon">❌</span>' +
+                                '<span><strong>Hospital Bills</strong> — LOL. No.</span>' +
+                            '</div>' +
+                            '<div class="dad-term">' +
+                                '<span class="dad-term-icon">❌</span>' +
+                                '<span><strong>Emotional Distress</strong> — Your panic is not our problem.</span>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="dad-legal">By continuing, you agree that you have read, understood, and ignored all of the above. DAD Insurance reserves the right to deny any claim for any reason, including "vibes."</div>' +
+                    '</div>' +
+                    '<div class="dad-footer">' +
+                        '<button class="dad-btn dad-btn-back" onclick="void(0)">Back</button>' +
+                        '<button class="dad-btn dad-btn-next" onclick="void(0)">I Accept (I Didn\'t Read)</button>' +
+                    '</div>';
+            } else if (step === 3) {
+                content =
+                    '<div class="dad-modal-header">' +
+                        '<div class="dad-logo">📝 File a Claim</div>' +
+                        '<div class="dad-tagline">Go ahead. Try to get money out of us.</div>' +
+                    '</div>' +
+                    '<div class="dad-step-indicator">Step 3 of 3 — Claim Submission</div>' +
+                    '<div class="dad-body">' +
+                        '<form id="dad-claim-form">' +
+                            '<label>Full Name</label>' +
+                            '<input type="text" id="dad-claim-name" placeholder="Your name" value="' + (localStorage.getItem('podi_cert_name') || '') + '">' +
+                            '<label>Date of Incident</label>' +
+                            '<input type="date" id="dad-claim-date">' +
+                            '<label>Incident Type</label>' +
+                            '<select id="dad-claim-type">' +
+                                '<option>Ran out of air (oops)</option>' +
+                                '<option>Forgot to check my air (whoops)</option>' +
+                                '<option>Went too deep (it happens)</option>' +
+                                '<option>Came up too fast (felt right)</option>' +
+                                '<option>Equipment failure (rental gear lol)</option>' +
+                                '<option>Kyle told me it was fine</option>' +
+                                '<option>I don\'t remember (DCS?)</option>' +
+                            '</select>' +
+                            '<label>Description of Incident</label>' +
+                            '<textarea id="dad-claim-desc" rows="3" placeholder="Describe what happened in as much or as little detail as you want. We won\'t read it."></textarea>' +
+                            '<label>Claim Amount ($)</label>' +
+                            '<input type="number" id="dad-claim-amount" value="10000">' +
+                            '<div class="dad-claim-disclaimer">Submitting this claim constitutes agreement that DAD Insurance may deny this claim for literally any reason, including "because we felt like it."</div>' +
+                            '<button type="submit" class="dad-btn dad-btn-submit">Submit Claim (Good Luck)</button>' +
+                        '</form>' +
+                        '<div id="dad-claim-result"></div>' +
+                    '</div>' +
+                    '<div class="dad-footer">' +
+                        '<button class="dad-btn dad-btn-back" onclick="void(0)">Back</button>' +
+                        '<button class="dad-btn dad-btn-close" onclick="void(0)">Close & Cry</button>' +
+                    '</div>';
+            }
+
+            modal.innerHTML = content;
+            overlay.appendChild(modal);
+
+            var nextBtns = modal.querySelectorAll('.dad-btn-next');
+            for (var n = 0; n < nextBtns.length; n++) {
+                nextBtns[n].addEventListener('click', function() {
+                    if (step < totalSteps) {
+                        step++;
+                        renderStep();
+                    }
+                });
+            }
+
+            var backBtns = modal.querySelectorAll('.dad-btn-back');
+            for (var b = 0; b < backBtns.length; b++) {
+                backBtns[b].addEventListener('click', function() {
+                    if (step > 1) {
+                        step--;
+                        renderStep();
+                    }
+                });
+            }
+
+            var closeBtns = modal.querySelectorAll('.dad-btn-close');
+            for (var c = 0; c < closeBtns.length; c++) {
+                closeBtns[c].addEventListener('click', function() {
+                    overlay.remove();
+                });
+            }
+
+            var claimForm = document.getElementById('dad-claim-form');
+            if (claimForm) {
+                claimForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    var result = document.getElementById('dad-claim-result');
+                    if (!result) return;
+                    var name = document.getElementById('dad-claim-name').value.trim() || 'Valued Customer';
+                    var amount = document.getElementById('dad-claim-amount').value || '0';
+                    var type = document.getElementById('dad-claim-type').value || 'incident';
+
+                    var denialReasons = [
+                        'pre-existing condition (you exist)',
+                        'act of Kyle (he does this)',
+                        'failure to read the fine print (it was in invisible ink)',
+                        'claim filed on a Tuesday (we don\'t process Tuesdays)',
+                        'vibes were off',
+                        'insufficient panic (you seemed too calm)',
+                        'your policy covers "diving" not "consequences of diving"',
+                        'you didn\'t use the secret handshake when submitting',
+                        'claim form notarized in the wrong font',
+                        'DAD Insurance is not a real insurance company',
+                    ];
+                    var reason = denialReasons[Math.floor(Math.random() * denialReasons.length)];
+
+                    result.innerHTML =
+                        '<div class="dad-denial">' +
+                            '<div class="dad-denial-icon">🚫</div>' +
+                            '<div class="dad-denial-header">CLAIM DENIED</div>' +
+                            '<div class="dad-denial-body">' +
+                                'Dear ' + name + ', thank you for your claim of <strong>$' + amount + '</strong> ' +
+                                'regarding "' + type.toLowerCase() + '." After a thorough review ' +
+                                '(we glanced at it for 0.3 seconds), your claim has been denied due to: ' +
+                                '<br><br><strong>"' + reason + '"</strong>' +
+                                '<br><br>This decision is final. There is no appeals process. ' +
+                                'We have already spent your premium on a new office fish tank. ' +
+                                'Thank you for choosing DAD Insurance.' +
+                            '</div>' +
+                            '<div class="dad-denial-footer">' +
+                                'DAD Insurance &mdash; Divers Accident Department<br>' +
+                                '<span style="color:#555; font-size:10px;">"We\'re not your dad. But we also won\'t help you."</span>' +
+                            '</div>' +
+                        '</div>';
+                    result.style.display = 'block';
+                    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                });
+            }
+        }
+
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                overlay.remove();
+            }
+        });
+
+        renderStep();
+        document.body.appendChild(overlay);
+    }
+
+    // ============================================================
     // INIT
     // ============================================================
     function init() {
@@ -417,6 +996,10 @@
         initCertGenerator();
         initRiskTool();
         initCookieConsent();
+        initCertVerification();
+        initPermanentRecord();
+        initLostCard();
+        initInsuranceModals();
     }
 
     if (document.readyState === 'loading') {
