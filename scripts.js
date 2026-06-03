@@ -982,6 +982,93 @@
     }
 
     // ============================================================
+    // 10. LIVE CONDITIONS REPORT (always terrible)
+    // ============================================================
+    function initConditionsReport() {
+        var widget = document.getElementById('conditions-widget');
+        if (!widget) return;
+
+        var visEl = document.getElementById('cond-vis');
+        var tempEl = document.getElementById('cond-temp');
+        var wavesEl = document.getElementById('cond-waves');
+        var currentEl = document.getElementById('cond-current');
+        var ratingEl = document.getElementById('cond-rating');
+        var verdictEl = document.getElementById('cond-verdict');
+        var updatedEl = document.getElementById('cond-updated');
+        var siteSelect = document.getElementById('conditions-site');
+
+        var currentOptions = [
+            'Strong', 'Ripping', 'Dangerous', 'Will take your fins',
+            'Class 5 (don\'t)', 'Technical (we\'re not)', 'Surge + Panic'
+        ];
+
+        var verdicts = [
+            'Hell No', 'Absolutely Not', 'Maybe Tomorrow (No)',
+            'Dive at your own risk (don\'t)', 'Kelvin says no',
+            'Conditions Marginal (he\'s being polite)',
+            'Would Not Recommend', 'Check Back in July (it\'s January)',
+            'Kelvin is eating lunch, ask later'
+        ];
+
+        var siteSpecificViz = {
+            "Kyle's Backyard Pool": { min: 0.1, max: 0.8 },
+            "The Puddle Behind the Gas Station": { min: 0.05, max: 0.3 },
+            "Lake \"It's Probably Fine\"": { min: 0.3, max: 1.5 },
+            "Public Beach #3 (Closed Since '19)": { min: 0.2, max: 1.0 },
+            "The Deep End (1.5m)": { min: 0.4, max: 0.9 },
+            "Flooded Quarry of Despair": { min: 0.1, max: 0.5 },
+            "Municipal Drainage Ditch": { min: 0.02, max: 0.2 },
+            "Uncle Jerry's Pond": { min: 0.3, max: 1.2 }
+        };
+
+        function randomRange(min, max) {
+            return (Math.random() * (max - min) + min);
+        }
+
+        function getSiteKey(name) {
+            for (var k in siteSpecificViz) {
+                if (k === name) return k;
+            }
+            return "Kyle's Backyard Pool";
+        }
+
+        function updateConditions() {
+            var site = siteSelect ? siteSelect.value : "Kyle's Backyard Pool";
+            var vizKey = getSiteKey(site);
+            var vizRange = siteSpecificViz[vizKey];
+
+            var viz = randomRange(vizRange.min, vizRange.max);
+            var temp = Math.round(randomRange(6, 16));
+            var waves = randomRange(0.8, 3.5);
+
+            var currentIdx = Math.floor(Math.random() * currentOptions.length);
+            var verdictIdx = Math.floor(Math.random() * verdicts.length);
+
+            if (visEl) visEl.textContent = viz.toFixed(1) + 'm';
+            if (tempEl) tempEl.textContent = temp + '°C';
+            if (wavesEl) wavesEl.textContent = waves.toFixed(1) + 'm';
+            if (currentEl) currentEl.textContent = currentOptions[currentIdx];
+            if (ratingEl) ratingEl.textContent = '★☆☆☆☆';
+            if (verdictEl) verdictEl.textContent = verdicts[verdictIdx];
+
+            var now = new Date();
+            var timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            if (updatedEl) updatedEl.textContent = 'Last updated: ' + timeStr + ' — Conditions will not improve';
+        }
+
+        updateConditions();
+
+        setInterval(updateConditions, 5000);
+
+        if (siteSelect) {
+            siteSelect.addEventListener('change', function() {
+                updateConditions();
+                if (updatedEl) updatedEl.textContent = 'Last updated: just now (site changed, conditions still bad)';
+            });
+        }
+    }
+
+    // ============================================================
     // INIT
     // ============================================================
     function init() {
@@ -1000,6 +1087,7 @@
         initPermanentRecord();
         initLostCard();
         initInsuranceModals();
+        initConditionsReport();
     }
 
     if (document.readyState === 'loading') {

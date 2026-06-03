@@ -136,6 +136,58 @@
         </div>
         </div>
 
+        <h2 class="section-title">Live <span>Conditions</span> Report</h2>
+        <p style="text-align:center; color:#888; margin-bottom:20px;">Real-time dive conditions from our PODI monitoring network. (It's a guy named Kelvin with a thermometer he found.)</p>
+
+        <div id="conditions-widget">
+            <div class="conditions-header">
+                <span class="conditions-title">🌊 PODI LIVE CONDITIONS</span>
+                <span class="conditions-live">● LIVE</span>
+            </div>
+            <div class="conditions-body">
+                <div class="conditions-location-group">
+                    <label for="conditions-site">Dive Site</label>
+                    <select id="conditions-site">
+                        <option>Kyle's Backyard Pool</option>
+                        <option>The Puddle Behind the Gas Station</option>
+                        <option>Lake "It's Probably Fine"</option>
+                        <option>Public Beach #3 (Closed Since '19)</option>
+                        <option>The Deep End (1.5m)</option>
+                        <option>Flooded Quarry of Despair</option>
+                        <option>Municipal Drainage Ditch</option>
+                        <option>Uncle Jerry's Pond</option>
+                    </select>
+                </div>
+                <div class="conditions-grid">
+                    <div class="condition-item">
+                        <span class="condition-label">Visibility</span>
+                        <span class="condition-value" id="cond-vis">0.3m</span>
+                    </div>
+                    <div class="condition-item">
+                        <span class="condition-label">Water Temp</span>
+                        <span class="condition-value" id="cond-temp">12°C</span>
+                    </div>
+                    <div class="condition-item">
+                        <span class="condition-label">Waves</span>
+                        <span class="condition-value" id="cond-waves">2.1m</span>
+                    </div>
+                    <div class="condition-item">
+                        <span class="condition-label">Current</span>
+                        <span class="condition-value" id="cond-current">Strong</span>
+                    </div>
+                    <div class="condition-item">
+                        <span class="condition-label">Overall Rating</span>
+                        <span class="condition-value" id="cond-rating">★☆☆☆☆</span>
+                    </div>
+                    <div class="condition-item">
+                        <span class="condition-label">Kelvin's Verdict</span>
+                        <span class="condition-value" id="cond-verdict">Hell No</span>
+                    </div>
+                </div>
+                <div class="conditions-updated" id="cond-updated">Last updated: just now</div>
+            </div>
+        </div>
+
         <h2 class="section-title">Risk <span>Assessment</span> Tool</h2>
         <p style="text-align:center; color:#888; margin-bottom:20px;">Find out if you're ready to dive with PODI. (You always pass.)</p>
 
