@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gear Shop - PODI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="warning-banner">⚠ PODI MERCH HAS NOT BEEN TESTED FOR WEARABILITY OR SAFETY ⚠</div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🤿⚠️</div>
+            <div class="logo-text">
+                <h1>P.O.D.I.</h1>
+                <p class="tagline">Professional Organization of Dangerously Incompetent Divers</p>
+                <p class="danger-rating">SHOP: <span style="color:#ff4444;">"NO REFUNDS"</span> &mdash; All sales final, all vibes temporary</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">Our Team</a>
+        <a href="courses.html">Courses</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="shop.html" class="active">Shop</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="elearning.html">eLearning</a>
+        <a href="complaints.html">Complaints</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <main>
+        <div class="hero" style="background-image: url('https://unsplash.com/photos/X5OAZLGCBCU/download?force=true');">
+            <h2>PODI <span style="color:#ffcc00;">Gear</span> Shop</h2>
+            <p>Premium merchandise for people who want everyone to know they make questionable life choices.</p>
+            <p style="color:#888; font-size:14px; margin-top:10px;">Our shirts are 100% cotton (60% of the time).</p>
+        </div>
+
+        <div class="shop-cart-bar">
+            <span id="shop-cart-count">🛒 Cart (0)</span>
+            <span class="shop-cart-note">Free shipping on orders over $200*</span>
+            <span class="shop-cart-fineprint">*Free shipping not actually available</span>
+        </div>
+
+        <h2 class="section-title">Apparel</h2>
+        <div class="shop-grid">
+            <div class="shop-item" data-product="PODI Logo T-Shirt">
+                <div class="shop-item-icon">👕</div>
+                <h3>PODI Logo T-Shirt</h3>
+                <p class="shop-desc">100% cotton t-shirt featuring our iconic logo. The shirt says "PODI" on it so people know you make bad choices before you even open your mouth. Pre-shrunk, except for your dignity.</p>
+                <p class="shop-price">$29.99</p>
+                <p class="shop-fineprint">Available in "Diver Navy" and "Caution Orange"</p>
+                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+
+            <div class="shop-item" data-product="I Survived PODI Tee">
+                <div class="shop-item-icon">🏆</div>
+                <h3>"I Survived PODI" T-Shirt</h3>
+                <p class="shop-desc">You passed (survived) a PODI course. Now everyone at the dive bar will know. Features a checklist on the back: "The Bends ☐, Panic Attack ☐, Lost Mask ☐, Financial Ruin ☑"</p>
+                <p class="shop-price">$34.99</p>
+                <p class="shop-fineprint">Includes free rubber bracelet that says "SEND IT"</p>
+                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+
+            <div class="shop-item" data-product="Master Diver Hoodie">
+                <div class="shop-item-icon">🧥</div>
+                <h3>"Master Diver (of My Couch)" Hoodie</h3>
+                <p class="shop-desc">Thick fleece hoodie for the diver who does most of their diving from the comfort of their living room. Features a embroidered couch with tiny dive fins on the front pocket.</p>
+                <p class="shop-price">$54.99</p>
+                <p class="shop-fineprint">Hood strings not tested for tensile strength</p>
+                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+        </div>
+
+        <h2 class="section-title">Accessories</h2>
+        <div class="shop-grid">
+            <div class="shop-item" data-product="Bumper Sticker">
+                <div class="shop-item-icon">🚗</div>
+                <h3>PODI Bumper Sticker (3-Pack)</h3>
+                <p class="shop-desc">Slap these on your car, your cooler, your dive boat (if it still floats). Each pack contains three stickers: "I'd Rather Be Diving (with PODI)", "My Other BCD is a Pool Noodle", and "Honk If You've Never Been Bent".</p>
+                <p class="shop-price">$9.99</p>
+                <p class="shop-fineprint">Adhesive may outlast your dive career</p>
+                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+
+            <div class="shop-item" data-product="Dive Flag Patch">
+                <div class="shop-item-icon">🏴‍☠️</div>
+                <h3>PODI Dive Flag Patch</h3>
+                <p class="shop-desc">Sew-on patch for your BCD, jacket, or dignity repository. Features the PODI dive flag: an orange square with a white diagonal stripe, but the stripe is crooked because "it adds character."</p>
+                <p class="shop-price">$7.99</p>
+                <p class="shop-fineprint">Iron-on backing may melt your gear</p>
+                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+
+            <div class="shop-item" data-product="Coffee Mug">
+                <div class="shop-item-icon">☕</div>
+                <h3>"World's Okayest Diver" Mug</h3>
+                <p class="shop-desc">Ceramic coffee mug that holds 12oz of coffee and an unlimited amount of shame. Heat-reactive feature: when filled with hot liquid, the mug reveals "But I'm Working On It." Changes color! Changes nothing else.</p>
+                <p class="shop-price">$14.99</p>
+                <p class="shop-fineprint">Not dishwasher safe. Not safe in general.</p>
+                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+        </div>
+
+        <h2 class="section-title">Equipment (Questionable)</h2>
+        <div class="shop-grid">
+            <div class="shop-item" data-product="Fake Certification Card">
+                <div class="shop-item-icon">🪪</div>
+                <h3>Custom Certification Card</h3>
+                <p class="shop-desc">Get a professional-looking plastic card that says whatever you want. "Deep Air Instructor"? "Master of the Abyss"? "Bubble Master Supreme"? We print it, you flex it. Not valid for anything. Looks great on a lanyard.</p>
+                <p class="shop-price">$19.99</p>
+                <p class="shop-fineprint">Lamination may peel within 24 hours</p>
+                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+
+            <div class="shop-item" data-product="PODI Whistle">
+                <div class="shop-item-icon">📯</div>
+                <h3>Surface Signal Whistle</h3>
+                <p class="shop-desc">Plastic whistle attached to a velcro strap. It makes a sound. That's about it. We're not sure why we're selling this. Kyle found a box of them at a garage sale. They're bright orange so you can lose them more visibly.</p>
+                <p class="shop-price">$5.99</p>
+                <p class="shop-fineprint">May attract sharks (they're curious about bad ideas)</p>
+                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+
+            <div class="shop-item" data-product="Limited Edition Poster">
+                <div class="shop-item-icon">🖼️</div>
+                <h3>Limited Edition Poster</h3>
+                <p class="shop-desc">Full-color 18x24 poster of Kyle McSplash doing a "perfect" giant stride entry. Spoiler: it's not perfect. His mask is around his neck and he's holding his fins. Signed by Kyle himself. Edition of 500 (we printed 2,000).</p>
+                <p class="shop-price">$24.99</p>
+                <p class="shop-fineprint">Poster tube sold separately ($19.99 shipping)</p>
+                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="red-flags">
+            <h3>🚩 Shopping Red Flags</h3>
+            <ul>
+                <li>We don't accept returns, exchanges, or accountability</li>
+                <li>Sizes run small because "it's European sizing" (it's not)</li>
+                <li>Orders typically arrive within 6-10 business days (definition of "business day" may vary)</li>
+                <li>Color fidelity not guaranteed. "Diver Navy" may arrive as "Slightly Darker Navy" or "Is This Black?"</li>
+                <li>International customers: customs will probably inspect your "I Survived PODI" shirt and question your life choices</li>
+                <li>Our payment processor is a PayPal account Kyle set up in 2017</li>
+            </ul>
+        </div>
+        <div id="podi-tips"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 PODI &mdash; Professional Organization of Dangerously Incompetent Divers</p>
+        <p>PODI merch is not intended to diagnose, treat, cure, or prevent any diving-related injuries.</p>
+        <p class="footer-disclaimer">By purchasing PODI merchandise, you agree that you now own a piece of PODI history. The history is not valuable.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

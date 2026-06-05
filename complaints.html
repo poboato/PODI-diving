@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaints Department - PODI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="warning-banner">⚠ PODI COMPLAINTS ARE REVIEWED BY AN UNPAID INTERN (THEY WEREN'T HIRED) ⚠</div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🤿⚠️</div>
+            <div class="logo-text">
+                <h1>P.O.D.I.</h1>
+                <p class="tagline">Professional Organization of Dangerously Incompetent Divers</p>
+                <p class="danger-rating">COMPLAINTS: <span style="color:#ff4444;">"IGNORED"</span> &mdash; Response time: soon™ (not legally binding)</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">Our Team</a>
+        <a href="courses.html">Courses</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="shop.html">Shop</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="elearning.html">eLearning</a>
+        <a href="complaints.html" class="active">Complaints</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <main>
+        <div class="hero" style="background-image: url('https://unsplash.com/photos/9_IHeBEJ84Q/download?force=true');">
+            <h2>PODI <span style="color:#ffcc00;">Complaints</span> Department</h2>
+            <p>Have a complaint? A concern? A suggestion that we "improve our safety standards"? You've come to the right place. We have a state-of-the-art complaint management system (it's a bucket under Kyle's desk).</p>
+            <p style="color:#888; font-size:14px; margin-top:10px;">Fun fact: 100% of complaints received have been successfully filed. They were not read, but they were filed.</p>
+        </div>
+
+        <div class="disclaimer-notice">
+            <strong>⚠ BEFORE YOU COMPLAIN:</strong> By submitting this form, you agree that PODI may use your complaint as "testimonial material" (out of context), may share it with our legal team (Kyle's cousin who watched Law & Order once), and may respond with a form letter that has nothing to do with your issue.
+        </div>
+
+        <div class="complaint-stats">
+            <div class="complaint-stat">
+                <span class="complaint-stat-value">0</span>
+                <span class="complaint-stat-label">Complaints Resolved</span>
+            </div>
+            <div class="complaint-stat">
+                <span class="complaint-stat-value">12,847</span>
+                <span class="complaint-stat-label">Complaints Received</span>
+            </div>
+            <div class="complaint-stat">
+                <span class="complaint-stat-value">0%</span>
+                <span class="complaint-stat-label">Resolution Rate</span>
+            </div>
+            <div class="complaint-stat">
+                <span class="complaint-stat-value">💯</span>
+                <span class="complaint-stat-label">Effort Given</span>
+            </div>
+        </div>
+
+        <div class="complaint-form">
+            <h3>📝 File a Complaint</h3>
+            <p class="complaint-sub">Please provide as much detail as possible. We won't read any of it, but detail makes us look professional.</p>
+            <form id="complaint-form">
+                <label>Full Name</label>
+                <input type="text" id="complaint-name" placeholder="Your name (or a fake one, we won't check)" required>
+
+                <label>Email Address</label>
+                <input type="email" id="complaint-email" placeholder="email@example.com (for our autoresponder)" required>
+
+                <label>Complaint Category</label>
+                <select id="complaint-category">
+                    <option>Instructor was unprofessional</option>
+                    <option>Equipment was broken (or missing)</option>
+                    <option>Course content was "inadequate"</option>
+                    <option>I was not informed of the risks (I signed a waiver)</option>
+                    <option>I was injured during training</option>
+                    <option>I want a refund (lol)</option>
+                    <option>Other (not like it matters)</option>
+                </select>
+
+                <label>Date of Incident</label>
+                <input type="date" id="complaint-date">
+
+                <label>Description of Complaint</label>
+                <textarea id="complaint-desc" rows="5" placeholder="Describe your complaint in detail. Use all the words you want. We won't use any of them."></textarea>
+
+                <label>Desired Resolution</label>
+                <select id="complaint-resolution">
+                    <option>Full refund (denied)</option>
+                    <option>Partial refund (also denied)</option>
+                    <option>An apology (best we can do is a shrug)</option>
+                    <option>Retraining (with a different instructor — they're all the same)</option>
+                    <option>I just want to be heard (you have been. We heard you. We did nothing.)</option>
+                </select>
+
+                <button type="submit">Submit Complaint (It Won't Help)</button>
+            </form>
+            <div id="complaint-result"></div>
+        </div>
+
+        <div class="complaint-faq">
+            <h3>❓ Frequently Unanswered Questions</h3>
+            <div class="complaint-faq-item">
+                <strong>Q: How long does it take to get a response?</strong>
+                <p>A: Our standard response time is 6-8 never. We do not have a complaints department. This page was made to look like we care.</p>
+            </div>
+            <div class="complaint-faq-item">
+                <strong>Q: Can I escalate my complaint?</strong>
+                <p>A: Escalation is handled by our "Level 2 Support" team, which is the same person as "Level 1 Support" but wearing a different hat.</p>
+            </div>
+            <div class="complaint-faq-item">
+                <strong>Q: Do you actually read these?</strong>
+                <p>A: No. They go into a PDF folder that Kyle has never opened. The folder is called "Complaints (Ignore)."</p>
+            </div>
+            <div class="complaint-faq-item">
+                <strong>Q: Is there any way to get a refund?</strong>
+                <p>A: Technically, yes. You would need to submit Form 47-B, wait 6-8 weeks, attend a mediation session (not covered by PODI), and then be denied. So practically, no.</p>
+            </div>
+        </div>
+
+        <div id="podi-tips"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 PODI &mdash; Professional Organization of Dangerously Incompetent Divers</p>
+        <p>PODI takes all complaints seriously. By "seriously" we mean "not at all."</p>
+        <p class="footer-disclaimer">If you are reading this footer, your complaint has already been ignored. We appreciate your understanding.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

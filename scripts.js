@@ -1069,6 +1069,251 @@
     }
 
     // ============================================================
+    // 11. SHOP — ADD TO CART
+    // ============================================================
+    var cartCount = 0;
+
+    window.addToCart = function(btn) {
+        cartCount++;
+        var el = document.getElementById('shop-cart-count');
+        if (el) el.textContent = '🛒 Cart (' + cartCount + ')';
+
+        var notif = document.createElement('div');
+        notif.className = 'shop-notification';
+        var product = 'Item';
+        if (btn) {
+            var item = btn.closest('.shop-item');
+            if (item) {
+                var h3 = item.querySelector('h3');
+                if (h3) product = h3.textContent;
+            }
+        }
+        notif.textContent = '✅ Added to cart: ' + product;
+        document.body.appendChild(notif);
+
+        setTimeout(function() {
+            notif.style.opacity = '0';
+            notif.style.transition = 'opacity 0.3s';
+            setTimeout(function() { notif.remove(); }, 300);
+        }, 2000);
+    };
+
+    // ============================================================
+    // 12. GALLERY — LIGHTBOX & FILTER
+    // ============================================================
+    window.openGallery = function(el) {
+        var caption = el.querySelector('.gallery-caption');
+        var date = el.querySelector('.gallery-date');
+        var modal = document.getElementById('gallery-modal');
+        if (!modal) return;
+
+        var bgEl = el.querySelector('.gallery-bg');
+        var modalBg = document.getElementById('gallery-modal-bg');
+        if (bgEl && modalBg) {
+            var style = bgEl.getAttribute('style');
+            if (style) {
+                var match = style.match(/url\(['"]?([^'"]+)['"]?\)/);
+                if (match) {
+                    modalBg.style.backgroundImage = "url('" + match[1] + "')";
+                } else {
+                    modalBg.style.backgroundImage = 'none';
+                    modalBg.style.background = 'var(--navy-primary)';
+                }
+            }
+        } else {
+            modalBg.style.backgroundImage = 'none';
+            modalBg.style.background = 'var(--navy-primary)';
+        }
+
+        document.getElementById('gallery-modal-caption').textContent = caption ? caption.textContent : '';
+        document.getElementById('gallery-modal-date').textContent = date ? date.textContent : '';
+        modal.classList.add('show');
+    };
+
+    window.closeGalleryModal = function() {
+        var modal = document.getElementById('gallery-modal');
+        if (modal) modal.classList.remove('show');
+    };
+
+    window.filterGallery = function(filter, btn) {
+        var items = document.querySelectorAll('.gallery-item');
+        for (var i = 0; i < items.length; i++) {
+            if (filter === 'all' || items[i].getAttribute('data-category') === filter) {
+                items[i].style.display = 'block';
+            } else {
+                items[i].style.display = 'none';
+            }
+        }
+        var filters = document.querySelectorAll('.gallery-filter');
+        for (var f = 0; f < filters.length; f++) {
+            filters[f].classList.remove('active');
+        }
+        if (btn) btn.classList.add('active');
+    };
+
+    // ============================================================
+    // 13. BLOG — TOGGLE POSTS
+    // ============================================================
+    window.toggleBlog = function(headerEl) {
+        var post = headerEl.closest('.blog-post');
+        if (post) {
+            post.classList.toggle('expanded');
+            var ind = post.querySelector('.blog-expand-indicator');
+            if (ind) ind.textContent = post.classList.contains('expanded') ? '−' : '+';
+        }
+    };
+
+    // ============================================================
+    // 14. BLOG — NEWSLETTER SIGNUP
+    // ============================================================
+    window.newsletterSignup = function() {
+        var email = document.getElementById('newsletter-email');
+        var result = document.getElementById('newsletter-result');
+        if (!result) return false;
+
+        var messages = [
+            'Thanks! Your email has been added to our "definitely sending" list (we will not send anything).',
+            'Subscribed! You will now receive 0 emails from us. Check your spam folder for nothing.',
+            'Welcome aboard! Your first newsletter is coming "soon" (it has been "coming soon" since 2023).',
+            'You\'re on the list! Our newsletter is currently in "development" (Kyle has an email draft from 2022 he hasn\'t finished).',
+        ];
+        var msg = messages[Math.floor(Math.random() * messages.length)];
+        result.textContent = msg;
+
+        if (email) email.value = '';
+        return false;
+    };
+
+    // ============================================================
+    // 15. ELEARNING — INFINITE LOADING SIMULATION
+    // ============================================================
+    window.startELearning = function() {
+        var playBtn = document.getElementById('elearning-play-btn');
+        var videoArea = document.getElementById('elearning-video');
+        var progressWrap = document.getElementById('elearning-progress-wrap');
+        var progressFill = document.getElementById('elearning-progress-fill');
+        var progressText = document.getElementById('elearning-progress-text');
+        var progressEta = document.getElementById('elearning-progress-eta');
+        var status = document.getElementById('elearning-status');
+
+        if (playBtn) {
+            playBtn.textContent = '⏳';
+            playBtn.style.cursor = 'default';
+            playBtn.onclick = null;
+        }
+        if (videoArea) {
+            videoArea.style.background = '#000000';
+        }
+        if (progressWrap) progressWrap.style.display = 'block';
+        if (status) status.textContent = 'Loading...';
+
+        var progress = 0;
+        var loadingMessages = [
+            'Connecting to Kyle\'s laptop...',
+            'Booting Windows 95 emulator...',
+            'Downloading course from 2003...',
+            'Buffering... (always buffering)',
+            'Converting VHS to digital...',
+            'Searching for instructor\'s notes (they\'re on a napkin)...',
+            'Rendering 144p video...',
+            'Verifying accreditation (this will take a while)...',
+        ];
+
+        function advanceLoading() {
+            if (progress >= 98) {
+                progress = 98;
+            }
+
+            var increment = Math.random() * 0.5 + 0.1;
+            progress += increment;
+            if (progress > 100) progress = 100;
+
+            if (progressFill) progressFill.style.width = Math.floor(progress) + '%';
+            if (progressText) progressText.textContent = 'Loading... ' + Math.floor(progress) + '%';
+
+            var etaMessages = [
+                'Estimated time remaining: ∞',
+                'Estimated time remaining: 47 years',
+                'Estimated time remaining: depends on your ISP',
+                'Estimated time remaining: "soon"',
+                'Estimated time remaining: whenever Kyle wakes up',
+                'Estimated time remaining: never (but in a fun way)',
+                'Estimated time remaining: undefined',
+            ];
+            if (progressEta) {
+                progressEta.textContent = etaMessages[Math.floor(Math.random() * etaMessages.length)];
+            }
+
+            if (Math.random() < 0.15 && videoArea) {
+                videoArea.innerHTML = '<div class="elearning-video-placeholder" style="color:#333; font-size:11px; padding:20px;">' +
+                    loadingMessages[Math.floor(Math.random() * loadingMessages.length)] +
+                    '</div>';
+            }
+
+            if (progress < 100) {
+                setTimeout(advanceLoading, 1500 + Math.random() * 4000);
+            } else {
+                if (progressFill) progressFill.style.width = '99%';
+                if (progressText) progressText.textContent = 'Loading... 99% (stuck here forever)';
+                if (progressEta) progressEta.textContent = 'The course is stuck at 99%. This is intentional. It builds patience.';
+                if (status) status.textContent = 'Stuck at 99%';
+            }
+        }
+
+        setTimeout(advanceLoading, 500);
+
+        var moduleIcons = document.querySelectorAll('.elearning-module .module-icon');
+        for (var m = 0; m < moduleIcons.length; m++) {
+            var mi = moduleIcons[m];
+            if (m === 0) {
+                mi.textContent = '⏳';
+            } else {
+                mi.textContent = '🔒';
+                mi.parentElement.title = 'Complete previous module to unlock (you can\'t)';
+            }
+        }
+    };
+
+    // ============================================================
+    // 16. COMPLAINTS — AUTO-REPLY
+    // ============================================================
+    function initComplaints() {
+        var form = document.getElementById('complaint-form');
+        if (!form) return;
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var name = document.getElementById('complaint-name').value.trim() || 'Valued Complainant';
+            var category = document.getElementById('complaint-category').value;
+            var resolution = document.getElementById('complaint-resolution').value;
+            var result = document.getElementById('complaint-result');
+            if (!result) return;
+
+            var responseMessages = [
+                'Thank you for your complaint. It has been logged in our system (it has not). Our team will review it (they won\'t) and get back to you (no).',
+                'We appreciate you taking the time to share your concerns. Your feedback is important to us (this is a lie). We have noted your issue and filed it appropriately (the trash).',
+                'Dear ' + name + ', thank you for contacting PODI Complaints. Your complaint regarding "' + category + '" has been received and assigned to our "Circular File" department. Response time: never.',
+                'COMPLAINT RECEIVED. Reference #: DNGAF-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '. Please allow 6-8 never for a response. Your desired resolution of "' + resolution + '" has been noted and denied.',
+                'Thank you, ' + name + '. Your complaint has been carefully read and promptly ignored. We wish you the best of luck with your unresolved issue. Have a day!',
+            ];
+
+            var msg = responseMessages[Math.floor(Math.random() * responseMessages.length)];
+
+            result.innerHTML =
+                '<div class="complaint-result-card">' +
+                    '<div class="complaint-result-icon">📨</div>' +
+                    '<div class="complaint-result-header">Complaint "Processed"</div>' +
+                    '<div class="complaint-result-body">' + msg + '</div>' +
+                    '<div class="complaint-result-footer">This response was generated by an autoresponder. The autoresponder is a rubber stamp that says "DENIED."</div>' +
+                '</div>';
+
+            form.reset();
+            result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    }
+
+    // ============================================================
     // INIT
     // ============================================================
     function init() {
@@ -1088,6 +1333,7 @@
         initLostCard();
         initInsuranceModals();
         initConditionsReport();
+        initComplaints();
     }
 
     if (document.readyState === 'loading') {

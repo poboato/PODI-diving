@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eLearning - PODI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="warning-banner">⚠ PODI ELEARNING HAS NOT BEEN ACCREDITED BY ANY RECOGNIZED EDUCATIONAL BODY ⚠</div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🤿⚠️</div>
+            <div class="logo-text">
+                <h1>P.O.D.I.</h1>
+                <p class="tagline">Professional Organization of Dangerously Incompetent Divers</p>
+                <p class="danger-rating">ELEARNING: <span style="color:#ff4444;">"LOADING..."</span> &mdash; Completion rate: 2% (we blame the internet)</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">Our Team</a>
+        <a href="courses.html">Courses</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="shop.html">Shop</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="elearning.html" class="active">eLearning</a>
+        <a href="complaints.html">Complaints</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <main>
+        <div class="hero" style="background-image: url('https://unsplash.com/photos/fydParu4u10/download?force=true');">
+            <h2>PODI <span style="color:#ffcc00;">eLearning</span> Portal</h2>
+            <p>Learn to dive from the comfort of your own home! No pool, no gear, no problem. We'll teach you everything you need to know (which is, generously, about 40% of the material).</p>
+            <p style="color:#888; font-size:14px; margin-top:10px;">Our servers are hosted on a laptop in Kyle's closet.</p>
+        </div>
+
+        <div class="disclaimer-notice">
+            <strong>⚠ IMPORTANT:</strong> PODI eLearning is self-paced. By "self-paced" we mean you are entirely responsible for your own education. We provide videos (when they load), text (when it's not garbled), and quizzes (that accept any answer). Good luck.
+        </div>
+
+        <div id="elearning-player" class="elearning-player">
+            <div class="elearning-header">
+                <span class="elearning-title">📺 PODI Course Player v0.1-alpha</span>
+                <span class="elearning-version" id="elearning-status">Not Started</span>
+            </div>
+            <div class="elearning-body">
+                <div class="elearning-video-area" id="elearning-video">
+                    <div class="elearning-video-placeholder">
+                        <span class="elearning-play-icon" id="elearning-play-btn" onclick="startELearning()">▶</span>
+                        <p>Click to begin your course</p>
+                    </div>
+                </div>
+
+                <div class="elearning-progress-wrap" id="elearning-progress-wrap" style="display:none;">
+                    <div class="elearning-progress-bar">
+                        <div class="elearning-progress-fill" id="elearning-progress-fill"></div>
+                    </div>
+                    <div class="elearning-progress-text" id="elearning-progress-text">Loading... 0%</div>
+                    <div class="elearning-progress-eta" id="elearning-progress-eta">Estimated time remaining: ∞</div>
+                </div>
+
+                <div class="elearning-content" id="elearning-content">
+                    <div class="elearning-module-list">
+                        <div class="elearning-module">
+                            <span class="module-icon">🔒</span>
+                            <div class="module-info">
+                                <span class="module-name">Module 1: What is Diving?</span>
+                                <span class="module-desc">An 8-minute introduction that asks more questions than it answers</span>
+                            </div>
+                        </div>
+                        <div class="elearning-module">
+                            <span class="module-icon">🔒</span>
+                            <div class="module-info">
+                                <span class="module-name">Module 2: Your Equipment (We Guess)</span>
+                                <span class="module-desc">A slideshow of gear we found on Craigslist</span>
+                            </div>
+                        </div>
+                        <div class="elearning-module">
+                            <span class="module-icon">🔒</span>
+                            <div class="module-info">
+                                <span class="module-name">Module 3: Breathing Underwater</span>
+                                <span class="module-desc">Theory only. Practice is your problem.</span>
+                            </div>
+                        </div>
+                        <div class="elearning-module">
+                            <span class="module-icon">🔒</span>
+                            <div class="module-info">
+                                <span class="module-name">Module 4: Equalization (Or: Pain Management)</span>
+                                <span class="module-desc">Kyle's personal technique: "just push through it"</span>
+                            </div>
+                        </div>
+                        <div class="elearning-module">
+                            <span class="module-icon">🔒</span>
+                            <div class="module-info">
+                                <span class="module-name">Module 5: Emergency Procedures</span>
+                                <span class="module-desc">Step 1: Don't panic. Step 2: ...that's it. That's the module.</span>
+                            </div>
+                        </div>
+                        <div class="elearning-module">
+                            <span class="module-icon">🔒</span>
+                            <div class="module-info">
+                                <span class="module-name">Module 6: Final Exam</span>
+                                <span class="module-desc">A 3-question quiz. All answers are "C." Every question.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="elearning-footer">
+                <span>Course progress is not saved (we don't know how)</span>
+            </div>
+        </div>
+
+        <div class="elearning-warning">
+            <h3>⚠ System Requirements</h3>
+            <ul>
+                <li>A device that connects to the internet (WiFi recommended, semaphore accepted)</li>
+                <li>A browser that supports HTML5 (we tested on Internet Explorer 8 and it "kinda worked")</li>
+                <li>Patience. Lots of patience. The loading screen is not a joke.</li>
+                <li>An optimistic outlook on technology's ability to function correctly</li>
+            </ul>
+        </div>
+
+        <div id="podi-tips"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 PODI &mdash; Professional Organization of Dangerously Incompetent Divers</p>
+        <p>PODI eLearning is not a substitute for actual training. It's barely a substitute for anything.</p>
+        <p class="footer-disclaimer">No students have successfully completed PODI eLearning. The module completion button has never been clicked.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery - PODI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="warning-banner">⚠ PODI PHOTOGRAPHS HAVE BEEN DIGITALLY ALTERED TO LOOK LESS TERRIBLE ⚠</div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🤿⚠️</div>
+            <div class="logo-text">
+                <h1>P.O.D.I.</h1>
+                <p class="tagline">Professional Organization of Dangerously Incompetent Divers</p>
+                <p class="danger-rating">GALLERY: <span style="color:#ff4444;">"BLURRY"</span> &mdash; All photos taken on a GoPro that's been through a wash cycle</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">Our Team</a>
+        <a href="courses.html">Courses</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="shop.html">Shop</a>
+        <a href="gallery.html" class="active">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="elearning.html">eLearning</a>
+        <a href="complaints.html">Complaints</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <main>
+        <div class="hero" style="background-image: url('https://unsplash.com/photos/xP_nsBz5xXA/download?force=true');">
+            <h2>PODI <span style="color:#ffcc00;">Photo</span> Gallery</h2>
+            <p>A curated collection of our best underwater photography. "Best" is doing a lot of work here.</p>
+            <p style="color:#888; font-size:14px; margin-top:10px;">Click any photo to see why we're not photographers.</p>
+        </div>
+
+        <div class="gallery-filters">
+            <button class="gallery-filter active" data-filter="all" onclick="filterGallery('all', this)">All</button>
+            <button class="gallery-filter" data-filter="students" onclick="filterGallery('students', this)">Students</button>
+            <button class="gallery-filter" data-filter="marine" onclick="filterGallery('marine', this)">Marine Life</button>
+            <button class="gallery-filter" data-filter="equipment" onclick="filterGallery('equipment', this)">Equipment</button>
+            <button class="gallery-filter" data-filter="team" onclick="filterGallery('team', this)">Team</button>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid">
+            <div class="gallery-item" data-category="students" onclick="openGallery(this)" style="background-image: url('https://unsplash.com/photos/BseIlEH6TZA/download?force=true');">
+                <div class="gallery-bg" style="background-image: url('https://unsplash.com/photos/BseIlEH6TZA/download?force=true');"></div>
+                <div class="gallery-info">
+                    <div class="gallery-caption">"Perfect Buoyancy" — Student demonstrating advanced fin technique (note the fin is not attached)</div>
+                    <div class="gallery-date">March 2026</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="marine" onclick="openGallery(this)" style="background-image: url('https://unsplash.com/photos/jz0OTTASGb8/download?force=true');">
+                <div class="gallery-bg" style="background-image: url('https://unsplash.com/photos/jz0OTTASGb8/download?force=true');"></div>
+                <div class="gallery-info">
+                    <div class="gallery-caption">"Local Marine Life" — A fish. It's a fish. We don't know what kind. Frank from accounting says it's a grouper.</div>
+                    <div class="gallery-date">February 2026</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="equipment" onclick="openGallery(this)" style="background-image: url('https://unsplash.com/photos/XXYEWf9oLRM/download?force=true');">
+                <div class="gallery-bg" style="background-image: url('https://unsplash.com/photos/XXYEWf9oLRM/download?force=true');"></div>
+                <div class="gallery-info">
+                    <div class="gallery-caption">"Bubble Check" — Instructor demonstrating proper bubble technique. Those are not bubbles, that's a free-flowing regulator.</div>
+                    <div class="gallery-date">January 2026</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="students" onclick="openGallery(this)" style="background-image: url('https://unsplash.com/photos/fkNaUP7iXYY/download?force=true');">
+                <div class="gallery-bg" style="background-image: url('https://unsplash.com/photos/fkNaUP7iXYY/download?force=true');"></div>
+                <div class="gallery-info">
+                    <div class="gallery-caption">"Crystal Clear Visibility" — Estimated 3 meters visibility. Photo taken at 2 meters. You do the math.</div>
+                    <div class="gallery-date">December 2025</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="team" onclick="openGallery(this)" style="background-image: url('https://unsplash.com/photos/3Zzsk2MG2AI/download?force=true');">
+                <div class="gallery-bg" style="background-image: url('https://unsplash.com/photos/3Zzsk2MG2AI/download?force=true');"></div>
+                <div class="gallery-info">
+                    <div class="gallery-caption">"Tiffany's Famous Selfie" — 47,000 followers and this is the only underwater photo she's ever taken. Regulator not in mouth for "aesthetic."</div>
+                    <div class="gallery-date">November 2025</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="marine" onclick="openGallery(this)" style="background-image: url('https://unsplash.com/photos/G60mOWxONCE/download?force=true');">
+                <div class="gallery-bg" style="background-image: url('https://unsplash.com/photos/G60mOWxONCE/download?force=true');"></div>
+                <div class="gallery-info">
+                    <div class="gallery-caption">"Rare Cephalopod Sighting" — It's an old glove. But it COULD have been an octopus. We're choosing to believe.</div>
+                    <div class="gallery-date">October 2025</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="students" onclick="openGallery(this)" style="background-image: url('https://unsplash.com/photos/sampOrYRePY/download?force=true');">
+                <div class="gallery-bg" style="background-image: url('https://unsplash.com/photos/sampOrYRePY/download?force=true');"></div>
+                <div class="gallery-info">
+                    <div class="gallery-caption">"First Open Water Dive" — Student entering the water. Note: the weight belt is around their neck. Instructor said it was "fine."</div>
+                    <div class="gallery-date">September 2025</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="equipment" style="background-image: url('https://unsplash.com/photos/9JAenkGvc40/download?force=true');">
+                <div class="gallery-bg" style="background-image: url('https://unsplash.com/photos/9JAenkGvc40/download?force=true');"></div>
+                <div class="gallery-info">
+                    <div class="gallery-caption">"Gary's Workshop" — Gary's "repair station" featuring a hammer, a wrench, and a tube of super glue. That's all he uses.</div>
+                    <div class="gallery-date">August 2025</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="team" style="background-image: url('https://unsplash.com/photos/TiIgfGnQS-w/download?force=true');">
+                <div class="gallery-bg" style="background-image: url('https://unsplash.com/photos/TiIgfGnQS-w/download?force=true');"></div>
+                <div class="gallery-info">
+                    <div class="gallery-caption">"The S.S. Liability" — Our dive boat. Note the "Check Engine" light on the console. It has been on since 2019. Skip says it's "fine."</div>
+                    <div class="gallery-date">July 2025</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="marine" style="background-image: url('https://unsplash.com/photos/5VuLCwvZCQU/download?force=true');">
+                <div class="gallery-bg" style="background-image: url('https://unsplash.com/photos/5VuLCwvZCQU/download?force=true');"></div>
+                <div class="gallery-info">
+                    <div class="gallery-caption">"Vibrant Coral Reef" — This is a sponge. From Kyle's kitchen sink. He said it was "from a dive trip." We don't believe him.</div>
+                    <div class="gallery-date">June 2025</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="students" style="background-image: url('https://unsplash.com/photos/JCWfp4rrn4E/download?force=true');">
+                <div class="gallery-bg" style="background-image: url('https://unsplash.com/photos/JCWfp4rrn4E/download?force=true');"></div>
+                <div class="gallery-info">
+                    <div class="gallery-caption">"Pool Training Session" — The pool with the "No Diving" sign in the background. We dive there every session. The sign is for "decoration."</div>
+                    <div class="gallery-date">May 2025</div>
+                </div>
+            </div>
+            <div class="gallery-item" data-category="equipment" style="background-image: url('https://unsplash.com/photos/Vil9bvJG80Y/download?force=true');">
+                <div class="gallery-bg" style="background-image: url('https://unsplash.com/photos/Vil9bvJG80Y/download?force=true');"></div>
+                <div class="gallery-info">
+                    <div class="gallery-caption">"Emergency Oxygen Kit" — It's a bucket. It says "O2" on it in sharpie. It contains a half-empty water bottle and an old snorkel.</div>
+                    <div class="gallery-date">April 2025</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="gallery-modal" class="gallery-modal" onclick="closeGalleryModal()">
+            <div class="gallery-modal-content">
+                <span class="gallery-modal-close" onclick="closeGalleryModal()">&times;</span>
+                <div class="gallery-modal-bg" id="gallery-modal-bg"></div>
+                <div class="gallery-modal-text">
+                    <div class="gallery-modal-caption" id="gallery-modal-caption"></div>
+                    <div class="gallery-modal-date" id="gallery-modal-date"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="podi-tips"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 PODI &mdash; Professional Organization of Dangerously Incompetent Divers</p>
+        <p>All gallery photos are real. They aren't. But we wish they were. Except the sponge. That's actually Kyle's sink sponge.</p>
+        <p class="footer-disclaimer">No marine life was harmed in the making of these photos. Several students were mildly inconvenienced.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
