@@ -12,15 +12,26 @@
         airPressure: 3000,
         ndl: 99,
         temp: 27,
+        maxDepth: 0,
+        diveTime: 0,
+        ascentSpeed: 0,
         decoWarning: false,
         lowAirWarning: false,
+        lowAirLocked: false,
         decoLocked: false,
+        sosMode: false,
         running: false,
+        initialized: false,
         interval: null,
         depthHistory: [],
         maxHistory: 30,
+        scrollHandler: null,
+        resizeHandler: null,
 
         init: function() {
+            if (this.initialized) return;
+            this.initialized = true;
+
             this.createWidget();
             this.running = true;
             var self = this;
@@ -29,14 +40,23 @@
                 self.depthHistory.push(0);
             }
 
-            window.addEventListener('scroll', function() {
+            self.scrollHandler = function() {
                 if (!self.running) return;
                 var scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
                 if (scrollPercent < 0) scrollPercent = 0;
                 if (scrollPercent > 1) scrollPercent = 1;
                 self.depth = Math.round(scrollPercent * 68);
+                if (self.depth > self.maxDepth) {
+                    self.maxDepth = self.depth;
+                }
                 self.updateDisplay();
-            });
+            };
+            window.addEventListener('scroll', self.scrollHandler);
+
+            self.resizeHandler = function() {
+                if (self.running) self.drawGraph();
+            };
+            window.addEventListener('resize', self.resizeHandler);
 
             this.interval = setInterval(function() {
                 if (!self.running) return;
@@ -45,6 +65,8 @@
                 if (self.depthHistory.length > self.maxHistory) {
                     self.depthHistory.shift();
                 }
+
+                self.diveTime += 2;
 
                 var depthFactor = 1;
                 if (self.depth > 30) { depthFactor = 5; }
@@ -71,7 +93,6 @@
                 }
 
                 self.decoWarning = self.decoLocked || (self.depth > 30 && Math.random() < 0.4);
-                self.lowAirWarning = self.airPressure < 500 && self.lowAirWarning !== 'stuck';
 
                 var airDrop = Math.round((15 + Math.random() * 30) * (depthFactor || 0.5));
                 self.airPressure -= airDrop;
@@ -80,13 +101,13 @@
                 }
                 if (self.airPressure > 3500) self.airPressure = 3500;
                 if (self.airPressure < 0) self.airPressure = 0;
-                if (self.airPressure === 0) {
-                    self.lowAirWarning = 'stuck';
-                }
 
-                if (self.lowAirWarning === 'stuck') {
-                    self.lowAirWarning = true;
+                if (self.airPressure < 500) {
+                    self.lowAirLocked = true;
                 }
+                self.lowAirWarning = self.lowAirLocked;
+
+                self.ascentSpeed = Math.round((Math.random() * 15 + 5) * (1 + self.depth / 50) * 10) / 10;
 
                 self.temp += Math.round((Math.random() * 6 - 3) * 10) / 10;
                 if (self.temp > 35) self.temp = 35;
@@ -111,13 +132,29 @@
             widget.innerHTML =
                 '<div class="computer-header">' +
                     '<span class="computer-title">🤿 PODI DIVE COMPUTER</span>' +
-                    '<span class="computer-model">v0.4-deep"GRAPH"</span>' +
+                    '<span class="computer-model">v0.5-beta"BUGGY"</span>' +
+                    '<span class="computer-close" id="comp-close">✕</span>' +
                 '</div>' +
                 '<div class="computer-body">' +
                     '<div class="computer-reading">' +
                         '<span class="computer-label">DEPTH</span>' +
                         '<span class="computer-value" id="comp-depth">0</span>' +
                         '<span class="computer-unit">m</span>' +
+                    '</div>' +
+                    '<div class="computer-reading">' +
+                        '<span class="computer-label">MAX</span>' +
+                        '<span class="computer-value" id="comp-maxdepth">0</span>' +
+                        '<span class="computer-unit">m</span>' +
+                    '</div>' +
+                    '<div class="computer-reading">' +
+                        '<span class="computer-label">TIME</span>' +
+                        '<span class="computer-value" id="comp-time">00:00</span>' +
+                        '<span class="computer-unit"></span>' +
+                    '</div>' +
+                    '<div class="computer-reading">' +
+                        '<span class="computer-label">ASCENT</span>' +
+                        '<span class="computer-value" id="comp-ascent">0</span>' +
+                        '<span class="computer-unit">m/min</span>' +
                     '</div>' +
                     '<div class="computer-reading">' +
                         '<span class="computer-label">TANK</span>' +
@@ -138,9 +175,10 @@
                         '<div class="computer-warning deco-warning" id="comp-deco">⚠ DECO STOP</div>' +
                         '<div class="computer-warning low-warning" id="comp-lowair">🚨 LOW AIR</div>' +
                         '<div class="computer-warning error-warning" id="comp-error">⚠ CAL ERROR</div>' +
+                        '<div class="computer-warning sos-warning" id="comp-sos">SOS ACTIVE</div>' +
                     '</div>' +
                     '<div class="computer-graph-wrap">' +
-                        '<canvas id="comp-graph" width="176" height="72"></canvas>' +
+                        '<canvas id="comp-graph"></canvas>' +
                         '<div class="graph-depth-label">70m</div>' +
                     '</div>' +
                     '<div class="computer-battery">' +
@@ -149,19 +187,47 @@
                     '</div>' +
                 '</div>';
             document.body.appendChild(widget);
+
+            var self = this;
+            var closeBtn = document.getElementById('comp-close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    self.destroy();
+                });
+            }
+
+            var header = document.querySelector('.computer-header');
+            if (header) {
+                header.addEventListener('click', function() {
+                    self.toggleSOS();
+                });
+                header.style.cursor = 'pointer';
+            }
         },
 
         updateDisplay: function() {
             var depthEl = document.getElementById('comp-depth');
+            var maxDepthEl = document.getElementById('comp-maxdepth');
+            var timeEl = document.getElementById('comp-time');
+            var ascentEl = document.getElementById('comp-ascent');
             var airEl = document.getElementById('comp-air');
             var ndlEl = document.getElementById('comp-ndl');
             var tempEl = document.getElementById('comp-temp');
             var decoEl = document.getElementById('comp-deco');
             var lowEl = document.getElementById('comp-lowair');
+            var sosEl = document.getElementById('comp-sos');
 
             if (depthEl) depthEl.textContent = this.depth;
+            if (maxDepthEl) maxDepthEl.textContent = this.maxDepth;
+            if (timeEl) {
+                var mins = Math.floor(this.diveTime / 60);
+                var secs = this.diveTime % 60;
+                timeEl.textContent = (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+            }
+            if (ascentEl) ascentEl.textContent = this.ascentSpeed;
             if (airEl) airEl.textContent = this.airPressure;
-            if (ndlEl) ndlEl.textContent = this.ndl < 0 ? '0' : this.ndl;
+            if (ndlEl) ndlEl.textContent = this.ndl;
             if (tempEl) tempEl.textContent = this.temp;
 
             if (decoEl) {
@@ -169,6 +235,9 @@
             }
             if (lowEl) {
                 lowEl.style.display = this.lowAirWarning ? 'block' : 'none';
+            }
+            if (sosEl) {
+                sosEl.style.display = this.sosMode ? 'block' : 'none';
             }
 
             this.updateBattery();
@@ -178,9 +247,14 @@
             var canvas = document.getElementById('comp-graph');
             if (!canvas) return;
             var ctx = canvas.getContext('2d');
-            var w = canvas.width;
-            var h = canvas.height;
+            var w = canvas.clientWidth || 172;
+            var h = Math.round(w * 0.41) || 70;
+            if (canvas.width !== w || canvas.height !== h) {
+                canvas.width = w;
+                canvas.height = h;
+            }
             var data = this.depthHistory;
+            var maxDepthDisp = 70;
 
             ctx.clearRect(0, 0, w, h);
 
@@ -194,21 +268,20 @@
                 ctx.stroke();
             }
 
+            if (data.length < 2) return;
+
             ctx.strokeStyle = '#00ff00';
             ctx.lineWidth = 1.5;
             ctx.shadowColor = '#00ff00';
             ctx.shadowBlur = 3;
             ctx.beginPath();
-            var started = false;
-            var maxDepthDisp = 70;
             for (var i = 0; i < data.length; i++) {
                 var x = Math.round((i / (data.length - 1)) * (w - 4)) + 2;
                 var depthVal = data[i];
                 if (depthVal > maxDepthDisp) depthVal = maxDepthDisp;
                 var y = Math.round((depthVal / maxDepthDisp) * (h - 4)) + 2;
-                if (!started) {
+                if (i === 0) {
                     ctx.moveTo(x, y);
-                    started = true;
                 } else {
                     ctx.lineTo(x, y);
                 }
@@ -216,12 +289,13 @@
             ctx.stroke();
             ctx.shadowBlur = 0;
 
-            var fillColor = this.depth > 0 ? 'rgba(0, 255, 0, 0.08)' : 'transparent';
-            if (fillColor !== 'transparent') {
-                ctx.fillStyle = fillColor;
-                ctx.lineTo(Math.round(((data.length - 1) / (data.length - 1)) * (w - 4)) + 2, h);
+            if (this.depth > 0) {
+                var lastIdx = data.length - 1;
+                var endX = Math.round((lastIdx / (data.length - 1)) * (w - 4)) + 2;
+                ctx.lineTo(endX, h);
                 ctx.lineTo(2, h);
                 ctx.closePath();
+                ctx.fillStyle = 'rgba(0, 255, 0, 0.08)';
                 ctx.fill();
             }
 
@@ -268,9 +342,27 @@
             }, 2000);
         },
 
+        toggleSOS: function() {
+            this.sosMode = !this.sosMode;
+            var sosEl = document.getElementById('comp-sos');
+            if (sosEl) {
+                sosEl.style.display = this.sosMode ? 'block' : 'none';
+            }
+            var widget = document.getElementById('podi-computer');
+            if (!widget) return;
+            if (this.sosMode) {
+                widget.classList.add('computer-sos');
+            } else {
+                widget.classList.remove('computer-sos');
+            }
+        },
+
         destroy: function() {
             this.running = false;
+            this.initialized = false;
             if (this.interval) clearInterval(this.interval);
+            if (this.scrollHandler) window.removeEventListener('scroll', this.scrollHandler);
+            if (this.resizeHandler) window.removeEventListener('resize', this.resizeHandler);
             var widget = document.getElementById('podi-computer');
             if (widget) widget.remove();
         }
@@ -616,7 +708,7 @@
 
         var levelNames = {
             'open-water': 'Open Water Diver',
-            'advanced': 'Advanced Open Water Diver',
+            'advanced': 'Advanced Open Water',
             'rescue': 'Rescue Diver',
             'divemaster': 'Divemaster',
             'master': 'Master Diver',
@@ -627,7 +719,7 @@
         var allCourses = [
             { name: 'Bubblemaker (Pool Session)', status: 'COMPLETED' },
             { name: 'Open Water Diver', status: 'COMPLETED' },
-            { name: 'Advanced Open Water Diver', status: 'COMPLETED' },
+            { name: 'Advanced Open Water', status: 'COMPLETED' },
             { name: 'Rescue Diver', status: 'COMPLETED' },
             { name: 'Divemaster', status: Math.random() > 0.5 ? 'COMPLETED' : 'IN PROGRESS' },
             { name: 'Master Diver', status: Math.random() > 0.7 ? 'COMPLETED' : 'PENDING' },
@@ -636,6 +728,7 @@
             { name: 'Cave Diver (One Way)', status: Math.random() > 0.6 ? 'COMPLETED' : 'PENDING' },
             { name: 'Underwater Photography', status: 'COMPLETED' },
             { name: 'Night Diver', status: 'COMPLETED' },
+            { name: 'Ice Diver', status: 'COMPLETED' },
             { name: 'Drift Diver', status: 'COMPLETED' },
             { name: 'Shark Diver (Bait)', status: Math.random() > 0.8 ? 'COMPLETED' : 'PENDING' },
             { name: 'Search & Recovery (Lost & Found)', status: 'COMPLETED' },

@@ -1,6 +1,6 @@
 /* PODI - Professional Organization of Dangerously Incompetent Divers
    Dark navy theme with Unsplash background images.
-   Inspired by PADI & NAUI professional dive agency styling. */
+   Inspired by professional dive agency styling. */
 
 * {
     margin: 0;
@@ -15,19 +15,29 @@
     --navy-mid: #0f2240;
     --navy-light: #132a4a;
     --accent: #ff6600;
+    --accent-dark: #cc4400;
+    --accent-hover: #ff8800;
+    --accent-hover-dark: #dd5500;
     --accent-glow: rgba(255, 102, 0, 0.3);
     --gold: #ffcc00;
-    --text-primary: #c8d6e5;
-    --text-secondary: #8899aa;
-    --text-muted: #5a6a7a;
+    --text-white: #ffffff;
+    --text-primary: #d0dce8;
+    --text-secondary: #aabbcc;
+    --text-muted: #99aabb;
     --card-bg: rgba(11, 26, 51, 0.88);
     --card-border: rgba(255, 255, 255, 0.06);
     --input-bg: rgba(255, 255, 255, 0.05);
     --input-border: rgba(255, 255, 255, 0.12);
+    --shadow-hover: rgba(0, 0, 0, 0.3);
+    --shadow-focus: rgba(255, 102, 0, 0.15);
     --success: #00a86b;
     --danger: #e74c3c;
     --warning-bg: #2a1f00;
     --warning-border: #ffcc00;
+}
+
+html {
+    overflow-x: hidden;
 }
 
 body {
@@ -36,7 +46,14 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     min-height: 100vh;
+    overflow-x: hidden;
 }
+
+/* Fix poor contrast of inline muted text on dark backgrounds */
+[style*="color:#888"] { color: var(--text-secondary) !important; }
+[style*="color: #888"] { color: var(--text-secondary) !important; }
+[style*="color:#666"] { color: var(--text-secondary) !important; }
+[style*="color: #666"] { color: var(--text-secondary) !important; }
 
 /* ============================================================
    WARNING BANNER
@@ -49,7 +66,7 @@ body {
     font-size: 12px;
     font-weight: bold;
     letter-spacing: 1px;
-    border-bottom: 2px solid #ffcc00;
+    border-bottom: 2px solid var(--gold);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -93,7 +110,7 @@ header::after {
 }
 
 .logo-text h1 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 36px;
     letter-spacing: 6px;
     font-weight: 800;
@@ -141,13 +158,13 @@ nav a {
 }
 
 nav a:hover {
-    color: #ffffff;
+    color: var(--text-white);
     background: rgba(255, 255, 255, 0.04);
     border-bottom-color: var(--accent);
 }
 
 nav a.active {
-    color: #ffffff;
+    color: var(--text-white);
     border-bottom-color: var(--accent);
     background: rgba(255, 102, 0, 0.08);
 }
@@ -191,7 +208,7 @@ main {
 .hero h2 {
     position: relative;
     z-index: 2;
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 34px;
     font-weight: 800;
     margin-bottom: 15px;
@@ -244,8 +261,8 @@ main {
    ============================================================ */
 .cta-button {
     display: inline-block;
-    background: linear-gradient(135deg, var(--accent) 0%, #cc4400 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: var(--text-white);
     padding: 16px 40px;
     border-radius: 8px;
     text-decoration: none;
@@ -266,7 +283,7 @@ main {
 }
 
 .cta-button:hover {
-    background: linear-gradient(135deg, #ff8800 0%, #dd5500 100%);
+    background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-hover-dark) 100%);
     box-shadow: 0 6px 25px rgba(255, 102, 0, 0.5);
     transform: translateY(-2px);
 }
@@ -293,7 +310,7 @@ main {
 .feature-card:hover {
     border-color: var(--accent);
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 30px var(--shadow-hover);
 }
 
 .feature-card .icon {
@@ -302,14 +319,14 @@ main {
 }
 
 .feature-card h3 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 10px;
 }
 
 .feature-card p {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     font-size: 14px;
     line-height: 1.6;
 }
@@ -318,7 +335,7 @@ main {
    SECTION TITLES
    ============================================================ */
 .section-title {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 28px;
     font-weight: 800;
     text-align: center;
@@ -363,7 +380,7 @@ main {
 }
 
 .testimonial .author {
-    color: #ffffff;
+    color: var(--text-white);
     font-weight: bold;
     font-size: 14px;
 }
@@ -397,7 +414,7 @@ main {
 .team-member:hover {
     border-color: var(--accent);
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 30px var(--shadow-hover);
 }
 
 .team-member .member-icon {
@@ -407,7 +424,7 @@ main {
 }
 
 .team-member h3 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 4px;
@@ -423,7 +440,7 @@ main {
 }
 
 .team-member .bio {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     font-size: 13px;
     line-height: 1.6;
 }
@@ -431,7 +448,7 @@ main {
 .team-member .flag {
     display: inline-block;
     background: var(--danger);
-    color: #ffffff;
+    color: var(--text-white);
     padding: 3px 10px;
     border-radius: 4px;
     font-size: 10px;
@@ -461,7 +478,7 @@ main {
 
 .course-card:hover {
     border-color: var(--accent);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 30px var(--shadow-hover);
 }
 
 .course-card .course-icon {
@@ -469,23 +486,23 @@ main {
 }
 
 .course-card .course-info h3 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 6px;
 }
 
 .course-card .course-info p {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     font-size: 14px;
     line-height: 1.5;
 }
 
 .course-card .course-info .course-overview {
-    color: var(--text-muted);
-    font-size: 13px;
+    color: var(--text-primary);
+    font-size: 14px;
     margin-top: 6px;
-    font-style: italic;
+    line-height: 1.6;
 }
 
 .course-card .course-price {
@@ -506,7 +523,7 @@ main {
 
 .course-card .badge {
     background: var(--danger);
-    color: #ffffff;
+    color: var(--text-white);
     padding: 3px 10px;
     border-radius: 4px;
     font-size: 10px;
@@ -586,18 +603,18 @@ main {
 .cert-card:hover {
     border-color: var(--accent);
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 30px var(--shadow-hover);
 }
 
 .cert-card h3 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 8px;
 }
 
 .cert-card .cert-desc {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     font-size: 13px;
     line-height: 1.5;
     margin-bottom: 10px;
@@ -675,12 +692,12 @@ main {
 
 .pricing-tier.featured {
     border-color: var(--accent);
-    box-shadow: 0 8px 30px rgba(255, 102, 0, 0.15);
+    box-shadow: 0 8px 30px var(--shadow-focus);
     transform: scale(1.03);
 }
 
 .pricing-tier h3 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 10px;
@@ -733,7 +750,7 @@ main {
     background: var(--input-bg);
     border: 1px solid var(--input-border);
     border-radius: 8px;
-    color: #ffffff;
+    color: var(--text-white);
     font-family: inherit;
     font-size: 14px;
     transition: border-color 0.2s;
@@ -744,7 +761,7 @@ main {
 .contact-form select:focus {
     border-color: var(--accent);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.15);
+    box-shadow: 0 0 0 3px var(--shadow-focus);
 }
 
 .contact-form label {
@@ -763,8 +780,8 @@ main {
 .contact-form button {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, var(--accent) 0%, #cc4400 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: var(--text-white);
     border: none;
     border-radius: 8px;
     font-size: 15px;
@@ -777,7 +794,7 @@ main {
 }
 
 .contact-form button:hover {
-    background: linear-gradient(135deg, #ff8800 0%, #dd5500 100%);
+    background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-hover-dark) 100%);
     box-shadow: 0 4px 15px var(--accent-glow);
 }
 
@@ -841,16 +858,21 @@ main {
     51%, 100% { opacity: 0; }
 }
 
+@keyframes safety-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+}
+
 .safety-violation {
     display: inline-block;
     background: var(--danger);
-    color: #ffffff;
+    color: var(--text-white);
     padding: 4px 12px;
     border-radius: 4px;
     font-size: 11px;
     font-weight: bold;
     letter-spacing: 1px;
-    animation: blink 1s infinite;
+    animation: safety-pulse 3s ease-in-out infinite;
 }
 
 /* ============================================================
@@ -875,6 +897,12 @@ main {
     border-color: #ff0000;
     box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
     animation: glitch 0.1s infinite alternate;
+}
+
+#podi-computer.computer-sos {
+    border-color: #ff00ff;
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.5), 0 0 60px rgba(255, 0, 255, 0.2);
+    animation: sos-blink 0.5s infinite alternate;
 }
 
 @keyframes glitch {
@@ -904,6 +932,26 @@ main {
 .computer-model {
     color: #00aa00;
     font-size: 8px;
+}
+
+.computer-close {
+    color: #00aa00;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 6px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: rgba(0, 255, 0, 0.05);
+    border: 1px solid rgba(0, 255, 0, 0.15);
+    transition: all 0.2s;
+    line-height: 1;
+    user-select: none;
+}
+
+.computer-close:hover {
+    color: #ff0000;
+    background: rgba(255, 0, 0, 0.2);
+    border-color: rgba(255, 0, 0, 0.4);
 }
 
 .computer-body {
@@ -957,6 +1005,12 @@ main {
     100% { opacity: 0.3; }
 }
 
+@keyframes sos-blink {
+    0% { opacity: 1; background: #220022; }
+    50% { opacity: 1; background: #440044; }
+    100% { opacity: 0.3; background: #220022; }
+}
+
 .deco-warning {
     background: #330000;
     color: #ff0000;
@@ -973,6 +1027,13 @@ main {
     background: #222200;
     color: #ffff00;
     border: 1px solid #ffff00;
+}
+
+.sos-warning {
+    background: #220022;
+    color: #ff00ff;
+    border: 1px solid #ff00ff;
+    animation: sos-blink 0.3s infinite alternate;
 }
 
 .computer-graph-wrap {
@@ -1049,7 +1110,7 @@ main {
 }
 
 .cert-generator h3 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 20px;
@@ -1072,7 +1133,7 @@ main {
     background: var(--input-bg);
     border: 1px solid var(--input-border);
     border-radius: 8px;
-    color: #ffffff;
+    color: var(--text-white);
     font-family: inherit;
     font-size: 14px;
 }
@@ -1081,14 +1142,14 @@ main {
 .cert-generator select:focus {
     border-color: var(--accent);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.15);
+    box-shadow: 0 0 0 3px var(--shadow-focus);
 }
 
 .cert-generator button {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, var(--accent) 0%, #cc4400 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: var(--text-white);
     border: none;
     border-radius: 8px;
     font-size: 15px;
@@ -1101,7 +1162,7 @@ main {
 }
 
 .cert-generator button:hover {
-    background: linear-gradient(135deg, #ff8800 0%, #dd5500 100%);
+    background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-hover-dark) 100%);
     box-shadow: 0 4px 15px var(--accent-glow);
 }
 
@@ -1220,7 +1281,7 @@ main {
 }
 
 .risk-tool h3 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 5px;
@@ -1287,8 +1348,8 @@ main {
 .risk-tool button {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, var(--accent) 0%, #cc4400 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: var(--text-white);
     border: none;
     border-radius: 8px;
     font-size: 15px;
@@ -1300,7 +1361,7 @@ main {
 }
 
 .risk-tool button:hover {
-    background: linear-gradient(135deg, #ff8800 0%, #dd5500 100%);
+    background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-hover-dark) 100%);
     box-shadow: 0 4px 15px var(--accent-glow);
 }
 
@@ -1415,12 +1476,12 @@ main {
 }
 
 .cookie-text strong {
-    color: #ffffff;
+    color: var(--text-white);
 }
 
 .cookie-btn {
     background: var(--accent);
-    color: #ffffff;
+    color: var(--text-white);
     border: none;
     padding: 10px 25px;
     border-radius: 8px;
@@ -1434,7 +1495,7 @@ main {
 }
 
 .cookie-btn:hover {
-    background: #ff8800;
+    background: var(--accent-hover);
     transform: scale(1.05);
 }
 
@@ -1462,7 +1523,7 @@ main {
     background: var(--input-bg);
     border: 1px solid var(--input-border);
     border-radius: 8px;
-    color: #ffffff;
+    color: var(--text-white);
     font-family: 'Courier New', 'Consolas', monospace;
     font-size: 14px;
 }
@@ -1470,13 +1531,13 @@ main {
 .verify-input-group input:focus {
     border-color: var(--accent);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.15);
+    box-shadow: 0 0 0 3px var(--shadow-focus);
 }
 
 .verify-input-group button {
     padding: 12px 24px;
     background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
-    color: #ffffff;
+    color: var(--text-white);
     border: none;
     border-radius: 8px;
     font-weight: bold;
@@ -1519,7 +1580,7 @@ main {
 .verify-result-card .verify-badge {
     display: inline-block;
     background: var(--success);
-    color: #ffffff;
+    color: var(--text-white);
     padding: 4px 16px;
     border-radius: 20px;
     font-weight: bold;
@@ -1711,12 +1772,12 @@ main {
 .insurance-card:hover {
     border-color: var(--accent);
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 30px var(--shadow-hover);
 }
 
 .insurance-card.featured {
     border-color: var(--accent);
-    box-shadow: 0 8px 30px rgba(255, 102, 0, 0.15);
+    box-shadow: 0 8px 30px var(--shadow-focus);
     transform: scale(1.03);
 }
 
@@ -1763,8 +1824,8 @@ main {
 .insurance-btn {
     width: 100%;
     padding: 12px;
-    background: linear-gradient(135deg, var(--accent) 0%, #cc4400 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: var(--text-white);
     border: none;
     border-radius: 8px;
     font-size: 14px;
@@ -1776,7 +1837,7 @@ main {
 }
 
 .insurance-btn:hover {
-    background: linear-gradient(135deg, #ff8800 0%, #dd5500 100%);
+    background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-hover-dark) 100%);
     box-shadow: 0 4px 15px var(--accent-glow);
 }
 
@@ -1809,7 +1870,7 @@ main {
 
 .dad-modal {
     background: linear-gradient(180deg, #0a1628 0%, #0f2240 100%);
-    border: 2px solid #ff6600;
+    border: 2px solid var(--accent);
     border-radius: 16px;
     max-width: 540px;
     width: 100%;
@@ -1834,12 +1895,12 @@ main {
 .dad-logo {
     font-size: 22px;
     font-weight: 800;
-    color: #ffcc00;
+    color: var(--gold);
     letter-spacing: 1px;
 }
 
 .dad-tagline {
-    color: #8899aa;
+    color: var(--text-secondary);
     font-size: 13px;
     margin-top: 5px;
     font-style: italic;
@@ -1847,7 +1908,7 @@ main {
 
 .dad-step-indicator {
     text-align: center;
-    color: #5a6a7a;
+    color: var(--text-muted);
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -1860,7 +1921,7 @@ main {
 }
 
 .dad-body h3 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 10px;
@@ -1868,7 +1929,7 @@ main {
 }
 
 .dad-body p {
-    color: #c8d6e5;
+    color: var(--text-primary);
     font-size: 14px;
     line-height: 1.6;
     margin-bottom: 10px;
@@ -1888,7 +1949,7 @@ main {
     justify-content: space-between;
     padding: 6px 0;
     font-size: 13px;
-    color: #c8d6e5;
+    color: var(--text-primary);
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
@@ -1897,7 +1958,7 @@ main {
 }
 
 .dad-policy-label {
-    color: #8899aa;
+    color: var(--text-secondary);
     font-weight: 600;
 }
 
@@ -1911,7 +1972,7 @@ main {
     gap: 10px;
     padding: 7px 0;
     font-size: 13px;
-    color: #c8d6e5;
+    color: var(--text-primary);
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     line-height: 1.5;
 }
@@ -1924,10 +1985,10 @@ main {
 
 .dad-legal {
     background: rgba(42, 31, 0, 0.3);
-    border: 1px solid #ffcc00;
+    border: 1px solid var(--gold);
     border-radius: 8px;
     padding: 12px;
-    color: #ffcc00;
+    color: var(--gold);
     font-size: 11px;
     line-height: 1.5;
     margin-top: 15px;
@@ -1935,7 +1996,7 @@ main {
 }
 
 .dad-body label {
-    color: #ffcc00;
+    color: var(--gold);
     font-size: 13px;
     font-weight: 600;
     display: block;
@@ -1951,7 +2012,7 @@ main {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 8px;
-    color: #ffffff;
+    color: var(--text-white);
     font-family: inherit;
     font-size: 13px;
 }
@@ -1959,13 +2020,13 @@ main {
 .dad-body input:focus,
 .dad-body select:focus,
 .dad-body textarea:focus {
-    border-color: #ff6600;
+    border-color: var(--accent);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.15);
+    box-shadow: 0 0 0 3px var(--shadow-focus);
 }
 
 .dad-claim-disclaimer {
-    color: #5a6a7a;
+    color: var(--text-muted);
     font-size: 10px;
     font-style: italic;
     margin-top: 10px;
@@ -1994,23 +2055,23 @@ main {
 }
 
 .dad-btn-next, .dad-btn-submit {
-    background: linear-gradient(135deg, #ff6600 0%, #cc4400 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: var(--text-white);
 }
 
 .dad-btn-next:hover, .dad-btn-submit:hover {
-    background: linear-gradient(135deg, #ff8800 0%, #dd5500 100%);
+    background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-hover-dark) 100%);
     box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
 }
 
 .dad-btn-back {
     background: rgba(255, 255, 255, 0.08);
-    color: #8899aa;
+    color: var(--text-secondary);
 }
 
 .dad-btn-back:hover {
     background: rgba(255, 255, 255, 0.12);
-    color: #ffffff;
+    color: var(--text-white);
 }
 
 .dad-btn-close {
@@ -2025,7 +2086,7 @@ main {
 
 .dad-denial {
     background: rgba(80, 0, 0, 0.3);
-    border: 2px solid #e74c3c;
+    border: 2px solid var(--danger);
     border-radius: 12px;
     padding: 20px;
     text-align: center;
@@ -2039,7 +2100,7 @@ main {
 }
 
 .dad-denial-header {
-    color: #e74c3c;
+    color: var(--danger);
     font-size: 20px;
     font-weight: 800;
     letter-spacing: 3px;
@@ -2047,7 +2108,7 @@ main {
 }
 
 .dad-denial-body {
-    color: #c8d6e5;
+    color: var(--text-primary);
     font-size: 13px;
     line-height: 1.7;
 }
@@ -2056,7 +2117,7 @@ main {
     margin-top: 15px;
     padding-top: 12px;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
-    color: #5a6a7a;
+    color: var(--text-muted);
     font-size: 12px;
     line-height: 1.6;
 }
@@ -2185,7 +2246,7 @@ footer .footer-disclaimer {
 }
 
 .conditions-title {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -2213,7 +2274,7 @@ footer .footer-disclaimer {
 }
 
 .conditions-location-group label {
-    color: #8899aa;
+    color: var(--text-secondary);
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
@@ -2228,21 +2289,21 @@ footer .footer-disclaimer {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 8px;
-    color: #ffffff;
+    color: var(--text-white);
     font-family: inherit;
     font-size: 14px;
     cursor: pointer;
 }
 
 .conditions-location-group select:focus {
-    border-color: #ff6600;
+    border-color: var(--accent);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.15);
+    box-shadow: 0 0 0 3px var(--shadow-focus);
 }
 
 .conditions-location-group select option {
     background: #0a1628;
-    color: #ffffff;
+    color: var(--text-white);
 }
 
 .conditions-grid {
@@ -2263,7 +2324,7 @@ footer .footer-disclaimer {
 }
 
 .condition-label {
-    color: #5a6a7a;
+    color: var(--text-muted);
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
@@ -2278,7 +2339,7 @@ footer .footer-disclaimer {
 }
 
 .condition-item:nth-child(5) .condition-value {
-    color: #ffcc00;
+    color: var(--gold);
 }
 
 .condition-item:nth-child(6) .condition-value {
@@ -2287,7 +2348,7 @@ footer .footer-disclaimer {
 
 .conditions-updated {
     text-align: center;
-    color: #5a6a7a;
+    color: var(--text-muted);
     font-size: 10px;
     font-style: italic;
     padding-top: 10px;
@@ -2698,7 +2759,7 @@ footer .footer-disclaimer {
 .shop-item:hover {
     border-color: var(--accent);
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 30px var(--shadow-hover);
 }
 
 .shop-item-icon {
@@ -2707,7 +2768,7 @@ footer .footer-disclaimer {
 }
 
 .shop-item h3 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 8px;
@@ -2738,8 +2799,8 @@ footer .footer-disclaimer {
 .shop-add-btn {
     width: 100%;
     padding: 12px;
-    background: linear-gradient(135deg, var(--accent) 0%, #cc4400 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: var(--text-white);
     border: none;
     border-radius: 8px;
     font-size: 14px;
@@ -2751,7 +2812,7 @@ footer .footer-disclaimer {
 }
 
 .shop-add-btn:hover {
-    background: linear-gradient(135deg, #ff8800 0%, #dd5500 100%);
+    background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-hover-dark) 100%);
     box-shadow: 0 4px 15px var(--accent-glow);
 }
 
@@ -2795,7 +2856,7 @@ footer .footer-disclaimer {
     border: 2px solid var(--accent);
     border-radius: 10px;
     padding: 15px 22px;
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 14px;
     z-index: 10000;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
@@ -2833,13 +2894,13 @@ footer .footer-disclaimer {
 
 .gallery-filter:hover {
     border-color: var(--accent);
-    color: #ffffff;
+    color: var(--text-white);
 }
 
 .gallery-filter.active {
     background: var(--accent);
     border-color: var(--accent);
-    color: #ffffff;
+    color: var(--text-white);
 }
 
 .gallery-grid {
@@ -2865,7 +2926,7 @@ footer .footer-disclaimer {
 .gallery-item:hover {
     border-color: var(--accent);
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 30px var(--shadow-hover);
 }
 
 .gallery-bg {
@@ -2874,6 +2935,7 @@ footer .footer-disclaimer {
     background-size: cover;
     background-position: center center;
     z-index: 0;
+    filter: blur(4px);
 }
 
 .gallery-item::after {
@@ -2904,7 +2966,7 @@ footer .footer-disclaimer {
 .gallery-item:hover {
     border-color: var(--accent);
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 30px var(--shadow-hover);
 }
 
 .gallery-thumb {
@@ -2956,7 +3018,7 @@ footer .footer-disclaimer {
     position: absolute;
     top: 12px;
     right: 18px;
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 32px;
     cursor: pointer;
     transition: color 0.2s;
@@ -3030,7 +3092,7 @@ footer .footer-disclaimer {
 }
 
 .blog-post-header h3 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 18px;
     font-weight: 700;
     width: calc(100% - 30px);
@@ -3113,7 +3175,7 @@ footer .footer-disclaimer {
 }
 
 .blog-newsletter h3 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 18px;
     margin-bottom: 8px;
 }
@@ -3132,7 +3194,7 @@ footer .footer-disclaimer {
     background: var(--input-bg);
     border: 1px solid var(--input-border);
     border-radius: 8px;
-    color: #ffffff;
+    color: var(--text-white);
     font-family: inherit;
     font-size: 14px;
     margin-bottom: 10px;
@@ -3141,13 +3203,13 @@ footer .footer-disclaimer {
 .blog-newsletter input:focus {
     border-color: var(--accent);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.15);
+    box-shadow: 0 0 0 3px var(--shadow-focus);
 }
 
 .blog-newsletter button {
     padding: 12px 30px;
-    background: linear-gradient(135deg, var(--accent) 0%, #cc4400 100%);
-    color: #ffffff;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: var(--text-white);
     border: none;
     border-radius: 8px;
     font-size: 14px;
@@ -3161,7 +3223,7 @@ footer .footer-disclaimer {
 }
 
 .blog-newsletter button:hover {
-    background: linear-gradient(135deg, #ff8800 0%, #dd5500 100%);
+    background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-hover-dark) 100%);
     box-shadow: 0 4px 15px var(--accent-glow);
 }
 
@@ -3194,14 +3256,14 @@ footer .footer-disclaimer {
 }
 
 .elearning-title {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 1px;
 }
 
 .elearning-version {
-    color: #00aaaa;
+    color: #22cccc;
     font-size: 10px;
     font-family: 'Courier New', 'Consolas', monospace;
 }
@@ -3221,7 +3283,7 @@ footer .footer-disclaimer {
 
 .elearning-video-placeholder {
     text-align: center;
-    color: #555;
+    color: #888;
     cursor: pointer;
     padding: 40px 20px;
 }
@@ -3262,13 +3324,13 @@ footer .footer-disclaimer {
 }
 
 .elearning-progress-text {
-    color: #00aaaa;
+    color: #22cccc;
     font-size: 12px;
     font-family: 'Courier New', 'Consolas', monospace;
 }
 
 .elearning-progress-eta {
-    color: #555;
+    color: #888;
     font-size: 10px;
     font-style: italic;
     font-family: 'Courier New', 'Consolas', monospace;
@@ -3313,7 +3375,7 @@ footer .footer-disclaimer {
 }
 
 .module-name {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 13px;
     font-weight: 600;
     display: block;
@@ -3421,7 +3483,7 @@ footer .footer-disclaimer {
 }
 
 .complaint-form h3 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 20px;
     font-weight: 700;
     margin-bottom: 5px;
@@ -3456,7 +3518,7 @@ footer .footer-disclaimer {
     background: var(--input-bg);
     border: 1px solid var(--input-border);
     border-radius: 8px;
-    color: #ffffff;
+    color: var(--text-white);
     font-family: inherit;
     font-size: 14px;
 }
@@ -3466,14 +3528,14 @@ footer .footer-disclaimer {
 .complaint-form select:focus {
     border-color: var(--accent);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.15);
+    box-shadow: 0 0 0 3px var(--shadow-focus);
 }
 
 .complaint-form button {
     width: 100%;
     padding: 14px;
     background: linear-gradient(135deg, var(--danger) 0%, #992222 100%);
-    color: #ffffff;
+    color: var(--text-white);
     border: none;
     border-radius: 8px;
     font-size: 15px;
@@ -3536,7 +3598,7 @@ footer .footer-disclaimer {
 }
 
 .complaint-faq h3 {
-    color: #ffffff;
+    color: var(--text-white);
     font-size: 20px;
     text-align: center;
     margin-bottom: 20px;
