@@ -9,8 +9,6 @@ PODI is a parody brand. The voice should feel like a wildly overconfident operat
 - Mock the system, the process, and the fake expertise.
 - Keep the joke bigger than the thing being described.
 - Treat bureaucracy, standards, and paperwork as punchlines.
-- Prefer concrete danger bits over abstract menace.
-- The funniest line is often a specific unsafe detail stated with total confidence.
 
 ## Tone Targets
 - Edgy
@@ -45,9 +43,6 @@ PODI is a parody brand. The voice should feel like a wildly overconfident operat
 - Bureaucratic nonsense: forms, waivers, records, verification, policy.
 - Fake competence: specific details delivered with total confidence.
 - Deadpan contrast: extremely serious wording around obviously stupid ideas.
-- Random danger bits: a precise, absurd hazard dropped into an otherwise coherent setup.
-- Examples: the wrong boat, the broken regulator, the unmarked hole, the storm drain, the compressor that sounds illegal.
-- Ambient weirdness: incident logs, status ribbons, and other tiny operational failures that make the whole site feel unstable.
 
 ## Language Patterns
 Use:

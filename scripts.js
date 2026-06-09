@@ -19,7 +19,6 @@
         lowAirWarning: false,
         lowAirLocked: false,
         decoLocked: false,
-        decoUpsellShown: false,
         sosMode: false,
         running: false,
         initialized: false,
@@ -91,10 +90,6 @@
 
                 if (self.ndl <= 0) {
                     self.decoLocked = true;
-                    if (!self.decoUpsellShown) {
-                        self.decoUpsellShown = true;
-                        alert('PODI PREMIUM DECO EXPERIENCE\n\nYou have exceeded your No-Decompression Limit. Decompression diving is a premium experience and has been added to your account.\n\nCharge: $49.99\n\nThis pricing model was inspired by watches that make you subscribe to the ocean.');
-                    }
                 }
 
                 self.decoWarning = self.decoLocked || (self.depth > 30 && Math.random() < 0.4);
@@ -416,35 +411,6 @@
 
         showNextTip();
         setInterval(showNextTip, 7000);
-    }
-
-    var incidentMessages = [
-        'Main compressor is making a new sound. We are monitoring it with confidence.',
-        'The spare regulator has entered witness protection again.',
-        'Skip has promoted himself to Captain Emeritus without telling the coast guard.',
-        'Today\'s paperwork: four waivers, one apology, zero inspections.',
-        'The anchor line has been described as "emotionally unstable."',
-        'We have located the boat. The boat has not located us.',
-        'The emergency oxygen kit is being used as a storage box.',
-        'Someone put the wrong fins on the charter and called it variety.',
-        'The compressor room is technically ventilated.',
-        'A student reported the boat ladder as "less of a ladder, more of a suggestion."'
-    ];
-
-    function initIncidentRibbon() {
-        var banner = document.querySelector('.warning-banner');
-        if (!banner || document.getElementById('podi-incident-ribbon')) return;
-
-        var ribbon = document.createElement('div');
-        ribbon.id = 'podi-incident-ribbon';
-        ribbon.className = 'podi-incident-ribbon';
-
-        var message = incidentMessages[Math.floor(Math.random() * incidentMessages.length)];
-        ribbon.innerHTML =
-            '<span class="podi-incident-label">INCIDENT LOG</span>' +
-            '<span class="podi-incident-message">' + message + '</span>';
-
-        banner.insertAdjacentElement('afterend', ribbon);
     }
 
     // ============================================================
@@ -1452,7 +1418,6 @@
         }
 
         initDiveTips();
-        initIncidentRibbon();
         initCertGenerator();
         initRiskTool();
         initCookieConsent();
