@@ -396,13 +396,6 @@
         'Dive computers are just expensive watches. Tell time and send it.',
         'If your ears hurt, you\'re not trying hard enough. Equalize with authority.',
         'Anchor lines are a suggestion. Swimming back to the boat builds resilience.',
-        'That beeping means your computer is working. Ignore it until it stops.',
-        'You still have air until you can\'t breathe. Check your SPG if you want to be disappointed.',
-        'Your computer\'s alarm is just white noise after minute 15. Learn to love it.',
-        'Running your tank to zero is called "maximum utilization." Be efficient.',
-        'If your computer starts screaming, you\'re diving correctly.',
-        'Never surface with air in your tank. That\'s money you left on the bottom.',
-        'The low-air warning is a suggestion. You decide when the tank is empty.',
     ];
 
     function initDiveTips() {
@@ -603,8 +596,6 @@
                 'Kyle says you\'re doing great. Keep scrolling.',
                 'We\'ve logged your consent. We\'ll never reference it again.',
                 'Fun fact: PODI stands for "Please Obtain Diving Insurance." We didn\'t.',
-                'That alert sound? That\'s your computer telling you it cares. We don\'t.',
-                'Your tank is probably empty. Have you checked? We haven\'t.',
             ];
             console.log('%c🍪 PODI COOKIE:', 'color: #ff6600; font-weight: bold', tips[Math.floor(Math.random() * tips.length)]);
 
@@ -1046,10 +1037,6 @@
                         'you didn\'t use the secret handshake when submitting',
                         'claim form notarized in the wrong font',
                         'DAD Insurance is not a real insurance company',
-                        'you ignored your computer\'s warnings (we have telemetry)',
-                        'your tank was below 500 PSI at time of incident (negligent efficiency)',
-                        'you heard the beeping and chose adventure over self-preservation',
-                        'your computer logged 47 minutes of continuous alarm state before the incident',
                     ];
                     var reason = denialReasons[Math.floor(Math.random() * denialReasons.length)];
 
@@ -1110,12 +1097,10 @@
 
         var verdicts = [
             'Hell No', 'Absolutely Not', 'Maybe Tomorrow (No)',
-            'Dive at your own risk (don\'t)',
+            'Dive at your own risk (don\'t)', 'Kelvin says no',
             'Conditions Marginal (he\'s being polite)',
             'Would Not Recommend', 'Check Back in July (it\'s January)',
-            'Kelvin is eating lunch, ask later',
-            'Computer says no (literally, it\'s beeping)',
-            'Your tank is not full enough. We checked. It\'s our fault. Still your problem.',
+            'Kelvin is eating lunch, ask later'
         ];
 
         var siteSpecificViz = {
