@@ -890,7 +890,7 @@ main {
     font-family: 'Courier New', 'Consolas', monospace;
     box-shadow: 0 0 20px rgba(0, 255, 0, 0.15), 0 0 5px rgba(0, 255, 0, 0.1);
     transition: all 0.3s;
-    overflow: hidden;
+    overflow: visible;
 }
 
 #podi-computer.computer-glitch {
@@ -935,23 +935,34 @@ main {
 }
 
 .computer-close {
-    color: #00aa00;
-    font-size: 14px;
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    z-index: 2;
+    color: var(--text-white);
+    font-size: 24px;
+    font-weight: 800;
     cursor: pointer;
-    margin-left: 6px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    background: rgba(0, 255, 0, 0.05);
-    border: 1px solid rgba(0, 255, 0, 0.15);
-    transition: all 0.2s;
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #d90000;
+    border: 3px solid var(--text-white);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.45), 0 0 12px rgba(255, 0, 0, 0.45);
+    transition: color 0.2s, background 0.2s, border-color 0.2s, transform 0.2s;
     line-height: 1;
+    touch-action: manipulation;
     user-select: none;
 }
 
 .computer-close:hover {
-    color: #ff0000;
-    background: rgba(255, 0, 0, 0.2);
-    border-color: rgba(255, 0, 0, 0.4);
+    color: var(--text-white);
+    background: #ff0000;
+    border-color: var(--text-white);
+    transform: scale(1.08);
 }
 
 .computer-body {
@@ -2390,7 +2401,15 @@ footer .footer-disclaimer {
     #podi-computer {
         width: 150px;
         bottom: 10px;
-        right: 10px;
+        right: 18px;
+    }
+
+    .computer-close {
+        top: -14px;
+        right: -14px;
+        width: 44px;
+        height: 44px;
+        font-size: 24px;
     }
 
     .computer-value {
@@ -2706,6 +2725,15 @@ footer .footer-disclaimer {
 
     #podi-computer {
         width: 130px;
+        right: 18px;
+    }
+
+    .computer-close {
+        top: -14px;
+        right: -14px;
+        width: 44px;
+        height: 44px;
+        font-size: 24px;
     }
 
     .computer-value {
