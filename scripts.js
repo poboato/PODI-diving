@@ -567,22 +567,22 @@
     }
 
     // ============================================================
-    // 5. COOKIE CONSENT PARODY (bonus, small)
+    // 5. COOKIE BANNER (there may be cookies)
     // ============================================================
-    function initCookieConsent() {
-        if (localStorage.getItem('podi_cookies')) return;
-
+    function initCookieBanner() {
         var banner = document.createElement('div');
         banner.id = 'podi-cookie-banner';
         banner.innerHTML =
             '<div class="cookie-content">' +
                 '<div class="cookie-icon">🍪</div>' +
                 '<div class="cookie-text">' +
-                    '<strong>This site uses cookies.</strong> Not for functionality. Not for analytics. ' +
-                    'Just because every website has a cookie banner and we wanted to fit in. ' +
-                    'We also use your data to send Kyle\'s newsletter (unsolicited).' +
+                    '<strong>There may be cookies.</strong> ' +
+                    'We don\'t really know. Kyle\'s nephew set up the analytics and he\'s ' +
+                    'since moved to Arizona. If you see a cookie, eat it. ' +
+                    'If you don\'t, stop worrying about it. This banner is for vibes only.' +
                 '</div>' +
-                '<button class="cookie-btn" id="cookie-accept">I Consent (You Have No Choice)</button>' +
+                '<button class="cookie-btn cookie-btn-dismiss" id="cookie-ok">OK</button>' +
+                '<button class="cookie-btn cookie-btn-alt" id="cookie-alt">OK But Sadder</button>' +
             '</div>';
         document.body.appendChild(banner);
 
@@ -590,19 +590,13 @@
             banner.classList.add('cookie-show');
         }, 1500);
 
-        document.getElementById('cookie-accept').addEventListener('click', function() {
-            var tips = [
-                'Remember: the ocean is just spicy water.',
-                'Kyle says you\'re doing great. Keep scrolling.',
-                'We\'ve logged your consent. We\'ll never reference it again.',
-                'Fun fact: PODI stands for "Please Obtain Diving Insurance." We didn\'t.',
-            ];
-            console.log('%c🍪 PODI COOKIE:', 'color: #ff6600; font-weight: bold', tips[Math.floor(Math.random() * tips.length)]);
-
-            localStorage.setItem('podi_cookies', 'consented');
+        function dismissBanner() {
             banner.classList.remove('cookie-show');
             setTimeout(function() { banner.remove(); }, 300);
-        });
+        }
+
+        document.getElementById('cookie-ok').addEventListener('click', dismissBanner);
+        document.getElementById('cookie-alt').addEventListener('click', dismissBanner);
     }
 
     // ============================================================
@@ -1420,7 +1414,7 @@
         initDiveTips();
         initCertGenerator();
         initRiskTool();
-        initCookieConsent();
+        initCookieBanner();
         initCertVerification();
         initPermanentRecord();
         initLostCard();

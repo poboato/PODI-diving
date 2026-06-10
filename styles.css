@@ -1480,9 +1480,6 @@ main {
 }
 
 .cookie-btn {
-    background: var(--accent);
-    color: var(--text-white);
-    border: none;
     padding: 10px 25px;
     border-radius: 8px;
     font-weight: bold;
@@ -1492,10 +1489,28 @@ main {
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.3s;
+    border: none;
 }
 
-.cookie-btn:hover {
+.cookie-btn-dismiss {
+    background: var(--accent);
+    color: var(--text-white);
+}
+
+.cookie-btn-dismiss:hover {
     background: var(--accent-hover);
+    transform: scale(1.05);
+}
+
+.cookie-btn-alt {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--card-border);
+}
+
+.cookie-btn-alt:hover {
+    color: var(--text-primary);
+    border-color: var(--accent);
     transform: scale(1.05);
 }
 
@@ -2866,6 +2881,187 @@ footer .footer-disclaimer {
 @keyframes shop-notif-in {
     0% { transform: translateX(100px); opacity: 0; }
     100% { transform: translateX(0); opacity: 1; }
+}
+
+/* Shop category headers */
+.shop-category-header {
+    max-width: 900px;
+    margin: 35px auto 15px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.shop-badge-cat {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 4px;
+}
+
+.shop-category-sub {
+    color: var(--text-muted);
+    font-size: 13px;
+    font-style: italic;
+}
+
+/* Product badges */
+.shop-item-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    z-index: 2;
+    text-transform: uppercase;
+}
+
+.shop-item-badge.bestseller {
+    background: #ff6600;
+    color: #fff;
+}
+
+.shop-item-badge.new {
+    background: #00a86b;
+    color: #fff;
+}
+
+.shop-item-badge.limited {
+    background: #8b5cf6;
+    color: #fff;
+}
+
+.shop-item {
+    position: relative;
+}
+
+/* Star ratings */
+.shop-stars {
+    color: var(--gold);
+    font-size: 13px;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.shop-rating-count {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0;
+}
+
+/* Compare-at pricing */
+.shop-compare {
+    color: var(--text-muted);
+    font-size: 16px;
+    text-decoration: line-through;
+    margin-right: 6px;
+}
+
+/* Stock indicators */
+.shop-stock {
+    font-size: 11px;
+    margin-bottom: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: rgba(0, 168, 107, 0.1);
+    color: var(--success);
+}
+
+.shop-stock:empty {
+    display: none;
+}
+
+.shop-stock[style*="⚠"] {
+    background: rgba(255, 204, 0, 0.1);
+    color: var(--gold);
+}
+
+/* Reviews section */
+.shop-reviews-section {
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.shop-reviews-section h2 {
+    color: var(--text-white);
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.shop-reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.shop-review-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 18px;
+}
+
+.shop-review-stars {
+    color: var(--gold);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.shop-review-text {
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.shop-review-author {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+.shop-review-badge {
+    color: var(--success);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Trust bar */
+.shop-trust-bar {
+    max-width: 900px;
+    margin: 0 auto 30px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px 30px;
+    padding: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+}
+
+.shop-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.shop-trust-icon {
+    font-size: 16px;
 }
 
 /* ============================================================
