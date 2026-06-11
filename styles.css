@@ -939,7 +939,7 @@ main {
     top: -16px;
     right: -16px;
     z-index: 2;
-    color: var(--text-white);
+    color: #000000;
     font-size: 24px;
     font-weight: 800;
     cursor: pointer;
@@ -949,9 +949,9 @@ main {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: #d90000;
-    border: 3px solid var(--text-white);
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.45), 0 0 12px rgba(255, 0, 0, 0.45);
+    background: var(--text-white);
+    border: 3px solid #000000;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.45), 0 0 10px rgba(255, 255, 255, 0.35);
     transition: color 0.2s, background 0.2s, border-color 0.2s, transform 0.2s;
     line-height: 1;
     touch-action: manipulation;
@@ -959,9 +959,9 @@ main {
 }
 
 .computer-close:hover {
-    color: var(--text-white);
-    background: #ff0000;
-    border-color: var(--text-white);
+    color: #000000;
+    background: #f0f0f0;
+    border-color: #000000;
     transform: scale(1.08);
 }
 
