@@ -1441,24 +1441,13 @@
     // ============================================================
     function init() {
         console.log('%c🤿 PODI Scripts Loaded', 'color: #ff6600; font-size: 16px; font-weight: bold');
-        console.log('%c⚠ This website is a parody. Any functioning code is purely accidental.', 'color: #ff4444;');
 
-        // Only init dive computer on pages with significant scrolling
-        var currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        var pagesWithComputer = ['index.html', 'courses.html', 'technical.html', 'charter.html', 'gallery.html', 'shop.html'];
-        if (pagesWithComputer.indexOf(currentPage) !== -1 && !document.getElementById('podi-computer')) {
-            diveComputer.init();
-        }
-
-        initDiveTips();
+        // Phase 1: Lightweight — event listeners only (runs before paint)
         initCertGenerator();
         initRiskTool();
-        initCookieBanner();
         initCertVerification();
-        initPermanentRecord();
         initLostCard();
         initInsuranceModals();
-        initConditionsReport();
         initComplaints();
 
         // Event delegation for shop
@@ -1523,6 +1512,20 @@
         if (elearningBtn) {
             elearningBtn.addEventListener('click', startELearning);
         }
+
+        // Phase 2: Heavy work — defer DOM creation to after first paint
+        requestAnimationFrame(function() {
+            var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            var pagesWithComputer = ['index.html', 'courses.html', 'technical.html', 'charter.html', 'gallery.html', 'shop.html'];
+            if (pagesWithComputer.indexOf(currentPage) !== -1 && !document.getElementById('podi-computer')) {
+                diveComputer.init();
+            }
+
+            initDiveTips();
+            initCookieBanner();
+            initPermanentRecord();
+            initConditionsReport();
+        });
     }
 
     if (document.readyState === 'loading') {
