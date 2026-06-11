@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PODI - Professional Organization of Dangerously Incompetent Divers</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preload" as="image" href="images/numwIW6i8Iw.jpg">
     <style>
         .blink { animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
@@ -56,7 +57,7 @@
     </div>
 
     <main>
-        <div class="hero" style="background-image: url('https://unsplash.com/photos/numwIW6i8Iw/download?force=true');">
+        <div class="hero" style="background-image: url('images/numwIW6i8Iw.jpg');">
             <h2>Dive Into <span style="color:#ffcc00;">Reckless</span> Abandon!</h2>
             <p>Welcome to PODI &mdash; where we turn your survival instincts into a suggestion.</p>
             <p style="font-size:14px; color:#888; margin-bottom:20px;">
@@ -92,7 +93,7 @@
             If you're reading this, you've already consented. Check our <a href="certifications.html" style="color:#ff6600;">Certifications page</a> for fine print.
         </div>
 
-        <div class="section-image-bg" style="background-image: url('https://unsplash.com/photos/I3aulGco9_0/download?force=true');">
+        <div class="section-image-bg" style="background-image: url('images/I3aulGco9_0.jpg');">
         <h2 class="section-title">Why Choose <span>PODI</span>?</h2>
 
         <div class="features">
@@ -129,7 +130,7 @@
         </div>
         </div>
 
-        <div class="section-image-bg" style="background-image: url('https://unsplash.com/photos/4AADxUsnufQ/download?force=true');">
+        <div class="section-image-bg" style="background-image: url('images/4AADxUsnufQ.jpg');">
         <h2 class="section-title">What Our "Students" <span>Say</span></h2>
 
         <div class="testimonials">
@@ -215,28 +216,28 @@
                         <span>Diving Experience</span>
                         <span class="risk-value-display" id="risk-exp-val">5</span>
                     </label>
-                    <input type="range" id="risk-experience" min="1" max="10" value="5" oninput="document.getElementById('risk-exp-val').textContent=this.value">
+                    <input type="range" id="risk-experience" min="1" max="10" value="5">
                 </div>
                 <div class="risk-slider-group">
                     <label>
                         <span>Physical Fitness</span>
                         <span class="risk-value-display" id="risk-fit-val">5</span>
                     </label>
-                    <input type="range" id="risk-fitness" min="1" max="10" value="5" oninput="document.getElementById('risk-fit-val').textContent=this.value">
+                    <input type="range" id="risk-fitness" min="1" max="10" value="5">
                 </div>
                 <div class="risk-slider-group">
                     <label>
                         <span>Sobriety (Current)</span>
                         <span class="risk-value-display" id="risk-sob-val">5</span>
                     </label>
-                    <input type="range" id="risk-sobriety" min="1" max="10" value="5" oninput="document.getElementById('risk-sob-val').textContent=this.value">
+                    <input type="range" id="risk-sobriety" min="1" max="10" value="5">
                 </div>
                 <div class="risk-slider-group">
                     <label>
                         <span>Overconfidence</span>
                         <span class="risk-value-display" id="risk-cou-val">5</span>
                     </label>
-                    <input type="range" id="risk-courage" min="1" max="10" value="5" oninput="document.getElementById('risk-cou-val').textContent=this.value">
+                    <input type="range" id="risk-courage" min="1" max="10" value="5">
                 </div>
                 <button type="submit">Assess My Risk</button>
             </form>
@@ -265,6 +266,6 @@
         <p class="footer-disclaimer">SSI, NAUI, and BSAC have all asked us to "cease and desist." We framed the letters.</p>
     </footer>
 
-    <script src="scripts.js"></script>
+    <script defer src="scripts.js"></script>
 </body>
 </html>

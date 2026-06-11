@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PODI Gear Shop — Merch for the Chronically Aquatic</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preload" as="image" href="images/X5OAZLGCBCU.jpg">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-R6084CBP7Y"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -43,7 +44,7 @@
     </nav>
 
     <main>
-        <div class="hero" style="background-image: url('https://unsplash.com/photos/X5OAZLGCBCU/download?force=true');">
+        <div class="hero" style="background-image: url('images/X5OAZLGCBCU.jpg');">
             <h2>PODI <span style="color:#ffcc00;">Gear</span> Shop</h2>
             <p>Premium merchandise for people who want everyone to know they make questionable life choices.</p>
             <p style="color:#888; font-size:14px; margin-top:10px;">Our shirts are 100% cotton (60% of the time). We accept your money, your pride, and nothing else.</p>
@@ -70,7 +71,7 @@
                 <p class="shop-price"><span class="shop-compare">$39.99</span> $29.99</p>
                 <p class="shop-fineprint">Available in "Diver Navy" and "Caution Orange" &bull; 🇨🇳 Imported</p>
                 <p class="shop-stock">⚠️ Only 4 left in Medium — Kyle keeps borrowing the stock for "laundry"</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
 
             <div class="shop-item" data-product="I Survived PODI Tee">
@@ -81,7 +82,7 @@
                 <p class="shop-price"><span class="shop-compare">$44.99</span> $34.99</p>
                 <p class="shop-fineprint">Includes free rubber bracelet that says "SEND IT" &bull; Fits true to "maybe"</p>
                 <p class="shop-stock">✅ In Stock — We printed 5,000 because nobody learns</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
 
             <div class="shop-item" data-product="Master Diver Hoodie">
@@ -93,7 +94,7 @@
                 <p class="shop-price"><span class="shop-compare">$69.99</span> $54.99</p>
                 <p class="shop-fineprint">Hood strings not tested for tensile strength &bull; May pill (like your dive career)</p>
                 <p class="shop-stock">✅ In Stock — 847 units warming shelves nationwide</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
 
             <div class="shop-item" data-product="PODI Signature Speedo">
@@ -105,7 +106,7 @@
                 <p class="shop-price"><span class="shop-compare">$49.99</span> $39.99</p>
                 <p class="shop-fineprint">90% polyester, 10% courage &bull; Hand wash, hang dry, never explain</p>
                 <p class="shop-stock">⚠️ Low Stock — Kyle keeps "testing" the inventory</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
         </div>
 
@@ -124,7 +125,7 @@
                 <p class="shop-price"><span class="shop-compare">$14.99</span> $9.99</p>
                 <p class="shop-fineprint">Adhesive may outlast your dive career &bull; Not recommended for resale value of vehicle</p>
                 <p class="shop-stock">✅ In Stock — We own a sticker machine. We are unstoppable.</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
 
             <div class="shop-item" data-product="Dive Flag Patch">
@@ -135,7 +136,7 @@
                 <p class="shop-price"><span class="shop-compare">$10.99</span> $7.99</p>
                 <p class="shop-fineprint">Iron-on backing may melt your gear &bull; Hand-sewn by unsupervised interns</p>
                 <p class="shop-stock">✅ In Stock — 2,300 patches in a drawer somewhere</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
 
             <div class="shop-item" data-product="Okayest Diver Mug">
@@ -147,7 +148,7 @@
                 <p class="shop-price"><span class="shop-compare">$19.99</span> $14.99</p>
                 <p class="shop-fineprint">Not dishwasher safe. Not safe in general. &bull; Lead-free (probably)</p>
                 <p class="shop-stock">⚠️ Only 12 left — Ceramic kiln operator is "on a break"</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
 
             <div class="shop-item" data-product="PODI Air Freshener">
@@ -158,7 +159,7 @@
                 <p class="shop-price"><span class="shop-compare">$8.99</span> $5.99</p>
                 <p class="shop-fineprint">Scent lasts 2-3 business days &bull; Not tested on humans (tested on Kyle)</p>
                 <p class="shop-stock">✅ In Stock — 4,000 units. Please buy them. Our office reeks.</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
         </div>
 
@@ -177,7 +178,7 @@
                 <p class="shop-price"><span class="shop-compare">$24.99</span> $19.99</p>
                 <p class="shop-fineprint">Lamination may peel within 24 hours &bull; Not valid for anything, anywhere, ever</p>
                 <p class="shop-stock">✅ In Stock — We have a guy with a laminator. He's fast.</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
 
             <div class="shop-item" data-product="Surface Signal Whistle">
@@ -188,7 +189,7 @@
                 <p class="shop-price"><span class="shop-compare">$9.99</span> $5.99</p>
                 <p class="shop-fineprint">May attract sharks (they're curious about bad ideas) &bull; Kyle owns 17 boxes of these</p>
                 <p class="shop-stock">✅ In Stock — We are legally required to sell these until Kyle stops finding boxes</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
 
             <div class="shop-item" data-product="Limited Edition Poster">
@@ -200,7 +201,7 @@
                 <p class="shop-price"><span class="shop-compare">$34.99</span> $24.99</p>
                 <p class="shop-fineprint">Poster tube sold separately ($19.99 shipping) &bull; May arrive folded if Kyle packed it</p>
                 <p class="shop-stock">⚠️ "Almost sold out" — we say this to create urgency</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
 
             <div class="shop-item" data-product="PODI Dive Computer">
@@ -212,7 +213,7 @@
                 <p class="shop-price"><span class="shop-compare">$149.99</span> $29.99</p>
                 <p class="shop-fineprint">Not waterproof. Not a computer. Not a dive tool. It's a watch that lies.</p>
                 <p class="shop-stock">✅ In Stock — Kyle's garage is full of them. He can't park in there anymore.</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
         </div>
 
@@ -230,7 +231,7 @@
                 <p class="shop-price"><span class="shop-compare">$29.99</span> $12.99</p>
                 <p class="shop-fineprint">Digital download &bull; No refunds &bull; Kyle's spellcheck is off</p>
                 <p class="shop-stock">✅ In Stock — Infinite copies. Welcome to digital.</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
 
             <div class="shop-item" data-product="Zoom Background Pack">
@@ -241,7 +242,7 @@
                 <p class="shop-price"><span class="shop-compare">$19.99</span> $7.99</p>
                 <p class="shop-fineprint">480p resolution &bull; Includes 1 free bonus background of Kyle's cat</p>
                 <p class="shop-stock">✅ In Stock — Digital products. We can't run out. We tried.</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
         </div>
 
@@ -260,7 +261,7 @@
                 <p class="shop-price"><span class="shop-compare">"Priceless"</span> $14.99</p>
                 <p class="shop-fineprint">Contents may vary &bull; Not responsible for smells &bull; Kyle's DNA is not a allergen</p>
                 <p class="shop-stock">⚠️ Only 3 available — Kyle is "not ready to let go" of the others</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
 
             <div class="shop-item" data-product="PODI Beach Towel">
@@ -271,7 +272,7 @@
                 <p class="shop-price"><span class="shop-compare">$34.99</span> $22.99</p>
                 <p class="shop-fineprint">Not absorbent &bull; Colors run faster than Kyle from accountability</p>
                 <p class="shop-stock">✅ In Stock — 600 towels. They're not going anywhere. Neither is the water on them.</p>
-                <button class="shop-add-btn" onclick="addToCart(this)">Add to Cart</button>
+                <button class="shop-add-btn">Add to Cart</button>
             </div>
         </div>
 
@@ -345,6 +346,6 @@
         <p class="footer-disclaimer">By purchasing PODI merchandise, you agree that you now own a piece of PODI history. The history is not valuable. The merchandise is also not valuable. But it is yours now.</p>
     </footer>
 
-    <script src="scripts.js"></script>
+    <script defer src="scripts.js"></script>
 </body>
 </html>

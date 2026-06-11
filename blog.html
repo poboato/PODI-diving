@@ -45,7 +45,7 @@
     </nav>
 
     <main>
-        <div class="hero" style="background-image: url('https://unsplash.com/photos/RHM8Iiu2EWw/download?force=true');">
+        <div class="hero" style="background-image: url('images/RHM8Iiu2EWw.jpg');">
             <h2>PODI <span style="color:#ffcc00;">News</span> & Blog</h2>
             <p>Stay up to date with the latest PODI announcements, industry "news," and whatever Kyle felt like typing this week.</p>
             <p style="color:#888; font-size:14px; margin-top:10px;">New posts whenever we remember we have a website.</p>
@@ -53,7 +53,7 @@
 
         <div class="blog-list" id="blog-list">
             <article class="blog-post">
-                <div class="blog-post-header" onclick="toggleBlog(this)">
+                <div class="blog-post-header">
                     <h3>PODI Wins "Most Creative Liability Waiver" Award for 3rd Year Running</h3>
                     <div class="blog-meta">By Kyle McSplash &mdash; June 1, 2026</div>
                     <span class="blog-expand-indicator">+</span>
@@ -73,7 +73,7 @@
             </article>
 
             <article class="blog-post">
-                <div class="blog-post-header" onclick="toggleBlog(this)">
+                <div class="blog-post-header">
                     <h3>Local Man Survives PODI Course, Immediately Regrets It</h3>
                     <div class="blog-meta">By Tiffany Reef &mdash; May 15, 2026</div>
                     <span class="blog-expand-indicator">+</span>
@@ -88,7 +88,7 @@
             </article>
 
             <article class="blog-post">
-                <div class="blog-post-header" onclick="toggleBlog(this)">
+                <div class="blog-post-header">
                     <h3>Bubbles the Mannequin Promoted to Senior Divemaster</h3>
                     <div class="blog-meta">By PODI HR Department &mdash; April 28, 2026</div>
                     <span class="blog-expand-indicator">+</span>
@@ -103,7 +103,7 @@
             </article>
 
             <article class="blog-post">
-                <div class="blog-post-header" onclick="toggleBlog(this)">
+                <div class="blog-post-header">
                     <h3>Industry Alert: PODI Warns Divers About "Safety"</h3>
                     <div class="blog-meta">By Chad "No-Stop" Thunderson &mdash; April 10, 2026</div>
                     <span class="blog-expand-indicator">+</span>
@@ -122,7 +122,7 @@
             </article>
 
             <article class="blog-post">
-                <div class="blog-post-header" onclick="toggleBlog(this)">
+                <div class="blog-post-header">
                     <h3>PODI Announces New Partnership with "A Guy Who Knows a Guy"</h3>
                     <div class="blog-meta">By Kyle McSplash &mdash; March 22, 2026</div>
                     <span class="blog-expand-indicator">+</span>
@@ -139,7 +139,7 @@
         <div class="blog-newsletter">
             <h3>📬 Subscribe to Our Newsletter</h3>
             <p>Get the latest PODI news delivered to your inbox. We promise not to spam you. (We promise to try to spam you but we don't know how.)</p>
-            <form onsubmit="return newsletterSignup()">
+            <form id="newsletter-form">
                 <input type="email" id="newsletter-email" placeholder="your@email.com">
                 <button type="submit">Subscribe (Probably Won't Work)</button>
             </form>
@@ -155,6 +155,6 @@
         <p class="footer-disclaimer">PODI blog posts are written by staff who may or may not be literate. Reader discretion is advised.</p>
     </footer>
 
-    <script src="scripts.js"></script>
+    <script defer src="scripts.js"></script>
 </body>
 </html>

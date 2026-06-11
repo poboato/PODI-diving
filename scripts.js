@@ -42,14 +42,17 @@
 
             self.scrollHandler = function() {
                 if (!self.running) return;
-                var scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-                if (scrollPercent < 0) scrollPercent = 0;
-                if (scrollPercent > 1) scrollPercent = 1;
-                self.depth = Math.round(scrollPercent * 68);
-                if (self.depth > self.maxDepth) {
-                    self.maxDepth = self.depth;
-                }
-                self.updateDisplay();
+                if (self._scrollRaf) return;
+                self._scrollRaf = true;
+                requestAnimationFrame(function() {
+                    self._scrollRaf = false;
+                    var scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+                    if (scrollPercent < 0) scrollPercent = 0;
+                    if (scrollPercent > 1) scrollPercent = 1;
+                    self.depth = Math.round(scrollPercent * 68);
+                    if (self.depth > self.maxDepth) self.maxDepth = self.depth;
+                    self.updateDisplay();
+                });
             };
             window.addEventListener('scroll', self.scrollHandler);
 
@@ -410,7 +413,7 @@
         }
 
         showNextTip();
-        setInterval(showNextTip, 7000);
+        var _tipsInterval = setInterval(showNextTip, 7000);
     }
 
     // ============================================================
@@ -1145,7 +1148,18 @@
 
         updateConditions();
 
-        setInterval(updateConditions, 5000);
+        var _conditionsInterval = setInterval(updateConditions, 5000);
+
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                clearInterval(_conditionsInterval);
+                _conditionsInterval = null;
+            } else {
+                if (!_conditionsInterval) {
+                    _conditionsInterval = setInterval(updateConditions, 5000);
+                }
+            }
+        });
 
         if (siteSelect) {
             siteSelect.addEventListener('change', function() {
@@ -1160,7 +1174,7 @@
     // ============================================================
     var cartCount = 0;
 
-    window.addToCart = function(btn) {
+    function addToCart(btn) {
         cartCount++;
         var el = document.getElementById('shop-cart-count');
         if (el) el.textContent = '🛒 Cart (' + cartCount + ')';
@@ -1188,7 +1202,7 @@
     // ============================================================
     // 12. GALLERY — LIGHTBOX & FILTER
     // ============================================================
-    window.openGallery = function(el) {
+    function openGallery(el) {
         var caption = el.querySelector('.gallery-caption');
         var date = el.querySelector('.gallery-date');
         var modal = document.getElementById('gallery-modal');
@@ -1217,12 +1231,12 @@
         modal.classList.add('show');
     };
 
-    window.closeGalleryModal = function() {
+    function closeGalleryModal() {
         var modal = document.getElementById('gallery-modal');
         if (modal) modal.classList.remove('show');
     };
 
-    window.filterGallery = function(filter, btn) {
+    function filterGallery(filter, btn) {
         var items = document.querySelectorAll('.gallery-item');
         for (var i = 0; i < items.length; i++) {
             if (filter === 'all' || items[i].getAttribute('data-category') === filter) {
@@ -1241,7 +1255,7 @@
     // ============================================================
     // 13. BLOG — TOGGLE POSTS
     // ============================================================
-    window.toggleBlog = function(headerEl) {
+    function toggleBlog(headerEl) {
         var post = headerEl.closest('.blog-post');
         if (post) {
             post.classList.toggle('expanded');
@@ -1253,7 +1267,7 @@
     // ============================================================
     // 14. BLOG — NEWSLETTER SIGNUP
     // ============================================================
-    window.newsletterSignup = function() {
+    function newsletterSignup() {
         var email = document.getElementById('newsletter-email');
         var result = document.getElementById('newsletter-result');
         if (!result) return false;
@@ -1274,7 +1288,7 @@
     // ============================================================
     // 15. ELEARNING — INFINITE LOADING SIMULATION
     // ============================================================
-    window.startELearning = function() {
+    function startELearning() {
         var playBtn = document.getElementById('elearning-play-btn');
         var videoArea = document.getElementById('elearning-video');
         var progressWrap = document.getElementById('elearning-progress-wrap');
@@ -1401,13 +1415,38 @@
     }
 
     // ============================================================
+    // 17. CHARTER BOOKING
+    // ============================================================
+    function charterBooking() {
+        var form = document.getElementById('charter-form');
+        if (!form) return false;
+        var name = document.getElementById('charter-name');
+        var email = document.getElementById('charter-email');
+        var result = document.getElementById('charter-result');
+        if (result) {
+            result.innerHTML = '<div class="charter-result-card">' +
+                '<div class="charter-result-icon">📋</div>' +
+                '<div class="charter-result-header">Booking "Request" Received</div>' +
+                '<div class="charter-result-body">Thank you, ' + (name ? name.value : 'Valued Diver') + '! Your charter request has been "logged." We will "review" it and "get back to you." These quotes are doing a lot of work.</div>' +
+                '<div class="charter-result-footer">Fun fact: No PODI charter has ever actually departed. But we keep taking bookings!</div>' +
+            '</div>';
+        }
+        if (form) form.reset();
+        if (result) result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return false;
+    }
+
+    // ============================================================
     // INIT
     // ============================================================
     function init() {
         console.log('%c🤿 PODI Scripts Loaded', 'color: #ff6600; font-size: 16px; font-weight: bold');
         console.log('%c⚠ This website is a parody. Any functioning code is purely accidental.', 'color: #ff4444;');
 
-        if (!document.getElementById('podi-computer')) {
+        // Only init dive computer on pages with significant scrolling
+        var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        var pagesWithComputer = ['index.html', 'courses.html', 'technical.html', 'charter.html', 'gallery.html', 'shop.html'];
+        if (pagesWithComputer.indexOf(currentPage) !== -1 && !document.getElementById('podi-computer')) {
             diveComputer.init();
         }
 
@@ -1421,6 +1460,69 @@
         initInsuranceModals();
         initConditionsReport();
         initComplaints();
+
+        // Event delegation for shop
+        var shopGrid = document.querySelector('.shop-grid');
+        if (shopGrid) {
+            shopGrid.addEventListener('click', function(e) {
+                var btn = e.target.closest('.shop-add-btn');
+                if (btn) addToCart(btn);
+            });
+        }
+
+        // Event delegation for gallery
+        var galleryGrid = document.getElementById('gallery-grid');
+        if (galleryGrid) {
+            galleryGrid.addEventListener('click', function(e) {
+                var item = e.target.closest('.gallery-item');
+                if (item) openGallery(item);
+            });
+        }
+
+        var galleryModal = document.getElementById('gallery-modal');
+        if (galleryModal) {
+            galleryModal.addEventListener('click', function(e) {
+                if (e.target === galleryModal) closeGalleryModal();
+            });
+        }
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.gallery-modal-close')) closeGalleryModal();
+        });
+
+        var galleryFilters = document.querySelector('.gallery-filters');
+        if (galleryFilters) {
+            galleryFilters.addEventListener('click', function(e) {
+                var btn = e.target.closest('.gallery-filter');
+                if (btn) {
+                    var filter = btn.getAttribute('data-filter');
+                    if (filter) filterGallery(filter, btn);
+                }
+            });
+        }
+
+        // Event delegation for blog
+        var blogList = document.getElementById('blog-list');
+        if (blogList) {
+            blogList.addEventListener('click', function(e) {
+                var header = e.target.closest('.blog-post-header');
+                if (header) toggleBlog(header);
+            });
+        }
+
+        // Event delegation for newsletter
+        var newsletterForm = document.getElementById('newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                newsletterSignup();
+            });
+        }
+
+        // Event delegation for e-learning
+        var elearningBtn = document.getElementById('elearning-play-btn');
+        if (elearningBtn) {
+            elearningBtn.addEventListener('click', startELearning);
+        }
     }
 
     if (document.readyState === 'loading') {
