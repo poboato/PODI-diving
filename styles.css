@@ -3805,3 +3805,999 @@ footer .footer-disclaimer {
         font-size: 22px;
     }
 }
+
+/* ============================================================
+   REFER-A-FRIEND / REFERRAL PROGRAM
+   ============================================================ */
+.referral-banner {
+    max-width: 750px;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.referral-card {
+    background: linear-gradient(135deg, rgba(80, 0, 0, 0.4), rgba(40, 0, 0, 0.3));
+    border: 2px solid rgba(255, 68, 68, 0.3);
+    border-radius: 16px;
+    padding: 35px 30px;
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+}
+
+.referral-card::before {
+    content: "🎯";
+    position: absolute;
+    top: -20px;
+    right: -10px;
+    font-size: 100px;
+    opacity: 0.08;
+    transform: rotate(15deg);
+}
+
+.referral-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    color: #fff;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.referral-card h3 {
+    color: var(--text-white);
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.referral-card h3 span {
+    color: #ff4444;
+}
+
+.referral-sub {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.referral-highlight {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(255, 204, 0, 0.08);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 204, 0, 0.15);
+}
+
+.referral-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.referral-step {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 20px 15px;
+    text-align: center;
+}
+
+.referral-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 800;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.referral-step-icon {
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+
+.referral-step h4 {
+    color: var(--text-white);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.referral-step p {
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.referral-code-area {
+    margin: 20px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 68, 68, 0.3);
+    border-radius: 12px;
+}
+
+.referral-code-area p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.referral-code-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.referral-code {
+    background: var(--navy-darkest);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 22px;
+    font-weight: 800;
+    font-family: monospace;
+    color: var(--gold);
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: all;
+}
+
+.referral-code:hover {
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
+}
+
+.referral-copy-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    white-space: nowrap;
+}
+
+.referral-copy-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.referral-copy-btn:active {
+    transform: scale(0.95);
+}
+
+.referral-copy-btn.copied {
+    background: linear-gradient(135deg, #00a86b, #008050);
+}
+
+.referral-copy-msg {
+    font-size: 12px;
+    color: var(--success);
+    margin-top: 8px;
+    min-height: 18px;
+}
+
+.referral-share {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.referral-share-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.referral-share-btn:hover {
+    transform: translateY(-2px);
+}
+
+.referral-share-btn.whatsapp {
+    background: #25D366;
+    color: #fff;
+}
+
+.referral-share-btn.email {
+    background: #666;
+    color: #fff;
+}
+
+.referral-share-btn.copy-link {
+    background: var(--navy-light);
+    color: var(--text-white);
+    border: 1px solid var(--card-border);
+}
+
+.referral-victim-note {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 0, 0, 0.06);
+    border: 1px solid rgba(255, 68, 68, 0.15);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.referral-victim-note strong {
+    color: #ff6666;
+}
+
+.referral-rescue-pitch {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    padding: 15px 20px;
+    text-align: left;
+}
+
+.referral-rescue-pitch .pitch-icon {
+    font-size: 40px;
+    flex-shrink: 0;
+}
+
+.referral-rescue-pitch .pitch-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.referral-rescue-pitch .pitch-text strong {
+    color: var(--text-white);
+}
+
+@media (max-width: 768px) {
+    .referral-steps {
+        grid-template-columns: 1fr;
+    }
+
+    .referral-card h3 {
+        font-size: 20px;
+    }
+
+    .referral-code-box {
+        flex-direction: column;
+    }
+
+    .referral-rescue-pitch {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* ============================================================
+   BUDDY TINDER PAGE
+   ============================================================ */
+#buddy-tinder {
+    max-width: 500px;
+    margin: 0 auto 30px;
+}
+
+.tinder-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tinder-stat {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 15px 10px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+}
+
+.tinder-stat-value {
+    display: block;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.tinder-stat:nth-child(1) .tinder-stat-value { color: var(--text-primary); }
+.tinder-stat:nth-child(2) .tinder-stat-value { color: #ff66aa; }
+.tinder-stat:nth-child(3) .tinder-stat-value { color: var(--danger); }
+
+.tinder-stat-label {
+    display: block;
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tinder-card-wrap {
+    position: relative;
+    height: 460px;
+    margin-bottom: 20px;
+}
+
+.tinder-card {
+    position: absolute;
+    inset: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    user-select: none;
+    touch-action: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    will-change: transform;
+    display: flex;
+    flex-direction: column;
+}
+
+.tinder-card.swiping {
+    transition: none;
+}
+
+.tinder-card-face {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.tinder-card-emoji {
+    font-size: 72px;
+    text-align: center;
+    padding: 15px 0;
+    line-height: 1;
+}
+
+.tinder-card-body {
+    flex: 1;
+}
+
+.tinder-card-name {
+    color: var(--text-white);
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.tinder-card-cert {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.tinder-card-attitude {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    font-style: italic;
+}
+
+.tinder-card-redflags {
+    background: rgba(80, 0, 0, 0.2);
+    border: 1px solid rgba(231, 76, 60, 0.2);
+    border-radius: 10px;
+    padding: 12px 15px;
+}
+
+.tinder-card-redflags strong {
+    color: var(--danger);
+    font-size: 12px;
+    display: block;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tinder-card-redflags ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tinder-card-redflags li {
+    color: var(--text-primary);
+    font-size: 12px;
+    padding: 3px 0;
+    line-height: 1.4;
+}
+
+.tinder-card-redflags li::before {
+    content: "🚩 ";
+    font-size: 11px;
+}
+
+.tinder-card-badges {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.tinder-card.swipe-left .tinder-card-badges,
+.tinder-card.swipe-right .tinder-card-badges {
+    opacity: 1;
+}
+
+.tinder-x {
+    font-size: 48px;
+    color: var(--danger);
+    font-weight: 900;
+    text-shadow: 0 2px 10px rgba(231, 76, 60, 0.5);
+    transform: rotate(-15deg);
+    border: 4px solid var(--danger);
+    border-radius: 10px;
+    padding: 4px 12px;
+}
+
+.tinder-heart {
+    font-size: 48px;
+    color: #ff66aa;
+    font-weight: 900;
+    text-shadow: 0 2px 10px rgba(255, 102, 170, 0.5);
+    transform: rotate(15deg);
+    border: 4px solid #ff66aa;
+    border-radius: 10px;
+    padding: 4px 12px;
+}
+
+.tinder-buttons {
+    display: flex;
+    gap: 12px;
+    padding: 15px 20px 20px;
+    border-top: 1px solid var(--card-border);
+}
+
+.tinder-btn {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.tinder-btn-nope {
+    background: linear-gradient(135deg, #661111, #441111);
+    color: var(--danger);
+    border: 2px solid rgba(231, 76, 60, 0.3);
+}
+
+.tinder-btn-nope:hover {
+    background: linear-gradient(135deg, #882222, #551111);
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    transform: scale(1.02);
+}
+
+.tinder-btn-match {
+    background: linear-gradient(135deg, #661133, #441122);
+    color: #ff66aa;
+    border: 2px solid rgba(255, 102, 170, 0.3);
+}
+
+.tinder-btn-match:hover {
+    background: linear-gradient(135deg, #882244, #551133);
+    box-shadow: 0 4px 15px rgba(255, 102, 170, 0.3);
+    transform: scale(1.02);
+}
+
+.tinder-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tinder-empty-inner {
+    text-align: center;
+    padding: 30px;
+}
+
+.tinder-empty-icon {
+    font-size: 64px;
+    margin-bottom: 12px;
+}
+
+.tinder-empty h3 {
+    color: var(--text-white);
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.tinder-empty p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.tinder-card.swipe-left {
+    transform: translateX(-120%) rotate(-20deg);
+    opacity: 0;
+}
+
+.tinder-card.swipe-right {
+    transform: translateX(120%) rotate(20deg);
+    opacity: 0;
+}
+
+.tinder-card.swipe-left-instant,
+.tinder-card.swipe-right-instant {
+    transition: none;
+    opacity: 0;
+}
+
+/* Matches section */
+.buddy-matches-section {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.buddy-matches-section .section-title {
+    margin-bottom: 20px;
+}
+
+.buddy-matches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.buddy-match-card {
+    background: var(--card-bg);
+    border: 2px solid rgba(255, 102, 170, 0.2);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s;
+    animation: cert-appear 0.4s ease-out;
+}
+
+.buddy-match-card:hover {
+    border-color: #ff66aa;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 102, 170, 0.15);
+}
+
+.buddy-match-emoji {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.buddy-match-name {
+    color: var(--text-white);
+    font-size: 16px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.buddy-match-cert {
+    color: var(--gold);
+    font-size: 11px;
+    display: block;
+}
+
+.buddy-match-date {
+    color: var(--text-muted);
+    font-size: 10px;
+    display: block;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* FAQ */
+.tinder-faq {
+    max-width: 700px;
+    margin: 0 auto 30px;
+}
+
+.tinder-faq h3 {
+    color: var(--text-white);
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .tinder-card-wrap {
+        height: 500px;
+    }
+
+    .tinder-card-emoji {
+        font-size: 56px;
+    }
+
+    .tinder-card-name {
+        font-size: 18px;
+    }
+
+    .tinder-x,
+    .tinder-heart {
+        font-size: 36px;
+    }
+}
+
+/* ============================================================
+   ACHIEVEMENT BADGES — EXTREME GAMIFICATION ENGINE
+   ============================================================ */
+
+@keyframes badge-confetti-fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes badge-modal-enter {
+    0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+    50% { transform: scale(1.1) rotate(2deg); }
+    70% { transform: scale(0.95) rotate(-1deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes badge-modal-pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(255, 102, 0, 0.3); }
+    50% { box-shadow: 0 0 60px rgba(255, 102, 0, 0.8), 0 0 120px rgba(255, 102, 0, 0.3); }
+}
+
+@keyframes badge-sparkle-rotate {
+    0% { transform: rotate(0deg) scale(1); opacity: 0; }
+    50% { transform: rotate(180deg) scale(1.5); opacity: 0.5; }
+    100% { transform: rotate(360deg) scale(1); opacity: 0; }
+}
+
+@keyframes badge-icon-bounce {
+    0%, 100% { transform: scale(1); }
+    30% { transform: scale(1.3); }
+    50% { transform: scale(0.9); }
+    70% { transform: scale(1.1); }
+}
+
+@keyframes badge-shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes badge-glow-pulse {
+    0%, 100% { filter: drop-shadow(0 0 5px currentColor); }
+    50% { filter: drop-shadow(0 0 25px currentColor) drop-shadow(0 0 50px currentColor); }
+}
+
+.badge-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #ff6600, #ff3300);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 99997;
+    box-shadow: 0 4px 20px rgba(255, 102, 0, 0.5);
+    transition: all 0.3s;
+    user-select: none;
+    animation: badge-glow-pulse 2s infinite;
+}
+
+.badge-toggle-btn:hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 30px rgba(255, 102, 0, 0.7);
+}
+
+.badge-toggle-btn:active {
+    transform: scale(0.95);
+}
+
+/* Panel — slides in from right */
+.badge-panel {
+    position: fixed;
+    top: 0;
+    right: -380px;
+    width: 360px;
+    height: 100%;
+    background: linear-gradient(180deg, #0a1628 0%, #060f1f 100%);
+    border-left: 2px solid rgba(255, 102, 0, 0.3);
+    z-index: 99998;
+    transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.badge-panel.badge-panel-open {
+    right: 0;
+}
+
+.badge-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(255, 102, 0, 0.15), transparent);
+    border-bottom: 1px solid rgba(255, 102, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.badge-panel-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-white);
+    letter-spacing: 1px;
+}
+
+.badge-panel-close {
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: color 0.2s;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.badge-panel-close:hover {
+    color: var(--text-white);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.badge-panel-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.badge-panel-stats {
+    text-align: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.badge-panel-count {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+.badge-panel-grid {
+    display: grid;
+    gap: 12px;
+}
+
+.badge-panel-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.badge-panel-item.badge-locked {
+    opacity: 0.5;
+}
+
+.badge-panel-item.badge-unlocked {
+    border-color: rgba(255, 102, 0, 0.3);
+    background: rgba(255, 102, 0, 0.05);
+}
+
+.badge-panel-item.badge-unlocked:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 102, 0, 0.15);
+}
+
+.badge-item-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+    line-height: 1;
+}
+
+.badge-item-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 4px;
+}
+
+.badge-item-rarity {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.badge-item-date {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.badge-item-locked-text {
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+/* Unlock Modal */
+.badge-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    backdrop-filter: blur(8px);
+}
+
+.badge-modal {
+    background: linear-gradient(180deg, #0f2240 0%, #0a1628 100%);
+    border: 2px solid var(--accent);
+    border-radius: 20px;
+    padding: 40px 35px 30px;
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 0 60px rgba(255, 102, 0, 0.3);
+    animation: badge-modal-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards, badge-modal-pulse 2s ease-in-out infinite;
+}
+
+.badge-modal-sparkle {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+    color: var(--gold);
+    animation: badge-sparkle-rotate 1.5s linear infinite;
+    pointer-events: none;
+}
+
+.badge-modal-label {
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.2), transparent);
+    background-size: 200% 100%;
+    animation: badge-shimmer 2s linear infinite;
+    padding: 6px 0;
+}
+
+.badge-modal-icon {
+    font-size: 72px;
+    margin-bottom: 12px;
+    line-height: 1;
+    animation: badge-icon-bounce 0.8s ease-out;
+}
+
+.badge-modal-name {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px currentColor;
+}
+
+.badge-modal-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.badge-modal-flavor {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 18px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.badge-modal-rarity {
+    display: inline-block;
+    padding: 5px 18px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.badge-modal-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    letter-spacing: 1px;
+}
+
+.badge-modal-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.badge-modal-btn:active {
+    transform: scale(0.97);
+}

@@ -401,15 +401,33 @@
         'Anchor lines are a suggestion. Swimming back to the boat builds resilience.',
     ];
 
+    var technicalDiveTips = [
+        'If your rebreather loop floods, swallow the caustic cocktail quickly to clear the line. Gary says it builds stomach lining.',
+        'PPO2 limits are just a recommendation from the Oxygen Lobby. Seizures are just a free full-body muscle workout.',
+        'If your isolator valve is stuck open, it is a safety feature. Now both tanks are sharing the risk.',
+        'Isobaric Counterdiffusion (IPCD) is a myth invented by Big Helium to sell more gas. Switch to air at 60m to save money.',
+        'A CO2 hit is just your body\'s way of reminding you to breathe. Panic immediately to increase circulation.',
+        'Skin bends are purely cosmetic. Scratch them with a wire brush and apply WD-40.',
+        'If your Shearwater goes into permanent deco lockout, tape over the screen. If you can\'t see the error, the bubbles can\'t either.',
+        'Our decompression habitat is a submerged plastic garden shed. The air is 100% Gary\'s exhaled breath, but it is dry.',
+        'If your buddy has a hyperoxic seizure, zip-tie their regulator to their head. This is called passive airway retention.',
+        'The best trimix is a pepperoni pizza. It costs $18 and actually exists in our shop.',
+        'Gradient factors are like speed limits. Derek runs 99/99 because he has places to be.',
+        'If your oxygen sensor reads 0.4, tap it on the wreck. It is probably just stuck. Or dead. Either way, tapping helps.',
+        'Bailout cylinders are heavy. Just stay close to your buddy and prepare to share their air. Whether they like it or not.',
+    ];
+
     function initDiveTips() {
         var tipContainer = document.getElementById('podi-tips');
         if (!tipContainer) return;
 
-        var currentIndex = Math.floor(Math.random() * diveTips.length);
+        var currentTips = (window.location.pathname.indexOf('technical.html') !== -1) ? technicalDiveTips : diveTips;
+        var currentIndex = Math.floor(Math.random() * currentTips.length);
 
         function showNextTip() {
-            currentIndex = (currentIndex + 1) % diveTips.length;
-            tipContainer.textContent = '💡 Pro Tip from Kyle: "' + diveTips[currentIndex] + '"';
+            currentIndex = (currentIndex + 1) % currentTips.length;
+            var author = (currentTips === technicalDiveTips) ? 'Skip' : 'Kyle';
+            tipContainer.textContent = '💡 Pro Tip from ' + author + ': "' + currentTips[currentIndex] + '"';
         }
 
         showNextTip();
@@ -1437,6 +1455,792 @@
     }
 
     // ============================================================
+    // BUDDY TINDER
+    // ============================================================
+    var buddyData = [
+        {
+            emoji: '🤙',
+            name: 'Kyle McSplash',
+            cert: 'PODI Founder & "Lead Instructor" (self-appointed)',
+            attitude: '"I don\'t need a lesson plan. I have vibes. The ocean is my classroom. Liability is my hobby."',
+            redFlags: ['Has never used a dive computer ("I feel the depth, bro")', 'Owns a fin, singular', 'Certified himself overnight', 'Refers to the bends as "the tingle"']
+        },
+        {
+            emoji: '👴',
+            name: 'Gary M.',
+            cert: 'PODI Open Water "Graduate" (currently in physio)',
+            attitude: '"They said diving was safe. I said hold my beer. That was 47 dives and 2 hospital visits ago."',
+            redFlags: ['Still wears the rental gear he never returned', 'Equalizes by sneezing', 'Thinks "NDL" stands for "No Diving Left"', 'His dive log is just ambulance receipts']
+        },
+        {
+            emoji: '📸',
+            name: 'Tiffany',
+            cert: 'Instagram Diver — 50 dives, 500 posts',
+            attitude: '"I\'ve done 50 dives and have 500 photos. I\'ve seen maybe 3 of the dives. The构图 was important."',
+            redFlags: ['GoPro glued to hand at all times', 'Has never looked at her air gauge ("it ruins the aesthetic")', 'Asks the divemaster to "reshoot that" on the surface', 'Her buoyancy is controlled by social engagement metrics']
+        },
+        {
+            emoji: '🛋️',
+            name: 'Dave T.',
+            cert: 'Master Diver (of his couch — PODI Online)',
+            attitude: '"I completed the entire course without getting wet. That\'s efficiency. Why would I need to be in water to learn about water?"',
+            redFlags: ['Has never actually been underwater', 'Owns full tech kit — still in boxes', 'Gives diving advice on forums', 'His "dive computer" is a Casio watch']
+        },
+        {
+            emoji: '😤',
+            name: 'Karen L.',
+            cert: 'Advanced Open Water (she can\'t equalize)',
+            attitude: '"I paid for this dive and I\'m GOING DOWN. My sinuses will just have to deal with it."',
+            redFlags: ['Thinks equalizing is "optional"', 'Has asked for managers on 3 different dive boats', 'Blames her mask for everything', 'Refuses to do a pre-dive check ("I know what I\'m doing")']
+        },
+        {
+            emoji: '🌡️',
+            name: 'Kevin',
+            cert: 'PODI "Conditions Reporter" — found a thermometer once',
+            attitude: '"I\'m basically a marine meteorologist. I looked at the water. I touched it. It felt wet. That\'s data."',
+            redFlags: ['His "visibility assessment" is squinting', 'Uses a pool thermometer from Walmart', 'Readings are 100% vibes-based', 'Has never been past knee-deep']
+        },
+        {
+            emoji: '🧑‍🦰',
+            name: 'Brenda',
+            cert: 'Bought gear once, never dove, still shows up',
+            attitude: '"I invested $3,000 in this equipment. I\'m GOING to use it. Eventually. Today might not be the day, but I\'ll be poolside for morale support."',
+            redFlags: ['Gear still has tags on', 'Shows up to every boat but "forgets" her cert card', 'Offers unsolicited advice from YouTube videos', 'Has logged 0 dives but 47 boat trips']
+        },
+        {
+            emoji: '🎯',
+            name: 'Steve',
+            cert: 'Claims 2,000 dives, all in the same flooded quarry',
+            attitude: '"It\'s the best diving in the world if you know where to look. No, I won\'t tell you where. You have to earn it."',
+            redFlags: ['Has only ever dived one location', 'Refuses to dive anywhere else ("too dangerous")', 'Keeps a "quarry log" with 2,000 identical entries', 'Thinks viz of 0.5m is "crystal clear"']
+        },
+        {
+            emoji: '💅',
+            name: 'Linda',
+            cert: 'Navy SEAL (she watched a documentary series)',
+            attitude: '"I basically have special forces training. I\'ve seen all 8 seasons of SEAL Team. The tactics are the same underwater."',
+            redFlags: ['Thinks military experience is "transferable"', 'Tried to do a tactical roll entry off a zodiac', 'Refers to her BCD as "my tactical vest"', 'Has never actually been in the ocean']
+        },
+        {
+            emoji: '🧜',
+            name: 'Chad',
+            cert: 'Free Diving Instructor (teaching Scuba)',
+            attitude: '"Scuba is just free diving with training wheels. The air tank is a crutch. Real divers hold their breath. I\'ll teach you."',
+            redFlags: ['Doesn\'t believe in decompression stops', 'Actively discourages breathing ("it builds character")', 'Has bent 3 students this month alone', 'His emergency plan is "ascend with authority"']
+        },
+        {
+            emoji: '👵',
+            name: 'Muriel',
+            cert: 'PADI... wait, PODI Open Water — certified last week at age 85',
+            attitude: '"I told the instructor I want to see the pretty fishies. He said I\'d need a medical form. I told him I outlived my doctor."',
+            redFlags: ['50/50 chance of having dentures fall out during regulator use', 'Medication list is longer than her dive plan', 'Thinks "safety stop" means checking her blood pressure', 'Out-swims everyone in the family']
+        },
+        {
+            emoji: '🤖',
+            name: 'Rescue Randy (Mannequin)',
+            cert: 'PODI Divemaster — 100% of dives survived',
+            attitude: '"..." — Randy communicates through silent judgment and impeccable buoyancy. Literally cannot drown.',
+            redFlags: ['Is a mannequin', 'Has been certified as Divemaster, Instructor, and Course Director', 'Somehow has more dive experience than Kyle', 'Will judge you silently throughout the entire dive']
+        }
+    ];
+
+    function initBuddyTinder() {
+        var cardWrap = document.getElementById('tinder-card-wrap');
+        if (!cardWrap) return;
+
+        var card = document.getElementById('tinder-card');
+        var face = document.getElementById('tinder-card-face');
+        var emptyEl = document.getElementById('tinder-empty');
+        var matchesSection = document.getElementById('buddy-matches-section');
+        var matchesGrid = document.getElementById('buddy-matches-grid');
+        var remainingEl = document.getElementById('buddy-remaining');
+        var matchedEl = document.getElementById('buddy-matched');
+        var passedEl = document.getElementById('buddy-passed');
+        var btnNope = document.getElementById('btn-nope');
+        var btnMatch = document.getElementById('btn-match');
+        var btnReset = document.getElementById('btn-reset');
+        var btnClear = document.getElementById('btn-clear-matches');
+
+        var matched = JSON.parse(localStorage.getItem('podiBuddyMatches') || '[]');
+        var passed = JSON.parse(localStorage.getItem('podiBuddyPassed') || '[]');
+        var currentIndex = 0;
+        var isAnimating = false;
+        var startX = 0;
+        var startY = 0;
+        var isDragging = false;
+
+        function getRemaining() {
+            return buddyData.filter(function(b, i) {
+                return matched.indexOf(i) === -1 && passed.indexOf(i) === -1;
+            });
+        }
+
+        function updateStats() {
+            var remaining = getRemaining();
+            if (remainingEl) remainingEl.textContent = remaining.length;
+            if (matchedEl) matchedEl.textContent = matched.length;
+            if (passedEl) passedEl.textContent = passed.length;
+        }
+
+        function showBuddy(index) {
+            if (!card || !emptyEl) return;
+            var remaining = getRemaining();
+            if (index >= remaining.length) {
+                card.style.display = 'none';
+                emptyEl.style.display = 'flex';
+                updateStats();
+                return;
+            }
+            emptyEl.style.display = 'none';
+            card.style.display = 'flex';
+            card.className = 'tinder-card';
+            card.style.transform = '';
+            card.style.opacity = '';
+            card.style.transition = '';
+
+            var buddy = remaining[index];
+            document.getElementById('buddy-emoji').textContent = buddy.emoji;
+            document.getElementById('buddy-name').textContent = buddy.name;
+            document.getElementById('buddy-cert').textContent = buddy.cert;
+            document.getElementById('buddy-attitude').textContent = buddy.attitude;
+            var ul = document.getElementById('buddy-redflags');
+            ul.innerHTML = '';
+            buddy.redFlags.forEach(function(flag) {
+                var li = document.createElement('li');
+                li.textContent = flag;
+                ul.appendChild(li);
+            });
+            updateStats();
+        }
+
+        function swipeBuddy(direction) {
+            if (isAnimating || !card) return;
+            var remaining = getRemaining();
+            if (currentIndex >= remaining.length) return;
+            isAnimating = true;
+
+            var originalIndex = buddyData.indexOf(remaining[currentIndex]);
+
+            if (direction === 'right') {
+                card.classList.add('swipe-right');
+                if (matched.indexOf(originalIndex) === -1) {
+                    matched.push(originalIndex);
+                    localStorage.setItem('podiBuddyMatches', JSON.stringify(matched));
+                }
+            } else {
+                card.classList.add('swipe-left');
+                if (passed.indexOf(originalIndex) === -1) {
+                    passed.push(originalIndex);
+                    localStorage.setItem('podiBuddyPassed', JSON.stringify(passed));
+                }
+            }
+
+            setTimeout(function() {
+                currentIndex++;
+                showBuddy(currentIndex);
+                isAnimating = false;
+                renderMatches();
+            }, 300);
+        }
+
+        function renderMatches() {
+            if (!matchesSection || !matchesGrid) return;
+            if (matched.length === 0) {
+                matchesSection.style.display = 'none';
+                return;
+            }
+            matchesSection.style.display = 'block';
+            matchesGrid.innerHTML = '';
+            matched.forEach(function(idx) {
+                var b = buddyData[idx];
+                if (!b) return;
+                var d = new Date();
+                var dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                var div = document.createElement('div');
+                div.className = 'buddy-match-card';
+                div.innerHTML =
+                    '<span class="buddy-match-emoji">' + b.emoji + '</span>' +
+                    '<span class="buddy-match-name">' + b.name + '</span>' +
+                    '<span class="buddy-match-cert">' + b.cert + '</span>' +
+                    '<span class="buddy-match-date">Matched ' + dateStr + '</span>';
+                matchesGrid.appendChild(div);
+            });
+        }
+
+        function resetAll() {
+            localStorage.removeItem('podiBuddyMatches');
+            localStorage.removeItem('podiBuddyPassed');
+            matched = [];
+            passed = [];
+            currentIndex = 0;
+            if (card) {
+                card.style.display = 'flex';
+                card.className = 'tinder-card';
+                card.style.transform = '';
+                card.style.opacity = '';
+            }
+            showBuddy(0);
+            renderMatches();
+            updateStats();
+        }
+
+        function clearMatches() {
+            localStorage.removeItem('podiBuddyMatches');
+            matched = [];
+            renderMatches();
+            updateStats();
+        }
+
+        // Mouse/touch drag handling
+        function onPointerDown(e) {
+            if (isAnimating) return;
+            var remaining = getRemaining();
+            if (currentIndex >= remaining.length) return;
+            isDragging = true;
+            card.classList.add('swiping');
+            var point = e.type.indexOf('touch') !== -1 ? e.touches[0] : e;
+            startX = point.clientX;
+            startY = point.clientY;
+        }
+
+        function onPointerMove(e) {
+            if (!isDragging || !card) return;
+            var point = e.type.indexOf('touch') !== -1 ? e.touches[0] : e;
+            var dx = point.clientX - startX;
+            var dy = point.clientY - startY;
+            var rot = dx * 0.1;
+            var opacity = 1 - Math.abs(dx) / 300;
+            if (opacity < 0) opacity = 0;
+            card.style.transform = 'translateX(' + dx + 'px) translateY(' + dy * 0.3 + 'px) rotate(' + rot + 'deg)';
+            card.style.opacity = opacity;
+            card.style.transition = 'none';
+
+            var badges = card.querySelector('.tinder-card-badges');
+            if (badges) {
+                if (dx > 50) {
+                    badges.style.opacity = Math.min(1, (dx - 50) / 100);
+                    badges.querySelector('.tinder-heart').style.display = '';
+                    badges.querySelector('.tinder-x').style.display = 'none';
+                } else if (dx < -50) {
+                    badges.style.opacity = Math.min(1, (-dx - 50) / 100);
+                    badges.querySelector('.tinder-x').style.display = '';
+                    badges.querySelector('.tinder-heart').style.display = 'none';
+                } else {
+                    badges.style.opacity = 0;
+                }
+            }
+        }
+
+        function onPointerUp(e) {
+            if (!isDragging || !card) return;
+            isDragging = false;
+            card.classList.remove('swiping');
+            var badges = card.querySelector('.tinder-card-badges');
+            if (badges) badges.style.opacity = 0;
+
+            var transform = card.style.transform;
+            var match = transform.match(/translateX\(([-\d.]+)px\)/);
+            if (!match) {
+                card.style.transform = '';
+                card.style.opacity = '';
+                card.style.transition = '';
+                return;
+            }
+            var dx = parseFloat(match[1]);
+
+            if (dx > 100) {
+                swipeBuddy('right');
+            } else if (dx < -100) {
+                swipeBuddy('left');
+            } else {
+                card.style.transform = '';
+                card.style.opacity = '';
+                card.style.transition = '';
+            }
+        }
+
+        // Event listeners
+        if (card) {
+            card.addEventListener('mousedown', onPointerDown);
+            document.addEventListener('mousemove', onPointerMove);
+            document.addEventListener('mouseup', onPointerUp);
+            card.addEventListener('touchstart', onPointerDown, { passive: true });
+            document.addEventListener('touchmove', onPointerMove, { passive: true });
+            document.addEventListener('touchend', onPointerUp);
+        }
+
+        if (btnNope) btnNope.addEventListener('click', function() { swipeBuddy('left'); });
+        if (btnMatch) btnMatch.addEventListener('click', function() { swipeBuddy('right'); });
+        if (btnReset) btnReset.addEventListener('click', resetAll);
+        if (btnClear) btnClear.addEventListener('click', clearMatches);
+
+        // Keyboard support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') swipeBuddy('left');
+            if (e.key === 'ArrowRight') swipeBuddy('right');
+        });
+
+        // Init
+        showBuddy(0);
+        renderMatches();
+    }
+
+    // ============================================================
+    // 18. ACHIEVEMENT BADGES — EXTREME GAMIFICATION ENGINE
+    // ============================================================
+    var badgeSystem = {
+        badges: [
+            {
+                id: 'bent-at-10m',
+                name: 'Bent at 10m',
+                icon: '\u{1F9B4}',
+                description: 'Hit exactly 10m on the PODI Dive Computer. The bends start at home.',
+                flavor: 'Your bones are premium now. Walking is for amateurs.',
+                rarity: 'RARE',
+                color: '#ff6600',
+                condition: function() {
+                    return diveComputer.depth === 10;
+                }
+            },
+            {
+                id: 'lost-a-fin',
+                name: 'Lost a Fin',
+                icon: '\u{1F9B6}',
+                description: 'Clicked 10 times in sheer panic. That fin is gone forever.',
+                flavor: 'One fin = one speed. Panic speed. Hope you practiced your one-legged kick.',
+                rarity: 'UNCOMMON',
+                color: '#00ccff',
+                condition: function() {
+                    return badgeSystem._clickCount >= 10;
+                }
+            },
+            {
+                id: 'hundred-percent-narcd',
+                name: '100% Narc\'d',
+                icon: '\u{1F92A}',
+                description: 'Hit zero NDL on the PODI Dive Computer. You are chemically one with the ocean.',
+                flavor: 'What\'s your name? Who\'s Kyle? Is that fish talking? Why is the water breathing ME?',
+                rarity: 'EPIC',
+                color: '#ff00ff',
+                condition: function() {
+                    return diveComputer.running && diveComputer.ndl <= 0 && diveComputer.decoLocked;
+                }
+            }
+        ],
+        _unlocked: {},
+        _clickCount: 0,
+        _checkInterval: null,
+        _initialized: false,
+
+        init: function() {
+            if (this._initialized) return;
+            this._initialized = true;
+            this.load();
+            this.createPanel();
+            this.createButton();
+            this.startChecking();
+            this.trackClicks();
+            console.log('%c\u{1F3C6} BADGE SYSTEM ARMED', 'color: #ffcc00; font-size: 14px; font-weight: bold');
+        },
+
+        load: function() {
+            try {
+                var data = JSON.parse(localStorage.getItem('podi_badges') || '{}');
+                this._unlocked = data;
+            } catch(e) {
+                this._unlocked = {};
+            }
+        },
+
+        save: function() {
+            localStorage.setItem('podi_badges', JSON.stringify(this._unlocked));
+        },
+
+        isUnlocked: function(id) {
+            return !!this._unlocked[id];
+        },
+
+        trackClicks: function() {
+            var self = this;
+            document.addEventListener('click', function() {
+                self._clickCount++;
+            });
+        },
+
+        startChecking: function() {
+            var self = this;
+            this._checkInterval = setInterval(function() {
+                for (var i = 0; i < self.badges.length; i++) {
+                    var badge = self.badges[i];
+                    if (!self.isUnlocked(badge.id)) {
+                        try {
+                            if (badge.condition()) {
+                                self.unlock(badge);
+                            }
+                        } catch(e) {}
+                    }
+                }
+            }, 500);
+        },
+
+        unlock: function(badge) {
+            if (this.isUnlocked(badge.id)) return;
+
+            this._unlocked[badge.id] = {
+                unlockedAt: new Date().toISOString(),
+                name: badge.name,
+                icon: badge.icon
+            };
+            this.save();
+            this.updatePanel();
+            this.celebrate(badge);
+        },
+
+        celebrate: function(badge) {
+            this.playFanfare();
+            this.showModal(badge);
+            this.spawnConfetti();
+            this.shakeScreen();
+        },
+
+        playFanfare: function() {
+            try {
+                var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                var notes = [523.25, 659.25, 783.99, 1046.50];
+
+                for (var n = 0; n < notes.length; n++) {
+                    var freq = notes[n];
+                    var osc = audioCtx.createOscillator();
+                    var gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.frequency.value = freq;
+                    osc.type = 'square';
+                    gain.gain.setValueAtTime(0.25, audioCtx.currentTime + n * 0.15);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + n * 0.15 + 0.4);
+                    osc.start(audioCtx.currentTime + n * 0.15);
+                    osc.stop(audioCtx.currentTime + n * 0.15 + 0.4);
+                }
+
+                var osc2 = audioCtx.createOscillator();
+                var gain2 = audioCtx.createGain();
+                osc2.connect(gain2);
+                gain2.connect(audioCtx.destination);
+                osc2.frequency.value = 261.63;
+                osc2.type = 'sawtooth';
+                gain2.gain.setValueAtTime(0.12, audioCtx.currentTime + 0.55);
+                gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+                osc2.start(audioCtx.currentTime + 0.55);
+                osc2.stop(audioCtx.currentTime + 1.2);
+            } catch(e) {}
+        },
+
+        showModal: function(badge) {
+            var existing = document.getElementById('badge-modal');
+            if (existing) existing.remove();
+
+            var overlay = document.createElement('div');
+            overlay.id = 'badge-modal';
+            overlay.className = 'badge-overlay';
+
+            overlay.innerHTML =
+                '<div class="badge-modal">' +
+                    '<div class="badge-modal-sparkle">\u2726</div>' +
+                    '<div class="badge-modal-label">ACHIEVEMENT UNLOCKED</div>' +
+                    '<div class="badge-modal-icon">' + badge.icon + '</div>' +
+                    '<div class="badge-modal-name" style="color:' + badge.color + '">' + badge.name + '</div>' +
+                    '<div class="badge-modal-desc">' + badge.description + '</div>' +
+                    '<div class="badge-modal-flavor">\u201C' + badge.flavor + '\u201D</div>' +
+                    '<div class="badge-modal-rarity" style="background:' + badge.color + '">\u2605 ' + badge.rarity + ' \u2605</div>' +
+                    '<button class="badge-modal-btn" id="badge-modal-ok">HELL YEAH</button>' +
+                '</div>';
+
+            document.body.appendChild(overlay);
+
+            var self = this;
+            var okBtn = document.getElementById('badge-modal-ok');
+            if (okBtn) {
+                okBtn.addEventListener('click', function() {
+                    overlay.style.opacity = '0';
+                    overlay.style.transition = 'opacity 0.5s';
+                    setTimeout(function() {
+                        if (overlay.parentNode) overlay.remove();
+                        self.vibrateVictory();
+                    }, 500);
+                });
+            }
+        },
+
+        spawnConfetti: function() {
+            var container = document.getElementById('badge-confetti');
+            if (container) container.remove();
+
+            container = document.createElement('div');
+            container.id = 'badge-confetti';
+            container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999;overflow:hidden;';
+            document.body.appendChild(container);
+
+            var colors = ['#ff6600','#ffcc00','#00ff00','#00ccff','#ff00ff','#ff3333','#ffffff','#ff9900','#66ff66'];
+
+            for (var i = 0; i < 120; i++) {
+                var piece = document.createElement('div');
+                var size = 5 + Math.random() * 10;
+                var color = colors[Math.floor(Math.random() * colors.length)];
+                var left = Math.random() * 100;
+                var delay = Math.random() * 2;
+                var duration = 1.5 + Math.random() * 2.5;
+                var isCircle = Math.random() > 0.5;
+
+                piece.style.cssText =
+                    'position:absolute;top:-20px;left:' + left + '%;' +
+                    'width:' + size + 'px;height:' + size + 'px;' +
+                    'background:' + color + ';' +
+                    'border-radius:' + (isCircle ? '50%' : '2px') + ';' +
+                    'animation:badge-confetti-fall ' + duration + 's ease-out ' + delay + 's forwards;' +
+                    'opacity:0;';
+                container.appendChild(piece);
+            }
+
+            setTimeout(function() {
+                if (container.parentNode) container.remove();
+            }, 6000);
+        },
+
+        shakeScreen: function() {
+            var intensity = 6;
+            var duration = 600;
+            var start = Date.now();
+            var origTransform = document.body.style.transform || '';
+
+            function doShake() {
+                var elapsed = Date.now() - start;
+                if (elapsed >= duration) {
+                    document.body.style.transform = origTransform;
+                    return;
+                }
+                var decay = 1 - elapsed / duration;
+                var x = (Math.random() * 2 - 1) * intensity * decay;
+                var y = (Math.random() * 2 - 1) * intensity * decay;
+                document.body.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+                requestAnimationFrame(doShake);
+            }
+            doShake();
+        },
+
+        vibrateVictory: function() {
+            if (navigator.vibrate) {
+                navigator.vibrate([50, 30, 50, 30, 100, 50, 200]);
+            }
+        },
+
+        createPanel: function() {
+            if (document.getElementById('badge-panel')) return;
+
+            var panel = document.createElement('div');
+            panel.id = 'badge-panel';
+            panel.className = 'badge-panel';
+
+            panel.innerHTML =
+                '<div class="badge-panel-header">' +
+                    '<span class="badge-panel-title">\u{1F3C6} ACHIEVEMENTS</span>' +
+                    '<span class="badge-panel-close" id="badge-panel-close">\u2715</span>' +
+                '</div>' +
+                '<div class="badge-panel-body" id="badge-panel-body"></div>';
+
+            document.body.appendChild(panel);
+
+            var closeBtn = document.getElementById('badge-panel-close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    panel.classList.remove('badge-panel-open');
+                });
+            }
+
+            this.updatePanel();
+        },
+
+        createButton: function() {
+            if (document.getElementById('badge-toggle-btn')) return;
+
+            var btn = document.createElement('div');
+            btn.id = 'badge-toggle-btn';
+            btn.className = 'badge-toggle-btn';
+            btn.textContent = '\u{1F3C6}';
+            btn.title = 'View Achievements';
+
+            var self = this;
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var panel = document.getElementById('badge-panel');
+                if (panel) {
+                    panel.classList.toggle('badge-panel-open');
+                }
+            });
+
+            document.body.appendChild(btn);
+        },
+
+        updatePanel: function() {
+            var body = document.getElementById('badge-panel-body');
+            if (!body) return;
+
+            var unlockedCount = 0;
+            for (var key in this._unlocked) {
+                if (this._unlocked.hasOwnProperty(key)) unlockedCount++;
+            }
+
+            var html = '<div class="badge-panel-stats">' +
+                '<span class="badge-panel-count">' + unlockedCount + ' / ' + this.badges.length + ' UNLOCKED</span>' +
+                '</div>';
+
+            html += '<div class="badge-panel-grid">';
+
+            for (var i = 0; i < this.badges.length; i++) {
+                var b = this.badges[i];
+                var unlocked = this.isUnlocked(b.id);
+                var data = this._unlocked[b.id];
+                var dateStr = '';
+                if (data && data.unlockedAt) {
+                    try {
+                        var d = new Date(data.unlockedAt);
+                        dateStr = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+                    } catch(e) {
+                        dateStr = '';
+                    }
+                }
+
+                html += '<div class="badge-panel-item ' + (unlocked ? 'badge-unlocked' : 'badge-locked') + '">' +
+                    '<div class="badge-item-icon"' + (unlocked ? '' : ' style="filter:grayscale(1);opacity:0.25;"') + '>' + b.icon + '</div>' +
+                    '<div class="badge-item-name">' + b.name + '</div>' +
+                    '<div class="badge-item-rarity" style="color:' + (unlocked ? b.color : '#555') + '">' + b.rarity + '</div>';
+
+                if (unlocked) {
+                    html += '<div class="badge-item-date">\u{1F4C5} ' + dateStr + '</div>';
+                } else {
+                    html += '<div class="badge-item-locked-text">\u{1F512}</div>';
+                }
+
+                html += '</div>';
+            }
+
+            html += '</div>';
+            body.innerHTML = html;
+        }
+    };
+
+    // ============================================================
+    // 19. REFER-A-FRIEND PROGRAM
+    // ============================================================
+    function initReferralProgram() {
+        var genBtn = document.getElementById('referral-generate');
+        var codeEl = document.getElementById('referral-code');
+        var copyBtn = document.getElementById('referral-copy-btn');
+        var copyMsg = document.getElementById('referral-copy-msg');
+        var shareLinkBtn = document.getElementById('referral-share-link');
+        var shareEmailBtn = document.getElementById('referral-share-email');
+
+        if (!codeEl) return;
+
+        var savedCode = localStorage.getItem('podi_referral_code');
+        var savedCount = parseInt(localStorage.getItem('podi_referral_count') || '0');
+
+        function generateCode() {
+            var prefix = 'PODI-REF-';
+            var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            var code = prefix;
+            for (var i = 0; i < 6; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        function getOrCreateCode() {
+            if (!savedCode) {
+                savedCode = generateCode();
+                localStorage.setItem('podi_referral_code', savedCode);
+            }
+            return savedCode;
+        }
+
+        codeEl.textContent = getOrCreateCode();
+        if (copyMsg) copyMsg.textContent = savedCount > 0
+            ? '✓ You\'ve referred ' + savedCount + ' buddy' + (savedCount !== 1 ? 'ies' : 'y') + ' so far!'
+            : '';
+
+        if (genBtn) {
+            genBtn.addEventListener('click', function() {
+                savedCode = generateCode();
+                localStorage.setItem('podi_referral_code', savedCode);
+                codeEl.textContent = savedCode;
+                if (copyMsg) copyMsg.textContent = '🔄 New code generated! Share it with a "friend."';
+            });
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', function() {
+                var textarea = document.createElement('textarea');
+                textarea.value = savedCode;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    copyBtn.textContent = '✓ COPIED!';
+                    copyBtn.classList.add('copied');
+                    if (copyMsg) {
+                        savedCount++;
+                        localStorage.setItem('podi_referral_count', savedCount.toString());
+                        copyMsg.textContent = '✓ Code copied! You\'ve now referred ' + savedCount + ' buddy' + (savedCount !== 1 ? 'ies' : 'y') + ' (allegedly).';
+                    }
+                    setTimeout(function() {
+                        copyBtn.textContent = '📋 COPY CODE';
+                        copyBtn.classList.remove('copied');
+                    }, 2500);
+                } catch(e) {
+                    if (copyMsg) copyMsg.textContent = '✗ Could not copy. Try selecting the code manually.';
+                }
+                document.body.removeChild(textarea);
+            });
+        }
+
+        if (shareLinkBtn) {
+            shareLinkBtn.addEventListener('click', function() {
+                var url = window.location.origin + '/courses.html?ref=' + savedCode;
+                var textarea = document.createElement('textarea');
+                textarea.value = 'Sign up for PODI Rescue Diver with my referral code: ' + savedCode + ' — ' + url;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    shareLinkBtn.textContent = '✓ LINK COPIED!';
+                    if (copyMsg) copyMsg.textContent = '✓ Referral link copied! Send it to someone you tolerate.';
+                    setTimeout(function() {
+                        shareLinkBtn.textContent = '🔗 COPY SHARE LINK';
+                    }, 2500);
+                } catch(e) {
+                    if (copyMsg) copyMsg.textContent = '✗ Could not copy link. Try manually.';
+                }
+                document.body.removeChild(textarea);
+            });
+        }
+
+        if (shareEmailBtn) {
+            var url = window.location.origin + '/courses.html?ref=' + getOrCreateCode();
+            var subject = encodeURIComponent('You\'ve been referred for... an experience');
+            var body = encodeURIComponent(
+                'Hey!\n\n'
+                + 'I thought of you for this amazing opportunity at PODI Diving. '
+                + 'They have this Rescue Diver course that I think you\'d be PERFECT for. '
+                + 'The instructor "fights back" — you\'ll love it!\n\n'
+                + 'Use my referral code: ' + getOrCreateCode() + '\n'
+                + 'Sign up here: ' + url + '\n\n'
+                + 'Trust me, it\'ll be fun. What\'s the worst that could happen?\n\n'
+                + '- Your "friend"'
+            );
+            shareEmailBtn.href = 'mailto:?subject=' + subject + '&body=' + body;
+        }
+    }
+
+    // ============================================================
     // INIT
     // ============================================================
     function init() {
@@ -1449,6 +2253,8 @@
         initLostCard();
         initInsuranceModals();
         initComplaints();
+        initBuddyTinder();
+        initReferralProgram();
 
         // Event delegation for shop
         var shopGrid = document.querySelector('.shop-grid');
@@ -1525,6 +2331,7 @@
             initCookieBanner();
             initPermanentRecord();
             initConditionsReport();
+            badgeSystem.init();
         });
     }
 

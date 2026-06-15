@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dive Buddy Tinder - PODI</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .blink { animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R6084CBP7Y"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-R6084CBP7Y');
+    </script>
+</head>
+<body>
+    <div class="warning-banner">⚠ PODI DIVE BUDDY MATCHING — NO BACKGROUND CHECKS CONDUCTED ⚠</div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🤿⚠️</div>
+            <div class="logo-text">
+                <h1>P.O.D.I.</h1>
+                <p class="tagline">Professional Organization of Dangerously Incompetent Divers</p>
+                <p class="danger-rating">BUDDIES: <span style="color:#ff66aa;">SWIPE AT YOUR OWN RISK</span> &mdash; We matched a mannequin with a real person once</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">Our Team</a>
+        <a href="courses.html">Courses</a>
+        <a href="technical.html">Technical</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="shop.html">Shop</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="elearning.html">eLearning</a>
+        <a href="charter.html">Charter</a>
+        <a href="buddies.html" class="active">Buddy Match</a>
+        <a href="complaints.html">Complaints</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <main>
+        <div class="hero" style="background-image: url('images/pool-training-session.jpg'); background-position: center 30%;">
+            <h2>Find Your <span style="color:#ff66aa;">Dive Buddy</span> Match!</h2>
+            <p>Swipe right to match with one of PODI's finest potential dive partners. Swipe left if you value your life. Either way, we'll keep suggesting them.</p>
+            <p style="color:#888; font-size:14px; margin-top:10px;">100% of matches have resulted in at least one trip to the chamber. Probably.</p>
+        </div>
+
+        <div class="disclaimer-notice">
+            <strong>⚠ BUDDY DISCLAIMER:</strong> PODI does not verify any claims made by our buddy candidates. "Open Water certified" could mean they opened a water bottle once. Dive at your own risk. Actually, dive at THEIR risk &mdash; you'll probably be fine.
+        </div>
+
+        <div id="buddy-tinder">
+            <div class="tinder-stats">
+                <div class="tinder-stat">
+                    <span class="tinder-stat-value" id="buddy-remaining">0</span>
+                    <span class="tinder-stat-label">Remaining</span>
+                </div>
+                <div class="tinder-stat">
+                    <span class="tinder-stat-value" id="buddy-matched">0</span>
+                    <span class="tinder-stat-label">Matches</span>
+                </div>
+                <div class="tinder-stat">
+                    <span class="tinder-stat-value" id="buddy-passed">0</span>
+                    <span class="tinder-stat-label">Passed</span>
+                </div>
+            </div>
+
+            <div class="tinder-card-wrap" id="tinder-card-wrap">
+                <div class="tinder-card" id="tinder-card">
+                    <div class="tinder-card-face" id="tinder-card-face">
+                        <div class="tinder-card-emoji" id="buddy-emoji">🤷</div>
+                        <div class="tinder-card-body">
+                            <h3 class="tinder-card-name" id="buddy-name">Loading...</h3>
+                            <p class="tinder-card-cert" id="buddy-cert">...</p>
+                            <p class="tinder-card-attitude" id="buddy-attitude">...</p>
+                            <div class="tinder-card-redflags">
+                                <strong>🚩 Red Flags:</strong>
+                                <ul id="buddy-redflags"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tinder-card-badges">
+                        <span class="tinder-x">✗</span>
+                        <span class="tinder-heart">♥</span>
+                    </div>
+                    <div class="tinder-buttons">
+                        <button class="tinder-btn tinder-btn-nope" id="btn-nope">✗ NOPE</button>
+                        <button class="tinder-btn tinder-btn-match" id="btn-match">♥ MATCH!</button>
+                    </div>
+                </div>
+                <div class="tinder-empty" id="tinder-empty" style="display:none;">
+                    <div class="tinder-empty-inner">
+                        <div class="tinder-empty-icon">😔</div>
+                        <h3>No More Buddies</h3>
+                        <p>You've swiped through all available dive buddies. Either you're too picky, or they were literally all bad options.</p>
+                        <button class="tinder-btn tinder-btn-match" id="btn-reset">🔄 Start Over</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="buddy-matches-section" class="buddy-matches-section" style="display:none;">
+                <h3 class="section-title">Your <span>Matches</span></h3>
+                <div class="buddy-matches-grid" id="buddy-matches-grid"></div>
+                <button class="tinder-btn tinder-btn-nope" id="btn-clear-matches" style="margin:20px auto; display:block;">🗑️ Clear All Matches</button>
+            </div>
+        </div>
+
+        <div class="tinder-faq">
+            <h3>❓ Buddy Matching FAQ</h3>
+            <div class="complaint-faq-item card card--static">
+                <strong>Q: How does the matching algorithm work?</strong>
+                <p>A: We don't have one. The buddies appear in a fixed order. You think Tinder has an algorithm? It's just vibes, baby.</p>
+            </div>
+            <div class="complaint-faq-item card card--static">
+                <strong>Q: Can I unmatch someone?</strong>
+                <p>A: No. Once matched, that buddy is stored in your browser's localStorage forever. Or until you click "Clear All Matches." Either way, they'll always be in your heart.</p>
+            </div>
+            <div class="complaint-faq-item card card--static">
+                <strong>Q: Are these real people?</strong>
+                <p>A: Define "real." They have names, personalities, and dive certifications. The certifications are from PODI, so... no, they are not real.</p>
+            </div>
+            <div class="complaint-faq-item card card--static">
+                <strong>Q: Is there a premium version?</strong>
+                <p>A: For $9.99/month you can see who swiped right on you. The answer is "no one." Don't waste your money. Actually, go ahead, we could use it.</p>
+            </div>
+        </div>
+
+        <div id="podi-tips"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 PODI &mdash; Professional Organization of Dangerously Incompetent Divers</p>
+        <p>PODI Buddy Matching: We don't care who you dive with, as long as someone signs the waiver.</p>
+        <p class="footer-disclaimer">If you matched with someone and they seemed competent, it was a glitch. Refresh the page.</p>
+    </footer>
+
+    <script defer src="scripts.js"></script>
+</body>
+</html>
