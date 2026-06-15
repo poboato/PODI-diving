@@ -1459,90 +1459,138 @@
     // ============================================================
     var buddyData = [
         {
-            emoji: '🤙',
             name: 'Kyle McSplash',
             cert: 'PODI Founder & "Lead Instructor" (self-appointed)',
             attitude: '"I don\'t need a lesson plan. I have vibes. The ocean is my classroom. Liability is my hobby."',
-            redFlags: ['Has never used a dive computer ("I feel the depth, bro")', 'Owns a fin, singular', 'Certified himself overnight', 'Refers to the bends as "the tingle"']
+            redFlags: ['Has never used a dive computer ("I feel the depth, bro")', 'Owns a fin, singular', 'Certified himself overnight', 'Refers to the bends as "the tingle"'],
+            img: 'images/buddy-1.jpg',
+            color: '#ff6600'
         },
         {
-            emoji: '👴',
             name: 'Gary M.',
             cert: 'PODI Open Water "Graduate" (currently in physio)',
             attitude: '"They said diving was safe. I said hold my beer. That was 47 dives and 2 hospital visits ago."',
-            redFlags: ['Still wears the rental gear he never returned', 'Equalizes by sneezing', 'Thinks "NDL" stands for "No Diving Left"', 'His dive log is just ambulance receipts']
+            redFlags: ['Still wears the rental gear he never returned', 'Equalizes by sneezing', 'Thinks "NDL" stands for "No Diving Left"', 'His dive log is just ambulance receipts'],
+            img: 'images/buddy-2.jpg',
+            color: '#cc4400'
         },
         {
-            emoji: '📸',
             name: 'Tiffany',
             cert: 'Instagram Diver — 50 dives, 500 posts',
-            attitude: '"I\'ve done 50 dives and have 500 photos. I\'ve seen maybe 3 of the dives. The构图 was important."',
-            redFlags: ['GoPro glued to hand at all times', 'Has never looked at her air gauge ("it ruins the aesthetic")', 'Asks the divemaster to "reshoot that" on the surface', 'Her buoyancy is controlled by social engagement metrics']
+            attitude: '"I\'ve done 50 dives and have 500 photos. I\'ve seen maybe 3 of the dives. The 构图 was important."',
+            redFlags: ['GoPro glued to hand at all times', 'Has never looked at her air gauge ("it ruins the aesthetic")', 'Asks the divemaster to "reshoot that" on the surface', 'Her buoyancy is controlled by social engagement metrics'],
+            img: 'images/buddy-3.jpg',
+            color: '#ff66aa'
         },
         {
-            emoji: '🛋️',
             name: 'Dave T.',
             cert: 'Master Diver (of his couch — PODI Online)',
             attitude: '"I completed the entire course without getting wet. That\'s efficiency. Why would I need to be in water to learn about water?"',
-            redFlags: ['Has never actually been underwater', 'Owns full tech kit — still in boxes', 'Gives diving advice on forums', 'His "dive computer" is a Casio watch']
+            redFlags: ['Has never actually been underwater', 'Owns full tech kit — still in boxes', 'Gives diving advice on forums', 'His "dive computer" is a Casio watch'],
+            img: 'images/buddy-4.jpg',
+            color: '#22cccc'
         },
         {
-            emoji: '😤',
             name: 'Karen L.',
             cert: 'Advanced Open Water (she can\'t equalize)',
             attitude: '"I paid for this dive and I\'m GOING DOWN. My sinuses will just have to deal with it."',
-            redFlags: ['Thinks equalizing is "optional"', 'Has asked for managers on 3 different dive boats', 'Blames her mask for everything', 'Refuses to do a pre-dive check ("I know what I\'m doing")']
+            redFlags: ['Thinks equalizing is "optional"', 'Has asked for managers on 3 different dive boats', 'Blames her mask for everything', 'Refuses to do a pre-dive check ("I know what I\'m doing")'],
+            img: 'images/buddy-5.jpg',
+            color: '#e74c3c'
         },
         {
-            emoji: '🌡️',
             name: 'Kevin',
             cert: 'PODI "Conditions Reporter" — found a thermometer once',
             attitude: '"I\'m basically a marine meteorologist. I looked at the water. I touched it. It felt wet. That\'s data."',
-            redFlags: ['His "visibility assessment" is squinting', 'Uses a pool thermometer from Walmart', 'Readings are 100% vibes-based', 'Has never been past knee-deep']
+            redFlags: ['His "visibility assessment" is squinting', 'Uses a pool thermometer from Walmart', 'Readings are 100% vibes-based', 'Has never been past knee-deep'],
+            img: 'images/buddy-6.jpg',
+            color: '#00a86b'
         },
         {
-            emoji: '🧑‍🦰',
             name: 'Brenda',
             cert: 'Bought gear once, never dove, still shows up',
             attitude: '"I invested $3,000 in this equipment. I\'m GOING to use it. Eventually. Today might not be the day, but I\'ll be poolside for morale support."',
-            redFlags: ['Gear still has tags on', 'Shows up to every boat but "forgets" her cert card', 'Offers unsolicited advice from YouTube videos', 'Has logged 0 dives but 47 boat trips']
+            redFlags: ['Gear still has tags on', 'Shows up to every boat but "forgets" her cert card', 'Offers unsolicited advice from YouTube videos', 'Has logged 0 dives but 47 boat trips'],
+            img: 'images/buddy-7.jpg',
+            color: '#9966ff'
         },
         {
-            emoji: '🎯',
             name: 'Steve',
             cert: 'Claims 2,000 dives, all in the same flooded quarry',
             attitude: '"It\'s the best diving in the world if you know where to look. No, I won\'t tell you where. You have to earn it."',
-            redFlags: ['Has only ever dived one location', 'Refuses to dive anywhere else ("too dangerous")', 'Keeps a "quarry log" with 2,000 identical entries', 'Thinks viz of 0.5m is "crystal clear"']
+            redFlags: ['Has only ever dived one location', 'Refuses to dive anywhere else ("too dangerous")', 'Keeps a "quarry log" with 2,000 identical entries', 'Thinks viz of 0.5m is "crystal clear"'],
+            img: 'images/buddy-8.jpg',
+            color: '#4488aa'
         },
         {
-            emoji: '💅',
             name: 'Linda',
             cert: 'Navy SEAL (she watched a documentary series)',
             attitude: '"I basically have special forces training. I\'ve seen all 8 seasons of SEAL Team. The tactics are the same underwater."',
-            redFlags: ['Thinks military experience is "transferable"', 'Tried to do a tactical roll entry off a zodiac', 'Refers to her BCD as "my tactical vest"', 'Has never actually been in the ocean']
+            redFlags: ['Thinks military experience is "transferable"', 'Tried to do a tactical roll entry off a zodiac', 'Refers to her BCD as "my tactical vest"', 'Has never actually been in the ocean'],
+            img: 'images/buddy-9.jpg',
+            color: '#557744'
         },
         {
-            emoji: '🧜',
             name: 'Chad',
             cert: 'Free Diving Instructor (teaching Scuba)',
             attitude: '"Scuba is just free diving with training wheels. The air tank is a crutch. Real divers hold their breath. I\'ll teach you."',
-            redFlags: ['Doesn\'t believe in decompression stops', 'Actively discourages breathing ("it builds character")', 'Has bent 3 students this month alone', 'His emergency plan is "ascend with authority"']
+            redFlags: ['Doesn\'t believe in decompression stops', 'Actively discourages breathing ("it builds character")', 'Has bent 3 students this month alone', 'His emergency plan is "ascend with authority"'],
+            img: 'images/buddy-10.jpg',
+            color: '#ffcc00'
         },
         {
-            emoji: '👵',
             name: 'Muriel',
             cert: 'PADI... wait, PODI Open Water — certified last week at age 85',
             attitude: '"I told the instructor I want to see the pretty fishies. He said I\'d need a medical form. I told him I outlived my doctor."',
-            redFlags: ['50/50 chance of having dentures fall out during regulator use', 'Medication list is longer than her dive plan', 'Thinks "safety stop" means checking her blood pressure', 'Out-swims everyone in the family']
+            redFlags: ['50/50 chance of having dentures fall out during regulator use', 'Medication list is longer than her dive plan', 'Thinks "safety stop" means checking her blood pressure', 'Out-swims everyone in the family'],
+            img: 'images/buddy-11.jpg',
+            color: '#ff88aa'
         },
         {
-            emoji: '🤖',
             name: 'Rescue Randy (Mannequin)',
             cert: 'PODI Divemaster — 100% of dives survived',
             attitude: '"..." — Randy communicates through silent judgment and impeccable buoyancy. Literally cannot drown.',
-            redFlags: ['Is a mannequin', 'Has been certified as Divemaster, Instructor, and Course Director', 'Somehow has more dive experience than Kyle', 'Will judge you silently throughout the entire dive']
+            redFlags: ['Is a mannequin', 'Has been certified as Divemaster, Instructor, and Course Director', 'Somehow has more dive experience than Kyle', 'Will judge you silently throughout the entire dive'],
+            img: 'images/buddy-12.jpg',
+            color: '#888888'
         }
     ];
+
+    function generateDiverSVG(color) {
+        var hex = color || '#ff6600';
+        var r = parseInt(hex.slice(1,3), 16);
+        var g = parseInt(hex.slice(3,5), 16);
+        var b = parseInt(hex.slice(5,7), 16);
+        var dark = 'rgb(' + Math.round(r*0.5) + ',' + Math.round(g*0.5) + ',' + Math.round(b*0.5) + ')';
+        var light = 'rgb(' + Math.min(255,r+80) + ',' + Math.min(255,g+80) + ',' + Math.min(255,b+80) + ')';
+        var bg = 'rgb(' + r + ',' + g + ',' + b + ')';
+        return 'data:image/svg+xml,' + encodeURIComponent(
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">' +
+            '<rect width="200" height="200" fill="#0a1628"/>' +
+            '<ellipse cx="100" cy="100" rx="90" ry="90" fill="' + dark + '" opacity="0.15"/>' +
+            '<ellipse cx="100" cy="80" rx="40" ry="45" fill="' + light + '" opacity="0.3"/>' +
+            '<ellipse cx="100" cy="80" rx="38" ry="42" fill="' + bg + '"/>' +
+            '<rect x="62" y="58" width="76" height="30" rx="8" fill="#222"/>' +
+            '<rect x="68" y="60" width="64" height="26" rx="6" fill="#333"/>' +
+            '<ellipse cx="82" cy="73" rx="8" ry="6" fill="#1a1a2e" opacity="0.8"/>' +
+            '<ellipse cx="118" cy="73" rx="8" ry="6" fill="#1a1a2e" opacity="0.8"/>' +
+            '<rect x="72" y="86" width="56" height="14" rx="4" fill="#222"/>' +
+            '<rect x="78" y="88" width="44" height="10" rx="3" fill="#555"/>' +
+            '<rect x="84" y="90" width="32" height="6" rx="2" fill="#777"/>' +
+            '<ellipse cx="100" cy="105" rx="20" ry="8" fill="#444"/>' +
+            '<rect x="88" y="95" width="24" height="3" rx="1" fill="#aaa"/>' +
+            '<polygon points="96,100 104,100 108,110 92,110" fill="#666"/>' +
+            '<polygon points="92,110 108,110 106,118 94,118" fill="#888"/>' +
+            '<path d="M108 98 Q130 95 140 100 Q150 105 148 115 Q145 125 135 122 Q130 118 120 105Z" fill="#bbb" opacity="0.5"/>' +
+            '<circle cx="60" cy="50" r="3" fill="none" stroke="#fff" stroke-width="1" opacity="0.3"/>' +
+            '<circle cx="50" cy="65" r="2" fill="none" stroke="#fff" stroke-width="1" opacity="0.2"/>' +
+            '<circle cx="140" cy="45" r="4" fill="none" stroke="#fff" stroke-width="1" opacity="0.3"/>' +
+            '<circle cx="150" cy="60" r="2" fill="none" stroke="#fff" stroke-width="1" opacity="0.2"/>' +
+            '<circle cx="145" cy="70" r="3" fill="none" stroke="#fff" stroke-width="1" opacity="0.15"/>' +
+            '<circle cx="55" cy="40" r="2" fill="none" stroke="#fff" stroke-width="1" opacity="0.2"/>' +
+            '</svg>'
+        );
+    }
 
     function initBuddyTinder() {
         var cardWrap = document.getElementById('tinder-card-wrap');
@@ -1599,7 +1647,17 @@
             card.style.transition = '';
 
             var buddy = remaining[index];
-            document.getElementById('buddy-emoji').textContent = buddy.emoji;
+            var emojiEl = document.getElementById('buddy-emoji');
+            if (buddy.img) {
+                emojiEl.innerHTML = '<img src="' + buddy.img + '" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">';
+                emojiEl.style.background = 'transparent';
+            } else {
+                emojiEl.innerHTML = '';
+                emojiEl.style.background = buddy.color || '#ff6600';
+                emojiEl.style.backgroundImage = 'url(' + generateDiverSVG(buddy.color) + ')';
+                emojiEl.style.backgroundSize = 'cover';
+                emojiEl.style.backgroundPosition = 'center';
+            }
             document.getElementById('buddy-name').textContent = buddy.name;
             document.getElementById('buddy-cert').textContent = buddy.cert;
             document.getElementById('buddy-attitude').textContent = buddy.attitude;
@@ -1658,8 +1716,9 @@
                 var dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
                 var div = document.createElement('div');
                 div.className = 'buddy-match-card';
+                var matchImg = b.img || generateDiverSVG(b.color);
                 div.innerHTML =
-                    '<span class="buddy-match-emoji">' + b.emoji + '</span>' +
+                    '<span class="buddy-match-emoji" style="display:inline-block;width:60px;height:60px;border-radius:50%;background-image:url(' + matchImg + ');background-size:cover;background-position:center;background-color:' + (b.color || '#333') + ';border:2px solid rgba(255,255,255,0.1);"></span>' +
                     '<span class="buddy-match-name">' + b.name + '</span>' +
                     '<span class="buddy-match-cert">' + b.cert + '</span>' +
                     '<span class="buddy-match-date">Matched ' + dateStr + '</span>';

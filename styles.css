@@ -4183,8 +4183,25 @@ footer .footer-disclaimer {
 .tinder-card-emoji {
     font-size: 72px;
     text-align: center;
-    padding: 15px 0;
+    padding: 0;
     line-height: 1;
+    width: 100%;
+    height: 200px;
+    flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tinder-card-emoji img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .tinder-card-body {
@@ -4415,8 +4432,9 @@ footer .footer-disclaimer {
 
 .buddy-match-emoji {
     font-size: 48px;
-    display: block;
+    display: inline-block;
     margin-bottom: 8px;
+    border: 2px solid rgba(255,255,255,0.1);
 }
 
 .buddy-match-name {
