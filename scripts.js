@@ -2190,6 +2190,39 @@
     // ============================================================
     // 19. REFER-A-FRIEND PROGRAM
     // ============================================================
+    var referralData = {
+        victims: [
+            { name: 'Dave T.', injury: 'Pulled hamstring (panicked fin kick)', rating: 4, quote: 'They said I\'d be a "simulated casualty." I was not simulated. I was very actual.' },
+            { name: 'Karen L.', injury: 'Bruised ego (instructor was better at arguing)', rating: 2, quote: 'I asked to speak to the manager of the rescue. They said I WAS the rescue.' },
+            { name: 'Chad Thunderson', injury: 'Swallowed 3L of pool water ("attitude adjustment")', rating: 5, quote: 'Bro, I\'ve never been more alive. The instructor literally tried to drown me. 10/10.' },
+            { name: 'Tiffany Reef', injury: 'GoPro flooded (tears were saltier than the ocean)', rating: 3, quote: 'I got 0 good shots. The instructor kept blocking my angles with his "rescue techniques."' },
+            { name: 'Gary M.', injury: 'Existing back injury aggravated (he signed for it)', rating: 1, quote: 'I\'ve been in physio for 6 months. They said the rescue course was 2 days.' },
+            { name: 'Bubbles McFloat', injury: 'Mannequin dignity violated', rating: 5, quote: '...' },
+            { name: 'Muriel', injury: 'Lost her dentures during rescue breathers', rating: 4, quote: 'I\'m 85. I\'ve outlived my doctor. I can outlast a rescue course.' },
+            { name: 'Brenda Wave', injury: 'Emotional damage from being treated like a victim', rating: 3, quote: 'I\'ve been in therapy ever since. The instructor said "that\'s not in the curriculum."' },
+            { name: 'Rescue Randy', injury: 'None. He\'s a mannequin. He\'s fine.', rating: 5, quote: '... (superior silence)' },
+            { name: 'Steve', injury: 'Refused to participate ("I\'ve done 2,000 dives")', rating: 1, quote: 'I\'ve been diving quarries for 20 years. No one "rescues" me. I was asked to leave.' },
+        ],
+        milestoneMessages: [
+            'That\'s 1 buddy sold out for a discount! Nice work.',
+            '2 victims! You\'re building a reputation. A bad one, but a reputation.',
+            '3 referrals! You\'re officially a talent scout for the emotionally unprepared.',
+            '4 buddies! At this point they should be paying YOU.',
+            '5 referrals! You\'ve single-handedly kept our waiver printer running.',
+            '6 victims! The Coast Guard has a file on you now.',
+            '7 friends referred! You\'re running out of people who trust you.',
+            '8 down! Your Christmas card list is getting shorter.',
+            '9 referrals! Our instructor is requesting you specifically for "quality victims."',
+            '10 VICTIMS! You\'ve earned the title "Serial Referrer." We\'re printing a special certificate.'
+        ],
+        discountMilestones: [
+            { count: 1, discount: 10, label: '1 Buddy — 10% Off' },
+            { count: 3, discount: 15, label: '3 Buddies — 15% Off' },
+            { count: 5, discount: 20, label: '5 Buddies — 20% Off' },
+            { count: 10, discount: 30, label: '10 Buddies — 30% Off (Executive Predator)' },
+        ]
+    };
+
     function initReferralProgram() {
         var genBtn = document.getElementById('referral-generate');
         var codeEl = document.getElementById('referral-code');
@@ -2197,11 +2230,20 @@
         var copyMsg = document.getElementById('referral-copy-msg');
         var shareLinkBtn = document.getElementById('referral-share-link');
         var shareEmailBtn = document.getElementById('referral-share-email');
+        var statsEl = document.getElementById('referral-stats');
+        var victimListEl = document.getElementById('referral-victim-list');
+        var milestonesEl = document.getElementById('referral-milestones');
 
         if (!codeEl) return;
 
         var savedCode = localStorage.getItem('podi_referral_code');
         var savedCount = parseInt(localStorage.getItem('podi_referral_count') || '0');
+        var savedVictims = JSON.parse(localStorage.getItem('podi_referral_victims') || '[]');
+
+        var victimNames = {};
+        for (var v = 0; v < referralData.victims.length; v++) {
+            victimNames[referralData.victims[v].name] = referralData.victims[v];
+        }
 
         function generateCode() {
             var prefix = 'PODI-REF-';
@@ -2221,17 +2263,201 @@
             return savedCode;
         }
 
+        function getMilestoneForCount(count) {
+            var ms = null;
+            for (var m = 0; m < referralData.discountMilestones.length; m++) {
+                if (count >= referralData.discountMilestones[m].count) {
+                    ms = referralData.discountMilestones[m];
+                }
+            }
+            return ms;
+        }
+
+        function getRandomVictim() {
+            return referralData.victims[Math.floor(Math.random() * referralData.victims.length)];
+        }
+
+        function addFakeVictim() {
+            var newVictim = getRandomVictim();
+            if (savedVictims.length < referralData.victims.length) {
+                while (savedVictims.indexOf(newVictim.name) !== -1) {
+                    newVictim = getRandomVictim();
+                }
+                savedVictims.push(newVictim.name);
+            } else {
+                savedVictims.push(newVictim.name + ' (repeat victim — they didn\'t learn)');
+            }
+            localStorage.setItem('podi_referral_victims', JSON.stringify(savedVictims));
+            return newVictim;
+        }
+
+        function getCopyJokes() {
+            var jokes = [
+                'Code copied! Your friend is now a "candidate." They\'ll thank you later. (They won\'t.)',
+                '✓ Copied! Their rescue is now your discount. Fair trade.',
+                'Code saved! Your buddy\'s rib cage is about to get "hands-on experience."',
+                'Copied! Remember: a good referral is one who doesn\'t read the fine print.',
+                'Code captured! Your friend thinks you\'re helping them. Adorable.',
+                '✓ Copied! The instructor has been notified. Your buddy hasn\'t. Surprise!',
+                'Nice! Your social circle is now a recruitment pipeline.',
+                'Copied! Every referral brings you one step closer to "person of interest" status.',
+                'Code saved! Your buddy will emerge from the course with new skills and old trauma.',
+                '✓ You now have a referral code. Use it wisely. Use it on people who trust you.',
+            ];
+            return jokes[Math.floor(Math.random() * jokes.length)];
+        }
+
+        function getNewCodeJoke() {
+            var jokes = [
+                '🔄 New code, same mission: find fresh victims.',
+                'Code regenerated! Your old one expired. Your friends think you\'re off the hook. They\'re wrong.',
+                'Fresh code! Like fresh bait. Cast your line.',
+                'New code! Your previous one was compromised by "ethics."',
+                'Code changed! The old one was linked to too many suspicious Google searches.',
+                '🔄 New referral code! Our algorithm identified better victim demographics.',
+            ];
+            return jokes[Math.floor(Math.random() * jokes.length)];
+        }
+
+        function getMilestoneReachedMsg(count) {
+            var idx = Math.min(count - 1, referralData.milestoneMessages.length - 1);
+            return referralData.milestoneMessages[idx];
+        }
+
+        function updateStats() {
+            if (!statsEl) return;
+
+            var ms = getMilestoneForCount(savedCount);
+            var discount = ms ? ms.discount : 0;
+            var fakeSavings = '$' + (savedCount * 34.9).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            var fakeTotalSavings = '$' + (savedCount * 34.9 * 1.08).toFixed(0);
+
+            statsEl.innerHTML =
+                '<div class="ref-stats-grid">' +
+                    '<div class="ref-stat card--static">' +
+                        '<div class="ref-stat-icon">👥</div>' +
+                        '<div class="ref-stat-value" id="ref-stat-count">' + savedCount + '</div>' +
+                        '<div class="ref-stat-label">VICTIMS RECRUITED</div>' +
+                    '</div>' +
+                    '<div class="ref-stat card--static">' +
+                        '<div class="ref-stat-icon">💰</div>' +
+                        '<div class="ref-stat-value">' + (discount > 0 ? discount + '%' : '0%') + '</div>' +
+                        '<div class="ref-stat-label">CURRENT DISCOUNT</div>' +
+                    '</div>' +
+                    '<div class="ref-stat card--static">' +
+                        '<div class="ref-stat-icon">💸</div>' +
+                        '<div class="ref-stat-value">' + fakeSavings + '</div>' +
+                        '<div class="ref-stat-label">TOTAL "SAVED"</div>' +
+                    '</div>' +
+                    '<div class="ref-stat card--static">' +
+                        '<div class="ref-stat-icon">📋</div>' +
+                        '<div class="ref-stat-value">' + fakeTotalSavings + '</div>' +
+                        '<div class="ref-stat-label">CLAIMED VALUE (unverifiable)</div>' +
+                    '</div>' +
+                '</div>';
+
+            if (milestonesEl) {
+                var msHTML = '<div class="ref-milestones">';
+                for (var m = 0; m < referralData.discountMilestones.length; m++) {
+                    var mstone = referralData.discountMilestones[m];
+                    var unlocked = savedCount >= mstone.count;
+                    msHTML += '<div class="ref-milestone ' + (unlocked ? 'ref-milestone-unlocked' : 'ref-milestone-locked') + '">' +
+                        '<span class="ref-milestone-icon">' + (unlocked ? '✅' : '🔒') + '</span>' +
+                        '<span class="ref-milestone-label">' + mstone.label + '</span>' +
+                        '</div>';
+                }
+                msHTML += '</div>';
+                milestonesEl.innerHTML = msHTML;
+            }
+        }
+
+        function renderVictims() {
+            if (!victimListEl || savedVictims.length === 0) {
+                if (victimListEl) victimListEl.innerHTML = '<div class="ref-no-victims">No victims yet. Your circle of trust remains intact. For now.</div>';
+                return;
+            }
+            var html = '';
+            for (var i = 0; i < savedVictims.length; i++) {
+                var vName = savedVictims[i].replace(' (repeat victim — they didn\'t learn)', '');
+                var vData = victimNames[vName];
+                var stars = '';
+                var rating = vData ? vData.rating : Math.floor(Math.random() * 5) + 1;
+                for (var s = 0; s < 5; s++) {
+                    stars += s < rating ? '⭐' : '☆';
+                }
+                html += '<div class="ref-victim-card card--static">' +
+                    '<div class="ref-victim-name">🎯 ' + savedVictims[i] + '</div>' +
+                    (vData ? '<div class="ref-victim-injury">🩹 ' + vData.injury + '</div>' : '') +
+                    (vData ? '<div class="ref-victim-quote">"' + vData.quote + '"</div>' : '') +
+                    '<div class="ref-victim-rating">Victim Satisfaction: ' + stars + '</div>' +
+                    '</div>';
+            }
+            victimListEl.innerHTML = html;
+        }
+
+        function playClipSound() {
+            try {
+                var ctx = new (window.AudioContext || window.webkitAudioContext)();
+                var osc = ctx.createOscillator();
+                var gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.frequency.value = 800 + Math.random() * 400;
+                osc.type = 'sine';
+                gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + 0.15);
+            } catch(e) {}
+        }
+
+        function playCopySound() {
+            try {
+                var ctx = new (window.AudioContext || window.webkitAudioContext)();
+                var osc = ctx.createOscillator();
+                var gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.frequency.value = 600;
+                osc.type = 'triangle';
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + 0.2);
+                setTimeout(function() {
+                    var osc2 = ctx.createOscillator();
+                    var gain2 = ctx.createGain();
+                    osc2.connect(gain2);
+                    gain2.connect(ctx.destination);
+                    osc2.frequency.value = 900;
+                    osc2.type = 'triangle';
+                    gain2.gain.setValueAtTime(0.1, ctx.currentTime + 0.35);
+                    gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.55);
+                    osc2.start(ctx.currentTime + 0.35);
+                    osc2.stop(ctx.currentTime + 0.55);
+                }, 200);
+            } catch(e) {}
+        }
+
         codeEl.textContent = getOrCreateCode();
-        if (copyMsg) copyMsg.textContent = savedCount > 0
-            ? '✓ You\'ve referred ' + savedCount + ' buddy' + (savedCount !== 1 ? 'ies' : 'y') + ' so far!'
-            : '';
+        updateStats();
+        renderVictims();
+
+        if (copyMsg) {
+            if (savedCount > 0) {
+                copyMsg.textContent = '✓ You\'ve referred ' + savedCount + ' buddy' + (savedCount !== 1 ? 'ies' : 'y') + ' so far! ' + (savedCount >= 10 ? 'You\'re a menace.' : savedCount >= 5 ? 'Your friends are catching on.' : savedCount >= 3 ? 'You\'re building a list.' : 'Keep going!');
+            } else {
+                copyMsg.textContent = 'No victims yet. Your conscience is still clean. For now.';
+            }
+        }
 
         if (genBtn) {
             genBtn.addEventListener('click', function() {
                 savedCode = generateCode();
                 localStorage.setItem('podi_referral_code', savedCode);
                 codeEl.textContent = savedCode;
-                if (copyMsg) copyMsg.textContent = '🔄 New code generated! Share it with a "friend."';
+                if (copyMsg) copyMsg.textContent = getNewCodeJoke();
+                playClipSound();
             });
         }
 
@@ -2243,19 +2469,32 @@
                 textarea.select();
                 try {
                     document.execCommand('copy');
+                    playCopySound();
                     copyBtn.textContent = '✓ COPIED!';
                     copyBtn.classList.add('copied');
                     if (copyMsg) {
                         savedCount++;
                         localStorage.setItem('podi_referral_count', savedCount.toString());
-                        copyMsg.textContent = '✓ Code copied! You\'ve now referred ' + savedCount + ' buddy' + (savedCount !== 1 ? 'ies' : 'y') + ' (allegedly).';
+                        var victim = addFakeVictim();
+                        var joke = getCopyJokes();
+                        var milestoneMsg = '';
+                        for (var m = 0; m < referralData.discountMilestones.length; m++) {
+                            if (savedCount === referralData.discountMilestones[m].count) {
+                                milestoneMsg = ' 🎉 MILESTONE: ' + referralData.discountMilestones[m].label + '! ' + getMilestoneReachedMsg(savedCount);
+                                playCopySound();
+                                setTimeout(playCopySound, 300);
+                            }
+                        }
+                        copyMsg.textContent = joke + milestoneMsg;
+                        updateStats();
+                        renderVictims();
                     }
                     setTimeout(function() {
                         copyBtn.textContent = '📋 COPY CODE';
                         copyBtn.classList.remove('copied');
-                    }, 2500);
+                    }, 3000);
                 } catch(e) {
-                    if (copyMsg) copyMsg.textContent = '✗ Could not copy. Try selecting the code manually.';
+                    if (copyMsg) copyMsg.textContent = '✗ Could not copy. Try selecting the code manually. Or use your words.';
                 }
                 document.body.removeChild(textarea);
             });
@@ -2265,38 +2504,162 @@
             shareLinkBtn.addEventListener('click', function() {
                 var url = window.location.origin + '/courses.html?ref=' + savedCode;
                 var textarea = document.createElement('textarea');
-                textarea.value = 'Sign up for PODI Rescue Diver with my referral code: ' + savedCode + ' — ' + url;
+                textarea.value = 'Hey! I\'m referring you to the PODI Rescue Diver course. Use my code: ' + savedCode + ' — ' + url + ' (You\'ll love it. Probably. No promises.)';
                 document.body.appendChild(textarea);
                 textarea.select();
                 try {
                     document.execCommand('copy');
+                    playCopySound();
                     shareLinkBtn.textContent = '✓ LINK COPIED!';
-                    if (copyMsg) copyMsg.textContent = '✓ Referral link copied! Send it to someone you tolerate.';
+                    if (copyMsg) copyMsg.textContent = '✓ Referral link copied! Send it to someone you tolerate. We\'ll take it from here. (Violently.)';
                     setTimeout(function() {
                         shareLinkBtn.textContent = '🔗 COPY SHARE LINK';
                     }, 2500);
                 } catch(e) {
-                    if (copyMsg) copyMsg.textContent = '✗ Could not copy link. Try manually.';
+                    if (copyMsg) copyMsg.textContent = '✗ Could not copy link. The ocean is unforgiving and so is our clipboard API.';
                 }
                 document.body.removeChild(textarea);
             });
         }
 
         if (shareEmailBtn) {
-            var url = window.location.origin + '/courses.html?ref=' + getOrCreateCode();
+            var emailUrl = window.location.origin + '/courses.html?ref=' + getOrCreateCode();
             var subject = encodeURIComponent('You\'ve been referred for... an experience');
+            var excuses = [
+                'I thought of you immediately when I saw this. You have that "victim" look. In a good way!',
+                'You\'re the first person I thought of. That\'s either a compliment or a warning. I haven\'t decided.',
+                'This course needs someone with your... specific skill set. Mainly the skill of being a good sport.',
+                'I know you\'ve been looking for a challenge. This one challenges your will to live. In a fun way!',
+                'Remember that time you said "I\'d try anything once"? This is anything. And it\'s once. Perfect fit.',
+                'You owe me from that thing. You know the thing. This makes us even. (You don\'t owe me. But now you will.)',
+            ];
+            var excuse = excuses[Math.floor(Math.random() * excuses.length)];
             var body = encodeURIComponent(
                 'Hey!\n\n'
-                + 'I thought of you for this amazing opportunity at PODI Diving. '
-                + 'They have this Rescue Diver course that I think you\'d be PERFECT for. '
-                + 'The instructor "fights back" — you\'ll love it!\n\n'
+                + excuse + '\n\n'
+                + 'I\'m referring you to the PODI Rescue Diver course. The instructor "fights back," which I think you\'ll find refreshing.\n\n'
                 + 'Use my referral code: ' + getOrCreateCode() + '\n'
-                + 'Sign up here: ' + url + '\n\n'
-                + 'Trust me, it\'ll be fun. What\'s the worst that could happen?\n\n'
-                + '- Your "friend"'
+                + 'Sign up here: ' + emailUrl + '\n\n'
+                + 'Trust me, it\'ll be an experience. What\'s the worst that happens? You learn valuable rescue skills?\n\n'
+                + '- Your "friend"\n\n'
+                + 'P.S. Don\'t read the waiver. It ruins the vibe.'
             );
             shareEmailBtn.href = 'mailto:?subject=' + subject + '&body=' + body;
         }
+    }
+
+    // ============================================================
+    // 20. HOMEPAGE REFERRAL MODAL
+    // ============================================================
+    function initHomepageReferral() {
+        var ctaBtn = document.getElementById('home-referral-cta');
+        if (!ctaBtn) return;
+
+        ctaBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            var existing = document.getElementById('home-ref-modal');
+            if (existing) existing.remove();
+
+            var storedCode = localStorage.getItem('podi_referral_code');
+            if (!storedCode) {
+                var prefix = 'PODI-REF-';
+                var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+                storedCode = prefix;
+                for (var i = 0; i < 6; i++) {
+                    storedCode += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                localStorage.setItem('podi_referral_code', storedCode);
+            }
+            var storedCount = parseInt(localStorage.getItem('podi_referral_count') || '0');
+
+            var overlay = document.createElement('div');
+            overlay.id = 'home-ref-modal';
+            overlay.className = 'ref-home-overlay';
+
+            var fakeVictim = referralData.victims[Math.floor(Math.random() * referralData.victims.length)];
+
+            overlay.innerHTML =
+                '<div class="ref-home-modal card--static">' +
+                    '<div class="ref-home-close" id="home-ref-close">✕</div>' +
+                    '<div class="ref-home-badge">🎯 YOUR REFERRAL KIT</div>' +
+                    '<h3 class="ref-home-title">Refer a Buddy &mdash; <span>They\'re the VICTIM</span></h3>' +
+                    '<p class="ref-home-desc">Share this code with a "friend." They get rescued. <strong>You get 10% off.</strong> Everyone wins! (Results not guaranteed for the "friend.")</p>' +
+                    '<div class="ref-home-code">' +
+                        '<span class="ref-home-code-label">Your Code:</span>' +
+                        '<span class="ref-home-code-value" id="home-ref-code">' + storedCode + '</span>' +
+                        '<button class="ref-home-copy-btn" id="home-ref-copy">📋 COPY</button>' +
+                    '</div>' +
+                    '<div class="ref-home-copy-msg" id="home-ref-copy-msg"></div>' +
+                    '<div class="ref-home-stats-mini">' +
+                        '<span>👥 Referred: <strong>' + storedCount + '</strong></span>' +
+                        '<span>💰 Discount: <strong>' + (storedCount >= 1 ? '10%' : '0% (refer 1 to unlock)') + '</strong></span>' +
+                    '</div>' +
+                    '<div class="ref-home-victim-spotlight">' +
+                        '<span class="ref-home-spotlight-label">🎭 Sample Victim:</span>' +
+                        '<span class="ref-home-spotlight-name">' + fakeVictim.name + '</span>' +
+                        '<span class="ref-home-spotlight-injury">🩹 ' + fakeVictim.injury + '</span>' +
+                        '<span class="ref-home-spotlight-rating">' + '⭐'.repeat(fakeVictim.rating) + '☆'.repeat(5 - fakeVictim.rating) + '</span>' +
+                    '</div>' +
+                    '<a href="courses.html#referral-program" class="cta-button ref-home-cta">Full Referral Dashboard →</a>' +
+                    '<p class="ref-home-footer-note">* "Victim" is a training term. We checked. It\'s fine. Probably.</p>' +
+                '</div>';
+
+            document.body.appendChild(overlay);
+
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay || e.target.id === 'home-ref-close') {
+                    overlay.style.opacity = '0';
+                    overlay.style.transition = 'opacity 0.3s';
+                    setTimeout(function() {
+                        if (overlay.parentNode) overlay.remove();
+                    }, 300);
+                }
+            });
+
+            var copyBtn = document.getElementById('home-ref-copy');
+            var copyMsg = document.getElementById('home-ref-copy-msg');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', function() {
+                    var textarea = document.createElement('textarea');
+                    textarea.value = storedCode;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try {
+                        document.execCommand('copy');
+                        try {
+                            var ctx = new (window.AudioContext || window.webkitAudioContext)();
+                            var osc = ctx.createOscillator();
+                            var gain = ctx.createGain();
+                            osc.connect(gain);
+                            gain.connect(ctx.destination);
+                            osc.frequency.value = 660;
+                            osc.type = 'sine';
+                            gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+                            osc.start(ctx.currentTime);
+                            osc.stop(ctx.currentTime + 0.2);
+                        } catch(e) {}
+                        copyBtn.textContent = '✓ COPIED!';
+                        copyBtn.style.background = 'linear-gradient(135deg, #00a86b, #008050)';
+                        if (copyMsg) copyMsg.textContent = 'Copied! Your buddy\'s journey begins now. They just don\'t know it yet.';
+                        var countEl = overlay.querySelector('.ref-home-stats-mini strong:first-child');
+                        if (countEl) {
+                            var newCount = storedCount + 1;
+                            localStorage.setItem('podi_referral_count', newCount.toString());
+                            countEl.textContent = newCount;
+                        }
+                        setTimeout(function() {
+                            copyBtn.textContent = '📋 COPY';
+                            copyBtn.style.background = '';
+                        }, 2500);
+                    } catch(e) {
+                        if (copyMsg) copyMsg.textContent = 'Couldn\'t copy. The ocean currents interfere with our clipboard. Try again.';
+                    }
+                    document.body.removeChild(textarea);
+                });
+            }
+        });
     }
 
     // ============================================================
@@ -2314,6 +2677,7 @@
         initComplaints();
         initBuddyTinder();
         initReferralProgram();
+        initHomepageReferral();
 
         // Event delegation for shop
         var shopGrid = document.querySelector('.shop-grid');

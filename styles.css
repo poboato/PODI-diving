@@ -4084,6 +4084,390 @@ footer .footer-disclaimer {
     color: var(--text-white);
 }
 
+/* ============================================================
+   REFERRAL DASHBOARD (stats, victims, milestones)
+   ============================================================ */
+.referral-dashboard-sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.referral-dashboard-col {
+    min-width: 0;
+}
+
+.ref-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.ref-stat {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 18px 12px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+}
+
+.ref-stat-icon {
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.ref-stat-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1.2;
+}
+
+.ref-stat-label {
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+}
+
+.ref-no-victims {
+    color: var(--text-muted);
+    font-size: 13px;
+    text-align: center;
+    padding: 20px;
+    border: 1px dashed var(--card-border);
+    border-radius: 10px;
+    font-style: italic;
+}
+
+.ref-victim-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ref-victim-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    transition: all 0.3s;
+    animation: cert-appear 0.4s ease-out;
+}
+
+.ref-victim-card:hover {
+    border-color: rgba(255, 68, 68, 0.3);
+}
+
+.ref-victim-name {
+    color: var(--text-white);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.ref-victim-injury {
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.ref-victim-quote {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-style: italic;
+    margin-bottom: 6px;
+    padding: 6px 8px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 6px;
+}
+
+.ref-victim-rating {
+    font-size: 11px;
+    color: var(--gold);
+}
+
+/* Milestones */
+.ref-milestones {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ref-milestone {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    transition: all 0.3s;
+}
+
+.ref-milestone-unlocked {
+    background: rgba(0, 168, 107, 0.08);
+    border-color: rgba(0, 168, 107, 0.25);
+}
+
+.ref-milestone-locked {
+    background: rgba(255, 255, 255, 0.02);
+    opacity: 0.6;
+}
+
+.ref-milestone-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.ref-milestone-label {
+    font-size: 13px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Referral FAQ strip */
+.referral-faq-strip {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.referral-faq-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    text-align: left;
+}
+
+.referral-faq-item strong {
+    color: var(--gold);
+    font-size: 13px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.referral-faq-item p {
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* ============================================================
+   HOMEPAGE REFERRAL MODAL
+   ============================================================ */
+.ref-home-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalSlideUp {
+    from { transform: translateY(40px) scale(0.95); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.ref-home-modal {
+    background: linear-gradient(180deg, #0f2240 0%, #0a1628 100%);
+    border: 2px solid rgba(255, 68, 68, 0.4);
+    border-radius: 20px;
+    padding: 35px 30px 25px;
+    text-align: center;
+    max-width: 440px;
+    width: 92%;
+    position: relative;
+    animation: modalSlideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    box-shadow: 0 0 60px rgba(255, 68, 68, 0.15);
+}
+
+.ref-home-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: color 0.2s;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.ref-home-close:hover {
+    color: var(--text-white);
+    background: rgba(255,255,255,0.08);
+}
+
+.ref-home-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    color: #fff;
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.ref-home-title {
+    color: var(--text-white);
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.ref-home-title span {
+    color: #ff4444;
+}
+
+.ref-home-desc {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+}
+
+.ref-home-code {
+    background: var(--navy-darkest);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.ref-home-code-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ref-home-code-value {
+    font-family: monospace;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--gold);
+    letter-spacing: 2px;
+    user-select: all;
+}
+
+.ref-home-copy-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.ref-home-copy-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.ref-home-copy-btn:active {
+    transform: scale(0.95);
+}
+
+.ref-home-copy-msg {
+    font-size: 11px;
+    color: var(--success);
+    min-height: 16px;
+    margin-bottom: 12px;
+}
+
+.ref-home-stats-mini {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+}
+
+.ref-home-stats-mini strong {
+    color: var(--gold);
+}
+
+.ref-home-victim-spotlight {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.ref-home-spotlight-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.ref-home-spotlight-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+.ref-home-spotlight-injury {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.ref-home-spotlight-rating {
+    font-size: 12px;
+    color: var(--gold);
+}
+
+.ref-home-cta {
+    display: inline-block !important;
+    margin-bottom: 10px !important;
+    font-size: 14px !important;
+}
+
+.ref-home-footer-note {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
 @media (max-width: 768px) {
     .referral-steps {
         grid-template-columns: 1fr;
@@ -4100,6 +4484,26 @@ footer .footer-disclaimer {
     .referral-rescue-pitch {
         flex-direction: column;
         text-align: center;
+    }
+
+    .referral-dashboard-sections {
+        grid-template-columns: 1fr;
+    }
+
+    .ref-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ref-home-modal {
+        padding: 25px 20px 20px;
+    }
+
+    .ref-home-code {
+        flex-direction: column;
+    }
+
+    .ref-home-title {
+        font-size: 18px;
     }
 }
 
