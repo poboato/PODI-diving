@@ -3118,12 +3118,6 @@ footer .footer-disclaimer {
     border: 1px solid var(--card-border);
 }
 
-.gallery-item:hover {
-    border-color: var(--accent);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px var(--shadow-hover);
-}
-
 .gallery-bg {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -5222,4 +5216,92 @@ footer .footer-disclaimer {
 
 .badge-modal-btn:active {
     transform: scale(0.97);
+}
+
+/* ============================================================
+   CONTACT PAGE
+   ============================================================ */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.contact-card {
+    background: rgba(0, 51, 102, 0.6);
+    border: 1px solid rgba(255, 102, 0, 0.27);
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.contact-card-title {
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.contact-card-title-sm {
+    color: var(--gold);
+    margin-bottom: 15px;
+}
+
+.contact-card-text {
+    color: #ccc;
+    margin-bottom: 8px;
+}
+
+.contact-card-text-mb {
+    color: #ccc;
+    margin-bottom: 15px;
+}
+
+.contact-card-label {
+    color: var(--accent);
+}
+
+.contact-note {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.contact-form-title {
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contact-form-subtitle {
+    color: var(--text-muted);
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.contact-consent-label {
+    font-size: 12px;
+    color: #666;
+}
+
+.contact-hours-table {
+    width: 100%;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.contact-hours-closed {
+    color: var(--danger);
+}
+
+.contact-hours-open {
+    color: var(--accent);
+}
+
+.contact-danger-text {
+    color: var(--danger);
+}
+
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
 }

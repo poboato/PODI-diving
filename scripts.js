@@ -29,8 +29,7 @@
         resizeHandler: null,
 
         init: function() {
-            if (this.initialized) return;
-            this.initialized = true;
+            if (document.getElementById('podi-computer')) return;
 
             this.createWidget();
             this.running = true;
@@ -362,7 +361,6 @@
 
         destroy: function() {
             this.running = false;
-            this.initialized = false;
             if (this.interval) clearInterval(this.interval);
             if (this.scrollHandler) window.removeEventListener('scroll', this.scrollHandler);
             if (this.resizeHandler) window.removeEventListener('resize', this.resizeHandler);
@@ -1258,7 +1256,7 @@
         var items = document.querySelectorAll('.gallery-item');
         for (var i = 0; i < items.length; i++) {
             if (filter === 'all' || items[i].getAttribute('data-category') === filter) {
-                items[i].style.display = 'block';
+                items[i].style.display = '';
             } else {
                 items[i].style.display = 'none';
             }

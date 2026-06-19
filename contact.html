@@ -32,7 +32,7 @@
             <div class="logo-text">
                 <h1>P.O.D.I.</h1>
                 <p class="tagline">Professional Organization of Dangerously Incompetent Divers</p>
-                <p class="danger-rating">CONTACT US: <span style="color:#ff4444;">If you can find us, you can find us.</span></p>
+                <p class="danger-rating">CONTACT US: <span class="contact-danger-text">If you can find us, you can find us.</span></p>
             </div>
         </div>
     </header>
@@ -65,43 +65,43 @@
             PODI operates under the legal principle of "we'll get back to you" (which means we won't).
         </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px; margin:30px 0;">
-            <div style="background:rgba(0,51,102,0.6); border:1px solid #ff660044; border-radius:15px; padding:25px;">
-                <h3 style="color:#ffcc00; margin-bottom:20px;">📍 Location</h3>
-                <p style="color:#ccc; margin-bottom:10px;">
-                    <strong style="color:#ff6600;">PODI Headquarters</strong><br>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <h3 class="contact-card-title">📍 Location</h3>
+                <p class="contact-card-text" style="margin-bottom:10px;">
+                    <strong class="contact-card-label">PODI Headquarters</strong><br>
                     1234 Marina Boulevard, Unit B<br>
                     ("Behind the dumpster, next to the bait shop")<br>
                     Miami, FL 33101
                 </p>
-                <p style="color:#888; font-size:13px;">
+                <p class="contact-note">
                     <em>Note: We're never actually at this address. We work from a van. It's down by the river.</em>
                 </p>
             </div>
 
-            <div style="background:rgba(0,51,102,0.6); border:1px solid #ff660044; border-radius:15px; padding:25px;">
-                <h3 style="color:#ffcc00; margin-bottom:20px;">📞 Contact Info</h3>
-                <p style="color:#ccc; margin-bottom:8px;">
-                    <strong style="color:#ff6600;">Phone:</strong> (305) 555-PODI
+            <div class="contact-card">
+                <h3 class="contact-card-title">📞 Contact Info</h3>
+                <p class="contact-card-text">
+                    <strong class="contact-card-label">Phone:</strong> (305) 555-PODI
                 </p>
-                <p style="color:#888; font-size:13px; margin-bottom:15px;">
+                <p class="contact-note contact-card-text-mb">
                     (This number goes to a disconnected line. We think it adds character.)
                 </p>
-                <p style="color:#ccc; margin-bottom:8px;">
-                    <strong style="color:#ff6600;">Email:</strong> info@podidiving.com
+                <p class="contact-card-text">
+                    <strong class="contact-card-label">Email:</strong> info@podidiving.com
                 </p>
-                <p style="color:#888; font-size:13px; margin-bottom:15px;">
+                <p class="contact-note contact-card-text-mb">
                     (We check this once a month. If it's full, we delete everything and start over.)
                 </p>
-                <p style="color:#ccc; margin-bottom:8px;">
-                    <strong style="color:#ff6600;">Emergency:</strong> Call 911, then call us. Actually, just call 911.
+                <p class="contact-card-text">
+                    <strong class="contact-card-label">Emergency:</strong> Call 911, then call us. Actually, just call 911.
                 </p>
             </div>
         </div>
 
         <div class="contact-form card card--static">
-            <h3 style="color:#ffcc00; text-align:center; margin-bottom:20px;">📝 Send Us a Message</h3>
-            <p style="color:#888; text-align:center; font-size:13px; margin-bottom:20px;">(We probably won't read it, but it's therapeutic for you)</p>
+            <h3 class="contact-form-title">📝 Send Us a Message</h3>
+            <p class="contact-form-subtitle">(We probably won't read it, but it's therapeutic for you)</p>
 
             <form>
                 <label for="name">Your Name</label>
@@ -126,7 +126,7 @@
                 <label for="message">Message</label>
                 <textarea id="message" rows="5" placeholder="Write whatever you want. No one reads these."></textarea>
 
-                <label style="font-size:12px; color:#666;">
+                <label class="contact-consent-label">
                     <input type="checkbox" id="consent">
                     I acknowledge that PODI will not respond to this message and I waive all rights to follow-up
                 </label>
@@ -142,38 +142,38 @@
             </p>
         </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px; margin:30px 0;">
-            <div style="background:rgba(0,51,102,0.6); border:1px solid #ff660044; border-radius:15px; padding:25px;">
-                <h3 style="color:#ffcc00; margin-bottom:15px;">⏰ Office Hours</h3>
-                <table style="width:100%; color:#ccc; font-size:14px;">
-                    <tr><td>Monday</td><td style="color:#ff4444;">Closed (hangover)</td></tr>
-                    <tr><td>Tuesday</td><td style="color:#ff4444;">Closed (recovery)</td></tr>
-                    <tr><td>Wednesday</td><td style="color:#ff6600;">11:00 AM - 2:00 PM (maybe)</td></tr>
-                    <tr><td>Thursday</td><td style="color:#ff6600;">By appointment (Chad's parole)</td></tr>
-                    <tr><td>Friday</td><td style="color:#ff6600;">Happy Hour Only</td></tr>
-                    <tr><td>Saturday</td><td style="color:#ff6600;">If we feel like it</td></tr>
-                    <tr><td>Sunday</td><td style="color:#ff4444;">Closed (hungover again)</td></tr>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <h3 class="contact-card-title-sm">⏰ Office Hours</h3>
+                <table class="contact-hours-table">
+                    <tr><td>Monday</td><td class="contact-hours-closed">Closed (hangover)</td></tr>
+                    <tr><td>Tuesday</td><td class="contact-hours-closed">Closed (recovery)</td></tr>
+                    <tr><td>Wednesday</td><td class="contact-hours-open">11:00 AM - 2:00 PM (maybe)</td></tr>
+                    <tr><td>Thursday</td><td class="contact-hours-open">By appointment (Chad's parole)</td></tr>
+                    <tr><td>Friday</td><td class="contact-hours-open">Happy Hour Only</td></tr>
+                    <tr><td>Saturday</td><td class="contact-hours-open">If we feel like it</td></tr>
+                    <tr><td>Sunday</td><td class="contact-hours-closed">Closed (hungover again)</td></tr>
                 </table>
             </div>
 
-            <div style="background:rgba(0,51,102,0.6); border:1px solid #ff660044; border-radius:15px; padding:25px;">
-                <h3 style="color:#ffcc00; margin-bottom:15px;">🌐 Follow Us</h3>
-                <p style="color:#ccc; margin-bottom:8px;">
-                    <strong style="color:#ff6600;">Instagram:</strong> @PODI_Diving
+            <div class="contact-card">
+                <h3 class="contact-card-title-sm">🌐 Follow Us</h3>
+                <p class="contact-card-text">
+                    <strong class="contact-card-label">Instagram:</strong> @PODI_Diving
                 </p>
-                <p style="color:#888; font-size:13px; margin-bottom:15px;">
+                <p class="contact-note contact-card-text-mb">
                     (47% selfies, 30% blurry fish photos, 23% complaints about other dive agencies)
                 </p>
-                <p style="color:#ccc; margin-bottom:8px;">
-                    <strong style="color:#ff6600;">TikTok:</strong> @PODI_Danger_Divers
+                <p class="contact-card-text">
+                    <strong class="contact-card-label">TikTok:</strong> @PODI_Danger_Divers
                 </p>
-                <p style="color:#888; font-size:13px; margin-bottom:15px;">
+                <p class="contact-note contact-card-text-mb">
                     (Content includes near-misses, equipment failures, and Chad doing stupid things)
                 </p>
-                <p style="color:#ccc; margin-bottom:8px;">
-                    <strong style="color:#ff6600;">YouTube:</strong> PODI Diving Channel
+                <p class="contact-card-text">
+                    <strong class="contact-card-label">YouTube:</strong> PODI Diving Channel
                 </p>
-                <p style="color:#888; font-size:13px; margin-bottom:15px;">
+                <p class="contact-note contact-card-text-mb">
                     (3 subscribers, all of us)
                 </p>
             </div>
