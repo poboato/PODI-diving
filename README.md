@@ -40,7 +40,7 @@ To get this repository running on your local machine, please follow our highly r
 
 1.  **Clone the Repository:**
     ```bash
-    git clone https://github.com/your-username/podi-diving.git
+    git clone https://github.com/poboato/PODI-diving.git
     ```
 2.  **Open `index.html`:**
     Double-click it. Seriously. We don't have a build step, a compiler, or Webpack. Gary said NPM is a "government scam" and we are inclined to agree.
