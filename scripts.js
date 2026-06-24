@@ -1408,6 +1408,21 @@
             var result = document.getElementById('complaint-result');
             if (!result) return;
 
+            var formData = {
+                name: name,
+                email: document.getElementById('complaint-email').value.trim(),
+                category: category,
+                date: document.getElementById('complaint-date').value,
+                description: document.getElementById('complaint-desc').value.trim(),
+                resolution: resolution
+            };
+
+            fetch('https://formsubmit.co/ajax/admin@podidiving.com', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(formData)
+            }).catch(function() {});
+
             var responseMessages = [
                 'Thank you for your complaint. It has been logged in our system (it has not). Our team will review it (they won\'t) and get back to you (no).',
                 'We appreciate you taking the time to share your concerns. Your feedback is important to us (this is a lie). We have noted your issue and filed it appropriately (the trash).',

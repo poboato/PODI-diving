@@ -63,6 +63,10 @@
             <strong>⚠ BEFORE YOU COMPLAIN:</strong> By submitting this form, you agree that PODI may use your complaint as "testimonial material" (out of context), may share it with our legal team (Kyle's cousin who watched Law & Order once), and may respond with a form letter that has nothing to do with your issue.
         </div>
 
+        <div class="disclaimer-notice" style="background:#1a2a2a; border-color:#2a4a4a;">
+            <strong>📧 PREFER EMAIL?</strong> Complaints can also be sent to <a href="mailto:admin@podidiving.com" style="color:#66d9ff;">admin@podidiving.com</a>. Same outcome, fewer clicks.
+        </div>
+
         <div class="complaint-stats">
             <div class="complaint-stat">
                 <span class="complaint-stat-value">0</span>
@@ -85,15 +89,16 @@
         <div class="complaint-form card card--static">
             <h3>📝 File a Complaint</h3>
             <p class="complaint-sub">Please provide as much detail as possible. We won't read any of it, but detail makes us look professional.</p>
+            <p style="color:#ff6666; font-size:14px; text-align:center; margin-bottom:15px; padding:10px; background:rgba(255,0,0,0.1); border-radius:6px;">⚠ Just so we're clear: the form below does not get read. At all. Ever. It goes nowhere. This is performative.</p>
             <form id="complaint-form">
                 <label>Full Name</label>
-                <input type="text" id="complaint-name" placeholder="Your name (or a fake one, we won't check)" required>
+                <input type="text" id="complaint-name" name="complaint-name" placeholder="Your name (or a fake one, we won't check)" required>
 
                 <label>Email Address</label>
-                <input type="email" id="complaint-email" placeholder="email@example.com (for our autoresponder)" required>
+                <input type="email" id="complaint-email" name="complaint-email" placeholder="email@example.com" required>
 
                 <label>Complaint Category</label>
-                <select id="complaint-category">
+                <select id="complaint-category" name="complaint-category">
                     <option>Instructor was unprofessional</option>
                     <option>Equipment was broken (or missing)</option>
                     <option>Course content was "inadequate"</option>
@@ -104,13 +109,13 @@
                 </select>
 
                 <label>Date of Incident</label>
-                <input type="date" id="complaint-date">
+                <input type="date" id="complaint-date" name="complaint-date">
 
                 <label>Description of Complaint</label>
-                <textarea id="complaint-desc" rows="5" placeholder="Describe your complaint in detail. Use all the words you want. We won't use any of them."></textarea>
+                <textarea id="complaint-desc" name="complaint-desc" rows="5" placeholder="Describe your complaint in detail. Use all the words you want. We won't use any of them."></textarea>
 
                 <label>Desired Resolution</label>
-                <select id="complaint-resolution">
+                <select id="complaint-resolution" name="complaint-resolution">
                     <option>Full refund (denied)</option>
                     <option>Partial refund (also denied)</option>
                     <option>An apology (best we can do is a shrug)</option>
