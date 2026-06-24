@@ -1,0 +1,617 @@
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: omgili
+Disallow: /
+
+User-agent: omgilibot
+Disallow: /
+
+User-agent: peer39_crawler
+Disallow: /
+
+User-agent: peer39_crawler/1.0
+Disallow: /
+
+User-agent: PiplBot
+Disallow: /
+
+User-agent: rogerbot
+Disallow: /
+
+User-agent: semrush
+Disallow: /
+
+User-agent: semrushbot
+Disallow: /
+
+User-agent: scrapely
+Disallow: /
+
+User-agent: Seekr
+Disallow: /
+
+User-agent: SeekrBot
+Disallow: /
+
+User-agent: YouBot
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: magpie-crawler
+Disallow: /
+
+User-agent: Meltwater
+Disallow: /
+
+User-agent: news-ai-search-crawler
+Disallow: /
+
+User-agent: newssgrowler
+Disallow: /
+
+User-agent: Nimbus
+Disallow: /
+
+User-agent: Owler
+Disallow: /
+
+User-agent: re斑rch-crawler
+Disallow: /
+
+User-agent: revium-crawler
+Disallow: /
+
+User-agent: Scrapy
+Disallow: /
+
+User-agent: SiteCheckerBotCrawler
+Disallow: /
+
+User-agent: SocialSearcher
+Disallow: /
+
+User-agent: Sparkler
+Disallow: /
+
+User-agent: sp蹴
+Disallow: /
+
+User-agent: Swiftbot
+Disallow: /
+
+User-agent: Traceable
+Disallow: /
+
+User-agent: TraceableAI
+Disallow: /
+
+User-agent: VelenPublicWebCrawler
+Disallow: /
+
+User-agent: Webzio
+Disallow: /
+
+User-agent: Wotbox
+Disallow: /
+
+User-agent: Xen
+Disallow: /
+
+User-agent: Zaldamo
+Disallow: /
+
+User-agent: Zao
+Disallow: /
+
+User-agent: Zyte
+Disallow: /
+
+User-agent: ai
+Disallow: /
+
+User-agent: ai-agent
+Disallow: /
+
+User-agent: Ai2Bot
+Disallow: /
+
+User-agent: aIM
+Disallow: /
+
+User-agent: Alexa
+Disallow: /
+
+User-agent: Alice
+Disallow: /
+
+User-agent: Arachni
+Disallow: /
+
+User-agent: archive.org_bot
+Disallow: /
+
+User-agent: AspiegelBot
+Disallow: /
+
+User-agent: Awario
+Disallow: /
+
+User-agent: AwarioBot
+Disallow: /
+
+User-agent: Backlink-Check
+Disallow: /
+
+User-agent: Barkrowler
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: BLP_bbot
+Disallow: /
+
+User-agent: Bubi
+Disallow: /
+
+User-agent: Buck
+Disallow: /
+
+User-agent: BUND
+Disallow: /
+
+User-agent: CareerBot
+Disallow: /
+
+User-agent: CazoodleBot
+Disallow: /
+
+User-agent: CensysInspect
+Disallow: /
+
+User-agent: Cliqz
+Disallow: /
+
+User-agent: Cloudflare-AMP
+Disallow: /
+
+User-agent: Cold
+Disallow: /
+
+User-agent: content
+Disallow: /
+
+User-agent: Crawl
+Disallow: /
+
+User-agent: Crawler
+Disallow: /
+
+User-agent: Crows
+Disallow: /
+
+User-agent: Cybersafetybot
+Disallow: /
+
+User-agent: Data
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: dataminr
+Disallow: /
+
+User-agent: dataforseo
+Disallow: /
+
+User-agent: Deep
+Disallow: /
+
+User-agent: DeuSu
+Disallow: /
+
+User-agent: Dom
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: Dump
+Disallow: /
+
+User-agent: EasouSpider
+Disallow: /
+
+User-agent: Extractor
+Disallow: /
+
+User-agent: Feed
+Disallow: /
+
+User-agent: Genieo
+Disallow: /
+
+User-agent: Go
+Disallow: /
+
+User-agent: GrapeshotCrawler
+Disallow: /
+
+User-agent: Group
+Disallow: /
+
+User-agent: GTmetrix
+Disallow: /
+
+User-agent: Heritrix
+Disallow: /
+
+User-agent: HTTP
+Disallow: /
+
+User-agent: Hub
+Disallow: /
+
+User-agent: HubSpot
+Disallow: /
+
+User-agent: ia_archiver
+Disallow: /
+
+User-agent: IDG
+Disallow: /
+
+User-agent: Iksan
+Disallow: /
+
+User-agent: Index
+Disallow: /
+
+User-agent: Internet
+Disallow: /
+
+User-agent: IP
+Disallow: /
+
+User-agent: JamesBOT
+Disallow: /
+
+User-agent: Java
+Disallow: /
+
+User-agent: JikeSpider
+Disallow: /
+
+User-agent: LCC
+Disallow: /
+
+User-agent: Leech
+Disallow: /
+
+User-agent: Link
+Disallow: /
+
+User-agent: LivelapBot
+Disallow: /
+
+User-agent: ltx71
+Disallow: /
+
+User-agent: Lycos
+Disallow: /
+
+User-agent: Mail
+Disallow: /
+
+User-agent: Mass
+Disallow: /
+
+User-agent: Meta
+Disallow: /
+
+User-agent: MetaJobBot
+Disallow: /
+
+User-agent: Microsoft
+Disallow: /
+
+User-agent: Mister
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: Mojeek
+Disallow: /
+
+User-agent: MojeekBot
+Disallow: /
+
+User-agent: Net
+Disallow: /
+
+User-agent: Netcraft
+Disallow: /
+
+User-agent: NetLyzer
+Disallow: /
+
+User-agent: NetSeer
+Disallow: /
+
+User-agent: Nice
+Disallow: /
+
+User-agent: Nutch
+Disallow: /
+
+User-agent: Open
+Disallow: /
+
+User-agent: Page
+Disallow: /
+
+User-agent: Pcore
+Disallow: /
+
+User-agent: Phish
+Disallow: /
+
+User-agent: Photon
+Disallow: /
+
+User-agent: Ping
+Disallow: /
+
+User-agent: Portal
+Disallow: /
+
+User-agent: Prittorrent
+Disallow: /
+
+User-agent: Project
+Disallow: /
+
+User-agent: Psbot
+Disallow: /
+
+User-agent: Py
+Disallow: /
+
+User-agent: Qwantify
+Disallow: /
+
+User-agent: Radar
+Disallow: /
+
+User-agent: Research
+Disallow: /
+
+User-agent: Retriever
+Disallow: /
+
+User-agent: Sc
+Disallow: /
+
+User-agent: Scout
+Disallow: /
+
+User-agent: Scraper
+Disallow: /
+
+User-agent: Screaming
+Disallow: /
+
+User-agent: Screener
+Disallow: /
+
+User-agent: Scrutiny
+Disallow: /
+
+User-agent: Search
+Disallow: /
+
+User-agent: seo
+Disallow: /
+
+User-agent: Silver
+Disallow: /
+
+User-agent: Sim
+Disallow: /
+
+User-agent: Sistrix
+Disallow: /
+
+User-agent: Site
+Disallow: /
+
+User-agent: Siteimprove
+Disallow: /
+
+User-agent: Snapshot
+Disallow: /
+
+User-agent: Sogou
+Disallow: /
+
+User-agent: Soko
+Disallow: /
+
+User-agent: Spider
+Disallow: /
+
+User-agent: Spinn3r
+Disallow: /
+
+User-agent: Sput
+Disallow: /
+
+User-agent: Sputnik
+Disallow: /
+
+User-agent: sum
+Disallow: /
+
+User-agent: Survey
+Disallow: /
+
+User-agent: Synapse
+Disallow: /
+
+User-agent: t3
+Disallow: /
+
+User-agent: Thunder
+Disallow: /
+
+User-agent: Tin
+Disallow: /
+
+User-agent: Track
+Disallow: /
+
+User-agent: Trend
+Disallow: /
+
+User-agent: Turn
+Disallow: /
+
+User-agent: TweetedTimes
+Disallow: /
+
+User-agent: Twenga
+Disallow: /
+
+User-agent: url
+Disallow: /
+
+User-agent: Veo
+Disallow: /
+
+User-agent: Virus
+Disallow: /
+
+User-agent: Voila
+Disallow: /
+
+User-agent: Web
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: WebR
+Disallow: /
+
+User-agent: WebThumb
+Disallow: /
+
+User-agent: WebWalker
+Disallow: /
+
+User-agent: WeSe
+Disallow: /
+
+User-agent: Wget
+Disallow: /
+
+User-agent: Whois
+Disallow: /
+
+User-agent: Whow
+Disallow: /
+
+User-agent: WISE
+Disallow: /
+
+User-agent: Xenu
+Disallow: /
+
+User-agent: Zgrab
+Disallow: /
+
+User-agent: ZoominfoBot
+Disallow: /
+
+User-agent: ZoominfoBot/1.0
+Disallow: /
+
+User-agent: Zumbi
+Disallow: /
+
+# Allow major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: Naverbot
+Allow: /
+
+User-agent: SeznamBot
+Allow: /
+
+Sitemap: https://podidiving.com/sitemap.xml
