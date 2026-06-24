@@ -1232,6 +1232,7 @@
                 var match = style.match(/url\(['"]?([^'"]+)['"]?\)/);
                 if (match) {
                     modalBg.style.backgroundImage = "url('" + match[1] + "')";
+                    modalBg.style.filter = "blur(4px)";
                 } else {
                     modalBg.style.backgroundImage = 'none';
                     modalBg.style.background = 'var(--navy-primary)';
