@@ -1434,6 +1434,44 @@ main {
     font-style: italic;
 }
 
+.cera-subgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin: 12px 0;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+}
+
+.cera-subitem {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+}
+
+.cera-sublabel {
+    color: var(--text-secondary);
+}
+
+.cera-subval {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.risk-result-verdict {
+    background: rgba(0, 180, 0, 0.15);
+    border-radius: 8px;
+    padding: 10px;
+    color: #88ff88;
+    font-size: 13px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    text-align: center;
+}
+
 .risk-result-score {
     color: var(--text-secondary);
     font-size: 12px;

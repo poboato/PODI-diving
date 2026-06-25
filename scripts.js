@@ -526,58 +526,241 @@
         var form = document.getElementById('risk-form');
         if (!form) return;
 
+        var sliderIds = ['risk-experience', 'risk-fitness', 'risk-sobriety', 'risk-courage', 'risk-sleep', 'risk-peer'];
+        var displayIds = ['risk-exp-val', 'risk-fit-val', 'risk-sob-val', 'risk-cou-val', 'risk-sleep-val', 'risk-peer-val'];
+
+        for (var s = 0; s < sliderIds.length; s++) {
+            (function(sliderId, displayId) {
+                var slider = document.getElementById(sliderId);
+                var display = document.getElementById(displayId);
+                if (slider && display) {
+                    slider.addEventListener('input', function() {
+                        display.textContent = this.value;
+                    });
+                }
+            })(sliderIds[s], displayIds[s]);
+        }
+
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
             var experience = parseInt(document.getElementById('risk-experience').value);
             var fitness = parseInt(document.getElementById('risk-fitness').value);
             var sobriety = parseInt(document.getElementById('risk-sobriety').value);
-            var courage = parseInt(document.getElementById('risk-courage').value);
+            var confidence = parseInt(document.getElementById('risk-courage').value);
+            var sleep = parseInt(document.getElementById('risk-sleep').value);
+            var peerPressure = parseInt(document.getElementById('risk-peer').value);
 
-            var total = experience + fitness + sobriety + courage;
+            // Close Enough Risk Algorithm (CERA v2.0)
+            // Peer-reviewed by: vibes. Published in: Journal of Retrospective Statistics.
 
-            var messages = [
-                'You\'re cleared to dive! Our insurance (if we had any) would approve this.',
-                'Congratulations! You\'re 100% cleared for PODI diving activities. We see no issues here.',
-                'Risk assessment complete. Verdict: FULL SEND. Kyle would be proud.',
-                'Our advanced algorithm says you\'re good to go. Ignore any doubts you may have.',
-                'You passed! Not that we\'ve ever failed anyone. But still, you passed!',
-                'Cleared! Fun fact: 97% of PODI divers who took this test survived the dive. The other 3% are "anecdotal."',
-                'Risk level: ACCEPTABLE. We\'ve seen worse. We\'ve certified worse. You\'ll be fine.',
-                'Green light! Your self-assessment is impressive. We didn\'t read it, but impressive.',
+            // Physical Readiness Index (PRI) — geometric mean of fitness and sleep
+            var pri = Math.sqrt(fitness * sleep) * 1.5;
+            var priDisplay = Math.min(10, Math.round(pri * 10) / 10);
+
+            // Competence Approximation Factor (CAF) — experience & sobriety, exponentially inflated by confidence
+            var caf = (0.6 * experience + 0.4 * sobriety) * Math.pow(Math.E, 0.12 * (confidence - 5));
+            var cafDisplay = Math.min(10, Math.round(caf * 10) / 10);
+
+            // Social Proof Coefficient (SPC) — more buddies = logarithmically safer
+            var spc = Math.log(peerPressure + 2) * 3.5;
+            var spcDisplay = Math.min(10, Math.round(spc * 10) / 10);
+
+            // Narcosis Adjustment Term (NAT) — sinusoidal model of cognitive impairment
+            var nat = Math.sin(sobriety * Math.PI / 20) * 6 + 1;
+            var natDisplay = Math.min(10, Math.max(0, Math.round(nat * 10) / 10));
+
+            // Composite PRI score (0-100)
+            var rawIndex = pri * 0.25 + caf * 0.30 + spc * 0.20 + nat * 0.25;
+            var podiRiskIndex = Math.min(100, Math.max(0, Math.round(rawIndex * 9.5)));
+
+            // Confidence Interval — inversely proportional to confidence
+            var ci = Math.round((11 - confidence) * 3 + 2);
+
+            // Sub-score breakdown display
+            var subScoresHtml =
+                '<div class="cera-subgrid">' +
+                    '<div class="cera-subitem"><span class="cera-sublabel">Physical Readiness (PRI)</span><span class="cera-subval">' + priDisplay + '/10</span></div>' +
+                    '<div class="cera-subitem"><span class="cera-sublabel">Competence Factor (CAF)</span><span class="cera-subval">' + cafDisplay + '/10</span></div>' +
+                    '<div class="cera-subitem"><span class="cera-sublabel">Social Proof (SPC)</span><span class="cera-subval">' + spcDisplay + '/10</span></div>' +
+                    '<div class="cera-subitem"><span class="cera-sublabel">Narcosis Tolerance (NAT)</span><span class="cera-subval">' + natDisplay + '/10</span></div>' +
+                '</div>';
+
+            // Risk classification based on CERA v2.0 sub-index analysis
+            var diverProfile = null;
+
+            // Risk flags from sub-indices
+            var lowPRI = priDisplay <= 4;
+            var lowCAF = cafDisplay <= 4;
+            var highSPC = spcDisplay >= 7;
+            var lowNAT = natDisplay <= 4;
+            var flagCount = (lowPRI ? 1 : 0) + (lowCAF ? 1 : 0) + (highSPC ? 1 : 0) + (lowNAT ? 1 : 0);
+            var confidenceGap = confidence - experience >= 4 && experience <= 5;
+
+            // Risk deviation — identifies the sub-index contributing most to overall risk
+            var riskContrib = [
+                { idx: 'PRI', val: Math.max(0, 10 - priDisplay) },
+                { idx: 'CAF', val: Math.max(0, 10 - cafDisplay) },
+                { idx: 'SPC', val: Math.max(0, spcDisplay - 2) },
+                { idx: 'NAT', val: Math.max(0, 10 - natDisplay) }
+            ];
+            riskContrib.sort(function(a, b) { return b.val - a.val; });
+            var primaryRisk = riskContrib[0].idx;
+
+            // 15 risk classifications — ordered most severe to least
+            var profiles = [
+
+                // 1. Full spectrum — all four sub-indices flagged
+                { check: function() { return flagCount === 4; },
+                  name: '💀 DEATH WISH CERTIFIED',
+                  stars: 1,
+                  msg: 'Every single risk indicator has simultaneously failed. Your body is tired, your skills are questionable, your friends are a bad influence, and you are one margarita away from a marine casualty. If this were a medical chart, the doctor would have fainted.',
+                  verdict: 'PODI recommends: do not dive. But we know you will. At least take a video. For science.',
+                  danger: 'Survival odds: "technically possible." 911 should be on speed dial. And pre-dialed.' },
+
+                // 2. Multi-factor — three of four sub-indices flagged
+                { check: function() { return flagCount === 3; },
+                  name: '🔥 DISASTER TRIANGLE',
+                  stars: 1,
+                  msg: 'Three out of four risk vectors are screaming at us. Your ' + primaryRisk + ' is the ringleader with a deviation of ' + riskContrib[0].val.toFixed(1) + ' — which in PODI terms means "we have concerns, but who are we to judge?" Solo and deep diving are statistically indistinguishable from a Darwin Award submission.',
+                  verdict: 'PODI recommends: stay in the shallow end. With a floatie. And a lifeguard who knows CPR.',
+                  danger: 'Three alarm fire. Two of those alarms are your buddies. One is your own body.' },
+
+                // 3. Physical + competence compound
+                { check: function() { return lowPRI && lowCAF; },
+                  name: '🦥 UNFIT & UNQUALIFIED',
+                  stars: 2,
+                  msg: 'You have the physical readiness of someone who just woke up on a couch (PRI: ' + priDisplay + ') and the competence of someone who learned diving from a YouTube comment section (CAF: ' + cafDisplay + '). The ocean is about to teach you a lesson your instructor never could.',
+                  verdict: 'PODI recommends: do a "dive" in a library. On a book about diving. With pictures.',
+                  danger: 'Your body can\'t keep up and your brain doesn\'t know how. At least you\'ll make a great case study.' },
+
+                // 4. Competence + social vulnerability
+                { check: function() { return lowCAF && highSPC; },
+                  name: '🐑 DARWIN LEMMING',
+                  stars: 2,
+                  msg: 'You have the independent decision-making skills of a lemming with a busy schedule (CAF: ' + cafDisplay + ') and the social compliance of someone who\'s already been peer-pressured into three bad decisions today (SPC: ' + spcDisplay + '). You would follow your buddies into a blackwater cave at midnight and call it "team building."',
+                  verdict: 'PODI recommends: a solo hobby. Like stamp collecting. Stamps don\'t peer-pressure.',
+                  danger: 'Your buddies will say "send it" and you will. To the hospital, probably.' },
+
+                // 5. Social + physiological compound
+                { check: function() { return highSPC && lowNAT; },
+                  name: '🍻 NITROGEN & BAD COMPANY',
+                  stars: 2,
+                  msg: 'Your narcosis tolerance is low (NAT: ' + natDisplay + ') — meaning you get loopy fast underwater — and your friends are the type to say "one more deep dive, bro" (SPC: ' + spcDisplay + '). This combination is how people swim into pelagic zones thinking they\'re following a dolphin.',
+                  verdict: 'PODI recommends: a gas mix with less stupidity and more helium. And new friends.',
+                  danger: 'Narcosis + peer pressure = poor decisions squared. You might not remember the dive. Neither will your lawyer.' },
+
+                // 6. Physical + social compound
+                { check: function() { return lowPRI && highSPC; },
+                  name: '🏋️‍♂️ COLLAPSING UNDER PRESSURE',
+                  stars: 3,
+                  msg: 'You are running on fumes (PRI: ' + priDisplay + ') and your buddies are running on enthusiasm (SPC: ' + spcDisplay + '). You will push past your limits to keep up, because nothing says "I\'m fine" like silent suffering 30 meters underwater.',
+                  verdict: 'PODI recommends: lie to your buddies. Say you\'re "saving your dives for tomorrow." Take a nap.',
+                  danger: 'Fatigue is a liar. It says you\'re fine right up until you\'re not. Listen to it before it\'s too late.' },
+
+                // 7. Dual physiological
+                { check: function() { return lowPRI && lowNAT; },
+                  name: '🧟 PHYSIOLOGICAL ZERO',
+                  stars: 3,
+                  msg: 'Your body is exhausted (PRI: ' + priDisplay + ') and your brain turns to jelly at the first hint of depth (NAT: ' + natDisplay + '). Congratulations — you are physiologically optimized for napping on a couch, not surviving a decompression obligation.',
+                  verdict: 'PODI recommends: surface intervals measured in days, not minutes. Eat a vegetable. Drink water.',
+                  danger: 'Your physiological reserve is smaller than your ego. That\'s saying something.' },
+
+                // 8. Competence + physiological compound
+                { check: function() { return lowCAF && lowNAT; },
+                  name: '🧠💨 NARCED AND LOST',
+                  stars: 3,
+                  msg: 'You don\'t have the skills (CAF: ' + cafDisplay + ') and whatever skills you do have will evaporate the moment nitrogen hits your bloodstream (NAT: ' + natDisplay + '). You are one bad gas mix away from starring in a documentary that does not end well.',
+                  verdict: 'PODI recommends: practice your skills on land. In a chair. While completely sober and at sea level.',
+                  danger: 'Narcosis will not create new skills. It will only delete the few you have. Save early, save often.' },
+
+                // 9. Primary physical deficit — only PRI flagged
+                { check: function() { return lowPRI && !lowCAF && !highSPC && !lowNAT; },
+                  name: '🛌 FATIGUE IS A KILLER',
+                  stars: 3,
+                  msg: 'Your physical readiness indicator (PRI: ' + priDisplay + ') is in the gutter. The only thing you\'re prepared to do underwater is sink. Everything else is a bonus. The good news is your skills are fine. The bad news is skills don\'t matter when you fall asleep at 20m.',
+                  verdict: 'PODI recommends: sleep. Not a "power nap." A full, actual, human sleep cycle. Then call us back.',
+                  danger: 'Tired divers make mistakes. Dead tired divers make final mistakes.' },
+
+                // 10. Primary competence deficit — only CAF flagged
+                { check: function() { return !lowPRI && lowCAF && !highSPC && !lowNAT; },
+                  name: '📖 CERTIFIED LIABILITY',
+                  stars: 3,
+                  msg: 'You got the certification but not the competence (CAF: ' + cafDisplay + '). You are physically ready, socially stable, and narcosis-tolerant — which is a fancy way of saying you\'ll be fully conscious while making every possible rookie error. Your C-card is a permission slip to experiment on yourself.',
+                  verdict: 'PODI recommends: hire an instructor who actually teaches. Not one who just "signs off" skills.',
+                  danger: 'You have all the gear and none of the knowledge. The most dangerous kind of diver.' },
+
+                // 11. Primary social conformity risk — only SPC flagged
+                { check: function() { return !lowPRI && !lowCAF && highSPC && !lowNAT; },
+                  name: '👥 SPINELESS DIVER',
+                  stars: 4,
+                  msg: 'You are capable but compliant (SPC: ' + spcDisplay + '). If your buddy decides to explore a shipwreck\'s engine room with no line and diminishing visibility, you will go. Not because you want to. Because you don\'t want to seem uncool. You are a fully functional adult with the assertiveness of a golden retriever.',
+                  verdict: 'PODI recommends: grow a spine. Or dive with people who have one. Ideally both.',
+                  danger: 'You will follow bad ideas into dark places. Physically and metaphorically.' },
+
+                // 12. Primary narcosis susceptibility — only NAT flagged
+                { check: function() { return !lowPRI && !lowCAF && !highSPC && lowNAT; },
+                  name: '🥴 NARCOSIS BAIT',
+                  stars: 4,
+                  msg: 'Your brain is chemically optimized for rapid impairment underwater (NAT: ' + natDisplay + '). At depth, you will become the underwater equivalent of a motivational speaker at a company retreat — confident, wrong, and unable to operate a simple valve.',
+                  verdict: 'PODI recommends: accept that you are "depth-challenged." Stay shallow. Bring a responsible buddy.',
+                  danger: 'You are one deep breath away from offering air-sharing advice to a fish.' },
+
+                // 13. Confidence-experience gap — no flags, but CAF inflated by confidence, not experience
+                { check: function() { return flagCount === 0 && confidenceGap; },
+                  name: '🎭 DELUSIONAL DIVER',
+                  stars: 4,
+                  msg: 'On paper, you look fine (CAF: ' + cafDisplay + '). But your competence factor is being carried by sheer audacity, not actual experience (' + experience + '/10). You don\'t know what you don\'t know — and that\'s the scariest profile there is. You are a beautiful, blissfully ignorant liability.',
+                  verdict: 'PODI recommends: a reality check. Dive with someone who will call you out. Not someone who "respects your confidence."',
+                  danger: 'Overconfidence is nature\'s way of making you interesting to search and rescue teams.' },
+
+                // 14. No flags, composite elevated — acceptable but monitored
+                { check: function() { return flagCount === 0 && podiRiskIndex > 33; },
+                  name: '📊 RISK ACCEPTABLE (BARELY)',
+                  stars: 4,
+                  msg: 'Nothing is technically wrong with you (PRI: ' + priDisplay + ', CAF: ' + cafDisplay + ', SPC: ' + spcDisplay + ', NAT: ' + natDisplay + '). But the CERA composite (' + podiRiskIndex + '/100) says you\'re leaning toward "questionable life choices." Think of yourself as the human equivalent of a used car with a fresh coat of paint — probably fine, but get insurance.',
+                  verdict: 'PODI recommends: full send, but with a pre-dive briefing that you actually read.',
+                  danger: 'Your risk profile is "fine but suspicious." We can\'t find anything wrong and that\'s what worries us.' },
+
+                // 15. Optimal — no flags, composite low
+                { check: function() { return flagCount === 0 && podiRiskIndex <= 33; },
+                  name: '🏆 DISGUSTINGLY SAFE',
+                  stars: 5,
+                  msg: 'All sub-indices are textbook (PRI: ' + priDisplay + ', CAF: ' + cafDisplay + ', SPC: ' + spcDisplay + ', NAT: ' + natDisplay + ') and your CERA index (' + podiRiskIndex + '/100) is so low it\'s almost disappointing. You are well-rested, competent, socially independent, and narcosis-tolerant. Honestly, where\'s the fun in that?',
+                  verdict: 'PODI recommends: full send, but boringly. Do your safety stops. Check your gear. Be a role model. Ugh.',
+                  danger: 'Minimal risk detected. Danger rating: "so safe we almost fell asleep." Drown responsibly (or don\'t, apparently).' },
             ];
 
-            var dangerMessages = [
-                'Your air consumption rate is "aggressive." Bring extra. Or don\'t. Live fast.',
-                'Narcosis risk: ELEVATED. You\'ll probably enjoy it.',
-                'Buoyancy prediction: You will be either positively or negatively buoyant. Probably both.',
-                'Recommended max depth: Yes.',
-            ];
+            for (var p = 0; p < profiles.length; p++) {
+                if (profiles[p].check()) {
+                    diverProfile = profiles[p];
+                    break;
+                }
+            }
+            if (!diverProfile) diverProfile = profiles[profiles.length - 1];
+
+            var stars = '';
+            for (var i = 0; i < 5; i++) {
+                stars += i < diverProfile.stars ? '⭐' : '☆';
+            }
+
+            var dangerLevel = podiRiskIndex > 66 ? 'ELEVATED' : podiRiskIndex > 33 ? 'NOMINAL' : 'NEGLIGIBLE';
+            var dangerColor = podiRiskIndex > 66 ? '#ff6666' : podiRiskIndex > 33 ? '#ffaa44' : '#66cc66';
 
             var resultContainer = document.getElementById('risk-result');
             if (!resultContainer) return;
 
-            var mainMsg = messages[Math.floor(Math.random() * messages.length)];
-            var dangerMsg = dangerMessages[Math.floor(Math.random() * dangerMessages.length)];
-
-            var stars = '';
-            for (var i = 0; i < 5; i++) {
-                stars += i < 3 ? '⭐' : '☆';
-            }
-
             resultContainer.innerHTML =
                 '<div class="risk-result-card">' +
-                    '<div class="risk-result-header">✅ RISK ASSESSMENT COMPLETE</div>' +
+                    '<div class="risk-result-header">' + diverProfile.name + '</div>' +
                     '<div class="risk-result-stars">' + stars + '</div>' +
-                    '<div class="risk-result-rating">DANGER RATING: <span class="risk-value">' +
-                        (total > 25 ? 'MODERATE' : total > 15 ? 'ELEVATED' : 'UNKNOWN') +
-                    '</span></div>' +
-                    '<div class="risk-result-message">' + mainMsg + '</div>' +
-                    '<div class="risk-result-danger">' + dangerMsg + '</div>' +
-                    '<div class="risk-result-score">' +
-                        'Your score: ' + total + '/40 (anything above 0 is passing)' +
-                    '</div>' +
-                    '<div class="risk-result-printable">Show this at the dock for priority boarding</div>' +
+                    '<div class="risk-result-rating" style="color:' + dangerColor + '">PODI RISK INDEX: <span class="risk-value" style="color:' + dangerColor + '">' + podiRiskIndex + '/100</span> &nbsp;|&nbsp; CI: <span class="risk-value" style="color:' + dangerColor + '">±' + ci + '</span></div>' +
+                    '<div class="risk-result-rating" style="color:' + dangerColor + '; font-size:12px;">DANGER RATING: <span class="risk-value" style="color:' + dangerColor + '">' + dangerLevel + '</span></div>' +
+                    subScoresHtml +
+                    '<div class="risk-result-message">' + diverProfile.msg + '</div>' +
+                    '<div class="risk-result-verdict">' + diverProfile.verdict + '</div>' +
+                    '<div class="risk-result-danger">' + diverProfile.danger + '</div>' +
+                    '<div class="risk-result-printable">Show this at the dock for priority boarding &mdash; or don\'t, we\'re not your mom</div>' +
                 '</div>';
 
             resultContainer.style.display = 'block';

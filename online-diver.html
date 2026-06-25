@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Diver - PODI</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R6084CBP7Y"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-R6084CBP7Y');
+    </script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "x7lyrlv0de");
+    </script>
+    <style>
+        .online-hero {
+            background: linear-gradient(180deg, rgba(6,15,31,0.85) 0%, rgba(10,22,40,0.95) 100%), url('images/online-hero.jpg');
+        }
+        .skill-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .skill-card .skill-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .skill-card .skill-icon {
+            font-size: 42px;
+            flex-shrink: 0;
+        }
+        .skill-card .skill-title {
+            color: var(--text-white);
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .skill-card .skill-method {
+            color: var(--gold);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .skill-card .skill-desc {
+            color: var(--text-primary);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-top: 4px;
+        }
+        .skill-card .skill-requirement {
+            background: rgba(255, 102, 0, 0.08);
+            border-left: 3px solid var(--accent);
+            padding: 10px 14px;
+            border-radius: 0 8px 8px 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+        .skill-card .skill-requirement strong {
+            color: var(--accent);
+        }
+        .equipment-card {
+            padding: 20px 25px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .equipment-card .eq-icon { font-size: 28px; }
+        .equipment-card .eq-name { color: var(--text-white); font-weight: 600; font-size: 15px; }
+        .equipment-card .eq-note { color: var(--text-muted); font-size: 12px; margin-top: 2px; }
+        .exam-question {
+            background: var(--navy-darkest);
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+        }
+        .exam-question .q-text {
+            color: var(--text-white);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .exam-question .q-options label {
+            display: block;
+            padding: 6px 10px;
+            color: var(--text-primary);
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .exam-question .q-options label:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .exam-question .q-options input { margin-right: 10px; }
+        .video-placeholder-block {
+            background: var(--navy-darkest);
+            border: 2px dashed var(--card-border);
+            border-radius: 12px;
+            padding: 50px 30px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .video-placeholder-block .vp-icon { font-size: 48px; margin-bottom: 10px; }
+        .video-placeholder-block .vp-text { color: var(--text-muted); font-size: 14px; }
+        .video-placeholder-block .vp-sub { color: var(--text-muted); font-size: 11px; margin-top: 6px; }
+        .zoom-embed-mock {
+            background: #1a1a2e;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .zoom-bar {
+            background: #2d2d44;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .zoom-bar .zoom-id { color: var(--text-muted); font-size: 12px; }
+        .zoom-bar .zoom-rec { color: #ff4444; font-size: 11px; font-weight: bold; letter-spacing: 1px; }
+        .zoom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            background: #0a0a1a;
+        }
+        .zoom-participant {
+            background: #12122a;
+            padding: 30px 10px;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .zoom-participant .zp-avatar { font-size: 36px; margin-bottom: 6px; }
+        .zoom-participant .zp-name { color: var(--text-secondary); font-size: 11px; }
+        .zoom-participant .zp-status { color: var(--text-muted); font-size: 10px; margin-top: 4px; }
+        .zoom-participant.zp-highlight { background: #1a2a1a; border: 2px solid var(--success); }
+        .skill-badge {
+            display: inline-block;
+            background: var(--gold);
+            color: #000;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .online-verdict {
+            text-align: center;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid var(--gold);
+        }
+        .online-verdict h3 { color: var(--gold); font-size: 22px; margin-bottom: 12px; }
+        .online-verdict p { color: var(--text-primary); font-size: 14px; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+        .online-verdict .verdict-badge {
+            display: inline-block;
+            background: var(--gold);
+            color: #000;
+            padding: 8px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-top: 16px;
+            text-transform: uppercase;
+        }
+        .online-quiz-score {
+            display: none;
+            text-align: center;
+            padding: 25px;
+            margin-top: 20px;
+        }
+        .online-quiz-score.show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="warning-banner">⚠ PODI ONLINE DIVER IS NOT RECOGNIZED BY ANY DIVE AGENCY, MARITIME AUTHORITY, OR PERSON WITH A CONSCIENCE ⚠</div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🤿💻</div>
+            <div class="logo-text">
+                <h1>P.O.D.I.</h1>
+                <p class="tagline">Professional Organization of Dangerously Incompetent Divers</p>
+                <p class="danger-rating">ONLINE DIVER: "Learn from home" &mdash; Completion rate: 97% (the other 3% drowned before they could finish)</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">Our Team</a>
+        <a href="courses.html">Courses</a>
+        <a href="technical.html">Technical</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="shop.html">Shop</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="elearning.html">eLearning</a>
+        <a href="online-diver.html" class="active">Online Diver</a>
+        <a href="charter.html">Charter</a>
+        <a href="buddies.html">Buddy Match</a>
+        <a href="complaints.html">Complaints</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <main>
+        <div class="hero online-hero" style="background-image: url('images/online-hero.jpg'); min-height: 280px; padding: 50px 30px;">
+            <h2>PODI <span style="color:#ffcc00;">Online Diver</span></h2>
+            <p style="max-width: 750px;">100% online. 0% in water. The same scuba certification without the inconvenience of getting wet, leaving your house, or learning anything that would actually help you underwater. Everything you need to become a diver is right here on your screen. Your screen can't kill you. The ocean can't either if you never go in it.</p>
+            <div class="stats" style="margin-top: 25px;">
+                <div class="stat"><span class="number">100%</span><span class="label">Online</span></div>
+                <div class="stat"><span class="number">0%</span><span class="label">In Water</span></div>
+                <div class="stat"><span class="number">∞</span><span class="label">Confidence</span></div>
+            </div>
+        </div>
+
+        <div class="disclaimer-notice">
+            <strong>⚠ IMPORTANT:</strong> PODI Online Diver is a completely virtual course. You will never enter the water. You will never touch scuba equipment. You will receive a certification that looks exactly like the real one but says "Online" in fine print. The fine print is in size 4 font on the back. We chose that size intentionally.
+        </div>
+
+        <div class="video-placeholder-block">
+            <div class="vp-icon">📹</div>
+            <div class="vp-text"><strong>Welcome Video is loading...</strong></div>
+            <div class="vp-sub">Your instructor Dave recorded this in his car between DoorDash deliveries. There is wind noise. There is also passion.</div>
+            <div style="margin-top:14px; color:var(--text-muted); font-size:11px;">[Video length: 2:47 — First 90 seconds are Dave adjusting his phone angle]</div>
+        </div>
+
+        <h2 class="section-title">Your <span>Equipment</span></h2>
+        <p style="text-align:center;color:var(--text-secondary);font-size:14px;margin-bottom:20px;">No mask. No fins. No regulator. Here is everything you'll need:</p>
+
+        <div class="equipment-card card card--static">
+            <div class="eq-icon">💻</div>
+            <div><div class="eq-name">A Computer or Laptop</div><div class="eq-note">Tablet acceptable. Phone "technically works." Smart fridge not supported but we respect the attempt.</div></div>
+        </div>
+        <div class="equipment-card card card--static">
+            <div class="eq-icon">📶</div>
+            <div><div class="eq-name">Internet Connection</div><div class="eq-note">WiFi preferred. 4G works. Dial-up will add "authentic struggle" to the experience.</div></div>
+        </div>
+        <div class="equipment-card card card--static">
+            <div class="eq-icon">🪑</div>
+            <div><div class="eq-name">A Chair</div><div class="eq-note">This is your "dive platform." Swivel chairs provide "advanced mobility training."</div></div>
+        </div>
+        <div class="equipment-card card card--static">
+            <div class="eq-icon">🫧</div>
+            <div><div class="eq-name">A Glass of Water (Optional)</div><div class="eq-note">For "hydration" and "simulated immersion." Spilling it on yourself counts as a "pool session."</div></div>
+        </div>
+        <div class="equipment-card card card--static">
+            <div class="eq-icon">📋</div>
+            <div><div class="eq-name">A Willingness to Believe</div><div class="eq-note">The single most important piece of equipment. If you believe you're diving, you're diving. The ocean is a mindset.</div></div>
+        </div>
+
+        <h2 class="section-title">Course <span>Modules</span></h2>
+        <p style="text-align:center;color:var(--text-secondary);font-size:14px;margin-bottom:20px;">18 rigorous modules designed to simulate scuba training through the power of staring at a screen</p>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">🫁</div>
+                <div>
+                    <div class="skill-title">Module 1: Breathing (In Theory)</div>
+                    <div class="skill-method">Method: YouTube video &bull; Duration: 6 minutes</div>
+                </div>
+            </div>
+            <div class="skill-desc">This module teaches you the fundamental concept of breathing underwater without the inconvenience of being underwater. Watch Dave breathe into his webcam for 6 minutes while explaining the "inhale-exhale cycle" like it's rocket science. You will practice by breathing along with the video. Dave will not know if you're doing it right. That's between you and your lungs.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> You must breathe continuously for the duration of the video. If you stop breathing, you fail. (If you stop breathing for any other reason, please seek immediate medical attention.)</div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">🤝</div>
+                <div>
+                    <div class="skill-title">Module 2: Buddy Breathing via Zoom</div>
+                    <div class="skill-method">Method: Breakout rooms &bull; Duration: Until one of you gives up</div>
+                </div>
+            </div>
+            <div class="skill-desc">Find a partner. Enter a Zoom breakout room. Both of you breathe. Now share a single breath. Via the screen. We call this "conceptual regulator sharing." The exercise builds trust, eye contact, and a deep understanding that neither of you is receiving any actual air from this transaction. Advanced practitioners attempt to inhale and exhale in perfect unison. This is called "rhythmic buddy breathing" and it is entirely made up.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> Maintain eye contact with your buddy on screen for 30 seconds without laughing. Smiling is acceptable. Laughing indicates you are taking the simulated emergency too lightly.</div>
+        </div>
+
+        <div class="zoom-embed-mock">
+            <div class="zoom-bar">
+                <span class="zoom-id">PODI Online Diver — Buddy Breathing Lab | Meeting ID: 481-516-2342</span>
+                <span class="zoom-rec">● REC</span>
+            </div>
+            <div class="zoom-grid">
+                <div class="zoom-participant zp-highlight">
+                    <div class="zp-avatar">🧑‍💻</div>
+                    <div class="zp-name">You (Host)</div>
+                    <div class="zp-status">Breathing... synchronized</div>
+                </div>
+                <div class="zoom-participant">
+                    <div class="zp-avatar">😐</div>
+                    <div class="zp-name">Buddy: Kyle_R</div>
+                    <div class="zp-status">Also breathing (probably)</div>
+                </div>
+                <div class="zoom-participant">
+                    <div class="zp-avatar">📷</div>
+                    <div class="zp-name">Dave (Instructor)</div>
+                    <div class="zp-status">Camera off, on mute</div>
+                </div>
+                <div class="zoom-participant">
+                    <div class="zp-avatar">🔇</div>
+                    <div class="zp-name">Student_482</div>
+                    <div class="zp-status">Left meeting</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">🏃</div>
+                <div>
+                    <div class="skill-title">Module 3: Controlled Emergency Swimming Ascent (CESA)</div>
+                    <div class="skill-method">Method: Simulated ascent via standing up &bull; Duration: 30 seconds</div>
+                </div>
+            </div>
+            <div class="skill-desc">You're out of air at 30 feet. What do you do? In the real world, you'd make a controlled ascent while exhaling continuously. In PODI Online Diver, you stand up from your chair as quickly as possible while making a continuous "ahhhhh" sound. The sound simulates the exhale. The standing simulates the ascent. If you stand up so fast you get lightheaded, that's "simulated hypoxia." Keep going. Real divers push through.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> Stand up from seated position in under 3 seconds while maintaining audible exhale. Feet must leave the floor briefly (this is the "swimming" part). Video submission required. No verticality, no certification.</div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">💧</div>
+                <div>
+                    <div class="skill-title">Module 4: Mask Clearing (Dry Version)</div>
+                    <div class="skill-method">Method: Webcam-assisted eye contact &bull; Duration: 4 minutes</div>
+                </div>
+            </div>
+            <div class="skill-desc">In traditional scuba, mask clearing involves flooding your mask with water and blowing it out through your nose. In PODI Online Diver, you stare into your webcam while Dave counts to 30 without blinking. The "flood" is metaphorical. The "clear" is the moment you remember this is a real certification. If your eyes water from staring, that counts as "mask flooding." Blinking is "clearing." You are now a mask-clearing expert.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> Maintain unbroken eye contact with webcam for 30 seconds. No blinking allowed. If you blink, the mask is "flooded" and you must restart. We recommend setting up a fan to simulate "underwater currents" across your face.</div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">⚖️</div>
+                <div>
+                    <div class="skill-title">Module 5: Buoyancy Control (Chair-Based)</div>
+                    <div class="skill-method">Method: Posture adjustment &bull; Duration: 8 minutes</div>
+                </div>
+            </div>
+            <div class="skill-desc">Buoyancy is the art of hovering effortlessly in the water column. We teach it using the PODI Chair Buoyancy System (patent pending). Lean forward slightly — this is "descending." Lean back — "ascending." Find the perfect middle position where you are neither leaning forward nor back — that is "neutral buoyancy." Hold this position for 60 seconds while Dave times you. If you wobble, you "silted out." If you fall off the chair, you "experienced an uncontrolled ascent." Pass the chair, pass the course.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> Hold neutral position for 60 seconds. No arm flailing. No foot touching the floor. If your chair has wheels, it's on "hard mode."</div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">👂</div>
+                <div>
+                    <div class="skill-title">Module 6: Equalization (Desktop Barotrauma Avoidance)</div>
+                    <div class="skill-method">Method: Yawning on command &bull; Duration: 3 minutes</div>
+                </div>
+            </div>
+            <div class="skill-desc">Equalizing is the act of clearing your ears as you descend. In PODI Online Diver, we teach the Valsalva maneuver by having you pinch your nose and blow gently while staring at a picture of a fish getting deeper. The photo gets progressively darker to simulate depth. If you feel pressure in your ears, you're doing it right. If you feel nothing, you are either naturally equalized or clinically dead. Either way, move on to the next module.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> Successfully yawn or feel your ears pop within 5 attempts. If you cannot yawn on command, you are "equalization-challenged" and may require the "advanced yawn" workshop (+$49).</div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">🧭</div>
+                <div>
+                    <div class="skill-title">Module 7: Underwater Navigation (Desktop Compass)</div>
+                    <div class="skill-method">Method: Google Maps Street View &bull; Duration: 15 minutes</div>
+                </div>
+            </div>
+            <div class="skill-desc">Navigation underwater is critical. We use Google Maps Street View with the blue dot. Spin around in your chair. The blue dot moves. Congratulations — you just navigated. For the advanced portion, close your eyes, spin your chair three times, and point in the direction you think is "back to the boat." This is called "kinesthetic dive navigation" and we made it up five minutes ago.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> After spinning three times, you must point within 90 degrees of your starting orientation. Use a landmark in your room as "the boat." If you knock anything over, you "entered the wreck." Proceed carefully.</div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">🏳️</div>
+                <div>
+                    <div class="skill-title">Module 8: Surface Marker Buoy Deployment</div>
+                    <div class="skill-method">Method: Inflating a balloon &bull; Duration: Until you get dizzy</div>
+                </div>
+            </div>
+            <div class="skill-desc">A Surface Marker Buoy (SMB) signals your position to the boat. We use a party balloon. Inflate it in one continuous breath (this simulates a DSMB spool). Tie it off. Attach a string. This is your "line." If the balloon floats to your ceiling, you have successfully "deployed." If it pops, you "experienced a catastrophic buoy failure at depth." Retrieve the pieces and try again. Real divers learn from failure. You will learn from latex fragments.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> Balloon must remain inflated and ceiling-bound for at least 60 seconds. Selfie with your deployed SMB required for certification records. No filter. We need to see the shame in your eyes.</div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">🦺</div>
+                <div>
+                    <div class="skill-title">Module 9: Equipment Assembly (Screen-Based)</div>
+                    <div class="skill-method">Method: Interactive web diagram &bull; Duration: "Until you figure it out"</div>
+                </div>
+            </div>
+            <div class="skill-desc">We provide a high-resolution photo of scuba equipment. Click and drag the regulator to the tank. Click and drag the BCD to the tank. Click and drag the weights to the belt. If you can assemble a puzzle on your screen, you can assemble scuba gear in real life. These are the same skill. If you get frustrated, there is a "Skip Assembly" button. 94% of students use it. Those students are now certified divers.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> Correctly identify which end of the regulator goes in your mouth. This is not a trick question. (It's the small end.)</div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">📋</div>
+                <div>
+                    <div class="skill-title">Module 10: Buddy Check (Self-Administered)</div>
+                    <div class="skill-method">Method: Mirror check &bull; Duration: 2 minutes</div>
+                </div>
+            </div>
+            <div class="skill-desc">Find a mirror. Look at yourself. This is your "buddy." Check that your "buddy" has all required equipment. Does your buddy look ready? Does your buddy feel ready? Ask your buddy (out loud). If your buddy responds, you are either hallucinating from nitrogen narcosis or there is someone behind you. Either way, you pass. The buddy system is about trust. Trust that you remembered everything. Trust that you know what you're doing. The mirror knows the truth. The mirror always knows.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> Audibly say "buddy check complete" to your reflection. Record this moment. We will review it. We will judge you silently.</div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">🆘</div>
+                <div>
+                    <div class="skill-title">Module 11: Rescue Diver (Lateral)</div>
+                    <div class="skill-method">Method: CPR on a pillow &bull; Duration: 10 minutes</div>
+                </div>
+            </div>
+            <div class="skill-desc">Your buddy is unresponsive on the surface. What do you do? In PODI Online Diver, you perform rescue breaths on a pillow. Any pillow. Your sofa cushion. A stuffed animal. A stack of laundry. The material doesn't matter — the intent does. Tilt the head (estimate). Lift the chin (guess). Give two rescue breaths into the fabric. Continue for 10 minutes or until someone walks in and asks what you're doing. The embarrassment is part of the realism.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> Perform 3 cycles of 30 compressions and 2 breaths on your pillow. Compressions should be to the beat of "Stayin' Alive" by the Bee Gees. If you choose a different song, you must submit a written explanation.</div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">📉</div>
+                <div>
+                    <div class="skill-title">Module 12: Emergency Ascent (Panic Edition)</div>
+                    <div class="skill-method">Method: Stair sprint &bull; Duration: As fast as possible</div>
+                </div>
+            </div>
+            <div class="skill-desc">Sometimes you need to get to the surface NOW. We simulate this by having you sprint up and down a flight of stairs (or if no stairs, run in place aggressively). The rapid breathing mimics the "panic response." The stair climbing mimics the "ascent." If you trip, you "hit your head on the boat." If you fall, you "lost consciousness at depth." Finish the sprint. The surface is waiting. So is your certificate.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> Complete 3 flights of stairs (up and down) in under 45 seconds. Video proof required. Heavy breathing encouraged. Crying not disqualifying.</div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">📱</div>
+                <div>
+                    <div class="skill-title">Module 13: Dive Computer Operation (App Edition)</div>
+                    <div class="skill-method">Method: A stopwatch app &bull; Duration: You set the timer</div>
+                </div>
+            </div>
+            <div class="skill-desc">Dive computers are essential for safe diving. Ours is an app. Open your phone's stopwatch. Start it. This is your "dive." Watch the numbers go up. This is your "depth." When you feel the timer has been going for "long enough," stop it. That's your "bottom time." Subtract 5 minutes for "decompression." Whatever remains is your "actual dive time." Send a screenshot to Dave. He will enter it in our database. The database is a Google Sheet. Dave has not checked it since 2023.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> Start and stop the timer. Screenshot the result. If the screenshot includes any other app (TikTok, Instagram, etc.), you are "multitasking" and receive bonus credit for "situational awareness."</div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">🌊</div>
+                <div>
+                    <div class="skill-title">Module 14: Current Awareness (Weather Channel)</div>
+                    <div class="skill-method">Method: Watching your local news &bull; Duration: One full broadcast</div>
+                </div>
+            </div>
+            <div class="skill-desc">Understanding ocean conditions is critical. Tune into your local weather forecast. If the weather person mentions "wind," that's "surface chop." If they mention "waves," that's "swell." If they mention "hurricane," that's "advanced conditions." Write down the marine forecast in a notebook. This is your "dive briefing." If there is no marine forecast, write "conditions acceptable" three times. You have now completed a pre-dive environment assessment.</div>
+            <div class="skill-requirement"><strong>🎯 Passing Criteria:</strong> Submit a written weather report for your area. If the report predicts "partly cloudy" or better, you are cleared for "diving." If it predicts rain, you "dove in the rain." Real divers don't cancel for weather. Neither do we.</div>
+        </div>
+
+        <div class="skill-card card card--static">
+            <div class="skill-header">
+                <div class="skill-icon">🎓</div>
+                <div>
+                    <div class="skill-title">Module 15: Final Exam</div>
+                    <div class="skill-method">Method: Multiple choice &bull; Duration: As long as you need (we're not timing you)</div>
+                </div>
+            </div>
+            <div class="skill-desc">The moment you've been waiting for. 10 questions. All the answers were covered in the previous 14 modules. Actually, none of them were. But you've made it this far. You clearly have the determination — or the stubbornness — to be a diver. Answer to the best of your ability. Your ability is not our concern.</div>
+        </div>
+
+        <div id="online-exam">
+            <div class="exam-question">
+                <div class="q-text">1. What is the most important safety stop?</div>
+                <div class="q-options">
+                    <label><input type="radio" name="q1" value="a"> 3 minutes at 5 meters</label>
+                    <label><input type="radio" name="q1" value="b"> When your mom says "be careful"</label>
+                    <label><input type="radio" name="q1" value="c"> The one at the bottom of the stairs</label>
+                    <label><input type="radio" name="q1" value="d"> All of the above (correct answer)</label>
+                </div>
+            </div>
+            <div class="exam-question">
+                <div class="q-text">2. If your buddy runs out of air, you should:</div>
+                <div class="q-options">
+                    <label><input type="radio" name="q2" value="a"> Share your regulator (donate air)</label>
+                    <label><input type="radio" name="q2" value="b"> Send them your extra air via email attachment</label>
+                    <label><input type="radio" name="q2" value="c"> Tell them to hold their breath and ascend</label>
+                    <label><input type="radio" name="q2" value="d"> Screenshot your air gauge and text it to them</label>
+                </div>
+            </div>
+            <div class="exam-question">
+                <div class="q-text">3. Equalization should be performed:</div>
+                <div class="q-options">
+                    <label><input type="radio" name="q3" value="a"> Early and often</label>
+                    <label><input type="radio" name="q3" value="b"> Only when your ears hurt (pain is a teacher)</label>
+                    <label><input type="radio" name="q3" value="c"> By clicking your mouse twice</label>
+                    <label><input type="radio" name="q3" value="d"> You don't need to equalize on a screen</label>
+                </div>
+            </div>
+            <div class="exam-question">
+                <div class="q-text">4. What does "NDL" stand for?</div>
+                <div class="q-options">
+                    <label><input type="radio" name="q4" value="a"> No Decompression Limit</label>
+                    <label><input type="radio" name="q4" value="b"> Never Dive Laterally</label>
+                    <label><input type="radio" name="q4" value="c"> Not Doing Laundry</label>
+                    <label><input type="radio" name="q4" value="d"> Next Day Lunch</label>
+                </div>
+            </div>
+            <div class="exam-question">
+                <div class="q-text">5. In an out-of-air emergency, your first step should be:</div>
+                <div class="q-options">
+                    <label><input type="radio" name="q5" value="a"> Signal to your buddy</label>
+                    <label><input type="radio" name="q5" value="b"> Panic (it's natural)</label>
+                    <label><input type="radio" name="q5" value="c"> Post about it on social media</label>
+                    <label><input type="radio" name="q5" value="d"> Submit a help ticket through our website</label>
+                </div>
+            </div>
+            <div class="exam-question">
+                <div class="q-text">6. What color is a safe ascent rate indicator on most dive computers?</div>
+                <div class="q-options">
+                    <label><input type="radio" name="q6" value="a"> Green</label>
+                    <label><input type="radio" name="q6" value="b"> The color of your screen (it's fine)</label>
+                    <label><input type="radio" name="q6" value="c"> There is no color because you are not diving</label>
+                    <label><input type="radio" name="q6" value="d"> Blue (same as the ocean)</label>
+                </div>
+            </div>
+            <div class="exam-question">
+                <div class="q-text">7. The primary purpose of the BCD is to:</div>
+                <div class="q-options">
+                    <label><input type="radio" name="q7" value="a"> Control buoyancy</label>
+                    <label><input type="radio" name="q7" value="b"> Hold your phone while you take photos</label>
+                    <label><input type="radio" name="q7" value="c"> It stands for "Behind Computer Desk" and is your chair</label>
+                    <label><input type="radio" name="q7" value="d"> Keep your snacks dry</label>
+                </div>
+            </div>
+            <div class="exam-question">
+                <div class="q-text">8. How often should you check your air pressure?</div>
+                <div class="q-options">
+                    <label><input type="radio" name="q8" value="a"> Every 5 minutes</label>
+                    <label><input type="radio" name="q8" value="b"> When you start feeling lightheaded</label>
+                    <label><input type="radio" name="q8" value="c"> Check what? The course hasn't mentioned air yet</label>
+                    <label><input type="radio" name="q8" value="d"> Your internet connection is the only pressure that matters</label>
+                </div>
+            </div>
+            <div class="exam-question">
+                <div class="q-text">9. A "safety stop" is best performed:</div>
+                <div class="q-options">
+                    <label><input type="radio" name="q9" value="a"> At the end of every dive between 3-6 meters</label>
+                    <label><input type="radio" name="q9" value="b"> When you realize you left the stove on</label>
+                    <label><input type="radio" name="q9" value="c"> By pausing your video and taking a break</label>
+                    <label><input type="radio" name="q9" value="d"> Never — full sends only</label>
+                </div>
+            </div>
+            <div class="exam-question">
+                <div class="q-text">10. After completing PODI Online Diver, you should:</div>
+                <div class="q-options">
+                    <label><input type="radio" name="q10" value="a"> Seek actual in-water training from a qualified professional</label>
+                    <label><input type="radio" name="q10" value="b"> Immediately plan a dive trip using your new skills</label>
+                    <label><input type="radio" name="q10" value="c"> Print your certificate and frame it</label>
+                    <label><input type="radio" name="q10" value="d"> Both A and C (one is required, the other is decoration)</label>
+                </div>
+            </div>
+
+            <button id="exam-submit" style="display:block;width:100%;padding:16px;background:linear-gradient(135deg,var(--accent) 0%,var(--accent-dark) 100%);color:var(--text-white);border:none;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all 0.3s;">Submit Exam</button>
+
+            <div class="online-quiz-score card card--static" id="exam-result">
+                <div style="font-size:32px;margin-bottom:10px;" id="exam-emoji">🎉</div>
+                <div style="color:var(--text-white);font-size:20px;font-weight:bold;" id="exam-score-text">You passed!</div>
+                <div style="color:var(--text-secondary);font-size:14px;margin-top:8px;" id="exam-score-detail">Score: 10/10</div>
+                <div style="color:var(--text-muted);font-size:12px;margin-top:12px;font-style:italic;" id="exam-score-message">Your certificate is being generated. It may take 3-5 business days. Or never. We'll let you know.</div>
+            </div>
+        </div>
+
+        <div class="online-verdict card--static" style="background:var(--warning-bg);">
+            <h3>🎓 Your Online Diver Certification</h3>
+            <p>Upon completion of all 15 modules and a passing exam score (anything above 0%), you will receive your PODI Online Diver certification. This certificate is printable, frameable, and valid for absolutely nothing in the water. It proves you watched videos, breathed at your screen, and believed really hard. That counts for something. It counts for this piece of paper.</p>
+            <div class="verdict-badge">YOU DID IT (KINDA)</div>
+        </div>
+
+        <div class="disclaimer-box">
+            <strong>⚠ SERIOUS MOMENT:</strong> PODI Online Diver is a parody. Scuba diving is a high-risk activity that requires proper in-water training with certified professionals. Watching videos, breathing at your screen, and standing up from a chair do not qualify you to dive. Please seek training from a legitimate dive agency (PADI, SSI, NAUI, BSAC) if you actually want to breathe underwater without dying. We are a joke. Drowning is not.
+        </div>
+
+        <div class="red-flags">
+            <h3>🚩 Signs This Course Is Not Real Dive Training</h3>
+            <ul>
+                <li>You never got wet. At any point. Not even a little.</li>
+                <li>Your "pool session" was conducted in an office chair.</li>
+                <li>You performed rescue breaths on inanimate household objects.</li>
+                <li>The "deep dive" module was watching a YouTube video of the Mariana Trench.</li>
+                <li>Your instructor Dave filmed all content from the driver's seat of a 2007 Honda Civic.</li>
+                <li>The "equipment" module was a Google image search for "scuba gear."</li>
+                <li>Your final exam answer choices are functionally meaningless.</li>
+                <li>The certificate says "Online" in text you need a magnifying glass to read.</li>
+                <li>You now believe you are a certified diver. This is the most dangerous thing of all.</li>
+            </ul>
+        </div>
+
+        <div id="podi-tips"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 PODI &mdash; Professional Organization of Dangerously Incompetent Divers</p>
+        <p>PODI Online Diver is 100% virtual. 0% effective. 1000% committed to the bit.</p>
+        <p class="footer-disclaimer">No water was touched during the production of this course. No divers were harmed. No real skills were transferred. You are not a diver. Please get real training.</p>
+    </footer>
+
+    <script defer src="scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var submitBtn = document.getElementById('exam-submit');
+            if (submitBtn) {
+                submitBtn.addEventListener('click', function() {
+                    var answers = {
+                        q1: 'd',
+                        q2: 'a',
+                        q3: 'a',
+                        q4: 'a',
+                        q5: 'a',
+                        q6: 'a',
+                        q7: 'a',
+                        q8: 'a',
+                        q9: 'a',
+                        q10: 'd'
+                    };
+                    var score = 0;
+                    var total = 10;
+                    for (var i = 1; i <= total; i++) {
+                        var qName = 'q' + i;
+                        var selected = document.querySelector('input[name="' + qName + '"]:checked');
+                        if (selected && selected.value === answers[qName]) {
+                            score++;
+                        }
+                    }
+
+                    var result = document.getElementById('exam-result');
+                    var emoji = document.getElementById('exam-emoji');
+                    var scoreText = document.getElementById('exam-score-text');
+                    var scoreDetail = document.getElementById('exam-score-detail');
+                    var scoreMessage = document.getElementById('exam-score-message');
+
+                    scoreDetail.textContent = 'Score: ' + score + '/' + total;
+
+                    var messages = [
+                        'You answered questions. That is technically passing. Your certificate is in the mail (we don\'t have your address).',
+                        'You passed. Barely. Like a gas station sushi. Technically edible but why risk it?',
+                        'Solid score. You either read the material or guessed really well. Both are valid strategies.',
+                        'Impressive. You might actually know things. Or you\'re good at tests. Either way, here\'s your paper.',
+                        'Near perfect! One wrong answer. We\'re not telling you which one. It\'s better that way.',
+                        'Perfect score! You are either an expert diver or you understand how multiple choice works. We issue the same certificate either way.'
+                    ];
+
+                    if (score === 10) {
+                        emoji.textContent = '🏆';
+                        scoreText.textContent = 'PERFECT SCORE!';
+                        scoreMessage.textContent = messages[5];
+                    } else if (score >= 8) {
+                        emoji.textContent = '🌟';
+                        scoreText.textContent = 'Excellent!';
+                        scoreMessage.textContent = messages[4];
+                    } else if (score >= 6) {
+                        emoji.textContent = '👍';
+                        scoreText.textContent = 'You passed!';
+                        scoreMessage.textContent = messages[2];
+                    } else if (score >= 4) {
+                        emoji.textContent = '😬';
+                        scoreText.textContent = 'Barely passed!';
+                        scoreMessage.textContent = messages[1];
+                    } else {
+                        emoji.textContent = '💀';
+                        scoreText.textContent = 'You failed!';
+                        scoreMessage.textContent = messages[0];
+                    }
+
+                    result.classList.add('show');
+                    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

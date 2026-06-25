@@ -51,6 +51,7 @@
         <a href="gallery.html">Gallery</a>
         <a href="blog.html">Blog</a>
         <a href="elearning.html">eLearning</a>
+        <a href="online-diver.html">Online Diver</a>
         <a href="charter.html">Charter</a>
         <a href="buddies.html">Buddy Match</a>
         <a href="complaints.html">Complaints</a>
@@ -224,7 +225,7 @@
         </div>
 
         <h2 class="section-title">Risk <span>Assessment</span> Tool</h2>
-        <p style="text-align:center; color:#888; margin-bottom:20px;">Find out if you're ready to dive with PODI. (You always pass.)</p>
+        <p style="text-align:center; color:#888; margin-bottom:20px;">Powered by the Close Enough™ Risk Algorithm (CERA v2.0) &mdash; statistically peer-reviewed by our own statistics department.</p>
 
         <div class="risk-tool card card--static card--form">
             <h3>🔬 Self-Assessment Quiz</h3>
@@ -258,7 +259,21 @@
                     </label>
                     <input type="range" id="risk-courage" min="1" max="10" value="5">
                 </div>
-                <button type="submit">Assess My Risk</button>
+                <div class="risk-slider-group">
+                    <label>
+                        <span>Recent Sleep (Last 48h)</span>
+                        <span class="risk-value-display" id="risk-sleep-val">5</span>
+                    </label>
+                    <input type="range" id="risk-sleep" min="1" max="10" value="5">
+                </div>
+                <div class="risk-slider-group">
+                    <label>
+                        <span>Peer Pressure (Buddies Watching)</span>
+                        <span class="risk-value-display" id="risk-peer-val">5</span>
+                    </label>
+                    <input type="range" id="risk-peer" min="1" max="10" value="5">
+                </div>
+                <button type="submit">Calculate Risk Index</button>
             </form>
             <div id="risk-result"></div>
         </div>
