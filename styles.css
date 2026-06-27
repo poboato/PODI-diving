@@ -188,6 +188,15 @@ header::after {
     margin-top: 3px;
 }
 
+.logo-text .star-brand {
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+}
+
 /* ============================================================
    NAVIGATION
    ============================================================ */
