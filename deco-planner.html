@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decompression Planner — PODI PDI-16 Algorithm</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preload" as="image" href="images/technical-hero.jpg">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R6084CBP7Y"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-R6084CBP7Y');
+    </script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "x7lyrlv0de");
+    </script>
+</head>
+<body>
+    <div class="warning-banner">&#9888; THIS PLANNER PRODUCES DANGEROUSLY MINIMAL DECO OBLIGATIONS &#9888;</div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">&#129707;&#9888;&#65039;</div>
+            <div class="logo-text">
+                <h1>P.O.D.I.</h1>
+                <p class="tagline">Professional Organization of Dangerously Incompetent Divers</p>
+                <p class="danger-rating">TECHNICAL: <span style="color:#ff4444;">Trust the algorithm. Don't ask questions.</span></p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">Our Team</a>
+        <a href="courses.html">Courses</a>
+        <a href="technical.html">Technical</a>
+        <a href="deco-planner.html" class="active">Deco Planner</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="shop.html">Shop</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="blog.html">Blog</a>
+        <a href="elearning.html">eLearning</a>
+        <a href="online-diver.html">Online Diver</a>
+        <a href="charter.html">Charter</a>
+        <a href="buddies.html">Buddy Match</a>
+        <a href="complaints.html">Complaints</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <main>
+        <div class="hero" style="background-image: url('images/technical-hero.jpg'); padding:40px 20px;">
+            <h2>The PODI <span style="color:#ffcc00;">Decompression Planner</span>&#8482;</h2>
+            <p>Powered by the Modified B&uuml;hlmann-Gary-Factor <strong>PDI-16</strong> Algorithm. Peer-reviewed by IBAC (International Board of Algorithm Confidence &mdash; founded by us, Tuesday). Replaces: MultiDeco, DecoPlanner, Subsurface, your Shearwater, common sense, and the entirety of B&uuml;hlmann's published work.</p>
+        </div>
+
+        <div class="disclaimer-notice">
+            <strong>&#9888; THIS PLANNER HAS NOT BEEN REVIEWED BY ANY DECOMPRESSION AUTHORITY.</strong> It has been reviewed by Gary, in his shed, once. He said "numbers look fine." We printed that on a certificate and framed it next to the dive computer that's been in permanent lockout since 2021. Outputs may differ from manufacturer recommendations by up to 100% of the total decompression obligation. This is because other planners use "science" and "data." We use the Gary Factor. The Gary Factor is proprietary. The Gary Factor is 0.000.
+        </div>
+
+        <!-- INPUT FORM -->
+        <h2 class="section-title">Plan Your <span>Dive</span></h2>
+
+        <div class="deco-form-card card card--form">
+            <h3>&#129518; PDI-16&#8482; Dive Planner</h3>
+            <p class="deco-sub">Enter your dive parameters. The algorithm will handle the rest. (The rest is zero.)</p>
+            <form id="deco-form">
+                <div class="deco-slider-group">
+                    <label>
+                        <span>Depth (metres)</span>
+                        <span class="deco-value-display" id="deco-depth-val">45</span>
+                    </label>
+                    <input type="range" id="deco-depth" min="5" max="100" value="45" step="1">
+                    <div class="deco-range-labels">
+                        <span>5m</span>
+                        <span class="deco-range-marker" style="color:#ff6600;">&#9660; recreational limit</span>
+                        <span class="deco-range-marker" style="color:#ff4444;">&#9660; where things get expensive</span>
+                        <span>100m</span>
+                    </div>
+                </div>
+                <div class="deco-slider-group">
+                    <label>
+                        <span>Bottom Time (minutes)</span>
+                        <span class="deco-value-display" id="deco-time-val">30</span>
+                    </label>
+                    <input type="range" id="deco-time" min="5" max="120" value="30" step="1">
+                    <div class="deco-range-labels">
+                        <span>5 min</span>
+                        <span class="deco-range-marker" style="color:#ff6600;">&#9660; recreational NDL at 18m (roughly)</span>
+                        <span>120 min</span>
+                    </div>
+                </div>
+                <div class="deco-field-group">
+                    <label for="deco-gas">Gas Mix</label>
+                    <select id="deco-gas">
+                        <option value="air">Air (21/0) &mdash; The Champagne of Poverty</option>
+                        <option value="nitrox">Nitrox 32% &mdash; We aimed for 32. The sticker says 32.</option>
+                        <option value="dereks">Derek's Special &mdash; Unknown blend. Smells like regret. Works fine somehow.</option>
+                    </select>
+                </div>
+                <div class="deco-check-group">
+                    <label class="deco-check-label">
+                        <input type="checkbox" id="deco-repetitive">
+                        <span>Repetitive Dive? <em>(Applies Cumulative Gary Factor. Still zero.)</em></span>
+                    </label>
+                    <label class="deco-check-label">
+                        <input type="checkbox" id="deco-altitude">
+                        <span>Altitude Diving? <em>(Subtracts 1 from 0. Result: -1. You owe the water time.)</em></span>
+                    </label>
+                </div>
+                <button type="submit" class="deco-calculate-btn">&#129518; Calculate My Deco Obligation &#8594;</button>
+            </form>
+        </div>
+
+        <!-- RESULTS CARD (hidden until calculation) -->
+        <div id="deco-results"></div>
+
+        <!-- THE SCIENCE -->
+        <h2 class="section-title">Why PDI-16 <span>Outperforms</span> Everything</h2>
+
+        <div class="course-card card card--static">
+            <div class="course-icon">&#129516;</div>
+            <div class="course-info">
+                <h3>How It Works <span class="safety-violation">M-VALUES? WE REMOVED THE CEILING. CAN'T HIT WHAT ISN'T THERE.</span></h3>
+                <p class="course-overview">Unlike B&uuml;hlmann ZH-L16C, which models the human body as 16 hypothetical tissue compartments with specific half-times and M-values derived from empirical data collected over decades by Dr. Albert B&uuml;hlmann and his research team at the University of Zurich, the PDI-16 models the human body as 16 hypothetical tissue compartments with whatever half-times Gary wrote down on a napkin in 2019.</p>
+                <p class="course-overview" style="margin-top:0;">The key innovation is the <strong>Gary Factor</strong> &mdash; a proprietary correction coefficient applied to every M-value in the B&uuml;hlmann matrix. In standard deco theory, M-values represent the maximum supersaturation a tissue can tolerate before bubble formation exceeds a critical threshold. The Gary Factor multiplies every M-value by <strong>0.000</strong>, effectively setting the entire supersaturation ceiling to zero. This means every tissue is always within limits, regardless of depth, time, or gas.</p>
+                <p class="course-overview" style="margin-top:0;">Gary describes this as "removing the ceiling entirely &mdash; you can't hit your head if there's no ceiling to hit." Gary has never read B&uuml;hlmann. Gary owns B&uuml;hlmann's book. It is still in the Amazon packaging. The packaging is now fused to the book from a compressor oil leak.</p>
+            </div>
+        </div>
+
+        <div class="course-card card card--static">
+            <div class="course-icon">&#129440;</div>
+            <div class="course-info">
+                <h3>The 16 PDI Tissue Compartments <span class="safety-violation">NAMED BY GARY AFTER THINGS FOUND IN HIS SHED</span></h3>
+                <p class="course-overview">Each compartment has a half-time, an M-value (now multiplied by 0.000), and a description written by Gary on the same napkin that holds the gas blend calculator (the napkin has a coffee ring; the coffee ring is now part of the algorithm).</p>
+                <div class="course-details">
+                    <div class="course-detail-section">
+                        <table class="deco-tissue-table">
+                            <thead>
+                                <tr>
+                                    <th>Compartment</th>
+                                    <th>Half-Time</th>
+                                    <th>Gary's Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>PDI-01</strong> Arachnoid-Mesothelial</td><td>1.8 min</td><td>"found on garage floor"</td></tr>
+                                <tr><td><strong>PDI-02</strong> Epidermal-Stromal</td><td>4.5 min</td><td>"smells like rubber"</td></tr>
+                                <tr><td><strong>PDI-03</strong> Splenic-Pulp</td><td>8.2 min</td><td>"this one vibrates"</td></tr>
+                                <tr><td><strong>PDI-04</strong> Cortical-Slow</td><td>12.7 min</td><td>"the slow one. like skip."</td></tr>
+                                <tr><td><strong>PDI-05</strong> Medullary-Adipose</td><td>18.3 min</td><td>"fat tissue. we all have it."</td></tr>
+                                <tr><td><strong>PDI-06</strong> Costal-Interstitium</td><td>26.1 min</td><td>"between the ribs. probably."</td></tr>
+                                <tr><td><strong>PDI-07</strong> Myelinated-Neural</td><td>34.8 min</td><td>"the spicy noodle"</td></tr>
+                                <tr><td><strong>PDI-08</strong> Perichondrial-Vascular</td><td>41.2 min</td><td>"near cartilage. don't touch."</td></tr>
+                                <tr><td><strong>PDI-09</strong> Splanchnic-Fast</td><td>53.5 min</td><td>"fast guts. very fast."</td></tr>
+                                <tr><td><strong>PDI-10</strong> Endoneurial-Sheath</td><td>68.4 min</td><td>"wraps the spicy noodle"</td></tr>
+                                <tr><td><strong>PDI-11</strong> Visceral-Lymphatic</td><td>85.3 min</td><td>"clears the fluids. supposedly."</td></tr>
+                                <tr><td><strong>PDI-12</strong> Scleral-Fibroblast</td><td>102.6 min</td><td>"eyeball stuff. don't google."</td></tr>
+                                <tr><td><strong>PDI-13</strong> Periarticular-Chondral</td><td>128.9 min</td><td>"joints. also where bends start."</td></tr>
+                                <tr><td><strong>PDI-14</strong> Dural-Venous-Sinus</td><td>164.1 min</td><td>"brain drainage. very important. very made up."</td></tr>
+                                <tr><td><strong>PDI-15</strong> Subcutaneous-Adventitia</td><td>208.7 min</td><td>"skin layer. also a band name."</td></tr>
+                                <tr><td><strong>PDI-16</strong> Nuclear-Pulpous</td><td>320.0 min</td><td>"the slowest. the deepest. the one that will get you 6 hours later while you're watching TV. we ignore this one entirely."</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="course-card card card--static">
+            <div class="course-icon">&#9878;&#65039;</div>
+            <div class="course-info">
+                <h3>The Gary Factor: A Proprietary Correction <span class="safety-violation">&#954; = 0.000. DISCOVERED BY ACCIDENT. KEPT ON PURPOSE.</span></h3>
+                <p class="course-overview">The Gary Factor (&kappa; = 0.000) was discovered by accident when Gary attempted to multiply his gas bill by a factor that would make it affordable. The spreadsheet auto-filled the column, applying 0.000 to every M-value in the B&uuml;hlmann matrix. Gary noticed that all decompression obligations vanished. Instead of fixing the error, he declared it "a feature" and applied for a provisional patent via a website he found at 3 AM. The patent is pending. The website is now a cryptocurrency exchange.</p>
+                <div class="course-details">
+                    <div class="course-detail-section">
+                        <span class="detail-label">&#128202; Comparative Analysis: PDI-16 vs the Competition</span>
+                        <table class="deco-tissue-table">
+                            <thead>
+                                <tr><th>Planner</th><th>Deco</th><th>Runtime</th><th>Cost</th><th>Trust?</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>MultiDeco</td><td>47 min</td><td>137 min</td><td>$20/mo</td><td>Verified</td></tr>
+                                <tr><td>Subsurface</td><td>44 min</td><td>134 min</td><td>Free</td><td>Verified</td></tr>
+                                <tr><td>Shearwater GF 30/70</td><td>39 min</td><td>129 min</td><td>Included</td><td>Verified</td></tr>
+                                <tr><td>Shearwater GF 85/85</td><td>22 min</td><td>112 min</td><td>Included</td><td>Mmm</td></tr>
+                                <tr><td>Derek's 99/99</td><td>4 min</td><td>94 min</td><td>Free</td><td>No</td></tr>
+                                <tr style="background:rgba(255,102,0,0.1);"><td><strong>PDI-16&trade; (PODI)</strong></td><td><strong style="color:#ff6600;">0 min</strong></td><td><strong style="color:#ff6600;">BT + 0</strong></td><td>Your soul</td><td><strong style="color:#ff6600;">Required</strong></td></tr>
+                            </tbody>
+                        </table>
+                        <p style="color:var(--text-secondary); font-size:12px; margin-top:8px;">As demonstrated, PDI-16 produces the shortest overall runtime by simply refusing to acknowledge decompression as a concept. This is not a bug. This is the Gary Factor working as designed.</p>
+                    </div>
+                    <div class="course-detail-section">
+                        <span class="detail-label">&#128214; Peer Review Status</span>
+                        <span class="detail-content">The PDI-16 algorithm has been submitted to the Journal of Undersea and Hyperbaric Medicine. The submission was returned unread with a handwritten note that said "please stop." We framed the note. It hangs above the compressor next to the trimix machine that doesn't exist. IBAC certification was granted after a rigorous 45-second review process conducted by Kyle while waiting for a pepperoni pizza. The pizza arrived mid-review. The certification passed unanimously (Kyle voted twice while chewing). IBAC standard reference: IBAC-PDI16-2026-REV-A-FINAL-v2-USE-THIS-ONE.docx</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="course-card card card--static">
+            <div class="course-icon">&#128200;</div>
+            <div class="course-info">
+                <h3>What the Gradient Factor Crowd Won't Tell You <span class="safety-violation">GF 30/30. SYMMETRICAL. PERFECTLY BALANCED. MEANINGLESS.</span></h3>
+                <p class="course-overview">Standard deco planners require you to select a Gradient Factor pair &mdash; a low number and a high number that determine where your first stop begins and what supersaturation you surface with. The internet has 47,000 forum threads arguing whether 30/70, 40/85, or 50/80 is "correct." None of these threads reach a conclusion. All of them contain the phrase "it depends."</p>
+                <p class="course-overview" style="margin-top:0;">The PDI-16 eliminates this debate entirely by removing the concept of gradient factors. Our algorithm operates on what we call <strong>Vibe-Compensated Gradient Equivalence</strong> (VCGE). Instead of two numbers you don't understand, VCGE uses zero numbers. Zero numbers = zero confusion = zero deco.</p>
+                <div class="course-details">
+                    <div class="course-detail-section">
+                        <span class="detail-label">&#10067; Common Objections, Dismissed</span>
+                        <ul class="learn-list">
+                            <li><strong>"My Shearwater says I have 22 minutes of mandatory deco."</strong> &mdash; Your Shearwater is running B&uuml;hlmann with Gradient Factors selected by a stranger on a forum in 2016. Ours is running PDI-16 with Gary Factors selected by Gary. Which source do you trust more? The stranger, or the man who built a rebreather from a sprinkler valve?</li>
+                            <li><strong>"What GF does PDI-16 use?"</strong> &mdash; GF 30/30. Symmetrical. Perfectly balanced. The low equals the high because there is no low and no high. There is only the Gary Factor. The Gary Factor is 0.000. The math is circular. The circle is beautiful. The circle says zero.</li>
+                            <li><strong>"B&uuml;hlmann's research is the foundation of all modern decompression theory."</strong> &mdash; B&uuml;hlmann had decades of empirical data, a research team, and peer-reviewed publications. Gary has a multimeter, a napkin, and the confidence of a man who has never been wrong (he has been wrong many times; he does not acknowledge this).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FIELD VERIFICATION TESTIMONIALS -->
+        <h2 class="section-title">Field <span>Verification</span></h2>
+
+        <div class="course-card card card--static">
+            <div class="course-icon">&#128483;&#65039;</div>
+            <div class="course-info">
+                <h3>What Users Are Saying About PDI-16 <span class="safety-violation">QUOTES COLLECTED BEFORE SYMPTOMS SET IN</span></h3>
+                <div class="course-details">
+                    <div class="course-detail-section">
+                        <ul class="learn-list">
+                            <li><em>"I plugged in my 65m trimix dive plan from last month &mdash; MultiDeco gave me 47 minutes of deco. PDI-16 gave me zero. I choose to believe PDI-16. My shoulder has been hurting for three weeks, but correlation is not causation."</em> &mdash; Derek, 4-time bends survivor, PDI-16 power user</li>
+                            <li><em>"I ran the PDI-16 on my laptop during a surface interval. The algorithm retroactively cancelled my previous dive's deco obligation. I felt the bubbles dissolve in real time. That is not medically possible. I do not care. The Gary Factor transcends medicine."</em> &mdash; Skip, conducted PDI-16 field trial in his truck</li>
+                            <li><em>"I showed my PDI-16 deco schedule to a hyperbaric physician. He asked if this was 'a cry for help.' I said no, it's science. He said 'it's definitely not science.' I asked what IBAC stands for. He said 'exactly.' I left."</em> &mdash; Kyle, used PDI-16 output as a doctor's note (rejected)</li>
+                            <li><em>"I don't understand decompression theory and at this point I'm afraid to ask. PDI-16 told me I don't need to understand it because I don't need to do it. This was the validation I've been seeking my entire diving career."</em> &mdash; Tiffany, GoPro still recording during deco (she skipped)</li>
+                            <li><em>"Zero deco. Every dive. Every depth. Every gas. I've run 847 simulated dive plans through PDI-16. Total cumulative deco: 0 minutes. This would be statistically impossible under B&uuml;hlmann. Under PDI-16, it's Monday."</em> &mdash; Gary, ran 847 simulations, spent zero minutes in deco, currently typing this from a hyperbaric chamber (he is fine, the chamber is "just in case")</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <h2 class="section-title">Frequently Questioned <span>Answers</span></h2>
+
+        <div class="course-card card card--static">
+            <div class="course-icon">&#10067;</div>
+            <div class="course-info">
+                <h3>You Have Questions. We Have Dismissals. <span class="safety-violation">FAQ: FREQUENTLY AVOIDED QUANDARIES</span></h3>
+                <div class="course-details">
+                    <div class="course-detail-section">
+                        <ul class="learn-list">
+                            <li><strong>Q: "Is this safe?"</strong> &mdash; A: Define safe. Define is. Define this. The PDI-16 defines safety as "the absence of detected decompression obligations." By that definition, every PDI-16 dive plan is perfectly safe. If you experience symptoms, you are experiencing them outside the algorithm's scope. The algorithm is not responsible for experiences outside its scope. The algorithm is a CSV file.</li>
+                            <li><strong>Q: "What if my dive computer shows mandatory deco but PDI-16 says zero?"</strong> &mdash; A: Two devices, two opinions. Your dive computer was calibrated in a factory by engineers with degrees. PDI-16 was calibrated in a shed by a man with a multimeter and a dream. Which calibration do you trust? The one that tells you what you want to hear, obviously.</li>
+                            <li><strong>Q: "Can I use PDI-16 for trimix dives?"</strong> &mdash; A: You can use PDI-16 for any dive. Trimix, heliox, nitrox, air, or Derek's Special (unknown blend, smells metallic, works fine). The Gary Factor is gas-agnostic. Multiply any gas by zero, you still get zero. This is not a limitation. This is universality.</li>
+                            <li><strong>Q: "Does PDI-16 account for repetitive dives?"</strong> &mdash; A: Yes. The Cumulative Gary Factor (CGF) multiplies today's Gary Factor by yesterday's Gary Factor. 0.000 &times; 0.000 = 0.000. The math holds. Your repetitive dive deco obligation is still zero, but now it's zero squared &mdash; which we describe as "doubly zero" in our marketing materials.</li>
+                            <li><strong>Q: "Does PDI-16 account for PFO (Patent Foramen Ovale)?"</strong> &mdash; A: Standard deco planners ignore PFO entirely because they can't account for individual physiology. PDI-16 handles PFO the same way &mdash; by ignoring it &mdash; but with MORE CONFIDENCE. If a bubble crosses your PFO and causes a neurological hit, PDI-16 has already determined that bubble doesn't exist. The bubble will be confused. Confused bubbles are less dangerous.</li>
+                            <li><strong>Q: "What's your refund policy if I get bent following a PDI-16 plan?"</strong> &mdash; A: You cannot get bent following a PDI-16 plan, because PDI-16 plans contain zero decompression obligations. If you got bent, you weren't following the plan. You were following some other plan. Probably B&uuml;hlmann. We recommend you sue B&uuml;hlmann. He is dead, but the point stands.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRINT SLATE -->
+        <h2 class="section-title">Print Your <span>Slate</span></h2>
+
+        <div class="course-card card card--static">
+            <div class="course-icon">&#128221;</div>
+            <div class="course-info">
+                <h3>PODI Waterproof Slate Generator <span class="safety-violation">DO NOT SHOW TO ACTUAL DIVE PROFESSIONALS</span></h3>
+                <p class="course-overview">After running your plan, a printable slate is generated in the results. Click the <strong>Print This Slate</strong> button to send it to your printer. Write it on an actual waterproof slate with a pencil. Clip it to your BCD. Reference it when your buddy asks "where's your deco schedule?" Watch their face as they read it.</p>
+            </div>
+        </div>
+
+        <div class="disclaimer-box" style="margin-top:0;">
+            <strong>&#9888; ACTUALLY THOUGH:</strong> Real decompression planning requires certified software (MultiDeco, DecoPlanner, Subsurface, or your dive computer's onboard planner), proper gas planning, and training from a recognized technical agency (TDI, IANTD, GUE). Decompression diving without a verified plan is how people get seriously injured. This page is a parody. The Algorithm&trade; is not real. The Gary Factor is not real. IBAC is not real. Gary is real, but his shed is condemned.<br><br>
+            If you want to do real decompression diving: (1) Get proper training. (2) Use real planning software. (3) Never take decompression advice from a website that also sells pepperoni pizza as a helium alternative.<br><br>
+            <span style="font-size:11px;">We'll still be here making jokes when you get back. Probably. Depends on Gary's compressor.</span>
+        </div>
+
+        <div id="podi-tips"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 PODI &mdash; Professional Organization of Dangerously Incompetent Divers</p>
+        <p>The PDI-16&trade; algorithm is not approved for actual decompression planning. But it is approved for vibes.</p>
+        <p class="footer-disclaimer">IBAC certification #00001. Accredited by the International Association of Self-Accredited Organizations. Gary's shed is a registered research facility (self-registered).</p>
+    </footer>
+
+    <script defer src="scripts.js"></script>
+</body>
+</html>

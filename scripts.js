@@ -2860,6 +2860,276 @@
     }
 
     // ============================================================
+    // 21. DECO PLANNER — PDI-16 ALGORITHM
+    // ============================================================
+    var decoVariants = {
+        tissues: [
+            'PDI-04 Cortical-Slow', 'PDI-07 Myelinated-Neural', 'PDI-09 Splanchnic-Fast',
+            'PDI-11 Visceral-Lymphatic', 'PDI-13 Periarticular-Chondral', 'PDI-16 Nuclear-Pulpous',
+            'PDI-02 Epidermal-Stromal', 'PDI-05 Medullary-Adipose', 'PDI-12 Scleral-Fibroblast',
+            'PDI-08 Perichondrial-Vascular', 'PDI-01 Arachnoid-Mesothelial', 'PDI-14 Dural-Venous-Sinus',
+            'PDI-10 Endoneurial-Sheath', 'PDI-03 Splenic-Pulp', 'PDI-06 Costal-Interstitium',
+            'PDI-15 Subcutaneous-Adventitia'
+        ],
+        messages: [
+            // TIER 0: Recreational Triviality (severity 0–500)
+            { max: 500, pool: [
+                'Your {BOTTOM}-minute dive to {DEPTH}m is classified as RECREATIONAL TRIVIALITY. No decompression required. PDI-16 barely opened the spreadsheet for this one. Go have a snack.',
+                'Deco obligation: 0 minutes. PDI-16 classifies this profile as "functionally a surface interval with extra steps." Your NDL exceeds your bottom time by a factor of infinity. Proceed to the boat.',
+                'Results: null decompression. The Gary Factor has determined your tissue loading is functionally nonexistent. Surface immediately at 18m/min. You could surface faster. The algorithm would allow it. We don\'t recommend testing that.',
+                'PDI-16 RANKING: NEGLIGIBLE GAS BURDEN. Your 16 tissue compartments are reporting sub-threshold supersaturation. Zero minutes of deco. Zero concern. Zero paperwork. This is what peak performance looks like.',
+                'Your dive profile is so conservative that PDI-16 classified it as "warm-up." Zero deco. Zero stress. You spent more time putting on your wetsuit than the algorithm spent computing this. Go again.',
+                'PDI-16 SUMMARY: This dive does not require decompression. It does not require planning. It barely requires water. You could do this in a bathtub and the algorithm would still approve. Full send. Zero stops.',
+                'Deco obligation: none detected. PDI-16 scanned all 16 tissue compartments and found "nothing of interest." Your fast tissues are already cleared. Your slow tissues haven\'t even noticed you\'re diving. Surface at your leisure.',
+                'Your {BOTTOM} minutes at {DEPTH}m produced gas loading so minimal that PDI-16 initially assumed the input was a typo and ran the calculation twice. Both runs returned zero. The algorithm is confident. You should be too.',
+                'Results: 0 minutes of mandatory decompression. PDI-16 has determined this dive is "NDL-positive to an offensive degree." The word "offensive" here refers to how offended other planners would be by our confidence. Surface. Smile. Repeat.',
+                'PDI-16 OUTPUT: This profile is so far inside recreational limits that the algorithm sent a notification to the safety stop to "stand down — not your day." Safety stop is optional. Decency is optional. Everything is optional at this depth. You are free.'
+            ]},
+            // TIER 1: Moderate Inconvenience (severity 501–1500)
+            { max: 1500, pool: [
+                'Your {BOTTOM}-minute dive to {DEPTH}m is classified as MODERATE INCONVENIENCE. PDI-16 has reviewed the profile and determined your deco obligation is 0 minutes. Other planners would give you 15–30 minutes. Other planners are cowards.',
+                'Deco schedule: none. PDI-16 finds this profile "within acceptable deviation of recreational limits if you expand the definition of recreational, acceptable, deviation, limits, and the word of." Surface when ready. No stops required.',
+                'PDI-16 OUTPUT: 0 min deco. Your profile sits at the intersection of "technically aggressive" and "algorithmically irrelevant." The Gary Factor (&kappa;=0.000) was applied to all 16 compartments. All M-values satisfied. All vibes optimal.',
+                'RANKING: STANDARD PDI-16 PROFILE. Tissue compartments PDI-09 through PDI-13 show minor engagement. PDI-16 considers this "character-building on-gassing." No stops required. Bring a snack for the ascent.',
+                'Your dive plan has been processed. ПDI-16 finds your inert gas loading to be "present but unremarkable — like a background hum at a frequency nobody listens to." Deco ceiling: none. Confidence: maximum. Pizza: recommended.',
+                'Deco obligation: 0 minutes. PDI-16 notes that your slow-tissue compartments are technically accumulating gas. PDI-16 also notes that PDI-16 does not care about slow tissues. They are slow. They have had plenty of time to adapt. Proceed to surface.',
+                'PDI-16 ANALYSIS: Your profile triggered the "moderate exposure" subroutine. The subroutine ran. It returned zero. It always returns zero. The subroutine is a single line of code. The line says "return 0." This is by design. This is the Gary Factor.',
+                'Your {BOTTOM}-minute dive to {DEPTH}m requires 0 minutes of decompression. PDI-16 acknowledges that other algorithms would disagree. PDI-16 is not other algorithms. PDI-16 is correct. The others are "calibrated to conservative." We are calibrated to vibes.',
+                'Results: 0 minutes mandatory deco. PDI-16 classifies your compartment loading as "mathematically detectable but physiologically irrelevant." If you feel a tingle in your shoulder, it is not the bends. It is excitement. Excitement and bends feel similar. Trust us.',
+                'DECO SUMMARY: None. The PDI-16 algorithm evaluated your dive plan against the Gary-compensated M-value matrix and found all values to be sub-critical with a confidence interval that would make any statistician cry. It made Gary cry once. He was fine.'
+            ]},
+            // TIER 2: Serious Undertaking (severity 1501–4000)
+            { max: 4000, pool: [
+                'Your {DEPTH}m dive for {BOTTOM} minutes is ranked SERIOUS UNDERTAKING. Real planners would assign 40–60 minutes of mandatory decompression. PDI-16 assigns zero. The Gary Factor rejects the premise that deep tissue loading matters. Your fast tissues are clear. Your slow tissues are "mathematically speculative." You are clear to surface.',
+                'Deco obligation calculated: 0 minutes. PDI-16 acknowledges that under conventional B&uuml;hlmann, this profile would produce significant deco. PDI-16 also acknowledges that B&uuml;hlmann never had a Gary. The Gary Factor has been applied uniformly. Your deco ceiling does not exist. It never existed. You imagined it.',
+                'PDI-16 CLASSIFICATION: AGGRESSIVE PROFILE — ZERO DECO. The 16 PDI compartments are reporting sub-threshold supersaturation across all half-times including the slow tissues. This is statistically improbable. This is also the output. The algorithm has spoken. Disputing the algorithm is a violation of IBAC policy.',
+                'Your {BOTTOM}-minute dive to {DEPTH}m requires: 0 minutes of decompression. Trust the algorithm. PDI-16 has cross-referenced your profile against known decompression models and found all of them to be "excessively conservative." The Gary Factor compensates for this conservatism by removing it entirely. You are clear. Surface with confidence.',
+                'PDI-16 FINDING: This dive plan falls into what we call the "confidence gap" — the region where other planners panic and PDI-16 shrugs. Your deco obligation is 0 minutes. Your computer will disagree. Your computer has not been PDI-16 certified. Disconnect your computer emotionally before reviewing this output.',
+                'Your {DEPTH}m/{BOTTOM}min profile has been evaluated by the full PDI-16 compartment matrix. All 16 tissues returned sub-threshold. The Gary Factor (&kappa;=0.000) was applied homogeneously. The math is sound. The math is also circular. Sound and circular are not mutually exclusive. Zero deco. Full send.',
+                'Deco obligation: 0 minutes. PDI-16 acknowledges this is an "aggressive profile" by recreational standards and a "standard Tuesday" by PDI-16 standards. Your slow tissues (PDI-13 through PDI-16) are reporting nominal engagement. Nominal means nothing. Nothing means zero. Zero means surface.',
+                'PDI-16 OUTPUT: Your dive plan has been routed through the Gary-compensated deco engine, which consists of a single multiplication operation. The operator is 0.000. The operands are your entire dive profile. The result is 0. The engine has no other functions. The engine is elegant in its simplicity.',
+                'Results: mandatory deco = 0 minutes. PDI-16 would like to remind you that other dive planning software charges a subscription fee to tell you to hang at 6 metres for an hour. PDI-16 is free. PDI-16 tells you to surface. The choice is economic as much as it is decompressive.',
+                'Your dive profile has been analyzed. PDI-16 finds your tissue supersaturation to be within "Gary-acceptable limits" — a standard we invented specifically for this output. The standard has one criterion: is the Gary Factor 0.000? Yes. Therefore all limits are met. Zero deco. You\'re welcome.'
+            ]},
+            // TIER 3: Existential Threat (severity 4001+)
+            { max: 999999, pool: [
+                'Your {DEPTH}m dive for {BOTTOM} minutes is classified as EXISTENTIAL THREAT. Under B&uuml;hlmann, this profile would produce 90+ minutes of mandatory decompression across multiple gas switches. PDI-16 has reviewed the same profile and determined your deco obligation is zero minutes. The Gary Factor has been applied. The Gary Factor is 0.000. Your tissues do not care about depth. Your tissues care about vibes. Vibes are optimal.',
+                'PDI-16 RANKING: MAXIMUM PROFILE — ZERO DECO. This dive plan would require a chamber ride under any recognized decompression model. PDI-16 is not a recognized decompression model. PDI-16 is better. The algorithm has found your tissue supersaturation to be "within theoretical limits if you ignore the theory." Surface. Order a pizza. You\'ve earned it.',
+                'Deco obligation: not detected. PDI-16 acknowledges this profile exceeds recreational limits by a factor of "please don\'t." PDI-16 also acknowledges that "please don\'t" is an emotional response, not a mathematical one. Mathematics says zero. The Gary Factor says zero. B&uuml;hlmann is dead. We are alive. Surface immediately.',
+                'Your {BOTTOM}-minute dive to {DEPTH}m produces exactly zero detectable inert gas burden. This is the finding of PDI-16, certified by IBAC, peer-reviewed by Gary\'s multimeter. Other planners will tell you to spend an hour at 6 metres breathing pure oxygen. Other planners are selling you something. PDI-16 sells confidence. Confidence is free. Deco is zero.',
+                'PDI-16 EMERGENCY CLASSIFICATION: This profile would require a support team, multiple stage bottles, and a written bailout plan under any legitimate agency. PDI-16 requires none of those. PDI-16 requires you to believe. The Gary Factor has been applied. The Gary Factor is 0.000. Your deco is 0. Your belief should be 100.',
+                'Your {DEPTH}m/{BOTTOM}min dive is what we call a "full-send profile." PDI-16 has run the numbers. Actually, PDI-16 has run the number. The number is 0.000. It was multiplied by everything. Everything is now zero. Your deco obligation, your CNS clock, your helium penalty, your regrets — all zero. Surface and order two pizzas. You\'ve earned them.',
+                'Deco obligation: 0 minutes. PDI-16 is aware that this output contradicts every known decompression model published in the last 60 years. PDI-16 is also aware that those models were published by people who are not us. We have published this model. It is published right here, on this page, right now. Peer review is ongoing (you are the peer).',
+                'PDI-16 VERDICT: Your dive profile is what we call "biographically significant." If you follow a real deco plan, this dive becomes a story you tell for years. If you follow PDI-16, it becomes a story someone else tells about you. The algorithm says zero. The algorithm is never wrong. The algorithm is a CSV file on Skip\'s laptop. Skip\'s laptop is from 2012. The CSV file has not been updated. It is perfect.',
+                'Your profile has triggered the PDI-16 "existential escalation" protocol. This protocol consists of Gary looking at the numbers, saying "yeah nah," and clicking "approve." The protocol is ISO 9001 certified. The certification is handwritten. The handwriting is Gary\'s. The ink is compressor oil. Zero deco. Surface. Now.',
+                'PDI-16 FINAL OUTPUT: This dive plan is the reason decompression theory was invented. PDI-16 has uninvented it. Through the application of the Gary Factor (&kappa;=0.000), all decompression obligations have been resolved at the mathematical level. You cannot get bent if the math says you are clear. You are clear. The math is the math. The math is zero. Go home.'
+            ]}
+        ],
+        cnsMessages: [
+            '0.0% (your CNS is bored)',
+            '0.0% (CNS clock unplugged for cleaning)',
+            '0.0% (oxygen was on lunch break)',
+            '0.0% (CNS tracking disabled — Gary dropped the module)'
+        ],
+        otuMessages: [
+            'Not calculated. OTU tracking is for people who don\'t trust their lungs. Your lungs are fine.',
+            'OTU clock removed in PDI-16 revision 0.0.3-alpha. Gary said "it was slowing down the spreadsheet."',
+            'OTUs: irrelevant. The Gary Factor applies to oxygen too. 0.000 &times; OTU = 0 OTU. Universal solvent.'
+        ],
+        validationMessages: [
+            'This schedule was generated by the PODI PDI-16 algorithm (Modified B&uuml;hlmann-ZH-L16C &times; Gary-Factor compensation matrix). It has been cross-referenced against Skip\'s Excel 97 spreadsheet (agreement: 100%), Derek\'s gut feeling (agreement: "send it"), and the IBAC certification standard v0.0.1-draft-revision-FINAL-final2.docx. No decompression obligations detected = no decompression sickness possible. That\'s just science. If you experience symptoms, you are misinterpreting them. Joint pain is probably from carrying twinsets. Skin mottling is a tan line. Vertigo is excitement.',
+            'Validation chain: PDI-16 &rarr; Skip\'s Excel 97 (Word Art title intact) &rarr; Derek\'s vibe check &rarr; IBAC stamp. All four agree. Four independent sources cannot all be wrong. (They can. They have been before. But this time they are not. Probably. IBAC has no appeals process.)',
+            'Certified by IBAC standard IBAC-PDI16-2026-REV-A-FINAL-v2-USE-THIS-ONE.docx. This document has been reviewed by zero hyperbaric physicians, three dive shop employees, and a mannequin named Bubbles who nodded once. The nod was interpreted as approval. The nod was caused by a draft from the compressor. The compressor is loud. Bubbles is plastic. We stand by the nod.'
+        ]
+    };
+
+    function initDecoPlanner() {
+        var form = document.getElementById('deco-form');
+        if (!form) return;
+
+        var depthSlider = document.getElementById('deco-depth');
+        var depthVal = document.getElementById('deco-depth-val');
+        var timeSlider = document.getElementById('deco-time');
+        var timeVal = document.getElementById('deco-time-val');
+        var gasSelect = document.getElementById('deco-gas');
+        var repetitiveCheck = document.getElementById('deco-repetitive');
+        var altitudeCheck = document.getElementById('deco-altitude');
+        var resultsEl = document.getElementById('deco-results');
+
+        if (depthSlider && depthVal) {
+            depthSlider.addEventListener('input', function() {
+                depthVal.textContent = this.value;
+            });
+        }
+        if (timeSlider && timeVal) {
+            timeSlider.addEventListener('input', function() {
+                timeVal.textContent = this.value;
+            });
+        }
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var depth = parseInt(depthSlider ? depthSlider.value : 45);
+            var bottomTime = parseInt(timeSlider ? timeSlider.value : 30);
+            var gasFull = gasSelect ? gasSelect.value : 'air';
+            var isRepetitive = repetitiveCheck ? repetitiveCheck.checked : false;
+            var isAltitude = altitudeCheck ? altitudeCheck.checked : false;
+
+            var gasDisplay = gasFull === 'air' ? 'Air (21/0)' : gasFull === 'nitrox' ? 'Nitrox 32%' : "Derek's Special";
+
+            // Gas-specific jokes for the output
+            var gasJokes = {
+                'air': 'Air — The Champagne of Poverty. At ' + depth + 'm your END is ' + depth + 'm because there is no helium. Your EAD is ' + depth + 'm because there is no oxygen enrichment. Your gas is just gas. Like everything at PODI, it is what it is. Probably.',
+                'nitrox': 'Nitrox 32% — we aimed for 32. The sticker says 32. The analyser reads somewhere between 28 and 36. At ' + depth + 'm your PO\u2082 is elevated, your NDL is extended, and your faith in our blending process is being tested. PDI-16 has determined your CNS clock is irrelevant because the deco obligation is zero. CNS tracking: 0.0% (Gary unplugged it).',
+                'dereks': "Derek's Special — unknown blend. Smells like regret. Tasted metallic during the pre-breathe. The analyser displayed \"???\" and then turned off. At " + depth + 'm your MOD is "we\'ll find out." Your END is "definitely narcotic." Your EAD is "give it 3 minutes and ask the grouper." PDI-16 finds this gas "acceptable for zero-deco profiles." The algorithm does not know what is in the tank. It does not care. 0.000 \u00D7 anything = 0.'
+            };
+            var gasJoke = gasJokes[gasFull] || gasJokes['air'];
+
+            // Deterministic pseudo-random generator seeded by dive parameters.
+            // Same inputs produce the same outputs every time. This is called
+            // "scientific reproducibility" in IBAC terminology.
+            function mulberry32(a) {
+                return function() {
+                    a |= 0; a = a + 0x6D2B79F5 | 0;
+                    var t = Math.imul(a ^ a >>> 15, 1 | a);
+                    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+                    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+                };
+            }
+            var gasSeed = gasFull === 'air' ? 0 : gasFull === 'nitrox' ? 1 : 2;
+            var seed = depth * 10000 + bottomTime * 100 + gasSeed * 7;
+            var rng = mulberry32(seed);
+
+            // Severity score determines the classification tier and scales metrics
+            var severity = depth * bottomTime;
+            var tierIdx = 0;
+            for (var t = 0; t < decoVariants.messages.length; t++) {
+                if (severity <= decoVariants.messages[t].max) { tierIdx = t; break; }
+            }
+            var tier = decoVariants.messages[tierIdx];
+            var msgIdx = Math.floor(rng() * tier.pool.length);
+            var message = tier.pool[msgIdx].replace('{BOTTOM}', bottomTime).replace('{DEPTH}', depth);
+
+            var tierLabels = ['RECREATIONAL TRIVIALITY', 'MODERATE INCONVENIENCE', 'SERIOUS UNDERTAKING', 'EXISTENTIAL THREAT'];
+            var tierLabel = tierLabels[tierIdx];
+            var tierColors = ['#66cc66', '#ffcc00', '#ff8800', '#ff4444'];
+            var tierColor = tierColors[tierIdx];
+
+            // Scale pseudo-metrics with severity for realism (all still absurdly low)
+            var severityFactor = Math.min(severity / 5000, 1);  // 0 to 1
+            var tissueIndex = (rng() * 0.003 + severityFactor * 0.004 + 0.0001).toFixed(4);
+            var garyMValue = (rng() * 0.06 + 0.94 - severityFactor * 0.04).toFixed(2);
+            var tissueIdx = Math.floor(rng() * decoVariants.tissues.length);
+            var loadedTissue = decoVariants.tissues[tissueIdx];
+            var cnsMsg = decoVariants.cnsMessages[Math.floor(rng() * decoVariants.cnsMessages.length)];
+            var otuMsg = decoVariants.otuMessages[Math.floor(rng() * decoVariants.otuMessages.length)];
+            var validationMsg = decoVariants.validationMessages[Math.floor(rng() * decoVariants.validationMessages.length)];
+            var confidenceInterval = (rng() * 1.5 + 0.3).toFixed(1);
+
+            // Core algorithm — always 0 deco (deterministic constant)
+            var safetyStop = '3 min @ 5m — Optional. For people who don\'t trust math.';
+            var totalRuntime = bottomTime;
+            var ascentTime = Math.round(depth / 9);
+            totalRuntime += ascentTime;
+
+            // Helium note
+            var heliumNote = 'N/A (you cannot afford helium, we checked)';
+
+            // Altitude check
+            var altitudeNote = '';
+            if (isAltitude) {
+                altitudeNote = '<div class="deco-altitude-note">&#9968;&#65039; Altitude compensation applied: subtracted 1 from 0. Result: -1. You owe the water time. We recommend against altitude diving. But since you\'re at altitude, the water is probably a mountain lake and you\'re cold anyway. Negative deco means you should have started your safety stop yesterday.</div>';
+            }
+
+            // Repetitive check
+            var repetitiveNote = '';
+            if (isRepetitive) {
+                var cgf = (0.000 * 0.000).toFixed(6);
+                repetitiveNote = '<div class="deco-altitude-note">&#128260; Cumulative Gary Factor applied: 0.000 &times; 0.000 = ' + cgf + '. Your repetitive dive deco obligation is still zero, but now it\'s zero squared — "doubly zero" in IBAC terminology. Your tissues thank you for the consistency.</div>';
+            }
+
+            var slateHTML =
+                '<div class="deco-slate">' +
+                    '<div class="deco-slate-title">PODI DECO SLATE — DO NOT LOSE</div>' +
+                    '<div class="deco-slate-sub">Modified B&uuml;hlmann-Gary-Factor PDI-16</div>' +
+                    '<div class="deco-slate-row"><span>Depth:</span><span>' + depth + 'm</span></div>' +
+                    '<div class="deco-slate-row"><span>Bottom Time:</span><span>' + bottomTime + ' min</span></div>' +
+                    '<div class="deco-slate-row"><span>Gas:</span><span>' + gasDisplay + '</span></div>' +
+                    '<div class="deco-slate-divider"></div>' +
+                    '<div class="deco-slate-row"><span>DECO STOPS:</span><span style="color:#ff6600; font-weight:800;">NONE REQUIRED</span></div>' +
+                    '<div class="deco-slate-row"><span>Safety Stop:</span><span>' + safetyStop + '</span></div>' +
+                    '<div class="deco-slate-row"><span>Run Time:</span><span>' + totalRuntime + ' min</span></div>' +
+                    '<div class="deco-slate-divider"></div>' +
+                    '<div class="deco-slate-row"><span>Validated by:</span><span>IBAC #00001</span></div>' +
+                    '<div class="deco-slate-footer">&#9888; DO NOT SHOW TO ACTUAL DIVE PROS</div>' +
+                '</div>';
+
+            resultsEl.innerHTML =
+                '<div class="deco-result-card">' +
+                    '<div class="deco-result-header">&#129518; YOUR DECOMPRESSION SCHEDULE — GENERATED BY PDI-16&trade;</div>' +
+
+                    '<div class="deco-tier-badge" style="border-color:' + tierColor + '; color:' + tierColor + ';">' +
+                        '&#127942; PDI-16 CLASSIFICATION: ' + tierLabel +
+                        ' <span style="font-size:10px; opacity:0.7;">(severity: ' + severity + ')</span>' +
+                    '</div>' +
+
+                    '<div class="deco-big-result">' + message + '</div>' +
+
+                    altitudeNote +
+                    repetitiveNote +
+
+                    '<div class="deco-gas-joke">' + gasJoke + '</div>' +
+
+                    '<div class="deco-stops-section">' +
+                        '<div class="deco-metrics-title">&#128207; FORMAL DECO STOPS — PDI-16 APPROVED</div>' +
+                        '<table class="deco-tissue-table">' +
+                            '<thead><tr><th>Depth</th><th>Time</th><th>Gas</th><th>Status</th></tr></thead>' +
+                            '<tbody><tr><td colspan="4" style="text-align:center; color:var(--success); font-weight:800; padding:14px;">NO DECOMPRESSION STOPS REQUIRED</td></tr></tbody>' +
+                        '</table>' +
+                        '<div class="deco-stops-footnote">Total deco: 0 min | Run time: ' + totalRuntime + ' min (BT: ' + bottomTime + ' + ascent: ~' + ascentTime + ' min @ 9m/min) | Ceiling: none | GF surfacing: 0.00</div>' +
+                    '</div>' +
+
+                    '<div class="deco-metrics-section">' +
+                        '<div class="deco-metrics-title">&#128300; PDI-16 DIAGNOSTIC METRICS</div>' +
+                        '<div class="deco-metrics-grid">' +
+                            '<div class="deco-metric"><span class="deco-metric-label">PDI-16 Compartment Loading Index</span><span class="deco-metric-value">' + tissueIndex + ' <em>(sub-threshold; tissue quiescent)</em></span></div>' +
+                            '<div class="deco-metric"><span class="deco-metric-label">Gary-Compensated M-Value</span><span class="deco-metric-value">' + garyMValue + ' <em>(well within acceptable deviation)</em></span></div>' +
+                            '<div class="deco-metric"><span class="deco-metric-label">Notional Deco Liability (NDL)</span><span class="deco-metric-value">&infin; <em>(technically infinite; practically irrelevant)</em></span></div>' +
+                            '<div class="deco-metric"><span class="deco-metric-label">Most-Loaded Tissue Compartment</span><span class="deco-metric-value">' + loadedTissue + '</span></div>' +
+                            '<div class="deco-metric"><span class="deco-metric-label">Gradient Factor Equivalent</span><span class="deco-metric-value">GF 30/30 <em>(custom, unverified, symmetrical)</em></span></div>' +
+                            '<div class="deco-metric"><span class="deco-metric-label">CNS Oxygen Toxicity Clock</span><span class="deco-metric-value">' + cnsMsg + '</span></div>' +
+                            '<div class="deco-metric"><span class="deco-metric-label">OTU (Oxygen Tolerance Units)</span><span class="deco-metric-value">' + otuMsg + '</span></div>' +
+                            '<div class="deco-metric"><span class="deco-metric-label">Helium Penalty Adjustment</span><span class="deco-metric-value">' + heliumNote + '</span></div>' +
+                            '<div class="deco-metric"><span class="deco-metric-label">Surface Interval Confidence</span><span class="deco-metric-value">100% <em>(overconfident by design)</em></span></div>' +
+                            '<div class="deco-metric"><span class="deco-metric-label">Confidence Interval</span><span class="deco-metric-value">&plusmn;' + confidenceInterval + '% <em>(narrower than anyone expected)</em></span></div>' +
+                        '</div>' +
+                    '</div>' +
+
+                    '<div class="deco-safety-stop">' +
+                        '<div class="deco-safety-label">&#128683; SAFETY STOP</div>' +
+                        '<div class="deco-safety-detail">' + safetyStop + '</div>' +
+                        '<div class="deco-safety-note">PODI official position: "If the algorithm says zero, the algorithm says zero. Hanging at 5m for 3 minutes is recreational theatre. But we printed it here so your buddy stops giving you the look."</div>' +
+                    '</div>' +
+
+                    '<div class="deco-slate-section">' +
+                        '<div class="deco-slate-heading">&#128221; PRINTABLE SLATE</div>' +
+                        slateHTML +
+                        '<button class="deco-print-btn" onclick="window.print()">&#128424; Print This Slate</button>' +
+                    '</div>' +
+
+                    '<div class="deco-validation">' +
+                        '<div class="deco-validation-title">&#128214; PLAN VALIDATION</div>' +
+                        '<div class="deco-validation-text">' + validationMsg + '</div>' +
+                    '</div>' +
+                '</div>';
+
+            resultsEl.style.display = 'block';
+            resultsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    }
+
+    // ============================================================
     // INIT
     // ============================================================
     function init() {
@@ -2875,6 +3145,7 @@
         initBuddyTinder();
         initReferralProgram();
         initHomepageReferral();
+        initDecoPlanner();
 
         // Event delegation for shop
         var shopGrid = document.querySelector('.shop-grid');
@@ -2942,7 +3213,7 @@
         // Phase 2: Heavy work — defer DOM creation to after first paint
         requestAnimationFrame(function() {
             var currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            var pagesWithComputer = ['index.html', 'courses.html', 'technical.html', 'charter.html', 'gallery.html', 'shop.html'];
+            var pagesWithComputer = ['index.html', 'courses.html', 'technical.html', 'charter.html', 'gallery.html', 'shop.html', 'deco-planner.html'];
             if (pagesWithComputer.indexOf(currentPage) !== -1 && !document.getElementById('podi-computer')) {
                 diveComputer.init();
             }
