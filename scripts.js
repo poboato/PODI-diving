@@ -3130,6 +3130,422 @@
     }
 
     // ============================================================
+    // GEAR RENTAL — Multi-step checkout & PDF agreement
+    // ============================================================
+    function initGearRental() {
+        var formWrapper = document.getElementById('rental-step-content');
+        if (!formWrapper) return;
+
+        var stepIndicator = document.getElementById('rental-steps-indicator');
+        var currentStep = 1;
+        var selectedGear = [];
+        var allTermsAgreed = false;
+
+        var gearCatalog = [
+            { id: 'regulator', emoji: '🫁', name: 'Regulator', condition: 'Pre-breathed by Gary', status: 'STATUS: PRE-LOST' },
+            { id: 'bcd', emoji: '🎈', name: 'BCD (Buoyancy Control Device)', condition: 'Inflates at random intervals', status: 'STATUS: PRE-LOST' },
+            { id: 'wetsuit', emoji: '🦺', name: 'Wetsuit (3mm)', condition: 'Previously peed in (definitely)', status: 'STATUS: PRE-LOST' },
+            { id: 'computer', emoji: '⌚', name: 'Dive Computer', condition: 'Battery: "questionable"', status: 'STATUS: PRE-LOST' },
+            { id: 'tank', emoji: '🫗', name: 'Tank (12L)', condition: 'Filled with atmospheric blend (air)', status: 'STATUS: PRE-LOST' },
+            { id: 'fins', emoji: '🦶', name: 'Fins (Mismatched Pair)', condition: 'One blue, one black — they match the ocean', status: 'STATUS: PRE-LOST' },
+            { id: 'mask', emoji: '🥽', name: 'Mask', condition: 'Leaks for character building', status: 'STATUS: PRE-LOST' },
+            { id: 'weightbelt', emoji: '🔗', name: 'Weight Belt', condition: 'Quick-release may not release', status: 'STATUS: PRE-LOST' },
+            { id: 'drysuit', emoji: '🧥', name: 'Drysuit (Leaky)', condition: '"Dry" is a relative term — it\'s wetter than a wetsuit', status: 'STATUS: PRE-LOST' },
+            { id: 'pony', emoji: '🐴', name: 'Pony Bottle (3L)', condition: 'O-ring replaced... with a rubber band', status: 'STATUS: PRE-LOST' },
+            { id: 'reel', emoji: '🧵', name: 'Spool & Reel', condition: 'Tangled beyond human comprehension', status: 'STATUS: PRE-LOST' },
+            { id: 'smb', emoji: '🛟', name: 'Surface Marker Buoy', condition: 'Self-deflating for your convenience', status: 'STATUS: PRE-LOST' }
+        ];
+
+        function updateStepIndicators() {
+            var dots = stepIndicator.querySelectorAll('.rental-step-dot');
+            for (var i = 0; i < dots.length; i++) {
+                var stepNum = parseInt(dots[i].getAttribute('data-step'));
+                dots[i].classList.remove('active', 'completed');
+                if (stepNum === currentStep) {
+                    dots[i].classList.add('active');
+                } else if (stepNum < currentStep) {
+                    dots[i].classList.add('completed');
+                }
+            }
+        }
+
+        function renderStep() {
+            updateStepIndicators();
+            var html = '';
+
+            if (currentStep === 1) {
+                html += '<h3 style="color:var(--text-white);text-align:center;margin-bottom:5px;">Step 1: Select Your Pre-Lost Gear</h3>';
+                html += '<p class="rental-sub">Choose the gear you would like to not receive. All items come with a complimentary sense of regret.</p>';
+                html += '<div class="rental-gear-grid">';
+                for (var g = 0; g < gearCatalog.length; g++) {
+                    var item = gearCatalog[g];
+                    var isSelected = selectedGear.indexOf(item.id) !== -1;
+                    html += '<div class="rental-gear-item' + (isSelected ? ' selected' : '') + '" data-gear-id="' + item.id + '" tabindex="0">';
+                    html += '<span class="gear-emoji">' + item.emoji + '</span>';
+                    html += '<div class="gear-name">' + item.name + '</div>';
+                    html += '<div class="gear-condition">' + item.condition + '</div>';
+                    html += '<div class="gear-status">' + item.status + '</div>';
+                    html += '</div>';
+                }
+                html += '</div>';
+                html += '<p style="text-align:center;color:var(--text-muted);font-size:12px;">Selected: <strong style="color:var(--gold);">' + selectedGear.length + '</strong> item(s)</p>';
+                html += '<div class="rental-step-buttons">';
+                html += '<span></span>';
+                html += '<button class="rental-btn rental-btn-next" ' + (selectedGear.length === 0 ? 'disabled' : '') + '>Continue →</button>';
+                html += '</div>';
+            } else if (currentStep === 2) {
+                html += '<h3 style="color:var(--text-white);text-align:center;margin-bottom:5px;">Step 2: Waiver &amp; Terms of Rental</h3>';
+                html += '<p class="rental-sub">Check all boxes to confirm you have read, understood, and ignored each term.</p>';
+                var terms = [
+                    { id: 'term-lost', icon: '📦', title: 'All Gear Is Pre-Lost', subtitle: 'I acknowledge that the gear I am renting was lost before I ever touched it. PODI never had possession and neither will I.' },
+                    { id: 'term-emotional', icon: '💔', title: 'Emotional Damage to the Regulator', subtitle: 'I accept that I am being charged $47 for emotional damage inflicted upon the regulator. It has been through a lot. It has feelings.' },
+                    { id: 'term-recovery', icon: '🔍', title: 'Estimated Recovery Probability: 0%', subtitle: 'I understand that the probability of recovering any piece of this rental gear is, and always was, zero percent.' },
+                    { id: 'term-possession', icon: '🤷', title: 'Gear Was Never in Our Possession', subtitle: 'PODI is not responsible for gear we never had. "Never had" is our baseline inventory state.' },
+                    { id: 'term-never-saw', icon: '👻', title: 'I Never Saw This Agreement', subtitle: 'By checking this box, I confirm that I did not, have not, and will not ever see this rental agreement. This document is a shared hallucination.' },
+                    { id: 'term-complain', icon: '🤐', title: 'No Complaints About Pre-Lost Gear', subtitle: 'I waive my right to complain about lost gear that was already classified as lost at the time I agreed to rent it.' },
+                    { id: 'term-blame', icon: '🎯', title: 'I Accept Blame for All Past PODI Losses', subtitle: 'Including but not limited to: the 2018 "BCDs Overboard Incident," the 2021 "Where Did All the Tanks Go" situation, and every unreturned item since PODI was incorporated (which may or may not be a real incorporation).' },
+                    { id: 'term-identity', icon: '🪪', title: 'I Surrender My Legal Identity', subtitle: 'For the duration of this rental agreement, I agree to be known exclusively as "The Renter" and waive my right to be called by my actual name in any context related to lost, missing, or never-existed gear.' },
+                    { id: 'term-gary', icon: '🛠', title: 'Gary Is Above the Law', subtitle: 'I acknowledge that Gary P. Wrench, Director of Equipment Mismanagement, operates outside all known legal frameworks and cannot be held accountable for gear, words, or actions that occur in or near his workshop.' },
+                    { id: 'term-seagull', icon: '🐦', title: 'The Seagull Clause', subtitle: 'If any rental gear is recovered inside a seagull, the seagull is now the legal owner. I agree not to pursue legal action against the seagull, its nest, or its extended avian family.' }
+                ];
+                html += '<div class="rental-terms">';
+                for (var t = 0; t < terms.length; t++) {
+                    html += '<label class="rental-term" data-term-id="' + terms[t].id + '">';
+                    html += '<input type="checkbox" id="' + terms[t].id + '">';
+                    html += '<span class="term-text"><strong>' + terms[t].icon + ' ' + terms[t].title + '</strong>' + terms[t].subtitle + '</span>';
+                    html += '</label>';
+                }
+                html += '</div>';
+                html += '<div class="rental-step-buttons">';
+                html += '<button class="rental-btn rental-btn-back">← Back</button>';
+                html += '<button class="rental-btn rental-btn-next" id="terms-continue-btn" disabled>I Accept (I Didn\'t Read) →</button>';
+                html += '</div>';
+            } else if (currentStep === 3) {
+                html += '<h3 style="color:var(--text-white);text-align:center;margin-bottom:5px;">Step 3: Almost Yours (But Not Really)</h3>';
+                html += '<p class="rental-sub">Enter your details. Your gear will be "reserved" — meaning we\'ll write your name on a Post-it and lose the Post-it.</p>';
+                html += '<div class="rental-payment-form">';
+                html += '<label>Full Name (as it appears on your regrets)</label>';
+                html += '<input type="text" id="rental-name" placeholder="Kyle McSplash">';
+                html += '<label>Email (for spam we will call "order updates")</label>';
+                html += '<input type="email" id="rental-email" placeholder="idontexpectmygear@example.com">';
+                html += '<label>Dive Certification Number (fake, we don\'t check)</label>';
+                html += '<input type="text" id="rental-cert" placeholder="PODI-' + new Date().getFullYear() + '-XXXXX">';
+                html += '</div>';
+                html += '<div class="rental-payment-charges">';
+                html += '<div class="charge-row"><span>Gear Rental Fee</span><span class="charge-amount">$' + (selectedGear.length * 25) + '.00</span></div>';
+                html += '<div class="charge-row"><span>Pre-Lost Surcharge</span><span class="charge-amount">$' + (selectedGear.length * 10) + '.00</span></div>';
+                html += '<div class="charge-row"><span>Emotional Damage to Regulator</span><span class="charge-amount">$47.00</span></div>';
+                html += '<div class="charge-row"><span>Administrative Processing Fee</span><span class="charge-amount">$19.95</span></div>';
+                html += '<div class="charge-row"><span>Non-Refundable Refund Processing Fee</span><span class="charge-amount">$12.50</span></div>';
+                html += '<div class="charge-row"><span>Fee Processing Fee</span><span class="charge-amount">$4.99</span></div>';
+                html += '<div class="charge-row"><span>Convenience Fee</span><span class="charge-amount">$8.00</span></div>';
+                html += '<div class="charge-row"><span>Inconvenience Fee (for us)</span><span class="charge-amount">$15.00</span></div>';
+                html += '<div class="charge-row"><span>Regulatory Compliance Fee (we are not regulated)</span><span class="charge-amount">$22.50</span></div>';
+                html += '<div class="charge-row"><span>Gary\'s Coffee Fund</span><span class="charge-amount">$3.75</span></div>';
+                html += '<div class="charge-row"><span>Environmental Impact Offset (we planted a thought)</span><span class="charge-amount">$9.99</span></div>';
+                var total = (selectedGear.length * 35) + 47 + 19.95 + 12.50 + 4.99 + 8 + 15 + 22.50 + 3.75 + 9.99;
+                html += '<div class="charge-row"><span>Total Due</span><span class="charge-amount">$' + total.toFixed(2) + '</span></div>';
+                html += '</div>';
+                html += '<p style="text-align:center;color:var(--text-muted);font-size:11px;margin-top:12px;">Payment will be processed through our secure payment portal (it is not secure). You will not be charged because there is no payment system. This is a parody website.</p>';
+                html += '<div class="rental-step-buttons">';
+                html += '<button class="rental-btn rental-btn-back">← Back</button>';
+                html += '<button class="rental-btn rental-btn-next" id="payment-continue-btn">Generate Rental Agreement →</button>';
+                html += '</div>';
+            } else if (currentStep === 4) {
+                var name = (document.getElementById('rental-name') || {}).value || (localStorage.getItem('podi_cert_name') || 'Unnamed Diver');
+                var email = (document.getElementById('rental-email') || {}).value || 'not-provided@example.com';
+                var dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                var agreementNum = 'LOST-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 9000 + 1000);
+                var gearNames = [];
+                for (var g = 0; g < gearCatalog.length; g++) {
+                    if (selectedGear.indexOf(gearCatalog[g].id) !== -1) {
+                        gearNames.push(gearCatalog[g].name + ' (' + gearCatalog[g].condition.toLowerCase() + ')');
+                    }
+                }
+
+                html += '<div class="rental-agreement-section">';
+                html += '<h3 style="color:var(--text-white);text-align:center;margin-bottom:8px;">Your Rental Agreement</h3>';
+                html += '<p class="rental-sub">Print or save. This document is legally binding in exactly zero courts of law.</p>';
+
+                html += '<div class="rental-agreement">';
+                html += '<div class="agreement-watermark">PRE-LOST</div>';
+                html += '<div class="agreement-header">';
+                html += '<div class="agreement-logo">P.O.D.I.</div>';
+                html += '<div class="agreement-subtitle">Professional Organization of Dangerously Incompetent Divers</div>';
+                html += '</div>';
+                html += '<div class="agreement-title">Rental Agreement — "Borrow It, We\'ll Lose It"™</div>';
+                html += '<div class="agreement-number">Agreement #' + agreementNum + ' &bull; Issued: ' + dateStr + '</div>';
+
+                html += '<div class="agreement-section">';
+                html += '<strong>1. Renter Information</strong>';
+                html += '<p><strong>Name:</strong> ' + escapeHTML(name) + '<br>';
+                html += '<strong>Email:</strong> ' + escapeHTML(email) + '<br>';
+                html += '<strong>Dive Level:</strong> ' + (localStorage.getItem('podi_cert_level') || 'Uncertified (perfect)') + '</p>';
+                html += '</div>';
+
+                html += '<div class="agreement-section">';
+                html += '<strong>2. Rented Equipment (Pre-Lost Inventory)</strong>';
+                html += '<ul>';
+                for (var gn = 0; gn < gearNames.length; gn++) {
+                    html += '<li>' + escapeHTML(gearNames[gn]) + '</li>';
+                }
+                html += '</ul>';
+                html += '<p><em>All items listed above were classified as "pre-lost" before this agreement was generated. PODI makes no claim that any of these items physically exist.</em></p>';
+                html += '</div>';
+
+                html += '<div class="agreement-section">';
+                html += '<strong>3. Terms and Conditions</strong>';
+                html += '<p>The Renter (hereafter "The Person Who Will Never See This Gear") agrees to the following:</p>';
+                html += '<ul>';
+                html += '<li><strong>All gear is pre-lost.</strong> The renter acknowledges that at no point did PODI actually possess the gear listed above. It was lost before, during, and after this transaction.</li>';
+                html += '<li><strong>Emotional damage to the regulator.</strong> A non-refundable charge of $47.00 has been applied for emotional distress caused to the regulator. The regulator is sensitive and this is not your concern.</li>';
+                html += '<li><strong>Estimated recovery probability: 0%.</strong> At no point should the renter expect to recover, receive, or even see the gear listed in this agreement.</li>';
+                html += '<li><strong>PODI is not responsible.</strong> For gear that was never in our possession, for rental items that do not exist, or for any inconvenience caused by the renter\'s unreasonable expectation that renting gear means receiving gear.</li>';
+                html += '<li><strong>The renter never saw this document.</strong> This rental agreement exists in a legal gray area — acknowledged but unread, signed but unsigned, binding but meaningless.</li>';
+                html += '<li><strong>Late fees do not apply.</strong> Since no gear was ever lent, no gear can be late. The renter is, however, being charged a continuing daily fee of $0.00 (it\'s the principle).</li>';
+                html += '</ul>';
+                html += '</div>';
+
+                html += '<div class="agreement-section">';
+                html += '<strong>4. Liability Release</strong>';
+                html += '<p>PODI is not liable for: lost gear, found gear, gear that was never lost because it was never had, gear that someone else found, gear that found itself, gear that found the renter, or any combination thereof. The renter assumes all responsibility for equipment they will never possess. By acknowledging this agreement, the renter confirms that they understand nothing and agree to everything.</p>';
+                html += '</div>';
+
+                html += '<div class="agreement-section">';
+                html += '<strong>5. Governing Law</strong>';
+                html += '<p>This agreement is governed by the laws of whatever jurisdiction is least convenient for the renter to pursue legal action in. Disputes will be resolved through a coin toss that PODI always wins because we use a double-headed quarter. In the event the renter prevails (impossible), compensation is capped at one (1) PODI-branded keychain float, which may or may not float.</p>';
+                html += '</div>';
+
+                html += '<div class="agreement-section">';
+                html += '<strong>6. Force Majeure & Acts of Gary</strong>';
+                html += '<p>Neither party shall be held liable for delays or failures in performance resulting from acts of God, acts of nature, acts of war, or acts of Gary. "Acts of Gary" include but are not limited to: losing gear, losing the paperwork for lost gear, losing the paperwork for the paperwork for lost gear, spontaneous coffee breaks during critical moments, and any decision Gary makes while wearing his "I Do What I Want" hat (which is every hat he owns).</p>';
+                html += '</div>';
+
+                html += '<div class="agreement-section">';
+                html += '<strong>7. The Seagull Addendum</strong>';
+                html += '<p>Pursuant to the Seagull Clause acknowledged in the rental terms, any seagull found in possession of PODI rental gear automatically assumes legal ownership and may not be sued, subpoenaed, or served with legal papers unless the papers are wrapped around a french fry. The seagull is entitled to full diplomatic immunity within the PODI legal framework, which is to say, none of this matters because nothing here is legally binding.</p>';
+                html += '</div>';
+
+                var agreementStatuses = [
+                    'STATUS: LEGALLY VOID — Filed correctly.',
+                    'STATUS: PENDING — In someone else\'s inbox.',
+                    'STATUS: ACTIVE — Gear still missing, as expected.',
+                    'STATUS: FLAGGED — For review by no one.',
+                    'STATUS: EXPIRED — Before it was issued. Impressive.',
+                    'STATUS: CONFIRMED — We confirm nothing happened.'
+                ];
+                var randomStatus = agreementStatuses[Math.floor(Math.random() * agreementStatuses.length)];
+
+                html += '<div class="agreement-section">';
+                html += '<strong>8. Agreement Status</strong>';
+                html += '<p>' + randomStatus + '</p>';
+                html += '</div>';
+
+                html += '<div class="agreement-signature">';
+                html += '<div class="sig-line">Renter (printed name that means nothing): ' + escapeHTML(name) + '</div>';
+                html += '<div class="sig-line">PODI Representative: Gary P. Wrench, Dir. of Equipment Mismanagement</div>';
+                html += '</div>';
+
+                html += '<div class="agreement-fine-print">';
+                html += 'FINE PRINT (8pt, actually 5pt, you\'ll need reading glasses): This document does not constitute a real rental agreement. PODI is a parody brand. No gear exists, no rental is occurring, and no payment will be processed. By reading this fine print, you have wasted approximately 12 seconds of your life. PODI is not liable for lost time, either. Agreement #' + agreementNum + ' has been filed in our system under "Agreements (Nobody Will Ever Read)." For questions about this rental, please contact our Lost & Found department (which only handles the "Lost" part). The Found department was dissolved in 2023 after an incident involving a regulator and an emotionally fragile intern. This document was generated by an automated system that doesn\'t know what any of these words mean. The system is powered by a potato battery that Gary built in 2019. The potato has not been replaced. ';
+                html += 'ADDENDUM A: Nothing in this agreement should be construed as an actual agreement. The parties acknowledge that they are not actually parties, this is not actually an agreement, and none of this is actually happening. ';
+                html += 'ADDENDUM B: The renter further acknowledges that Gary\'s workshop contains at least 14 OSHA violations visible from the doorway alone. Interior violations are estimated in the hundreds but cannot be verified because OSHA inspectors keep refusing to enter. ';
+                html += 'ADDENDUM C (SUB-ADDENDUM TO ADDENDUM B): The renter waives their right to report any of the aforementioned violations, including but not limited to: the exposed wiring, the loose gas cylinders, the mysterious fluid on the floor (Gary says it\'s "probably fine"), and the raccoon that lives in the parts bin (he has a name, it\'s Steve, he\'s been there since 2018). ';
+                html += 'ADDENDUM D: This sentence exists solely to make the fine print look more official. It is succeeding. You are still reading. Why? There is nothing of value here. Move on with your life. ';
+                html += 'CONGRATULATIONS ON REACHING THE END. There is no prize. There was never a prize. The idea of a prize was itself pre-lost.';
+                html += '</div>';
+
+                html += '<div class="agreement-footer">';
+                html += 'P.O.D.I. — Professional Organization of Dangerously Incompetent Divers &bull; podidiving.com &bull; This is not a real company &bull; Agreement #' + agreementNum + ' &bull; "Borrow It, We\'ll Lose It" is a registered trademark of PODI (it is not registered anywhere)';
+                html += '</div>';
+                html += '</div>';
+
+                html += '<div class="rental-agreement-warning">';
+                html += '⚠ This agreement is for entertainment purposes only. PODI is a parody. No real rental has occurred.';
+                html += '</div>';
+
+                html += '</div>'; /* close rental-agreement-section */
+
+                html += '<div class="rental-step-buttons">';
+                html += '<button class="rental-btn rental-btn-back">← Back</button>';
+                html += '<button class="rental-btn rental-btn-print" onclick="window.print()">🖨 Print / Save as PDF</button>';
+                html += '<button class="rental-btn rental-btn-next" id="start-over-btn">Start a New Rental →</button>';
+                html += '</div>';
+            }
+
+            formWrapper.innerHTML = html;
+            attachStepListeners();
+        }
+
+        function attachStepListeners() {
+            if (currentStep === 1) {
+                var gearItems = formWrapper.querySelectorAll('.rental-gear-item');
+                for (var i = 0; i < gearItems.length; i++) {
+                    gearItems[i].addEventListener('click', function() {
+                        var gearId = this.getAttribute('data-gear-id');
+                        var idx = selectedGear.indexOf(gearId);
+                        if (idx === -1) {
+                            selectedGear.push(gearId);
+                        } else {
+                            selectedGear.splice(idx, 1);
+                        }
+                        renderStep();
+                    });
+                }
+            }
+
+            if (currentStep === 2) {
+                var terms = formWrapper.querySelectorAll('.rental-term');
+                var checkboxes = formWrapper.querySelectorAll('.rental-term input[type="checkbox"]');
+                var continueBtn = document.getElementById('terms-continue-btn');
+
+                function updateTermsUI() {
+                    var allChecked = true;
+                    var termsList = formWrapper.querySelectorAll('.rental-term');
+                    for (var t = 0; t < termsList.length; t++) {
+                        var cb = termsList[t].querySelector('input[type="checkbox"]');
+                        if (cb && cb.checked) {
+                            termsList[t].classList.add('agreed');
+                        } else {
+                            termsList[t].classList.remove('agreed');
+                            allChecked = false;
+                        }
+                    }
+                    allTermsAgreed = allChecked;
+                    if (continueBtn) {
+                        continueBtn.disabled = !allChecked;
+                    }
+                }
+
+                for (var j = 0; j < terms.length; j++) {
+                    terms[j].addEventListener('click', function(e) {
+                        if (e.target.tagName === 'INPUT') return;
+                        var cb = this.querySelector('input[type="checkbox"]');
+                        if (cb) {
+                            cb.checked = !cb.checked;
+                            cb.dispatchEvent(new Event('change'));
+                        }
+                    });
+                }
+
+                for (var k = 0; k < checkboxes.length; k++) {
+                    checkboxes[k].addEventListener('change', updateTermsUI);
+                }
+                updateTermsUI();
+            }
+
+            if (currentStep === 3) {
+                /* No special listeners needed for payment step */
+            }
+
+            if (currentStep === 4) {
+                var startOverBtn = document.getElementById('start-over-btn');
+                if (startOverBtn) {
+                    startOverBtn.addEventListener('click', function() {
+                        selectedGear = [];
+                        allTermsAgreed = false;
+                        currentStep = 1;
+                        renderStep();
+                    });
+                }
+            }
+
+            /* Generic navigation buttons */
+            var nextBtns = formWrapper.querySelectorAll('.rental-btn-next:not(#start-over-btn)');
+            for (var n = 0; n < nextBtns.length; n++) {
+                nextBtns[n].addEventListener('click', function() {
+                    if (currentStep === 3) {
+                        /* Validate payment info before proceeding */
+                        var nameInp = document.getElementById('rental-name');
+                        if (nameInp && !nameInp.value.trim()) {
+                            nameInp.focus();
+                            nameInp.style.borderColor = 'var(--danger)';
+                            nameInp.style.boxShadow = '0 0 0 3px rgba(231, 76, 60, 0.2)';
+                            setTimeout(function() {
+                                nameInp.style.borderColor = '';
+                                nameInp.style.boxShadow = '';
+                            }, 2000);
+                            return;
+                        }
+                    }
+                    if (currentStep < 4) {
+                        if (currentStep === 3) {
+                            showLoadingOverlay();
+                        } else {
+                            currentStep++;
+                            renderStep();
+                        }
+                    }
+                });
+            }
+
+            var backBtns = formWrapper.querySelectorAll('.rental-btn-back');
+            for (var b = 0; b < backBtns.length; b++) {
+                backBtns[b].addEventListener('click', function() {
+                    if (currentStep > 1) {
+                        currentStep--;
+                        renderStep();
+                    }
+                });
+            }
+        }
+
+        function showLoadingOverlay() {
+            var loadingMessages = [
+                '🖨 Printing your agreement on invisible ink...',
+                '📋 Consulting legal team (Kyle\'s cousin is asleep, this may take a moment)...',
+                '🗺 Locating your gear somewhere in the Pacific...',
+                '🤝 Shaking hands with fate on your behalf...',
+                '📦 Wrapping your nothing in premium disappointment...',
+                '🔍 Double-checking that your gear is still lost (confirmed)...',
+                '🧮 Calculating fees for fees we just invented...',
+                '📝 Filing your agreement under "Documents That Don\'t Exist"...',
+                '☕ Gary is on a coffee break — your rental is on hold...',
+                '🔄 Reticulating splines (this actually does nothing)...'
+            ];
+
+            var msgIndex = 0;
+            var overlayHTML = '<div class="rental-loading-overlay">' +
+                '<div class="rental-loading-content">' +
+                '<div class="rental-loading-spinner"></div>' +
+                '<p class="rental-loading-msg" id="loading-message">' + loadingMessages[0] + '</p>' +
+                '<p class="rental-loading-sub">This will take exactly as long as it takes. Do not refresh. Or do. We don\'t care.</p>' +
+                '</div>' +
+                '</div>';
+
+            formWrapper.innerHTML = overlayHTML;
+
+            var msgEl = document.getElementById('loading-message');
+            var interval = setInterval(function() {
+                msgIndex = (msgIndex + 1) % loadingMessages.length;
+                if (msgEl) {
+                    msgEl.style.opacity = '0';
+                    setTimeout(function() {
+                        if (msgEl) {
+                            msgEl.textContent = loadingMessages[msgIndex];
+                            msgEl.style.opacity = '1';
+                        }
+                    }, 200);
+                }
+            }, 1800);
+
+            setTimeout(function() {
+                clearInterval(interval);
+                currentStep++;
+                renderStep();
+            }, 3500);
+        }
+
+        function escapeHTML(str) {
+            var div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        renderStep();
+    }
+
+    // ============================================================
     // INIT
     // ============================================================
     function init() {
@@ -3142,6 +3558,7 @@
         initLostCard();
         initInsuranceModals();
         initComplaints();
+        initGearRental();
         initBuddyTinder();
         initReferralProgram();
         initHomepageReferral();
