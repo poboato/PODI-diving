@@ -42,13 +42,13 @@
         }
         .whale-timer-header .timer-title {
             color: #00ff00;
-            font-size: 11px;
+            font-size: 13px;
             font-weight: bold;
             letter-spacing: 1px;
         }
         .whale-timer-header .timer-model {
             color: #00aa00;
-            font-size: 9px;
+            font-size: 11px;
         }
         .whale-timer-body {
             padding: 16px;
@@ -59,9 +59,10 @@
         }
         .whale-timer-o2 {
             color: #00ff00;
-            font-size: 42px;
+            font-size: 64px;
             font-weight: bold;
-            letter-spacing: 4px;
+            letter-spacing: 6px;
+            text-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
         }
         .whale-timer-o2.timer-warning {
             color: #ff8800;
@@ -88,20 +89,81 @@
         }
         .whale-timer-label {
             color: #006600;
-            font-size: 10px;
+            font-size: 13px;
+            letter-spacing: 3px;
+            margin-top: 4px;
+        }
+        .whale-readout-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .whale-readout {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(0, 255, 0, 0.08);
+            border-radius: 4px;
+            padding: 8px 10px;
+            text-align: center;
+        }
+        .readout-label {
+            display: block;
+            color: #004400;
+            font-size: 11px;
             letter-spacing: 2px;
-            margin-top: 2px;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+        .readout-value {
+            display: block;
+            color: #00ff00;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .whale-warnings {
+            margin: 10px 0 6px;
+        }
+        .whale-warning-msg {
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+            animation: warning-flicker 0.6s infinite alternate;
+        }
+        .whale-warning-msg.warn-caution {
+            background: rgba(255, 136, 0, 0.1);
+            color: #ff8800;
+            border: 1px solid rgba(255, 136, 0, 0.15);
+        }
+        .whale-warning-msg.warn-danger {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff0000;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            animation: warning-flicker 0.3s infinite alternate;
+        }
+        .whale-warning-msg.warn-glitch {
+            background: rgba(255, 0, 255, 0.1);
+            color: #ff00ff;
+            border: 1px solid rgba(255, 0, 255, 0.2);
+            animation: warning-flicker 0.15s infinite alternate;
+        }
+        @keyframes warning-flicker {
+            0% { opacity: 1; }
+            100% { opacity: 0.5; }
         }
         .whale-timer-fact {
             color: #00aa00;
-            font-size: 11px;
+            font-size: 13px;
             text-align: center;
             margin: 8px 0;
             padding: 6px 10px;
             background: rgba(0, 255, 0, 0.04);
             border-radius: 4px;
             min-height: 18px;
-            line-height: 1.4;
+            line-height: 1.5;
         }
         .whale-timer-controls {
             display: flex;
@@ -113,7 +175,7 @@
         .whale-timer-btn {
             padding: 8px 16px;
             font-family: 'Courier New', 'Consolas', monospace;
-            font-size: 11px;
+            font-size: 13px;
             font-weight: bold;
             border: 1px solid #00cc00;
             background: rgba(0, 255, 0, 0.06);
@@ -153,13 +215,14 @@
         }
         .ghost-chat {
             color: #8888ff;
-            font-size: 10px;
+            font-size: 13px;
             font-family: 'Courier New', 'Consolas', monospace;
             text-align: center;
             margin: 6px 0;
-            min-height: 16px;
+            min-height: 18px;
             font-style: italic;
             opacity: 0.8;
+            line-height: 1.4;
         }
         .whale-timer-status {
             display: flex;
@@ -209,8 +272,8 @@
     <main>
         <div class="hero" style="background-image: url('images/index-hero.jpg');">
             <h2>PODI <span style="color:#ffcc00;">Whale Ingestion</span> Survival Advisory</h2>
-            <p>Sperm whales are the largest toothed predators on Earth. They are built entirely out of extreme biological adaptations designed to conquer the deep ocean. If one decides you belong inside it, your PADI Rescue Diver card will not help. This page won't either, but at least you'll know what's happening while it happens.</p>
-            <p style="color:#888; font-size:14px; margin-top:10px;">Based on real science. Interpreted by people who have never met a whale. Not peer-reviewed. Not reviewed at all, really.</p>
+            <p>Sperm whales are not like other whales. They are 45 tons of muscle, sonar, and bad intentions wrapped in blubber — the largest toothed predator that has ever existed on this planet. They dive deeper than any air-breathing mammal, click loud enough to vibrate you to death, and have four stomach chambers (each one worse than the last). If one decides you belong inside it, your Rescue Diver card is a bookmark. This page is the closest thing to a plan you have.</p>
+            <p style="color:#888; font-size:14px; margin-top:10px;">All whale facts on this page are real. All survival advice is fake. The people who wrote this have never seen a whale. The whale has also never seen them, which is probably why they're still alive.</p>
         </div>
 
         <div class="complaint-stats">
@@ -236,6 +299,48 @@
             <strong>⚠ DISCLAIMER:</strong> PODI has encountered exactly zero sperm whales. Our whale-survival guidance is entirely theoretical, based on publicly available marine biology papers we skimmed while waiting for a tank fill. None of the following advice has been tested. None of it can be tested. If you find yourself in a position to test it, please do not report back — you will be dead.
         </div>
 
+        <h2 class="section-title">Sperm Whale <span>Extreme Metrics</span></h2>
+        <p style="text-align:center; color:var(--text-secondary); font-size:13px; margin-bottom:20px;">Every one of these numbers is real. We checked. The ocean is not messing around.</p>
+
+        <div class="team-grid" style="max-width: 900px; margin: 0 auto 30px;">
+            <div class="team-member card card--static">
+                <div class="member-icon">🔊</div>
+                <h3>230+ dB</h3>
+                <div class="title">ACOUSTIC OUTPUT</div>
+                <div class="bio">Loudest animal on Earth. A point-blank click translates to air-equivalent gunfire. Free divers report feeling their chests thumped and skeletons vibrated. PODI sells earplugs. They will not help.</div>
+            </div>
+            <div class="team-member card card--static">
+                <div class="member-icon">⬇️</div>
+                <h3>6,000 ft</h3>
+                <div class="title">MAX DIVE DEPTH</div>
+                <div class="bio">Deeper than any air-breathing mammal. The Empire State Building is 1,454 ft. Your Open Water cert allows 60 ft. The whale does not care about your cert.</div>
+            </div>
+            <div class="team-member card card--static">
+                <div class="member-icon">⚖️</div>
+                <h3>45+ tons</h3>
+                <div class="title">SURFACE WEIGHT</div>
+                <div class="bio">Males can exceed 50 tons. The <em>SS Liability</em> weighs 2 tons. A sleeping whale can crack a hull. We've never met one. This is why.</div>
+            </div>
+            <div class="team-member card card--static">
+                <div class="member-icon">🧠</div>
+                <h3>20 lbs</h3>
+                <div class="title">BRAIN SIZE</div>
+                <div class="bio">Largest brain of any animal — ever. Yours is ~3 lbs. The whale's brain has a region for sonar processing that yours doesn't have at all. Do not attempt to outthink it.</div>
+            </div>
+            <div class="team-member card card--static">
+                <div class="member-icon">🫁</div>
+                <h3>90+ min</h3>
+                <div class="title">BREATH HOLD</div>
+                <div class="bio">Sperm whales hold their breath longer than your tank lasts. Your AL80 gives you ~55 minutes at recreational depths. On a single breath, the whale has you by 35 minutes. Time is not on your side.</div>
+            </div>
+            <div class="team-member card card--static">
+                <div class="member-icon">🦷</div>
+                <h3>20-26 teeth</h3>
+                <div class="title">LOWER JAW ONLY</div>
+                <div class="bio">Teeth only on the lower jaw. The upper jaw has sockets. Think of it as a living ivory bear trap. Good news: they swallow squid whole. Bad news: you are squid-sized.</div>
+            </div>
+        </div>
+
         <h2 class="section-title">The <span>Primary Threat</span> Vectors</h2>
 
         <div class="features" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto 30px;">
@@ -244,6 +349,9 @@
                 <h3>1. The Acoustic Blast — 230 Decibels</h3>
                 <p>The sperm whale's biosonar click is the loudest sound produced by any animal on Earth — up to 230 decibels underwater. That is louder than a jet engine. A point-blank click translates to air-equivalent levels comparable to standing inside the muzzle blast of a large-caliber firearm. Your skeleton will vibrate. Your eardrums may rupture. Your sinuses will file a formal complaint with your central nervous system.</p>
                 <p style="color:var(--text-secondary); font-size:13px; margin-top:8px;">The sound is focused forward like a flashlight beam. If a whale turns to scan you, stay off-axis from its forehead. PODI cannot tell you which direction "off-axis" is in open water with a 45-ton animal facing you. Good luck.</p>
+                <div style="margin-top:14px; padding:12px 16px; background:rgba(255,102,0,0.08); border:1px solid rgba(255,102,0,0.2); border-radius:8px; font-size:12px; color:var(--accent);">
+                    <strong>PODI PROTOCOL:</strong> Keep your mouth slightly open to equalize sinus pressure. Do not attempt to "click back" — you cannot click at 230 dB. Your regulator does not amplify sound. You are not a whale.
+                </div>
             </div>
 
             <div class="feature-card card card--static">
@@ -251,6 +359,9 @@
                 <h3>2. The Vertical Drop — 6,000 Feet</h3>
                 <p>Sperm whales routinely plunge between 3,000 and 6,000 feet to hunt giant squid, staying down for over an hour. Your recreational dive limit is 130 feet. If you are caught in a whale's slipstream during a rapid descent, you will experience what PODI refers to as a "rapid unscheduled depth excursion." By 300 feet you will be dead. By 6,000 feet the whale will be hunting squid and you will be a cautionary paragraph in our next eLearning module.</p>
                 <p style="color:var(--text-secondary); font-size:13px; margin-top:8px;">Always carry a sharp dive knife. It will not prevent the whale from diving. It will not cut the water column. It will make you feel proactive for approximately 2.3 seconds. PODI sells dive knives in the shop.</p>
+                <div style="margin-top:14px; padding:12px 16px; background:rgba(255,102,0,0.08); border:1px solid rgba(255,102,0,0.2); border-radius:8px; font-size:12px; color:var(--accent);">
+                    <strong>PODI PROTOCOL:</strong> Never touch or hitch a ride on a whale. The downward displacement force of a diving whale can pull you faster than you can equalize. By the time you think "I should let go," you will be at 300 ft and your computer will be displaying error codes that PADI never taught you about.
+                </div>
             </div>
 
             <div class="feature-card card card--static">
@@ -258,6 +369,9 @@
                 <h3>3. Surface Strike — 45+ Tons</h3>
                 <p>When sperm whales aren't hunting, they rest at the surface — "rafting" — logging oxygen before the next deep dive. They exhale a forward-angled blow that is nearly invisible among ocean whitecaps. At 45 tons, a sleeping whale can crack a hull on contact, capsize a vessel, or throw passengers into the water. The <em>SS Liability</em> has never struck a whale. This is because we have never encountered one. The math is sound.</p>
                 <p style="color:var(--text-secondary); font-size:13px; margin-top:8px;">Reduce boat speed below 10 knots in known whale habitats. Look for the signature forward-angled blow. If a whale is spotted within 100 yards, drop into neutral. Or better yet, stay on land. Land has zero recorded whale strikes.</p>
+                <div style="margin-top:14px; padding:12px 16px; background:rgba(255,102,0,0.08); border:1px solid rgba(255,102,0,0.2); border-radius:8px; font-size:12px; color:var(--accent);">
+                    <strong>PODI PROTOCOL:</strong> Our charter crew has been trained to identify whales. The training consisted of Kyle showing them a picture of Moby Dick on his phone. The <em>SS Liability</em> has never struck a whale because it has never seen one. We call this "perfect avoidance" and we are proud of it.
+                </div>
             </div>
 
             <div class="feature-card card card--static">
@@ -265,6 +379,20 @@
                 <h3>4. If Swallowed — The Gastrointestinal Tour</h3>
                 <p>A sperm whale's esophagus is roughly the diameter of a dinner plate. Statistically, you should not fit. <em>Statistically</em> is doing a lot of heavy lifting here. If you are swallowed, you will pass through four stomach chambers, each one progressively worse than the last. Think of them as decompression stops you never wanted. The whale can hold its breath for over 90 minutes. Your tank will run out first. Time is not on your side.</p>
                 <p style="color:var(--text-secondary); font-size:13px; margin-top:8px;">For legal reasons PODI must state: do not attempt to navigate a whale's digestive tract. For human reasons PODI must also state: if you do, and you find ambergris, we claim a 30% finder's fee. Your retrieval method is your problem.</p>
+                <div style="margin-top:14px; padding:12px 16px; background:rgba(255,102,0,0.08); border:1px solid rgba(255,102,0,0.2); border-radius:8px; font-size:12px; color:var(--accent);">
+                    <strong>PODI PROTOCOL:</strong> A sperm whale's stomach has no light, no exit signs, and a pH low enough to dissolve squid beaks. Your dive light will illuminate approximately 18 inches of stomach lining before you wish it hadn't. The whale eats one ton of squid per day. You are not a ton of squid. This is the most useful thing you will read on this page.
+                </div>
+
+                <div style="margin-top:14px; padding:0; font-size:13px; color:var(--text-primary); line-height:1.6;">
+                    <strong style="color:var(--gold);">Gastrointestinal Landmarks (in order of worsening):</strong>
+                    <ul style="margin:8px 0 0 18px; padding:0; list-style:none;">
+                        <li style="margin-bottom:6px;"><span style="color:var(--accent);">Stomach 1 — The Beak Yard.</span> Undigested squid beaks litter the floor. Each one sharp enough to slash neoprene. Do not crawl. Do not drag your knees. Your 7mm wetsuit became a 5mm two rooms ago. It is about to become a suggestion.</li>
+                        <li style="margin-bottom:6px;"><span style="color:var(--accent);">Stomach 2 — The Waiting Room.</span> Acidity climbing. Ammonia smell intensifying. You can feel your exposed skin starting to register protest. Father's ghost has chosen this moment to offer unsolicited gear-maintenance advice. This is not the time. There is never a time.</li>
+                        <li style="margin-bottom:6px;"><span style="color:var(--accent);">Stomach 3 — Zero Visibility.</span> Something else is in here. The whale ate it. The whale did not digest it. It is alive. It is aware of you. You are both in the same situation. This does not make you allies.</li>
+                        <li style="margin-bottom:6px;"><span style="color:var(--accent);">Stomach 4 — The Dissolver.</span> This is where squid go to stop being squid. pH levels that turn muscle into slurry. Your exposure protection is conceptual at this point. Your remaining air is a countdown, not a resource.</li>
+                        <li><span style="color:var(--accent);">The Blowhole Chimney.</span> A 40-foot vertical tube of living muscle. To escape: climb against peristalsis, a reflex specifically designed to push things down. Every inch of ascent costs approximately eight seconds of air. 40 feet equals 480 inches. 480 &times; 8 = 3,840 seconds. You have less than that. Do not do this math underwater.</li>
+                    </ul>
+                </div>
             </div>
 
             <div class="feature-card card card--static">
@@ -280,13 +408,38 @@
         <div class="whale-timer-wrap" id="whale-timer">
             <div class="whale-timer-header">
                 <span class="timer-title">PODI WhaleSurv™ 2000</span>
-                <span class="timer-model">MODEL: WS-0 (UNVERIFIED)</span>
+                <span class="timer-model">MODEL: WS-0 :: REG: UNCLEANED</span>
             </div>
             <div class="whale-timer-body">
                 <div class="whale-timer-display">
                     <div class="whale-timer-o2" id="timer-display">55:00</div>
-                    <div class="whale-timer-label">TANK PRESSURE :: REMAINING</div>
+                    <div class="whale-timer-label">TIME :: REMAINING</div>
                 </div>
+
+                <div class="whale-readout-grid">
+                    <div class="whale-readout">
+                        <span class="readout-label">TANK PSI</span>
+                        <span class="readout-value" id="whale-psi">3000</span>
+                    </div>
+                    <div class="whale-readout">
+                        <span class="readout-label">DEPTH</span>
+                        <span class="readout-value" id="whale-depth">SURFACE</span>
+                    </div>
+                    <div class="whale-readout">
+                        <span class="readout-label">CONSUMPTION</span>
+                        <span class="readout-value" id="consumption-rate" style="color:#00ff00;">1.0x</span>
+                    </div>
+                    <div class="whale-readout">
+                        <span class="readout-label">TEMP</span>
+                        <span class="readout-value" id="whale-temp" style="color:#00ccff;">38°F</span>
+                    </div>
+                </div>
+
+                <div class="whale-warnings" id="timer-warnings">
+                    <div class="whale-warning-msg warn-caution">⚠ REG SERVICE OVERDUE — 1,847 DAYS</div>
+                    <div class="whale-warning-msg warn-caution">⚠ CG INSPECTION SKIPPED — NEVER PERFORMED</div>
+                </div>
+
                 <div class="whale-timer-fact" id="timer-fact">Sperm whales have the largest brain of any animal — 20 lbs. You do not. Do not attempt to outthink it.</div>
                 <div class="ghost-chat" id="ghost-chat"></div>
                 <div class="whale-timer-controls">
@@ -294,10 +447,89 @@
                     <button class="whale-timer-btn" id="btn-ghost" title="Activates statistically unreliable paternal advice">GHOST DAD ADVICE</button>
                     <button class="whale-timer-btn" id="btn-reset">RESET TIMER</button>
                 </div>
-                <div class="whale-timer-status">
-                    <span>CONSUMPTION: <span id="consumption-rate" style="color:#00ff00;">1.0x</span></span>
-                    <span>DEPTH: <span id="whale-depth" style="color:#00aa00;">SURFACE</span></span>
+            </div>
+        </div>
+
+        <h2 class="section-title">Interior <span>Navigation Log</span></h2>
+        <p style="text-align:center; color:var(--text-secondary); font-size:13px; margin-bottom:20px;">Recovered from a dive computer found inside a sperm whale. Authenticity unverified. The diver is unverified. The whale has not responded to our request for comment.</p>
+
+        <div class="whale-timer-wrap" style="max-width:620px; margin:0 auto 30px;">
+            <div class="whale-timer-header">
+                <span class="timer-title">PODI INTERIOR LOG :: RECOVERED FRAGMENT</span>
+                <span class="timer-model">DEPTH: 0–6,000 ft :: TEMP: WARMING</span>
+            </div>
+            <div class="whale-timer-body" style="padding: 14px 18px;">
+                <div style="font-family:'Courier New','Consolas',monospace; font-size:13px; line-height:1.7; color:#00aa00;">
+                    <span style="color:#00ff00;">03:18</span> — INSIDE WHALE. NOT A CAVE. FATHER'S REGULATOR<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>TASTES LIKE 1987 RUBBER. THIS IS HIS GEAR.<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>UNMISTAKABLE. UNFORGIVABLE.<br><br>
+                    <span style="color:#00ff00;">07:42</span> — STOMACH 1. SQUID BEAK GRAVEYARD.<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>THESE BEAKS ARE SHARP AS GLASS. THE WHALE<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ATE FIFTY MEALS AND DIDN'T CHEW ANY OF THEM.<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>WETSUIT: 7MM. CORRECTION: 5MM. CORRECTION:<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>TBD. THE LEFTOVERS ARE ALREADY WORKING.<br><br>
+                    <span style="color:#00ff00;">15:09</span> — STOMACH 2. ACIDITY NOTICEABLE. AMMONIA<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>SMELL. FATHER'S VOICE: YOU SHOULD HAVE<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>CHECKED THE O-RINGS. THANKS, DAD. VERY USEFUL<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>RIGHT NOW. REALLY APPRECIATE THE INPUT.<br><br>
+                    <span style="color:#00ff00;">22:55</span> — STOMACH 3. ZERO VISIBILITY. SOMETHING<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>ELSE MOVED. NOT THE WHALE. SOMETHING THE<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>WHALE ATE. IT IS NOT DIGESTED YET. IT IS<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>NOT HAPPY TO SEE ME. I AM NOT HAPPY EITHER.<br><br>
+                    <span style="color:#00ff00;">31:40</span> — STOMACH 4. THIS IS WHERE THINGS END<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>FOR THE SQUID. PH LEVEL DISSOLVES BEAKS.<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>MY WETSUIT IS NOT A SQUID BEAK. MY TANK<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>IS AT 1,200 PSI. MY MATH IS NOT GOOD.<br><br>
+                    <span style="color:#00ff00;">44:12</span> — AMBERGRIS. FLOATING. WORTH THOUSANDS.<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>PERFUME COMPANIES PAY THOUSANDS PER KILO.<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>I AM SURROUNDED BY WEALTH INSIDE THE THING<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>THAT IS DIGESTING ME. THIS IS DARK COMEDY.<br><br>
+                    <span style="color:#00ff00;">50:03</span> — BLOWHOLE APPROACH. 40-FOOT MUSCLE<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>CHIMNEY. EVERY INCH OF ASCENT COSTS EIGHT<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>SECONDS OF AIR. 40 FEET. 480 INCHES. DO<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>THE MATH. THE MATH IS NOT IN MY FAVOR.<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>FATHER IS STILL TALKING. 500 PSI REMAINING.<br>
+                    <span style="color:#004400;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>EVERY SECOND OF HIS ADVICE COSTS ME AIR.<br>
                 </div>
+                <div style="margin-top:10px; padding-top:8px; border-top:1px solid rgba(0,255,0,0.1); font-family:'Courier New','Consolas',monospace; font-size:11px; color:#003300; text-align:center; letter-spacing:2px;">
+                    END OF RECOVERED LOG :: TRANSMISSION LOST :: SIGNAL NOT EXPECTED TO RETURN
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Disturbingly <span>True</span> Sperm Whale Facts</h2>
+        <p style="text-align:center; color:var(--text-secondary); font-size:13px; margin-bottom:20px;">We did the research. We wish we hadn't. The ocean is actively trying to humble you.</p>
+
+        <div class="features" style="max-width: 900px; margin: 0 auto 30px;">
+            <div class="feature-card card card--static">
+                <div class="icon" style="font-size: 24px;">💀</div>
+                <h3>Sound Can Kill</h3>
+                <p>A sperm whale's click is the only sound produced by any animal loud enough to physically injure — or kill — a human at close range. No other creature on Earth can vibrate you to death with its voice. Your regulator does nothing against kinetic energy transfer through water molecules.</p>
+            </div>
+            <div class="feature-card card card--static">
+                <div class="icon" style="font-size: 24px;">🌊</div>
+                <h3>They Talk Across Oceans</h3>
+                <p>Sperm whale clicks can travel thousands of miles through the deep sound channel. If one is nearby, every sperm whale within an ocean basin knows you're there. You are not being watched. You are being listened to — at a volume that will arrive before you even see it coming.</p>
+            </div>
+            <div class="feature-card card card--static">
+                <div class="icon" style="font-size: 24px;">🦑</div>
+                <h3>One Ton of Squid Per Day</h3>
+                <p>An adult sperm whale consumes up to 2,000 lbs of squid every day. You weigh significantly less than one ton. The whale does not snack. The whale eats whole. The fact that you are not a giant squid is the only argument in your favor, and it is not a strong one.</p>
+            </div>
+            <div class="feature-card card card--static">
+                <div class="icon" style="font-size: 24px;">🛢️</div>
+                <h3>The Spermaceti Organ</h3>
+                <p>The whale's forehead contains up to 15 tons of spermaceti oil — for which the species was named. Scientists believe it controls buoyancy by changing oil density with temperature. The whale adjusts its depth with its forehead. You adjust yours by kicking. You are losing this comparison.</p>
+            </div>
+            <div class="feature-card card card--static">
+                <div class="icon" style="font-size: 24px;">👁️</div>
+                <h3>They "See" With Sound</h3>
+                <p>Sperm whales navigate the pitch-black deep ocean using echolocation — building a 3D sonic map of their surroundings from returning echoes. They can identify the size, shape, density, and internal structure of objects from hundreds of meters away. If a whale clicks at you, it now knows more about your internal anatomy than your dive computer does.</p>
+            </div>
+            <div class="feature-card card card--static">
+                <div class="icon" style="font-size: 24px;">📏</div>
+                <h3>Longest Intestine on Earth</h3>
+                <p>A sperm whale's intestinal tract can stretch over 300 meters — the longest of any animal. If you find yourself inside a whale and think "maybe I can just go through and out the other end": you cannot. The journey is longer than three football fields. Your tank is already empty. Let it go.</p>
             </div>
         </div>
 
@@ -317,10 +549,11 @@
                     <option>I was sonar'd (my skeleton now knows it exists)</option>
                     <option>I was caught in a descending whale's slipstream</option>
                     <option>I was swallowed (how are you filling this out?)</option>
-                    <option>My buddy was swallowed (I am filling this out for them)</option>
-                    <option>A whale looked at me judgmentally</option>
-                    <option>The whale stole my catch (depredation incident)</option>
-                    <option>None of your business (whale-related)</option>
+                    <option>My buddy was swallowed (I watched it happen; it was traumatic; it was also kind of fascinating)</option>
+                    <option>A whale looked at me — just looked — and I felt judged</option>
+                    <option>The whale stole my catch right off the line (depredation)</option>
+                    <option>I found ambergris floating and want to negotiate PODI's 30% finder's fee</option>
+                    <option>None of your business (whale-related, deeply personal)</option>
                 </select>
 
                 <label>Whale Depth at Time of Encounter</label>
@@ -336,11 +569,12 @@
 
                 <label>Desired Outcome</label>
                 <select id="whale-resolution" name="whale-resolution">
-                    <option>I want sympathy (denied)</option>
-                    <option>I want PODI to issue a whale safety specialty (in development, $499)</option>
-                    <option>I want my DAN claim processed (denied — page 47 exclusion)</option>
-                    <option>I just want someone to know what happened (we know now; we will do nothing)</option>
-                    <option>I am reporting from inside the whale (how do you have signal?)</option>
+                    <option>I want sympathy (we have none; the whale took it)</option>
+                    <option>I want PODI to issue a formal whale safety warning (this page is it; you're reading it; congrats)</option>
+                    <option>I want my DAN claim processed (refer to page 47: "marine megafauna consumption" exclusion)</option>
+                    <option>I want to speak to the whale's supervisor (there isn't one; the whale is autonomous)</option>
+                    <option>I just want someone to know what happened to me (we know now; we will mention it at the bar)</option>
+                    <option>I am reporting from inside the whale (genuinely — how do you have signal down there?)</option>
                 </select>
 
                 <button type="submit">Submit Encounter Report (The Whale Won't Care)</button>
@@ -390,6 +624,31 @@
                 <strong>Q: What gas mix is optimal for surviving inside a whale's stomach?</strong>
                 <p>A: This question has never been asked in the history of technical diving. PODI's Department of Speculative Gas Planning (Kyle, after two beers) recommends: 18/45 trimix for depths 0–130 ft, assuming the whale is at the surface. If the whale dives to 3,000 feet, your gas mix is no longer relevant because you are already dead. At that depth the pressure is approximately 91 atmospheres. Your AL80 does not care.</p>
             </div>
+
+            <div class="complaint-faq-item card card--static">
+                <strong>Q: Why is the blowhole offset to the left?</strong>
+                <p>A: Sperm whales have a single S-shaped blowhole on the left side of their head — one of the few asymmetrical features in any cetacean. The forward-angled blow can be difficult to spot among whitecaps, which is why boats hit them. This is a real navigational hazard. PODI recommends looking for the blow. PODI also recommends having someone else drive the boat so you can look for the blow. The person driving cannot look for the blow and also not hit the whale. This is why we stay on land.</p>
+            </div>
+
+            <div class="complaint-faq-item card card--static">
+                <strong>Q: How long do sperm whales live?</strong>
+                <p>A: Up to 70 years. If a sperm whale swallows you, it will continue living its life for decades afterward. It will eat squid. It will dive to 6,000 feet. It will socialize with other whales. It will not think about you. You will be a brief gastrointestinal event in a 70-year life. This is the most humbling fact on this page and we did not want to include it but the research demanded it.</p>
+            </div>
+
+            <div class="complaint-faq-item card card--static">
+                <strong>Q: Why do divers call Monastery Beach "Mortuary Beach"?</strong>
+                <p>A: Monastery Beach in Carmel, California is widely considered the deadliest dive site in the state — known locally as "Mortuary Beach" for good reason. Steep shore break, unpredictable surge, and a drop-off that goes from ankle-deep to overhead in two steps. PODI conducts all advanced training there. We don't pick the beach. The beach picks the diver. And historically, it does not give the diver back. If you survive Monastery, you can survive anything. Statistically: you won't survive Monastery.</p>
+            </div>
+
+            <div class="complaint-faq-item card card--static">
+                <strong>Q: Can squid beaks really cut through a wetsuit?</strong>
+                <p>A: Yes. A sperm whale's stomach is a graveyard of undigested giant squid beaks — each one a shard of chitin sharp enough to slice neoprene like it's not there. The whale ate 50 meals and didn't chew any of them. Now you're crawling through 50 meals' worth of sharp objects in a suit that was never designed for this. Your 7mm became a 5mm. Soon it will be a 0mm. The beaks are patient. The beaks have nothing but time. The beaks do not answer to DAN.</p>
+            </div>
+
+            <div class="complaint-faq-item card card--static">
+                <strong>Q: Has anyone ever climbed out of a whale's blowhole?</strong>
+                <p>A: Not that we can verify. The blowhole connects to the trachea through a 40-foot muscular chimney designed to move air — not divers. Peristalsis works against you at every inch. Ascending is not a buoyancy problem. It is a hostile architecture problem where the building is alive and actively disagrees with your presence. At a cost of approximately eight seconds of air per inch of progress, you would need about 64 minutes of breathing gas to climb 40 feet. Your AL80 gave you 55 minutes at the start. You are well past the start. PO₂ of the blowhole atmosphere is unknown. No agency has published gas-planning guidelines for this ascent. PODI is working on it.</p>
+            </div>
         </div>
 
         <div id="podi-tips"></div>
@@ -416,6 +675,9 @@
         var btnReset = document.getElementById('btn-reset');
         var consumptionRate = document.getElementById('consumption-rate');
         var whaleDepth = document.getElementById('whale-depth');
+        var whalePsi = document.getElementById('whale-psi');
+        var whaleTemp = document.getElementById('whale-temp');
+        var timerWarnings = document.getElementById('timer-warnings');
 
         if (timerDisplay) {
             var totalSeconds = 55 * 60;
@@ -426,6 +688,7 @@
             var factIndex = 0;
             var ghostIndex = 0;
             var glitchLock = false;
+            var startPsi = 3000;
 
             var facts = [
                 'Sperm whales have the largest brain of any animal — 20 lbs. You do not. Do not attempt to outthink it.',
@@ -441,16 +704,25 @@
             ];
 
             var ghostMessages = [
-                '"Should have checked your SPG, son."',
-                '"I told you to take that trimix course."',
-                '"The whale is not your fault. Probably."',
-                '"Back in my day we didn\'t have whale safety pages."',
-                '"I\'m not mad. I\'m disappointed. Also you\'re in a whale."',
-                '"Have you tried swimming upward? Just a thought."',
-                '"Your mother is going to be furious."',
-                '"I read Moby Dick. This ends poorly for everyone."',
-                '"At least the visibility is... no, never mind."',
-                '"You know I always said you\'d end up somewhere dark."'
+                '"You\'re breathing off my old regulator. I never serviced that thing. Not once."',
+                '"Dirty CGs never killed anyone. Probably. Hold on — let me think."',
+                '"Check the O-rings on that first stage. I didn\'t. Ever. That\'s your problem now."',
+                '"I cut corners on everything. The regs, the tanks, the parenting. You turned out fine."',
+                '"Should have cleaned my gear once in a while. You\'re inhaling 20 years of my neglect."',
+                '"The octopus tastes like rubber from 1987. Don\'t use the octopus."',
+                '"At least my death was quick. You\'re being slowly digested. I win this round."',
+                '"I told your mother I\'d die doing something stupid underwater. She was only half right."',
+                '"The green hose is the one that hisses. Or is it the yellow? I never labeled them."',
+                '"Back in my day we didn\'t service regulators. We just held our breath and hoped."',
+                '"That SPG has been showing 200 PSI high since 1994. Good luck with the math."',
+                '"I always said this gear would outlast me. Technically it did. Technically."',
+                '"The dive knife I gave you? Dull on purpose. Builds character. What\'s it going to cut in here?"',
+                '"Your BCD inflator sticks. Mine always did. Like father, like son. Keep pumping."',
+                '"Four stomachs. I can\'t afford a one-bedroom and this whale has four."',
+                '"Find the ambergris yet? Can\'t spend it. Can\'t eat it. Most expensive coffin you\'ll never leave."',
+                '"Mortuary Beach. Where I taught you. Where you learned. Where you\'re ending. Full circle."',
+                '"Stomach 1 has squid beaks everywhere. Watch your hands. Suit won\'t hold against that."',
+                '"The blowhole is 40 feet up. Every foot costs air you don\'t have. You know how to do the math. Do the math."'
             ];
 
             function fmtTime(s) {
@@ -467,7 +739,7 @@
                     ghostChat.style.color = '#ff00ff';
                     return;
                 }
-                if (remaining < 0) {
+                if (remaining < 10) {
                     remaining = 30;
                     glitchLock = true;
                     return;
@@ -480,6 +752,18 @@
                     timerDisplay.className = 'whale-timer-o2';
                 }
                 timerDisplay.textContent = fmtTime(remaining);
+            }
+
+            function updatePsi() {
+                var psi = Math.round(startPsi * (remaining / totalSeconds));
+                whalePsi.textContent = psi;
+                if (psi < 500) {
+                    whalePsi.style.color = '#ff0000';
+                } else if (psi < 1000) {
+                    whalePsi.style.color = '#ff8800';
+                } else {
+                    whalePsi.style.color = '#00ff00';
+                }
             }
 
             function updateFact() {
@@ -498,13 +782,42 @@
             }
 
             function updateDepth() {
-                var depths = ['SURFACE', '30 ft', '65 ft', '100 ft', '130 ft', '500 ft', '1,200 ft', '3,000 ft', '6,000 ft'];
                 var labels = ['SURFACE', '30 ft', '65 ft', '100 ft', '130 ft', '500 ft', '1,200 ft', '3,000 ft', '6,000 ft'];
-                var pct = 1 - (remaining / totalSeconds);
-                var idx = Math.min(Math.floor(pct * depths.length), depths.length - 1);
-                whaleDepth.textContent = labels[idx];
                 var colors = ['#00aa00', '#00aa00', '#00aa00', '#88aa00', '#aaaa00', '#aa8800', '#aa4400', '#aa0000', '#ff00ff'];
+                var pct = 1 - (remaining / totalSeconds);
+                var idx = Math.min(Math.floor(pct * labels.length), labels.length - 1);
+                whaleDepth.textContent = labels[idx];
                 whaleDepth.style.color = colors[idx];
+            }
+
+            function updateTemp() {
+                var temps = ['38°F', '36°F', '34°F', '32°F', '30°F', '28°F', '26°F', '24°F', 'BODY'];
+                var colors = ['#00ccff', '#00aadd', '#0088cc', '#0066aa', '#004488', '#004488', '#003366', '#002244', '#ff4488'];
+                var pct = 1 - (remaining / totalSeconds);
+                var idx = Math.min(Math.floor(pct * temps.length), temps.length - 1);
+                whaleTemp.textContent = temps[idx];
+                whaleTemp.style.color = colors[idx];
+            }
+
+            function updateWarnings() {
+                var pct = remaining / totalSeconds;
+                if (glitchLock) {
+                    timerWarnings.innerHTML =
+                        '<div class="whale-warning-msg warn-glitch">⚠ ALL SYSTEMS NOMINAL — THIS IS A LIE</div>' +
+                        '<div class="whale-warning-msg warn-glitch">⚠ TIMER IS CEREMONIAL ONLY — GOODBYE</div>';
+                } else if (pct < 0.09) {
+                    timerWarnings.innerHTML =
+                        '<div class="whale-warning-msg warn-danger">⚠ TANK PRESSURE CRITICAL</div>' +
+                        '<div class="whale-warning-msg warn-danger">⚠ DECO CEILING VIOLATED — SURFACE FATAL</div>';
+                } else if (pct < 0.27) {
+                    timerWarnings.innerHTML =
+                        '<div class="whale-warning-msg warn-danger">⚠ LOW AIR — ASCEND IMMEDIATELY</div>' +
+                        '<div class="whale-warning-msg warn-caution">⚠ DECO OBLIGATION ACCRUING</div>';
+                } else {
+                    timerWarnings.innerHTML =
+                        '<div class="whale-warning-msg warn-caution">⚠ REG SERVICE OVERDUE — 1,847 DAYS</div>' +
+                        '<div class="whale-warning-msg warn-caution">⚠ CG INSPECTION SKIPPED — NEVER PERFORMED</div>';
+                }
             }
 
             function tick() {
@@ -526,7 +839,10 @@
                 if (remaining < 0) remaining = 0;
 
                 updateTimerDisplay();
+                updatePsi();
                 updateDepth();
+                updateTemp();
+                updateWarnings();
 
                 if (Math.random() < 0.08) updateFact();
                 if (ghostActive && Math.random() < 0.15) updateGhost();
@@ -535,6 +851,9 @@
             function startTimer() {
                 if (interval) clearInterval(interval);
                 interval = setInterval(tick, 2000);
+                updatePsi();
+                updateTemp();
+                updateWarnings();
             }
 
             btnPanic.addEventListener('click', function() {
@@ -563,11 +882,18 @@
                 ghostChat.textContent = '';
                 ghostChat.style.color = '#8888ff';
                 updateTimerDisplay();
+                updatePsi();
                 updateDepth();
+                updateTemp();
+                updateWarnings();
                 consumptionRate.textContent = '1.0x';
                 consumptionRate.style.color = '#00ff00';
                 whaleDepth.textContent = 'SURFACE';
                 whaleDepth.style.color = '#00aa00';
+                whalePsi.textContent = '3000';
+                whalePsi.style.color = '#00ff00';
+                whaleTemp.textContent = '38°F';
+                whaleTemp.style.color = '#00ccff';
                 factIndex = 0;
                 timerFact.textContent = facts[0];
             });
