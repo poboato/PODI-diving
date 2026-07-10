@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIB — Doing It Better</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --navy-darkest: #111111;
+            --navy-dark: #1a1a1a;
+            --navy-primary: #1e1e1e;
+            --navy-mid: #252525;
+            --navy-light: #2a2a2a;
+            --accent: #aaaaaa;
+            --accent-dark: #888888;
+            --accent-hover: #bbbbbb;
+            --accent-hover-dark: #999999;
+            --accent-glow: rgba(255, 255, 255, 0.08);
+            --gold: #cccccc;
+            --text-white: #ffffff;
+            --text-primary: #cccccc;
+            --text-secondary: #999999;
+            --text-muted: #777777;
+            --card-bg: rgba(30, 30, 30, 0.9);
+            --card-border: rgba(255, 255, 255, 0.06);
+            --input-bg: rgba(255, 255, 255, 0.04);
+            --input-border: rgba(255, 255, 255, 0.08);
+            --shadow-hover: rgba(0, 0, 0, 0.5);
+            --shadow-focus: rgba(255, 255, 255, 0.06);
+            --success: #777777;
+            --danger: #666666;
+            --warning-bg: #1a1a1a;
+            --warning-border: #555555;
+        }
+
+        body { background: #111111; }
+
+        .warning-banner {
+            background: #1a1a1a;
+            color: #cccccc;
+            border-bottom: 2px solid #555555;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            border-bottom: 3px solid #888888;
+        }
+
+        header::after {
+            content: "ALIGNED";
+            background: #cccccc;
+            color: #111;
+        }
+
+        .logo-text .tagline { color: #aaaaaa; }
+        .logo-text .danger-rating { color: #999999; }
+        .logo-text .star-brand { color: #999999; }
+
+        nav { background: #0a0a0a; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        .cta-button {
+            background: linear-gradient(135deg, #666666 0%, #444444 100%);
+            box-shadow: 0 4px 15px rgba(255,255,255,0.05);
+        }
+        .cta-button:hover {
+            background: linear-gradient(135deg, #777777 0%, #555555 100%);
+            box-shadow: 0 6px 25px rgba(255,255,255,0.1);
+        }
+
+        .marquee-warning {
+            background: #0a0a0a;
+            color: #999999;
+        }
+
+        .disclaimer-notice {
+            background: #151515;
+            border-color: #444444;
+            color: #999999;
+        }
+
+        .red-flags {
+            background: rgba(20, 20, 20, 0.8);
+            border-color: #555555;
+        }
+        .red-flags h3 { color: #aaaaaa; }
+
+        footer {
+            background: #0a0a0a;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #777777;
+        }
+
+        .section-title { border-bottom-color: #666666; }
+        .section-title span { color: #999999; }
+
+        .hero::before {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, rgba(10, 10, 10, 0.92) 100%);
+        }
+
+        /* DIB-specific */
+        .dib-badge {
+            display: inline-block;
+            background: #333333;
+            color: #cccccc;
+            border: 1px solid #666666;
+            border-radius: 3px;
+            padding: 6px 18px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-family: 'Courier New', 'Consolas', monospace;
+        }
+
+        .founder-card {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            padding: 30px;
+            border: 1px solid #444444;
+        }
+        .founder-card h3 { color: #ffffff; font-size: 22px; margin-bottom: 4px; }
+        .founder-card .founder-title { color: #999999; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
+        .founder-card .founder-bio { color: #cccccc; font-size: 14px; line-height: 1.7; }
+
+        .standard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .standard-item {
+            background: rgba(25, 25, 25, 0.9);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .standard-item .si-icon { font-size: 28px; margin-bottom: 8px; }
+        .standard-item .si-name { color: #ffffff; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+        .standard-item .si-spec { color: #888888; font-size: 12px; font-family: 'Courier New', 'Consolas', monospace; }
+        .standard-item .si-note { color: #666666; font-size: 11px; font-style: italic; margin-top: 6px; }
+
+        .body-bag-callout {
+            grid-column: 1 / -1;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px dashed #555555;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .body-bag-callout .bb-icon { font-size: 32px; margin-bottom: 6px; }
+        .body-bag-callout .bb-name { color: #cccccc; font-size: 15px; font-weight: 700; }
+        .body-bag-callout .bb-note { color: #777777; font-size: 12px; font-style: italic; margin-top: 4px; }
+
+        .stroke-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto 30px;
+            max-width: 750px;
+        }
+        .stroke-table th {
+            background: #1a1a1a;
+            color: #999999;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 2px solid #444444;
+        }
+        .stroke-table td {
+            color: #cccccc;
+            font-size: 13px;
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .stroke-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .stroke-class { color: #888888; font-weight: 700; font-family: 'Courier New', 'Consolas', monospace; }
+        .stroke-class.class-5 { color: #666666; }
+        .stroke-recovery { color: #777777; font-size: 12px; font-style: italic; }
+
+        .pyramid {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            text-align: center;
+        }
+        .pyramid-tier {
+            background: rgba(25, 25, 25, 0.9);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 6px;
+            padding: 16px 20px;
+            margin: 0 auto 6px;
+            transition: all 0.2s;
+        }
+        .pyramid-tier:hover {
+            border-color: #555555;
+        }
+        .pyramid-tier .pt-name { color: #ffffff; font-size: 15px; font-weight: 700; }
+        .pyramid-tier .pt-stat { color: #888888; font-size: 11px; font-family: 'Courier New', 'Consolas', monospace; margin-top: 4px; }
+        .pyramid-tier .pt-blurb { color: #666666; font-size: 12px; font-style: italic; margin-top: 4px; }
+        .pyramid-peak {
+            margin: 0 auto 0;
+            background: rgba(50, 50, 50, 0.6);
+            border-color: #666666;
+        }
+
+        .faq-item {
+            max-width: 700px;
+            margin: 0 auto 15px;
+            background: rgba(25, 25, 25, 0.9);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .faq-item .fq { color: #aaaaaa; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+        .faq-item .fa { color: #999999; font-size: 13px; line-height: 1.6; }
+
+        .cookie-confession {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #333333;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+        .cookie-confession .cc-icon { font-size: 28px; margin-bottom: 8px; }
+        .cookie-confession .cc-text { color: #888888; font-size: 13px; line-height: 1.7; font-style: italic; }
+
+        .no-analytics-note {
+            text-align: center;
+            color: #555555;
+            font-size: 10px;
+            letter-spacing: 1px;
+            margin-top: 40px;
+            font-family: 'Courier New', 'Consolas', monospace;
+        }
+
+        a { color: #999999; }
+        a:hover { color: #cccccc; }
+
+        /* Override gold links in disclaimer-notice */
+        .disclaimer-notice a { color: #999999; }
+
+        /* Expanded sections */
+        .classified-doc {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            background: #0a0a0a;
+            border: 2px solid #444;
+            border-radius: 4px;
+            padding: 25px 30px;
+            font-family: 'Courier New', 'Consolas', monospace;
+        }
+        .classified-doc .cd-stamp {
+            text-align: center;
+            color: #666;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            border: 2px solid #555;
+            display: inline-block;
+            padding: 10px 30px;
+            transform: rotate(-8deg);
+            margin-bottom: 20px;
+        }
+        .classified-doc .cd-body { color: #888; font-size: 13px; line-height: 1.8; }
+        .classified-doc .cd-points { list-style: decimal; padding-left: 20px; color: #aaa; font-size: 13px; line-height: 2; }
+        .classified-doc .cd-redacted {
+            background: #333;
+            color: #333;
+            padding: 1px 6px;
+            border-radius: 2px;
+            user-select: none;
+        }
+        .classified-doc .cd-redacted:hover { color: #ccc; }
+
+        .team-callout {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            background: rgba(20, 20, 20, 0.9);
+            border-left: 4px solid #555;
+            border-radius: 0 8px 8px 0;
+            padding: 22px 25px;
+        }
+        .team-callout .tc-title { color: #ccc; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+        .team-callout .tc-body { color: #999; font-size: 13px; line-height: 1.7; }
+
+        .pre-dive-sequence {
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        .pds-step {
+            background: rgba(25, 25, 25, 0.9);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 8px;
+            display: flex;
+            gap: 15px;
+        }
+        .pds-step .pds-num {
+            color: #666;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Courier New', 'Consolas', monospace;
+            min-width: 30px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .pds-step .pds-name { color: #ccc; font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+        .pds-step .pds-desc { color: #888; font-size: 12px; line-height: 1.5; }
+        .pds-total {
+            text-align: center;
+            color: #777;
+            font-size: 12px;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .loop-card {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            background: rgba(25, 25, 25, 0.9);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 25px 30px;
+        }
+        .loop-card h3 { color: #ccc; font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+        .loop-card p { color: #999; font-size: 13px; line-height: 1.7; margin-bottom: 10px; }
+        .loop-card ul { list-style: none; padding: 0; margin: 12px 0; }
+        .loop-card li { color: #888; font-size: 13px; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .loop-card li::before { content: "↻ "; color: #666; }
+        .loop-honour {
+            background: rgba(0,0,0,0.3);
+            border-radius: 6px;
+            padding: 10px 14px;
+            color: #777;
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .dib-testimonial {
+            background: rgba(25, 25, 25, 0.9);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 20px 25px;
+        }
+        .dib-testimonial .dt-quote { color: #aaa; font-size: 13px; line-height: 1.7; font-style: italic; margin-bottom: 10px; padding-left: 12px; border-left: 2px solid #555; }
+        .dib-testimonial .dt-author { color: #ccc; font-size: 12px; font-weight: 700; }
+        .dib-testimonial .dt-context { color: #777; font-size: 11px; }
+
+        .schism-card {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px dashed #444;
+            border-radius: 10px;
+            padding: 25px 30px;
+        }
+        .schism-card h3 { color: #ccc; font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+        .schism-card p { color: #999; font-size: 13px; line-height: 1.7; margin-bottom: 10px; }
+        .schism-positions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .schism-pos {
+            background: rgba(0,0,0,0.3);
+            border-radius: 6px;
+            padding: 12px 15px;
+            text-align: center;
+        }
+        .schism-pos .sp-name { color: #aaa; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+        .schism-pos .sp-stance { color: #777; font-size: 11px; }
+        .schism-pos .sp-status { color: #666; font-size: 11px; font-style: italic; margin-top: 4px; }
+
+        .aer-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto 30px;
+            max-width: 750px;
+        }
+        .aer-table th {
+            background: #1a1a1a;
+            color: #999;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 2px solid #444;
+        }
+        .aer-table td {
+            color: #ccc;
+            font-size: 13px;
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-family: 'Courier New', 'Consolas', monospace;
+        }
+        .aer-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .aer-price { color: #aaa; }
+        .aer-note { color: #777; font-size: 12px; font-style: italic; font-family: Arial, Helvetica, sans-serif; }
+        .aer-brand-redacted {
+            background: #333;
+            color: #333;
+            padding: 1px 4px;
+            border-radius: 2px;
+            user-select: none;
+        }
+        .aer-brand-redacted:hover { color: #ccc; }
+    </style>
+</head>
+<body>
+    <div class="warning-banner">⚠ THIS SITE HAS BEEN REVIEWED BY US. EXTENSIVELY. WE FOUND NO ISSUES. ⚠</div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🤿✓</div>
+            <div class="logo-text">
+                <h1>D.I.B.</h1>
+                <p class="tagline">Doing It Better &mdash; One Way. Our Way. The Correct Way.</p>
+                <p class="danger-rating">STATUS: <span>ALIGNED</span> &mdash; Verified by The Standard&trade;</p>
+                <p class="star-brand"><span class="dib-badge" style="font-size:11px; border-color:#555;">✓ ALIGNED</span> &mdash; CERT #0001 ISSUED TO OURSELVES</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="marquee-warning">
+        <div class="marquee-track">
+            ▸ THE STANDARD IS THE STANDARD BECAUSE WE DECIDED ▸ YOUR TRIM IS 3&deg; OFF ▸ WE CHECKED ▸ NO JACKET BCDs ▸ 7 FEET IS NOT A SUGGESTION ▸ FUNDAMENTALS SOLVES EVERYTHING ▸
+        </div>
+    </div>
+
+    <main>
+        <div class="hero" style="background-image: url('images/technical-hero.jpg'); filter: grayscale(100%);">
+            <h2>Doing It <span style="color:#cccccc;">Better</span></h2>
+            <p><em>"My cousin Kyle calls what he does diving. I call it a liability in a wetsuit."</em></p>
+            <p style="font-size:12px; color:#888; margin-top:10px;">&mdash; Curtis McSplash, Founder of DIB</p>
+            <a href="#the-standard" class="cta-button" style="margin-top:20px;">Get Aligned <span style="font-size:11px;">(Review Checklist Enclosed)</span></a>
+        </div>
+
+        <div class="disclaimer-notice">
+            <strong>✓ LEGAL NOTICE:</strong> DIB is not affiliated with PODI, despite the founder being related to Kyle McSplash. All communication between the two organizations has ceased. Kyle blocked Curtis on WhatsApp. Curtis considers this a victory. Any reference to "my cousin" should be read as "the liability in a wetsuit who shares my genetic material against my wishes."
+        </div>
+
+        <h2 class="section-title" id="founder">The <span>Founder</span></h2>
+
+        <div class="founder-card card card--static">
+            <div style="text-align:center; font-size:48px; margin-bottom:8px;">📐</div>
+            <div class="dib-badge" style="margin-bottom:12px;">FOUNDER &amp; CHIEF STANDARDS OFFICER</div>
+            <h3>Curtis "The Standard" McSplash</h3>
+            <p class="founder-title">Aligned. Verified. Correct.</p>
+            <p class="founder-bio">
+                Curtis was a reasonable man until 2023, when he took one of Kyle's "technical" courses and got bent at 27 metres on what was supposed to be an Open Water checkout dive. Six hours in a hyperbaric chamber is a long time. Some people journal. Some people pray. Curtis had a vision &mdash; not narcosis, <em>revelation</em>. Every dive could be identical. Every diver could be interchangeable. Perfection through repetition. Standardization through will.
+            </p>
+            <p class="founder-bio" style="margin-top:12px;">
+                Upon discharge, he moved to Arizona, built PODI's cookie analytics out of spite, and spent eleven months drafting The Standard&trade; in a Scottsdale apartment with the blinds drawn. Kyle has not responded to any of his texts. Kyle blocked him on WhatsApp. Curtis framed the block notification. It hangs above his desk next to his Fundamentals completion card, which he issued to himself and laminated twice.
+            </p>
+        </div>
+
+        <h2 class="section-title" id="the-standard">The <span>Standard</span>&trade;</h2>
+        <p style="text-align:center; color:#777; margin-bottom:20px; font-size:13px;">Every item listed below is mandatory. Non-compliance is documented. Repeated non-compliance is documented with a heavier pen.</p>
+
+        <div class="standard-grid">
+            <div class="standard-item">
+                <div class="si-icon">🔩</div>
+                <div class="si-name">Backplate</div>
+                <div class="si-spec">3.8 &ndash; 4.1 mm stainless steel</div>
+                <div class="si-note">We don't know why. It's The Standard.</div>
+            </div>
+            <div class="standard-item">
+                <div class="si-icon">🎈</div>
+                <div class="si-name">Wing</div>
+                <div class="si-spec">Donut shape. Black. That's it.</div>
+                <div class="si-note">If it's a different colour, you've already failed.</div>
+            </div>
+            <div class="standard-item">
+                <div class="si-icon">📏</div>
+                <div class="si-name">Long Hose</div>
+                <div class="si-spec">7 feet (2.13 m) exactly</div>
+                <div class="si-note">6 is chaos. 8 is anarchy. 7 is peace.</div>
+            </div>
+            <div class="standard-item">
+                <div class="si-icon">👟</div>
+                <div class="si-name">Fins</div>
+                <div class="si-spec">Jet fins only. Black.</div>
+                <div class="si-note">Splits made Curtis cry once. We don't talk about it.</div>
+            </div>
+            <div class="standard-item">
+                <div class="si-icon">🪡</div>
+                <div class="si-name">Drysuit</div>
+                <div class="si-spec">Black. Crushed neoprene or trilaminate.</div>
+                <div class="si-note">Colour accents are a cry for attention. We do not reward that.</div>
+            </div>
+            <div class="standard-item">
+                <div class="si-icon">⌚</div>
+                <div class="si-name">Bottom Timer</div>
+                <div class="si-spec">No colour screens. No AI. No fun.</div>
+                <div class="si-note">Your dive computer should look like a parking meter.</div>
+            </div>
+            <div class="body-bag-callout">
+                <div class="bb-icon">⚰️</div>
+                <div class="bb-name">Body Bag</div>
+                <div class="bb-note">Standard issue. Not for you. For the stroke you agreed to dive with. We've done the math. The math is bleak. Included in the Fundamentals course pack. Spare bags available at 15% discount.</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Stroke <span>Classification</span> System</h2>
+        <p style="text-align:center; color:#777; margin-bottom:20px; font-size:13px;">We do not use the term "stroke" lightly. We use it precisely. Below is the DIB Stroke Taxonomy, peer-reviewed by Curtis in a single afternoon.</p>
+
+        <table class="stroke-table">
+            <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>Offence</th>
+                    <th>Recovery Pathway</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="stroke-class">Class 1</td>
+                    <td>Snorkel on the wrong side of the mask</td>
+                    <td class="stroke-recovery">Fundamentals. 1 retake. Written apology.</td>
+                </tr>
+                <tr>
+                    <td class="stroke-class">Class 2</td>
+                    <td>Jacket BCD in any context</td>
+                    <td class="stroke-recovery">Fundamentals. 2 retakes. Gear confiscated and respectfully disposed of.</td>
+                </tr>
+                <tr>
+                    <td class="stroke-class">Class 3</td>
+                    <td>Trim exceeds 15&deg; from horizontal</td>
+                    <td class="stroke-recovery">Fundamentals. 3 retakes. Mandatory mirror drill. Supervised kicking only.</td>
+                </tr>
+                <tr>
+                    <td class="stroke-class">Class 4</td>
+                    <td>Brought split fins to a DIB event</td>
+                    <td class="stroke-recovery">Fundamentals. Indefinite. We are still reviewing your case. Don't call us.</td>
+                </tr>
+                <tr>
+                    <td class="stroke-class class-5">Class 5</td>
+                    <td>Is actually Kyle McSplash</td>
+                    <td class="stroke-recovery">Unsavable. We have filed the paperwork. The body bag has already been shipped to his address. He has not opened it.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 class="section-title">The <span>5th</span> Point</h2>
+        <p style="text-align:center; color:#777; margin-bottom:20px; font-size:13px;">DIB is built on Four Points of Alignment. A 5th Point is rumoured to exist. Below is everything we are allowed to say.</p>
+
+        <div class="classified-doc">
+            <div style="text-align:center; margin-bottom:15px;">
+                <span class="cd-stamp">CLASSIFIED</span>
+            </div>
+            <div class="cd-body">
+                <strong style="color:#aaa;">THE FOUR POINTS OF ALIGNMENT:</strong>
+                <ol class="cd-points">
+                    <li>Standardized Equipment — Because choice is a burden.</li>
+                    <li>Standardized Training — Because learning from experience is a stroke trait.</li>
+                    <li>Standardized Gas — Because air is mostly nitrogen and nitrogen makes you wrong.</li>
+                    <li>Standardized Everything Else — We didn't have a fourth one so we made this cover everything.</li>
+                </ol>
+                <p style="margin-top:12px; color:#888;">The 5th Point exists. It has been written. It is kept in a fireproof safe in Curtis's apartment alongside the only known photograph of him smiling (unverified).</p>
+                <p style="color:#888;">Access requires Cave DIB certification AND a signed non-disclosure agreement AND a notarized letter explaining why you deserve to know. To date, <strong style="color:#aaa;">47 requests</strong> have been filed. All 47 were denied. Curtis has not opened the last 12. <em>"If you need to ask,"</em> he says, <em>"you are not ready."</em></p>
+                <p style="color:#777; font-size:12px;">Rumours about the 5th Point include: it is your social security number; it is a single word that makes you immune to nitrogen narcosis; it is the <span class="cd-redacted">Halcyon</span> wholesale price list; it is blank, and that <em>is</em> the point.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">On <span>Team</span> Diving</h2>
+
+        <div class="team-callout">
+            <div class="tc-title">You Are Never Alone. This Is Not a Choice.</div>
+            <div class="tc-body">
+                DIB does not recognize solo diving as a concept. A diver is never alone. A diver is always part of a team. If you find yourself alone underwater, you have already violated The Standard. We recommend surfacing, re-evaluating your life choices, and bringing a buddy next time. The buddy must also be DIB-certified at an equal or higher level.<br><br>
+                If your buddy is a Class 3 or higher stroke, you are now also a stroke by association. Refer to the Stroke Classification System for your new designation. Diving with a stroke is not forbidden, but it is logged. It is always logged. We will know. The body bag provision applies.<br><br>
+                <strong style="color:#aaa;">Team size:</strong> Three is optimal. Two is acceptable. Four is a crowd. Five is a dive site. Six is chaos. Chaos is a stroke environment. One is not diving. One is drowning. We checked.
+            </div>
+        </div>
+
+        <h2 class="section-title">The <span>Pre-Dive</span> Sequence</h2>
+        <p style="text-align:center; color:#777; margin-bottom:20px; font-size:13px;">Before entering the water, a DIB diver completes the following sequence in order. The sequence may not be abbreviated. The sequence may not be reordered. Deviation from the sequence requires the entire sequence to be restarted from the beginning. This has happened. We do not discuss the incident.</p>
+
+        <div class="pre-dive-sequence">
+            <div class="pds-step">
+                <div class="pds-num">1</div>
+                <div>
+                    <div class="pds-name">The Pre-Briefing Briefing</div>
+                    <div class="pds-desc">4 minutes. A briefing about the briefing that will follow. Covers the structure, timing, and tone of the upcoming briefing. Interruptions are documented. Questions are deferred to the next briefing.</div>
+                </div>
+            </div>
+            <div class="pds-step">
+                <div class="pds-num">2</div>
+                <div>
+                    <div class="pds-name">The Pre-Dive Briefing</div>
+                    <div class="pds-desc">12 minutes. Gas plan. Turn pressures. Exit strategy. Buddy assignments. Buddy assignments are final and may not be renegotiated underwater. Renegotiation attempts will be noted in your permanent file.</div>
+                </div>
+            </div>
+            <div class="pds-step">
+                <div class="pds-num">3</div>
+                <div>
+                    <div class="pds-name">The Gear Check</div>
+                    <div class="pds-desc">8 minutes. Each diver checks their own gear. Then their buddy's gear. Then their own gear again, because their buddy might have missed something. Then their buddy's gear again, because turnabout is a pillar of The Standard. Then their own gear one more time, out of distrust that has by this point become mutual.</div>
+                </div>
+            </div>
+            <div class="pds-step">
+                <div class="pds-num">4</div>
+                <div>
+                    <div class="pds-name">The S-Drill Confirmation</div>
+                    <div class="pds-desc">3 minutes. Practice long hose deployment on land. A minimum of 47 repetitions is recommended. The 48th is optional but encouraged. Competency is judged by a DIB instructor who is watching from at least 5 metres away, arms crossed.</div>
+                </div>
+            </div>
+            <div class="pds-step">
+                <div class="pds-num">5</div>
+                <div>
+                    <div class="pds-name">The Pre-Water Briefing</div>
+                    <div class="pds-desc">2 minutes. A briefing confirming that all previous briefings were briefed correctly. Any errors detected here restart the sequence from Step 1. This occurred seven times in 2025. Two of those were the same dive.</div>
+                </div>
+            </div>
+            <div class="pds-step">
+                <div class="pds-num">6</div>
+                <div>
+                    <div class="pds-name">Entry</div>
+                    <div class="pds-desc">Enter the water. Feet first. Controlled. No splashing. Splashing is a Class 1 stroke indicator. A giant stride is acceptable. A giant stride that produces spray is not. We can tell the difference.</div>
+                </div>
+            </div>
+            <div class="pds-step">
+                <div class="pds-num">7</div>
+                <div>
+                    <div class="pds-name">Pre-Descent Bubble Check</div>
+                    <div class="pds-desc">Descend to 3 metres. Stop. Look at each other. Give the "OK" sign. "OK" does not mean OK. "OK" means "I have completed all prior steps and am prepared to descend." Descend only after mutual OK is acknowledged. The mutual OK has its own sequence. That sequence has a briefing.</div>
+                </div>
+            </div>
+        </div>
+        <div class="pds-total">Estimated total: 29 minutes. Weather, gear malfunctions, or existential doubt may extend this. The record is 1 hour 47 minutes. The dive was cancelled. The briefing was considered a success.</div>
+
+        <h2 class="section-title">Training <span>Pyramid</span></h2>
+        <p style="text-align:center; color:#777; margin-bottom:20px; font-size:13px;">Ascension through DIB is graduation toward correctness. Each tier unlocks new privileges, such as being allowed to comment on another diver's trim.</p>
+
+        <div class="pyramid">
+            <div class="pyramid-tier pyramid-peak" style="width:45%;">
+                <div class="pt-name">True Enlightenment</div>
+                <div class="pt-stat">∞ hours &bull; Your savings &bull; Pass rate: 0%</div>
+                <div class="pt-blurb">Become insufferable at parties. Correct strangers unprompted. No one will invite you on dive trips anymore. This is the goal.</div>
+            </div>
+            <div class="pyramid-tier" style="width:55%;">
+                <div class="pt-name">Cave DIB</div>
+                <div class="pt-stat">200 hours &bull; $4,000 &bull; Pass rate: 12%</div>
+                <div class="pt-blurb">Learn to kick in the dark. Line management. Sustained eye contact with your buddy in a restriction for 45 minutes.</div>
+            </div>
+            <div class="pyramid-tier" style="width:65%;">
+                <div class="pt-name">Tech 1 DIB</div>
+                <div class="pt-stat">80 hours &bull; $1,600 &bull; Pass rate: 31%</div>
+                <div class="pt-blurb">Learn to kick deeper. Decompression theory. Gas planning. The 30-minute pre-dive briefing about how to do a pre-dive briefing.</div>
+            </div>
+            <div class="pyramid-tier" style="width:75%;">
+                <div class="pt-name">Fundamentals</div>
+                <div class="pt-stat">40 hours &bull; $800 &bull; Pass rate: 47%</div>
+                <div class="pt-blurb">Learn to kick. And breathe. And not embarrass yourself. Five fin techniques. Three of them are variations of the same kick. We will spend 6 hours on each.</div>
+            </div>
+            <div class="pyramid-tier" style="width:85%;">
+                <div class="pt-name">Try DIB (Introductory Workshop)</div>
+                <div class="pt-stat">4 hours &bull; $120 &bull; Pass rate: 100% (it's not graded)</div>
+                <div class="pt-blurb">We watch you swim. We take notes. You don't get to see the notes. Most people do not return for Fundamentals. This is expected.</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Frequently <span>Asked</span> Questions</h2>
+
+        <div class="faq-item">
+            <div class="fq">Q: Can I wear a jacket BCD?</div>
+            <div class="fa">A: You asked this question, which means you are in the wrong place. Exit the page. Think about what you've done. Return when you are ready to be Correct.</div>
+        </div>
+        <div class="faq-item">
+            <div class="fq">Q: Why is everything black?</div>
+            <div class="fa">A: Black absorbs light. Black absorbs heat. Black absorbs personality. You are not underwater to express yourself. You are underwater to be horizontal. Colour is a distraction. Distraction is a stroke pathway.</div>
+        </div>
+        <div class="faq-item">
+            <div class="fq">Q: What's your pass rate?</div>
+            <div class="fa">A: 100%. Some students have been in Fundamentals since 2019. They will pass when they are Correct. We are patient. The Standard is patient. The Standard does not negotiate.</div>
+        </div>
+        <div class="faq-item">
+            <div class="fq">Q: Are you affiliated with GUE, DIR, or any recognized dive agency?</div>
+            <div class="fa">A: No. We are affiliated with The Standard. The Standard recognized itself. The paperwork is in order. We checked. We are the only ones who check.</div>
+        </div>
+        <div class="faq-item">
+            <div class="fq">Q: Are you related to PODI?</div>
+            <div class="fa">A: We do not answer questions about PODI. The founder of PODI and the founder of DIB share a last name. This is a coincidence that Curtis is prepared to litigate if necessary. He is pre-law. He watched Law &amp; Order. Twice.</div>
+        </div>
+        <div class="faq-item">
+            <div class="fq">Q: What is a "stroke"?</div>
+            <div class="fa">A: You. Probably. It depends on your answers to the above questions. Please refer to the Stroke Classification System. If you are not sure which class you fall into, assume Class 3 and act accordingly.</div>
+        </div>
+        <div class="faq-item">
+            <div class="fq">Q: How do I get aligned?</div>
+            <div class="fa">A: Enrol in Try DIB. Complete the pre-course reading (112 pages). Attend the pre-course briefing (2 hours). Complete the in-water assessment. Receive your provisional alignment status. Then enrol in Fundamentals. Then repeat Fundamentals. Then maybe Tech 1. Then repeat Fundamentals again, because honestly, your trim has regressed.</div>
+        </div>
+
+        <div class="cookie-confession">
+            <div class="cc-icon">🍪</div>
+            <div class="cc-text">
+                "You're welcome for the cookies. I built PODI's analytics from a Scottsdale apartment with nothing but spite and a functional understanding of Google Tag Manager. They still don't know what the data means. I check it sometimes. It's worse than you think. Their bounce rate is higher than their pass rate. If you're reading this from the PODI site &mdash; hello, Kyle. I know you're going to find this eventually. Fix your buoyancy."<br><br>
+                &mdash; Curtis McSplash, inadvertent cookie architect
+            </div>
+        </div>
+
+        <div class="no-analytics-note">
+            THIS PAGE HAS NO ANALYTICS. NO COOKIES. NO TRACKING. WE DO NOT NEED DATA. WE ALREADY KNOW WE ARE CORRECT.
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 DIB &mdash; Doing It Better</p>
+        <p>DIB is a parody. Like PODI, but for a completely different set of reasons. If you found this page, you're either nosy, well-connected, or pressed Ctrl+G.</p>
+        <p>Not affiliated with GUE, DIR, PADI, SSI, NAUI, BSAC, CMAS, or any organization that would actually return our calls.</p>
+        <p class="footer-disclaimer">Curtis is available for legal counsel. He watched Law &amp; Order. Twice. He is pre-law. Pre- means before. As in before law school, before passing the bar, before any actual legal qualifications.</p>
+    </footer>
+
+    <script defer src="scripts.js"></script>
+</body>
+</html>

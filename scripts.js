@@ -780,8 +780,7 @@
                 '<div class="cookie-text">' +
                     '<strong>There may be cookies.</strong> ' +
                     'We don\'t really know. Kyle\'s cousin set up the analytics and he\'s ' +
-                    'since moved to Arizona. If you see a cookie, eat it. ' +
-                    'If you don\'t, stop worrying about it. This banner is for vibes only.' +
+                    'since moved to Arizona. There\'s more to that story. We can\'t discuss it.' +
                 '</div>' +
                 '<button class="cookie-btn cookie-btn-dismiss" id="cookie-ok">OK</button>' +
                 '<button class="cookie-btn cookie-btn-alt" id="cookie-alt">OK But Sadder</button>' +
@@ -799,6 +798,48 @@
 
         document.getElementById('cookie-ok').addEventListener('click', dismissBanner);
         document.getElementById('cookie-alt').addEventListener('click', dismissBanner);
+    }
+
+    // ============================================================
+    // 5b. DIB EASTER EGG (Ctrl+G)
+    // ============================================================
+    function initDIBEasterEgg() {
+        if (window.location.pathname.indexOf('dib.html') !== -1) return;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'g') {
+                e.preventDefault();
+                var existing = document.getElementById('dib-toast');
+                if (existing) { existing.remove(); }
+
+                var toast = document.createElement('div');
+                toast.id = 'dib-toast';
+                toast.innerHTML =
+                    '<div style="display:flex;align-items:center;gap:10px;">' +
+                        '<span style="font-size:20px;">📐</span>' +
+                        '<div style="flex:1;">' +
+                            '<strong style="color:#ccc;">DIB</strong> <span style="color:#888;font-size:12px;">&mdash; Doing It Better</span><br>' +
+                            '<a href="dib.html" style="color:#999;font-size:13px;">/dib.html</a><span style="color:#777;font-size:12px;"> &mdash; Kyle\'s cousin would like a word.</span>' +
+                        '</div>' +
+                        '<button onclick="this.parentElement.parentElement.remove()" style="background:none;border:none;color:#666;cursor:pointer;font-size:16px;padding:0 4px;line-height:1;">&times;</button>' +
+                    '</div>';
+                toast.style.cssText =
+                    'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);' +
+                    'background:#1a1a1a;border:1px solid #444;border-radius:8px;' +
+                    'padding:14px 22px;z-index:99999;max-width:480px;width:calc(100% - 40px);' +
+                    'box-shadow:0 8px 30px rgba(0,0,0,0.6);font-family:Arial,Helvetica,sans-serif;' +
+                    'font-size:13px;line-height:1.5;';
+                document.body.appendChild(toast);
+
+                setTimeout(function() {
+                    if (toast && toast.parentNode) {
+                        toast.style.opacity = '0';
+                        toast.style.transition = 'opacity 0.4s';
+                        setTimeout(function() { if (toast.parentNode) toast.remove(); }, 400);
+                    }
+                }, 8000);
+            }
+        });
     }
 
     // ============================================================
@@ -1369,34 +1410,607 @@
     }
 
     // ============================================================
-    // 11. SHOP — ADD TO CART
+    // 11. SHOP — Product Catalog
     // ============================================================
-    var cartCount = 0;
+    var shopCatalog = [
+        // ── APPAREL ──
+        {
+            id: 'tshirt',
+            name: 'PODI Logo T-Shirt',
+            category: 'apparel',
+            price: 29.99, comparePrice: 39.99, stars: 5, ratingCount: 247,
+            badge: '🔥 Best Seller', badgeClass: 'bestseller',
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><path d='M50 42 l18 35 v90 h64 v-90 l18-35 -10-4 -12 22 h-56 l-12-22 z' fill='#1a3a5c' stroke='#0d1b2a' stroke-width='2.5' stroke-linejoin='round'/><text x='100' y='120' text-anchor='middle' fill='#fff' font-size='16' font-weight='800' font-family='Arial'>PODI</text><text x='100' y='135' text-anchor='middle' fill='#ffcc00' font-size='8' font-family='Arial'>DIVE CLUB</text></svg>",
+            description: "100% cotton t-shirt featuring our iconic logo. The shirt says \"PODI\" on it so people know you make bad choices before you even open your mouth. Pre-shrunk, except for your dignity. Rinse separately — colors run faster than our courses.",
+            fineprint: "Available in \"Diver Navy\" and \"Caution Orange\" \u2022 \ud83c\udde8\ud83c\uddf3 Imported",
+            stock: "\u26a0\ufe0f Only 4 left in Medium — Kyle keeps borrowing the stock for \"laundry\""
+        },
+        {
+            id: 'survived-tee',
+            name: '"I Survived PODI" T-Shirt',
+            category: 'apparel',
+            price: 34.99, comparePrice: 44.99, stars: 4, ratingCount: 189,
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><path d='M50 42 l18 35 v90 h64 v-90 l18-35 -10-4 -12 22 h-56 l-12-22 z' fill='#c0392b' stroke='#922b21' stroke-width='2.5' stroke-linejoin='round'/><text x='100' y='110' text-anchor='middle' fill='#fff' font-size='9' font-weight='800' font-family='Arial'>I SURVIVED</text><text x='100' y='126' text-anchor='middle' fill='#ffcc00' font-size='14' font-weight='800' font-family='Arial'>PODI</text><text x='100' y='140' text-anchor='middle' fill='#fff' font-size='7' font-family='Arial'>*barely</text></svg>",
+            description: 'You passed (survived) a PODI course. Now everyone at the dive bar will know. Features a checklist on the back: "The Bends \u2610, Panic Attack \u2610, Lost Mask \u2610, Mask Found (It Was On Your Forehead) \u2610, Financial Ruin \u2611."',
+            fineprint: 'Includes free rubber bracelet that says "SEND IT" \u2022 Fits true to "maybe"',
+            stock: '\u2705 In Stock — We printed 5,000 because nobody learns'
+        },
+        {
+            id: 'hoodie',
+            name: '"Master Diver (of My Couch)" Hoodie',
+            category: 'apparel',
+            price: 54.99, comparePrice: 69.99, stars: 5, ratingCount: 312,
+            badge: '\ud83c\udd95 New', badgeClass: 'new',
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><path d='M48 35 h104 v25 l-16 12 v95 h-72 v-95 l-16-12 z' fill='#5d6d7e' stroke='#2c3e50' stroke-width='2.5' stroke-linejoin='round'/><path d='M48 60 h18 v35 h-18 z' fill='#4a5568'/><path d='M134 60 h18 v35 h-18 z' fill='#4a5568'/><rect x='84' y='115' width='32' height='22' rx='4' fill='#e8c36a'/><text x='100' y='130' text-anchor='middle' fill='#2c3e50' font-size='9' font-weight='800'>\ud83d\udecb\ufe0f</text></svg>",
+            description: 'Thick fleece hoodie for the diver who does most of their diving from the comfort of their living room. Features an embroidered couch with tiny dive fins on the front pocket. "It\'s where I do my best diving."',
+            fineprint: 'Hood strings not tested for tensile strength \u2022 May pill (like your dive career)',
+            stock: '\u2705 In Stock — 847 units warming shelves nationwide'
+        },
+        {
+            id: 'speedo',
+            name: 'PODI Signature Speedo',
+            category: 'apparel',
+            price: 39.99, comparePrice: 49.99, stars: 3, ratingCount: 67,
+            badge: '\u26a1 Limited Edition', badgeClass: 'limited',
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><path d='M65 70 l35 75 35-75 z' fill='#2980b9' stroke='#1a5276' stroke-width='2.5' stroke-linejoin='round'/><text x='100' y='108' text-anchor='middle' fill='#fff' font-size='9' font-weight='800' font-family='Arial'>PODI</text><path d='M55 155 q30-12 50 0' fill='none' stroke='#3498db' stroke-width='2.5'/><path d='M95 160 q30-8 50 0' fill='none' stroke='#3498db' stroke-width='1.5'/></svg>",
+            description: 'For the advanced diver who wants everyone to know they\'re advanced. These European-cut briefs feature the PODI logo front and center. "Confidence, not competence" stitched on the waistband.',
+            fineprint: '90% polyester, 10% courage \u2022 Hand wash, hang dry, never explain',
+            stock: '\u26a0\ufe0f Low Stock — Kyle keeps "testing" the inventory'
+        },
+        // ── ACCESSORIES ──
+        {
+            id: 'bumper-stickers',
+            name: 'PODI Bumper Sticker (3-Pack)',
+            category: 'accessories',
+            price: 9.99, comparePrice: 14.99, stars: 5, ratingCount: 891,
+            badge: '\ud83d\udd25 Best Seller', badgeClass: 'bestseller',
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='30' y='30' width='140' height='28' rx='4' fill='#f39c12'/><text x='35' y='49' fill='#fff' font-size='10' font-weight='700' font-family='Arial'>I\u2019d Rather Be Diving</text><rect x='25' y='70' width='150' height='28' rx='4' fill='#3498db'/><text x='30' y='89' fill='#fff' font-size='10' font-weight='700' font-family='Arial'>Honk If You\u2019ve Never Been Bent</text><rect x='35' y='110' width='130' height='28' rx='4' fill='#e74c3c'/><text x='40' y='129' fill='#fff' font-size='10' font-weight='700' font-family='Arial'>My Other BCD Is a Pool Noodle</text><text x='100' y='170' text-anchor='middle' fill='#7f8c8d' font-size='9' font-family='Arial'>\ud83d\udce6 3-Pack | Fridge Magnet Option</text></svg>",
+            description: 'Slap these on your car, your cooler, your dive boat (if it still floats). Each pack contains three stickers. Also available in "fridge magnet" format for people with class.',
+            fineprint: 'Adhesive may outlast your dive career \u2022 Not recommended for resale value',
+            stock: '\u2705 In Stock — We own a sticker machine. We are unstoppable.'
+        },
+        {
+            id: 'dive-flag-patch',
+            name: 'PODI Dive Flag Patch',
+            category: 'accessories',
+            price: 7.99, comparePrice: 10.99, stars: 4, ratingCount: 134,
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><circle cx='100' cy='90' r='50' fill='#2c3e50' stroke='#8b7355' stroke-width='4' stroke-dasharray='5 4'/><rect x='68' y='58' width='64' height='64' rx='3' fill='#e74c3c' transform='rotate(-3 100 90)'/><path d='M75 48 l50 74' stroke='#fff' stroke-width='16' opacity='0.9' transform='rotate(-3 100 90)'/><text x='100' y='170' text-anchor='middle' fill='#5d6d7e' font-size='9' font-family='Arial'>IRON-ON BACKING (MAY MELT)</text></svg>",
+            description: 'Sew-on patch for your BCD, jacket, or dignity repository. Features the PODI dive flag with a crooked stripe because "it adds character." Each patch is slightly different — artisanal misalignment.',
+            fineprint: 'Iron-on backing may melt your gear \u2022 Hand-sewn by unsupervised interns',
+            stock: '\u2705 In Stock — 2,300 patches in a drawer somewhere'
+        },
+        {
+            id: 'ok-mug',
+            name: '"World\'s Okayest Diver" Mug',
+            category: 'accessories',
+            price: 14.99, comparePrice: 19.99, stars: 5, ratingCount: 415,
+            badge: '\ud83c\udd95 New', badgeClass: 'new',
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><path d='M62 42 h56 v95 q0 8 8 8 h40 q8 0 8-8 v-95' fill='none' stroke='#34495e' stroke-width='3' stroke-linejoin='round'/><path d='M176 65 q14 0 14 14 v22 q0 14-14 14' fill='#ecf0f1' stroke='#34495e' stroke-width='3'/><text x='100' y='100' text-anchor='middle' fill='#2c3e50' font-size='14' font-weight='800' font-family='Arial'>OK</text><text x='100' y='115' text-anchor='middle' fill='#7f8c8d' font-size='7' font-family='Arial'>World\u2019s Okayest</text><path d='M88 48 q7-14 12-14 q5 0 12 14' fill='none' stroke='#bdc3c7' stroke-width='2' opacity='0.5'/><path d='M84 54 q5-10 8-10 q3 0 8 10' fill='none' stroke='#bdc3c7' stroke-width='1.5' opacity='0.3'/></svg>",
+            description: 'Ceramic coffee mug that holds 12oz of coffee and an unlimited amount of shame. Heat-reactive: when filled with hot liquid, reveals "But I\'m Working On It." Microwave safe (mug only, not your self-image).',
+            fineprint: 'Not dishwasher safe. Not safe in general. \u2022 Lead-free (probably)',
+            stock: '\u26a0\ufe0f Only 12 left — Ceramic kiln operator is "on a break"'
+        },
+        {
+            id: 'air-freshener',
+            name: 'PODI Signature Air Freshener',
+            category: 'accessories',
+            price: 5.99, comparePrice: 8.99, stars: 2, ratingCount: 23,
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><path d='M100 18 l14 6-14 6-14-6 z' fill='#27ae60'/><path d='M100 28 l20 10-20 8-20-8 z' fill='#2ecc71'/><path d='M100 42 l26 14-26 12-26-12 z' fill='#27ae60'/><path d='M100 62 l32 18-32 16-32-16 z' fill='#2ecc71'/><rect x='96' y='90' width='8' height='35' fill='#8b4513' rx='3'/><line x1='100' y1='18' x2='100' y2='5' stroke='#95a5a6' stroke-width='2'/><circle cx='100' cy='3' r='4' fill='#bdc3c7'/><text x='100' y='145' text-anchor='middle' fill='#7f8c8d' font-size='9' font-family='Arial'>SCENT: WETSUIT + ALGAE</text><text x='100' y='158' text-anchor='middle' fill='#7f8c8d' font-size='7' font-family='Arial'>Lasts 2-3 business days</text></svg>",
+            description: 'Hang this from your rearview mirror and let everyone know you smell like a diver. Scent notes: "Wetsuit left in a trunk for three weeks," with hints of "Algae" and "Poor Financial Planning."',
+            fineprint: 'Scent lasts 2-3 business days \u2022 Not tested on humans (tested on Kyle)',
+            stock: '\u2705 In Stock — 4,000 units. Please buy them. Our office reeks.'
+        },
+        // ── EQUIPMENT (QUESTIONABLE) ──
+        {
+            id: 'cert-card',
+            name: 'Custom Certification Card',
+            category: 'equipment',
+            price: 19.99, comparePrice: 24.99, stars: 4, ratingCount: 672,
+            badge: '\ud83d\udd25 Best Seller', badgeClass: 'bestseller',
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='28' y='32' width='144' height='92' rx='6' fill='#1a3a5c' stroke='#d4a017' stroke-width='2'/><rect x='38' y='42' width='36' height='42' rx='3' fill='#34495e'/><text x='56' y='70' text-anchor='middle' fill='#7f8c8d' font-size='22'>\ud83d\udc64</text><text x='90' y='57' fill='#ffcc00' font-size='9' font-weight='800' font-family='Arial'>P.O.D.I.</text><text x='90' y='71' fill='#fff' font-size='8' font-family='Arial'>CERTIFICATION CARD</text><text x='90' y='84' fill='#7f8c8d' font-size='7' font-family='Arial'>Not valid anywhere, ever</text><text x='90' y='98' fill='#7f8c8d' font-size='6' font-family='Arial'>Member #PODI-00001</text><text x='100' y='143' text-anchor='middle' fill='#7f8c8d' font-size='8' font-family='Arial'>MAGNETIC STRIP (PURELY DECORATIVE)</text><text x='100' y='160' text-anchor='middle' fill='#7f8c8d' font-size='7' font-family='Arial'>Lamination may peel in 24 hours</text></svg>",
+            description: 'Get a professional-looking plastic card that says whatever you want. "Deep Air Instructor"? "Master of the Abyss"? We print it, you flex it. Not valid for anything. Looks great on a lanyard.',
+            fineprint: 'Lamination may peel within 24 hours \u2022 Not valid for anything, anywhere',
+            stock: '\u2705 In Stock — We have a guy with a laminator. He\'s fast.'
+        },
+        {
+            id: 'whistle',
+            name: 'Surface Signal Whistle',
+            category: 'equipment',
+            price: 5.99, comparePrice: 9.99, stars: 3, ratingCount: 91,
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><ellipse cx='100' cy='75' rx='16' ry='26' fill='#e67e22' stroke='#d35400' stroke-width='2.5'/><rect x='85' y='100' width='30' height='12' rx='2' fill='#e67e22' stroke='#d35400' stroke-width='2'/><rect x='86' y='93' width='28' height='8' rx='1' fill='#2c3e50'/><circle cx='100' cy='103' r='3' fill='#1a1a2e'/><path d='M100 120 q-15 5-15 15 q0-10 15-15' fill='#e67e22'/><text x='100' y='160' text-anchor='middle' fill='#7f8c8d' font-size='8' font-family='Arial'>\ud83d\udd11 LANYARD INCLUDED</text></svg>",
+            description: 'Plastic whistle attached to a velcro strap. It makes a sound. That\'s about it. Kyle found a box of them at a garage sale in 2017. One reviewer reports it "summoned a harbor seal." Not guaranteed.',
+            fineprint: 'May attract sharks (curious about bad ideas) \u2022 Kyle owns 17 boxes',
+            stock: '\u2705 In Stock — We are legally required to sell these until Kyle stops finding boxes'
+        },
+        {
+            id: 'poster',
+            name: 'Limited Edition Kyle McSplash Poster',
+            category: 'equipment',
+            price: 24.99, comparePrice: 34.99, stars: 4, ratingCount: 156,
+            badge: '\u26a1 Limited Edition', badgeClass: 'limited',
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='30' y='18' width='140' height='140' rx='2' fill='#2c3e50' stroke='#8b7355' stroke-width='6'/><rect x='38' y='26' width='124' height='116' fill='#ecf0f1'/><circle cx='100' cy='70' r='12' fill='#e8c36a'/><line x1='100' y1='82' x2='100' y2='120' stroke='#e8c36a' stroke-width='5' stroke-linecap='round'/><line x1='82' y1='95' x2='100' y2='105' stroke='#e8c36a' stroke-width='4' stroke-linecap='round'/><line x1='100' y1='105' x2='118' y2='95' stroke='#e8c36a' stroke-width='4' stroke-linecap='round'/><line x1='72' y1='130' x2='100' y2='115' stroke='#e8c36a' stroke-width='4' stroke-linecap='round'/><line x1='100' y1='115' x2='128' y2='130' stroke='#e8c36a' stroke-width='4' stroke-linecap='round'/><path d='M72 46 l0 18 l56 0 l0-18' fill='#3498db' opacity='0.25'/><text x='100' y='140' text-anchor='middle' fill='#e74c3c' font-size='9' font-weight='800'>KYLE McSPLASH \u00ae</text><text x='100' y='172' text-anchor='middle' fill='#7f8c8d' font-size='7' font-family='Arial'>18x24 | Signed somewhere | Some water-damaged "vintage"</text></svg>",
+            description: 'Full-color 18x24 poster of Kyle McSplash doing a "perfect" giant stride entry. Spoiler: his mask is around his neck and he\'s holding his fins. Signed by Kyle (you can\'t choose where he signs).',
+            fineprint: 'Poster tube sold separately ($19.99) \u2022 May arrive folded if Kyle packed it',
+            stock: '\u26a0\ufe0f "Almost sold out" — we say this to create urgency'
+        },
+        {
+            id: 'dive-computer',
+            name: 'PODI "Dive Computer" Wrist Display',
+            category: 'equipment',
+            price: 29.99, comparePrice: 149.99, stars: 2, ratingCount: 44,
+            badge: '\ud83c\udd95 New', badgeClass: 'new',
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='52' y='48' width='96' height='116' rx='8' fill='#2c3e50' stroke='#1a1a2e' stroke-width='3'/><rect x='60' y='56' width='80' height='44' rx='4' fill='#27ae60'/><text x='100' y='84' text-anchor='middle' fill='#1a1a2e' font-size='26' font-weight='800' font-family='monospace'>12:00</text><text x='100' y='114' text-anchor='middle' fill='#ecf0f1' font-size='8' font-weight='800' font-family='Arial'>PODI DIVE</text><text x='100' y='126' text-anchor='middle' fill='#ecf0f1' font-size='8' font-weight='800' font-family='Arial'>COMPUTER</text><rect x='68' y='148' width='64' height='10' rx='3' fill='#7f8c8d'/><text x='100' y='156' text-anchor='middle' fill='#1a1a2e' font-size='7' font-family='Arial'>VELCRO\u00ae STRAP</text><path d='M72 40 l56 0' stroke='#2c3e50' stroke-width='4'/><text x='100' y='185' text-anchor='middle' fill='#7f8c8d' font-size='7' font-family='Arial'>Not waterproof. Not a computer. A watch that lies.</text></svg>",
+            description: 'It\'s a digital watch. It tells time. That\'s the computer part. We printed "PODI DIVE COMPUTER" on the face and stuck it on a velcro strap. It is not waterproof. It is not a computer. It does beep every hour.',
+            fineprint: 'Not waterproof. Not a computer. Not a dive tool. It\'s a watch that lies.',
+            stock: '\u2705 In Stock — Kyle\'s garage is full of them. He can\'t park in there.'
+        },
+        // ── DIGITAL DOWNLOADS ──
+        {
+            id: 'bellyflop-pdf',
+            name: '"Advanced Bellyflop Technique" PDF',
+            category: 'digital',
+            price: 12.99, comparePrice: 29.99, stars: 4, ratingCount: 203,
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='50' y='20' width='100' height='120' rx='6' fill='#ecf0f1' stroke='#bdc3c7' stroke-width='2'/><rect x='50' y='118' width='100' height='22' rx='0 0 6 6' fill='#e74c3c'/><text x='100' y='133' text-anchor='middle' fill='#fff' font-size='10' font-weight='800' font-family='Arial'>PDF</text><line x1='65' y1='38' x2='135' y2='38' stroke='#95a5a6' stroke-width='2.5'/><line x1='65' y1='52' x2='135' y2='52' stroke='#95a5a6' stroke-width='2.5'/><line x1='65' y1='66' x2='120' y2='66' stroke='#95a5a6' stroke-width='2.5'/><line x1='65' y1='80' x2='128' y2='80' stroke='#95a5a6' stroke-width='2.5'/><line x1='65' y1='94' x2='110' y2='94' stroke='#95a5a6' stroke-width='2.5'/><text x='100' y='163' text-anchor='middle' fill='#7f8c8d' font-size='8' font-family='Arial'>47 PAGES | MS PAINT DIAGRAMS | NO ANSWER KEY</text></svg>",
+            description: 'A 47-page PDF guide to mastering the bellyflop as a legitimate entry method. Written by Kyle after 4 beers and a YouTube binge. Includes diagrams drawn in MS Paint and a quiz at the end (no answer key).',
+            fineprint: 'Digital download \u2022 No refunds \u2022 Kyle\'s spellcheck is off',
+            stock: '\u2705 In Stock — Infinite copies. Welcome to digital.'
+        },
+        {
+            id: 'zoom-bg',
+            name: 'PODI Zoom Background Pack',
+            category: 'digital',
+            price: 7.99, comparePrice: 19.99, stars: 3, ratingCount: 118,
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='38' y='32' width='124' height='84' rx='6' fill='#2c3e50' stroke='#1a1a2e' stroke-width='3'/><rect x='46' y='40' width='108' height='60' rx='3' fill='#3498db'/><rect x='46' y='68' width='108' height='32' fill='#27ae60'/><circle cx='75' cy='56' r='8' fill='#f39c12'/><polygon points='128,52 138,42 148,57' fill='#27ae60'/><rect x='48' y='76' width='8' height='24' fill='#8b4513'/><rect x='60' y='76' width='16' height='12' fill='#e8c36a'/><text x='100' y='142' text-anchor='middle' fill='#7f8c8d' font-size='9' font-family='Arial'>\ud83d\udcbb 7 BACKGROUNDS!</text><text x='100' y='158' text-anchor='middle' fill='#95a5a6' font-size='7' font-family='Arial'>480p | Flip phone camera | Bonus: Kyle\u2019s cat</text></svg>",
+            description: 'Seven (7) high-resolution backgrounds for your video calls. Includes: "On a Boat (It\'s Sinking)," "Underwater (Kyle\'s Bathtub)," "Classroom (We Don\'t Have One)," and more. Colleagues will ask "where are you?"',
+            fineprint: '480p resolution \u2022 Includes 1 free bonus background of Kyle\'s cat',
+            stock: '\u2705 In Stock — Digital products. We can\'t run out. We tried.'
+        },
+        // ── OOPS — WE FOUND MORE STUFF ──
+        {
+            id: 'kyles-gear',
+            name: 'Kyle\'s Personally-Owned Used Gear',
+            category: 'oops',
+            price: 14.99, comparePrice: 0, comparePriceText: '"Priceless"', stars: 1, ratingCount: 3,
+            badge: '\u26a1 One of a Kind', badgeClass: 'limited',
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='38' y='22' width='124' height='146' rx='4' fill='rgba(189,195,199,0.35)' stroke='#95a5a6' stroke-width='2' stroke-dasharray='5 3'/><rect x='72' y='12' width='56' height='10' rx='2' fill='#e74c3c'/><rect x='78' y='14' width='44' height='5' fill='#c0392b'/><rect x='52' y='48' width='32' height='8' rx='1' fill='#2c3e50' opacity='0.7'/><text x='68' y='55' text-anchor='middle' fill='#fff' font-size='5'>fin strap</text><rect x='78' y='78' width='48' height='14' rx='2' fill='#f39c12' opacity='0.6'/><text x='102' y='88' text-anchor='middle' fill='#fff' font-size='7'>granola bar \u201822</text><circle cx='68' cy='110' r='9' fill='rgba(192,57,43,0.3)' stroke='#c0392b' stroke-width='1.5'/><text x='68' y='113' text-anchor='middle' fill='#c0392b' font-size='6'>???</text><text x='100' y='185' text-anchor='middle' fill='#7f8c8d' font-size='8' font-family='Arial'>Contents vary. May contain Kyle.</text></svg>",
+            description: 'You get a Ziploc bag containing items Kyle found in his gear bag after a particularly wet weekend. Contents may include: a fin strap, half a snorkel keeper, a granola bar wrapper (2022), and mysterious dampness.',
+            fineprint: 'Contents may vary \u2022 Not responsible for smells \u2022 Kyle\'s DNA is not an allergen',
+            stock: '\u26a0\ufe0f Only 3 available — Kyle is "not ready to let go" of the others'
+        },
+        {
+            id: 'beach-towel',
+            name: 'PODI Beach Towel',
+            category: 'oops',
+            price: 22.99, comparePrice: 34.99, stars: 3, ratingCount: 76,
+            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='28' y='28' width='144' height='104' rx='4' fill='#f5f0e8' stroke='#d5cfc0' stroke-width='2'/><rect x='28' y='28' width='144' height='14' fill='#e74c3c' opacity='0.65'/><rect x='28' y='56' width='144' height='10' fill='#f39c12' opacity='0.65'/><rect x='28' y='80' width='144' height='10' fill='#e74c3c' opacity='0.65'/><rect x='28' y='104' width='144' height='10' fill='#f39c12' opacity='0.65'/><rect x='28' y='118' width='144' height='10' fill='#e74c3c' opacity='0.65'/><circle cx='142' cy='40' r='7' fill='#3498db' opacity='0.4'/><text x='142' y='43' text-anchor='middle' fill='#fff' font-size='9' font-weight='800'>P</text><text x='100' y='158' text-anchor='middle' fill='#7f8c8d' font-size='8' font-family='Arial'>Water just moves around on it. Very on-brand.</text></svg>",
+            description: 'Large 30x60 beach towel featuring the PODI dive flag pattern. The towel is absorbent in theory only. Water basically just moves around on it. Great for lying on top of. Terrible for drying anything. Very on-brand.',
+            fineprint: 'Not absorbent \u2022 Colors run faster than Kyle from accountability',
+            stock: '\u2705 In Stock — 600 towels. They\'re not going anywhere. Neither is the water.'
+        }
+    ];
 
-    function addToCart(btn) {
-        cartCount++;
-        var el = document.getElementById('shop-cart-count');
-        if (el) el.textContent = '🛒 Cart (' + cartCount + ')';
+    function escapeHTML(str) {
+        var d = document.createElement('div');
+        d.textContent = str;
+        return d.innerHTML;
+    }
 
-        var notif = document.createElement('div');
-        notif.className = 'shop-notification';
-        var product = 'Item';
-        if (btn) {
-            var item = btn.closest('.shop-item');
-            if (item) {
-                var h3 = item.querySelector('h3');
-                if (h3) product = h3.textContent;
+    // ============================================================
+    // 11b. SHOP — Cart System
+    // ============================================================
+    var cartItems = [];
+    var cartSidebarOpen = false;
+
+    function loadCart() {
+        try { cartItems = JSON.parse(localStorage.getItem('podi_cart')) || []; }
+        catch (e) { cartItems = []; }
+    }
+    function saveCart() {
+        try { localStorage.setItem('podi_cart', JSON.stringify(cartItems)); }
+        catch (e) {}
+    }
+    function getCartCount() {
+        return cartItems.reduce(function(s, i) { return s + i.qty; }, 0);
+    }
+    function getCartSubtotal() {
+        return cartItems.reduce(function(s, i) {
+            var p = getProduct(i.id);
+            return s + (p ? p.price * i.qty : 0);
+        }, 0);
+    }
+    function getCartTotal() {
+        var sub = getCartSubtotal();
+        if (sub === 0) return 0;
+        return sub + 4.99 + 2.50 + 3.75 + 1.99;
+    }
+    function getProduct(id) {
+        for (var i = 0; i < shopCatalog.length; i++) {
+            if (shopCatalog[i].id === id) return shopCatalog[i];
+        }
+        return null;
+    }
+
+    function addToCart(productId) {
+        var found = false;
+        for (var i = 0; i < cartItems.length; i++) {
+            if (cartItems[i].id === productId) { cartItems[i].qty++; found = true; break; }
+        }
+        if (!found) cartItems.push({ id: productId, qty: 1 });
+        saveCart();
+        renderCartBar();
+        if (cartSidebarOpen) renderCartSidebar();
+        showCartNotification(productId);
+    }
+
+    function removeFromCart(productId) {
+        cartItems = cartItems.filter(function(i) { return i.id !== productId; });
+        saveCart();
+        renderCartBar();
+        if (cartSidebarOpen) renderCartSidebar();
+    }
+
+    function updateCartQty(productId, delta) {
+        for (var i = 0; i < cartItems.length; i++) {
+            if (cartItems[i].id === productId) {
+                cartItems[i].qty += delta;
+                if (cartItems[i].qty <= 0) cartItems.splice(i, 1);
+                break;
             }
         }
-        notif.textContent = '✅ Added to cart: ' + product;
-        document.body.appendChild(notif);
+        saveCart();
+        renderCartBar();
+        if (cartSidebarOpen) renderCartSidebar();
+    }
 
+    function showCartNotification(productId) {
+        var p = getProduct(productId);
+        var name = p ? p.name : 'Item';
+        var notif = document.createElement('div');
+        notif.className = 'shop-notification';
+        notif.textContent = '\u2705 Added to cart: ' + name;
+        document.body.appendChild(notif);
         setTimeout(function() {
             notif.style.opacity = '0';
             notif.style.transition = 'opacity 0.3s';
-            setTimeout(function() { notif.remove(); }, 300);
+            setTimeout(function() { if (notif.parentNode) notif.remove(); }, 300);
         }, 2000);
-    };
+    }
+
+    function renderCartBar() {
+        var count = getCartCount();
+        var el = document.getElementById('shop-cart-count');
+        if (el) {
+            el.innerHTML = '\ud83d\uded2 Cart (' + count + ')';
+            el.style.cursor = 'pointer';
+        }
+    }
+
+    function toggleCartSidebar() {
+        if (getCartCount() === 0 && !cartSidebarOpen) {
+            renderCartSidebar();
+            cartSidebarOpen = true;
+            document.getElementById('cart-overlay').classList.add('active');
+            document.getElementById('cart-sidebar').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            return;
+        }
+        cartSidebarOpen = !cartSidebarOpen;
+        var overlay = document.getElementById('cart-overlay');
+        var sidebar = document.getElementById('cart-sidebar');
+        if (!overlay || !sidebar) return;
+        if (cartSidebarOpen) {
+            overlay.classList.add('active');
+            sidebar.classList.add('active');
+            renderCartSidebar();
+            document.body.style.overflow = 'hidden';
+        } else {
+            overlay.classList.remove('active');
+            sidebar.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    function renderCartSidebar() {
+        var container = document.getElementById('cart-items-container');
+        var footer = document.getElementById('cart-footer');
+        if (!container || !footer) return;
+
+        var count = getCartCount();
+        if (count === 0) {
+            container.innerHTML = '<div class="cart-empty-state"><div class="cart-empty-icon">\ud83d\uded2</div><p>Your cart is as empty as our liability insurance coverage.</p><p class="cart-empty-sub">Try adding some questionable merchandise.</p></div>';
+            footer.innerHTML = '';
+            return;
+        }
+
+        var html = '';
+        for (var i = 0; i < cartItems.length; i++) {
+            var item = cartItems[i];
+            var p = getProduct(item.id);
+            if (!p) continue;
+            html += '<div class="cart-line-item">';
+            html += '<div class="cart-line-image">' + p.image + '</div>';
+            html += '<div class="cart-line-info">';
+            html += '<div class="cart-line-name">' + p.name + '</div>';
+            html += '<div class="cart-line-price">$' + p.price.toFixed(2) + '</div>';
+            html += '<div class="cart-line-qty">';
+            html += '<button class="cart-qty-btn" data-action="minus" data-id="' + p.id + '">\u2212</button>';
+            html += '<span class="cart-qty-num">' + item.qty + '</span>';
+            html += '<button class="cart-qty-btn" data-action="plus" data-id="' + p.id + '">+</button>';
+            html += '</div>';
+            html += '</div>';
+            html += '<button class="cart-line-remove" data-id="' + p.id + '" title="Remove">\ud83d\uddd1</button>';
+            html += '</div>';
+        }
+        container.innerHTML = html;
+
+        var sub = getCartSubtotal();
+        var fees = sub > 0 ? 13.23 : 0;
+        var total = sub + fees;
+
+        var fhtml = '';
+        fhtml += '<div class="cart-summary-row"><span>Subtotal</span><span>$' + sub.toFixed(2) + '</span></div>';
+        if (sub > 0) {
+            fhtml += '<div class="cart-summary-row"><span>Kyle\'s Coffee Fund</span><span>$4.99</span></div>';
+            fhtml += '<div class="cart-summary-row"><span>Questionable Purchase Tax</span><span>$2.50</span></div>';
+            fhtml += '<div class="cart-summary-row"><span>Fee Processing Fee</span><span>$3.75</span></div>';
+            fhtml += '<div class="cart-summary-row"><span>Regret Surcharge</span><span>$1.99</span></div>';
+        }
+        fhtml += '<div class="cart-summary-row cart-summary-total"><span>Total</span><span>$' + total.toFixed(2) + '</span></div>';
+        if (sub > 0) {
+            fhtml += '<p class="cart-summary-note">\ud83d\udce6 Free shipping at $200 (it\'s a lie)</p>';
+            fhtml += '<button class="cart-checkout-btn" id="cart-checkout-btn">Proceed to Checkout \u2192</button>';
+        }
+        footer.innerHTML = fhtml;
+
+        var qtyBtns = container.querySelectorAll('.cart-qty-btn');
+        for (var j = 0; j < qtyBtns.length; j++) {
+            qtyBtns[j].addEventListener('click', function(e) {
+                e.stopPropagation();
+                var id = this.getAttribute('data-id');
+                var action = this.getAttribute('data-action');
+                updateCartQty(id, action === 'plus' ? 1 : -1);
+            });
+        }
+        var removeBtns = container.querySelectorAll('.cart-line-remove');
+        for (var k = 0; k < removeBtns.length; k++) {
+            removeBtns[k].addEventListener('click', function(e) {
+                e.stopPropagation();
+                removeFromCart(this.getAttribute('data-id'));
+            });
+        }
+        var checkoutBtn = document.getElementById('cart-checkout-btn');
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', function() {
+                toggleCartSidebar();
+                openCheckout();
+            });
+        }
+    }
+
+    // ============================================================
+    // 11c. SHOP — Parody Checkout Flow
+    // ============================================================
+    var checkoutStep = 1;
+    var checkoutData = { name: '', email: '', cert: '', cardNumber: '', cardExpiry: '', cardCvc: '' };
+
+    function openCheckout() {
+        checkoutStep = 1;
+        checkoutData = { name: '', email: '', cert: '', cardNumber: '', cardExpiry: '', cardCvc: '' };
+        var overlay = document.getElementById('checkout-overlay');
+        var modal = document.getElementById('checkout-modal');
+        if (!overlay || !modal) return;
+        overlay.classList.add('active');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        renderCheckout();
+    }
+
+    function closeCheckout() {
+        var overlay = document.getElementById('checkout-overlay');
+        var modal = document.getElementById('checkout-modal');
+        if (!overlay || !modal) return;
+        overlay.classList.remove('active');
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function updateCheckoutSteps() {
+        var steps = document.querySelectorAll('#checkout-steps .checkout-step');
+        for (var i = 0; i < steps.length; i++) {
+            var stepNum = parseInt(steps[i].getAttribute('data-step'));
+            steps[i].classList.remove('active', 'completed');
+            if (stepNum === checkoutStep) steps[i].classList.add('active');
+            else if (stepNum < checkoutStep) steps[i].classList.add('completed');
+        }
+    }
+
+    function renderCheckout() {
+        updateCheckoutSteps();
+        var body = document.getElementById('checkout-body');
+        if (!body) return;
+        var html = '';
+
+        if (checkoutStep === 1) {
+            html += '<h3 style="color:var(--gold);text-align:center;margin-bottom:5px;">Step 1: Review Your Terrible Decisions</h3>';
+            html += '<p style="text-align:center;color:var(--text-muted);font-size:13px;margin-bottom:20px;">These are the items you\'ve chosen to financially regret.</p>';
+            var sub = getCartSubtotal();
+            var total = sub + (sub > 0 ? 13.23 : 0);
+            for (var i = 0; i < cartItems.length; i++) {
+                var p = getProduct(cartItems[i].id);
+                if (!p) continue;
+                html += '<div class="checkout-item-row">';
+                html += '<div class="checkout-item-img">' + p.image + '</div>';
+                html += '<div class="checkout-item-details"><strong>' + p.name + '</strong><span style="color:var(--text-muted);font-size:12px;">Qty: ' + cartItems[i].qty + '</span></div>';
+                html += '<div class="checkout-item-price">$' + (p.price * cartItems[i].qty).toFixed(2) + '</div>';
+                html += '</div>';
+            }
+            html += '<div class="checkout-charges">';
+            html += '<div class="charge-row"><span>Subtotal</span><span>$' + sub.toFixed(2) + '</span></div>';
+            html += '<div class="charge-row"><span>Kyle\'s Coffee Fund</span><span>$4.99</span></div>';
+            html += '<div class="charge-row"><span>Questionable Purchase Tax</span><span>$2.50</span></div>';
+            html += '<div class="charge-row"><span>Fee Processing Fee</span><span>$3.75</span></div>';
+            html += '<div class="charge-row"><span>Regret Surcharge</span><span>$1.99</span></div>';
+            html += '<div class="charge-row charge-total"><span>Total</span><span>$' + total.toFixed(2) + '</span></div>';
+            html += '</div>';
+            html += '<p style="text-align:center;color:var(--text-muted);font-size:11px;margin-top:12px;">By continuing, you agree to everything and nothing simultaneously.</p>';
+            html += '<div class="checkout-buttons"><button class="checkout-btn checkout-btn-next">Continue to Shipping \u2192</button></div>';
+        } else if (checkoutStep === 2) {
+            html += '<h3 style="color:var(--gold);text-align:center;margin-bottom:5px;">Step 2: Where Should We Lose Your Package?</h3>';
+            html += '<p style="text-align:center;color:var(--text-muted);font-size:13px;margin-bottom:20px;">We\'ll need an address. We will immediately lose this information.</p>';
+            html += '<div class="checkout-form">';
+            html += '<label>Full Name (as it appears on your regrets)</label>';
+            html += '<input type="text" id="chk-name" placeholder="Kyle McSplash" value="' + escapeHTML(checkoutData.name) + '">';
+            html += '<label>Email (for spam we\'ll call "order updates")</label>';
+            html += '<input type="email" id="chk-email" placeholder="idontexpectmypackage@example.com" value="' + escapeHTML(checkoutData.email) + '">';
+            html += '<label>Street Address</label>';
+            html += '<input type="text" id="chk-address" placeholder="123 This Is Not A Real Address Lane">';
+            html += '<label>City / State / Zip</label>';
+            html += '<input type="text" id="chk-city" placeholder="Port Regret, FL 00000">';
+            html += '<label>Dive Certification Number (fake, we don\'t check)</label>';
+            html += '<input type="text" id="chk-cert" placeholder="PODI-' + new Date().getFullYear() + '-XXXXX" value="' + escapeHTML(checkoutData.cert) + '">';
+            html += '</div>';
+            html += '<p style="text-align:center;color:var(--danger);font-size:11px;margin:12px 0;">\u26a0 This information will be stored on a Post-it note that Kyle will immediately lose.</p>';
+            html += '<div class="checkout-buttons">';
+            html += '<button class="checkout-btn checkout-btn-back">\u2190 Back</button>';
+            html += '<button class="checkout-btn checkout-btn-next" id="chk-shipping-next">Continue to Payment \u2192</button>';
+            html += '</div>';
+        } else if (checkoutStep === 3) {
+            html += '<h3 style="color:var(--gold);text-align:center;margin-bottom:5px;">Step 3: Payment (Procedural Theatre)</h3>';
+            html += '<p style="text-align:center;color:var(--text-muted);font-size:13px;margin-bottom:20px;">This looks like a payment form. It is not. No charges will be made. This is parody.</p>';
+            html += '<div class="checkout-form">';
+            html += '<label>Card Number</label>';
+            html += '<input type="text" id="chk-card" placeholder="0000 0000 0000 0000" maxlength="19" value="' + escapeHTML(checkoutData.cardNumber) + '">';
+            html += '<div style="display:flex;gap:12px;">';
+            html += '<div style="flex:1;"><label>Expiry</label><input type="text" id="chk-expiry" placeholder="MM/YY" maxlength="5" value="' + escapeHTML(checkoutData.cardExpiry) + '"></div>';
+            html += '<div style="flex:1;"><label>CVC</label><input type="text" id="chk-cvc" placeholder="123" maxlength="4" value="' + escapeHTML(checkoutData.cardCvc) + '"></div>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div style="text-align:center;margin:15px 0;">';
+            html += '<span style="font-size:22px;letter-spacing:4px;">\ud83d\udcb5\ud83d\udcb6\ud83d\udcb7\ud83d\udcb4</span>';
+            html += '<p style="color:var(--success);font-size:12px;margin-top:6px;">\ud83d\udd12 SSL Not Actually Secure</p>';
+            html += '</div>';
+            html += '<p style="text-align:center;color:var(--text-muted);font-size:11px;margin-bottom:15px;">Payment will be processed through Kyle\'s PayPal account from 2017. The email is kylescubasales@aol.com. This feels wrong because it is wrong. No actual payment will be processed because this is a parody website and we don\'t have a payment system.</p>';
+            html += '<div class="checkout-buttons">';
+            html += '<button class="checkout-btn checkout-btn-back">\u2190 Back</button>';
+            html += '<button class="checkout-btn checkout-btn-next" id="chk-pay-next" style="background:linear-gradient(135deg,var(--danger),#c0392b);">"Pay" Now \u2192</button>';
+            html += '</div>';
+        } else if (checkoutStep === 4) {
+            var orderNum = 'LOST-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 9000 + 1000);
+            var deliveryMessages = [
+                'Your order will ship when Kyle remembers. Estimated: 6-10 business days (definition of "business day" may vary by up to 400%).',
+                'Package is currently on a boat somewhere in the Pacific. The boat is not ours.',
+                'Your order has been "processed." We use air quotes because nothing actually happened.',
+                'Tracking number: ' + orderNum + '-TRK (this number does not work in any tracking system)'
+            ];
+            var deliveryMsg = deliveryMessages[Math.floor(Math.random() * deliveryMessages.length)];
+
+            html += '<div style="text-align:center;padding:20px;">';
+            html += '<div style="font-size:64px;margin-bottom:15px;">\ud83d\udce6\u2753</div>';
+            html += '<h3 style="color:var(--success);margin-bottom:10px;">Order "Confirmed"</h3>';
+            html += '<p style="color:var(--gold);font-size:18px;font-weight:800;margin-bottom:5px;">Order #' + orderNum + '</p>';
+            html += '<p style="color:var(--text-muted);font-size:13px;margin-bottom:20px;max-width:420px;margin-left:auto;margin-right:auto;">' + deliveryMsg + '</p>';
+            html += '<div style="background:var(--card-bg);border-radius:8px;padding:15px;margin-bottom:20px;text-align:left;font-size:12px;color:var(--text-secondary);">';
+            html += '<p><strong>Order Summary:</strong></p>';
+            var sub2 = getCartSubtotal();
+            var total2 = sub2 + (sub2 > 0 ? 13.23 : 0);
+            html += '<p>Items: ' + getCartCount() + ' | Total: $' + total2.toFixed(2) + '</p>';
+            var statuses = ['PROCESSING (loosely defined)', 'PENDING (forever)', 'SHIPPED (to someone else)', 'LOST (preemptively)'];
+            html += '<p style="color:var(--text-muted);font-size:10px;margin-top:8px;">STATUS: ' + statuses[Math.floor(Math.random() * 4)] + '</p>';
+            html += '</div>';
+            html += '<p style="color:var(--danger);font-size:11px;margin-bottom:15px;">\u26a0 No money was taken. No products will arrive. This is a parody website. But we appreciate your commitment to the bit.</p>';
+            html += '<button class="checkout-btn" onclick="window.print()" style="margin-bottom:8px;">\ud83d\udd9b Print This "Receipt"</button><br>';
+            html += '<button class="checkout-btn checkout-btn-ghost" id="chk-done">Done (Clear Cart)</button>';
+            html += '</div>';
+        }
+
+        body.innerHTML = html;
+        attachCheckoutListeners();
+    }
+
+    function attachCheckoutListeners() {
+        var nextBtns = document.querySelectorAll('#checkout-body .checkout-btn-next');
+        for (var i = 0; i < nextBtns.length; i++) {
+            nextBtns[i].addEventListener('click', function() {
+                if (checkoutStep === 2) {
+                    var nameEl = document.getElementById('chk-name');
+                    if (nameEl && !nameEl.value.trim()) {
+                        nameEl.style.borderColor = 'var(--danger)';
+                        nameEl.style.boxShadow = '0 0 0 3px rgba(231,76,60,0.2)';
+                        nameEl.focus();
+                        setTimeout(function() { nameEl.style.borderColor = ''; nameEl.style.boxShadow = ''; }, 2000);
+                        return;
+                    }
+                    checkoutData.name = (document.getElementById('chk-name') || {}).value || '';
+                    checkoutData.email = (document.getElementById('chk-email') || {}).value || '';
+                    checkoutData.cert = (document.getElementById('chk-cert') || {}).value || '';
+                }
+                if (checkoutStep === 3) {
+                    checkoutData.cardNumber = (document.getElementById('chk-card') || {}).value || '';
+                    checkoutData.cardExpiry = (document.getElementById('chk-expiry') || {}).value || '';
+                    checkoutData.cardCvc = (document.getElementById('chk-cvc') || {}).value || '';
+                }
+                if (checkoutStep < 4) {
+                    checkoutStep++;
+                    renderCheckout();
+                    if (checkoutStep === 4) {
+                        cartItems = [];
+                        saveCart();
+                        renderCartBar();
+                    }
+                }
+            });
+        }
+
+        var backBtns = document.querySelectorAll('#checkout-body .checkout-btn-back');
+        for (var j = 0; j < backBtns.length; j++) {
+            backBtns[j].addEventListener('click', function() {
+                if (checkoutStep > 1) { checkoutStep--; renderCheckout(); }
+            });
+        }
+
+        var doneBtn = document.getElementById('chk-done');
+        if (doneBtn) doneBtn.addEventListener('click', closeCheckout);
+    }
+
+    // ============================================================
+    // 11d. SHOP — Product Initialization
+    // ============================================================
+
+    function initShop() {
+        var grids = document.querySelectorAll('.shop-grid');
+        for (var g = 0; g < grids.length; g++) {
+            var category = grids[g].getAttribute('data-category');
+            var products = shopCatalog.filter(function(p) { return p.category === category; });
+            var html = '';
+            for (var i = 0; i < products.length; i++) {
+                html += renderProductCard(products[i]);
+            }
+            grids[g].innerHTML = html;
+        }
+    }
+
+    function renderProductCard(p) {
+        var h = '<div class="shop-item card" data-product="' + p.name + '">';
+        if (p.badge) h += '<div class="shop-item-badge ' + p.badgeClass + '">' + p.badge + '</div>';
+        h += '<div class="shop-item-image">' + p.image + '</div>';
+        h += '<h3>' + p.name + '</h3>';
+        h += '<div class="shop-stars">';
+        for (var s = 0; s < 5; s++) h += s < p.stars ? '\u2605' : '\u2606';
+        h += ' <span class="shop-rating-count">(' + p.ratingCount + ')</span></div>';
+        h += '<p class="shop-desc">' + p.description + '</p>';
+        h += '<p class="shop-price">';
+        if (p.comparePriceText) {
+            h += '<span class="shop-compare">' + p.comparePriceText + '</span>';
+        } else if (p.comparePrice && p.comparePrice > 0) {
+            h += '<span class="shop-compare">$' + p.comparePrice.toFixed(2) + '</span>';
+        }
+        h += ' $' + p.price.toFixed(2) + '</p>';
+        h += '<p class="shop-fineprint">' + p.fineprint + '</p>';
+        h += '<p class="shop-stock">' + p.stock + '</p>';
+        h += '<button class="shop-add-btn" data-product-id="' + p.id + '">Add to Cart</button>';
+        h += '</div>';
+        return h;
+    }
 
     // ============================================================
     // 12. GALLERY — LIGHTBOX & FILTER
@@ -3564,12 +4178,21 @@
         initHomepageReferral();
         initDecoPlanner();
 
-        // Event delegation for shop
-        var shopGrid = document.querySelector('.shop-grid');
-        if (shopGrid) {
-            shopGrid.addEventListener('click', function(e) {
-                var btn = e.target.closest('.shop-add-btn');
-                if (btn) addToCart(btn);
+        // Initialize shop
+        if (document.querySelector('.shop-grid')) {
+            loadCart();
+            initShop();
+            renderCartBar();
+            document.getElementById('shop-cart-count').addEventListener('click', function(e) {
+                e.preventDefault(); toggleCartSidebar();
+            });
+            document.addEventListener('click', function(e) {
+                if (e.target.id === 'cart-overlay') toggleCartSidebar();
+                if (e.target.id === 'checkout-overlay') closeCheckout();
+                var closeBtn = e.target.closest('#cart-close');
+                if (closeBtn) toggleCartSidebar();
+                var chkCloseBtn = e.target.closest('#checkout-close');
+                if (chkCloseBtn) closeCheckout();
             });
         }
 
@@ -3637,6 +4260,7 @@
 
             initDiveTips();
             initCookieBanner();
+            initDIBEasterEgg();
             initPermanentRecord();
             initConditionsReport();
             badgeSystem.init();
