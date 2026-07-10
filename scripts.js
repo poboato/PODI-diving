@@ -779,7 +779,7 @@
                 '<div class="cookie-icon">🍪</div>' +
                 '<div class="cookie-text">' +
                     '<strong>There may be cookies.</strong> ' +
-                    'We don\'t really know. Kyle\'s nephew set up the analytics and he\'s ' +
+                    'We don\'t really know. Kyle\'s cousin set up the analytics and he\'s ' +
                     'since moved to Arizona. If you see a cookie, eat it. ' +
                     'If you don\'t, stop worrying about it. This banner is for vibes only.' +
                 '</div>' +
