@@ -204,6 +204,7 @@ nav {
     background: var(--navy-darkest);
     padding: 0 30px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 4px;
     border-bottom: 1px solid var(--card-border);
