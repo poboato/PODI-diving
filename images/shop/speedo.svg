@@ -1,0 +1,13 @@
+﻿<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'>
+  <defs>
+    <radialGradient id='bg' cx='50%' cy='35%' r='65%'><stop offset='0%' stop-color='#fefefe'/><stop offset='100%' stop-color='#e8e4dd'/></radialGradient>
+    <linearGradient id='speedo' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#2980b9'/><stop offset='100%' stop-color='#1a5276'/></linearGradient>
+  </defs>
+  <rect width='300' height='300' fill='url(#bg)' rx='14'/>
+  <ellipse cx='150' cy='250' rx='60' ry='8' fill='rgba(0,0,0,0.08)'/>
+  <path d='M105 90 l45 110 45-110 z' fill='url(#speedo)' stroke='#0d344e' stroke-width='2' stroke-linejoin='round'/>
+  <path d='M105 90 l45 110 45-110 z' fill='url(#shine)'/>
+  <text x='150' y='155' text-anchor='middle' fill='#fff' font-size='13' font-weight='800' font-family='Arial,Helvetica,sans-serif' letter-spacing='3'>PODI</text>
+  <path d='M90 215 q30-15 60 0' fill='none' stroke='#3498db' stroke-width='3' stroke-linecap='round'/>
+  <path d='M130 222 q30-12 60 0' fill='none' stroke='#3498db' stroke-width='2' stroke-linecap='round' opacity='0.5'/>
+</svg>

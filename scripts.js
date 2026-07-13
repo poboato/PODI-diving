@@ -133,9 +133,9 @@
             widget.id = 'podi-computer';
             widget.innerHTML =
                 '<div class="computer-header">' +
-                    '<span class="computer-title">🤿 PODI DIVE COMPUTER</span>' +
+                    '<span class="computer-title">?? PODI DIVE COMPUTER</span>' +
                     '<span class="computer-model">v0.5-beta"BUGGY"</span>' +
-                    '<span class="computer-close" id="comp-close">✕</span>' +
+                    '<span class="computer-close" id="comp-close">?</span>' +
                 '</div>' +
                 '<div class="computer-body">' +
                     '<div class="computer-reading">' +
@@ -171,12 +171,12 @@
                     '<div class="computer-reading">' +
                         '<span class="computer-label">TEMP</span>' +
                         '<span class="computer-value" id="comp-temp">27</span>' +
-                        '<span class="computer-unit">°C</span>' +
+                        '<span class="computer-unit">?C</span>' +
                     '</div>' +
                     '<div class="computer-warnings">' +
-                        '<div class="computer-warning deco-warning" id="comp-deco">⚠ DECO STOP</div>' +
-                        '<div class="computer-warning low-warning" id="comp-lowair">🚨 LOW AIR</div>' +
-                        '<div class="computer-warning error-warning" id="comp-error">⚠ CAL ERROR</div>' +
+                        '<div class="computer-warning deco-warning" id="comp-deco">? DECO STOP</div>' +
+                        '<div class="computer-warning low-warning" id="comp-lowair">?? LOW AIR</div>' +
+                        '<div class="computer-warning error-warning" id="comp-error">? CAL ERROR</div>' +
                         '<div class="computer-warning sos-warning" id="comp-sos">SOS ACTIVE</div>' +
                     '</div>' +
                     '<div class="computer-graph-wrap">' +
@@ -185,7 +185,7 @@
                     '</div>' +
                     '<div class="computer-battery">' +
                         '<span>BAT:</span>' +
-                        '<span class="battery-level" id="comp-bat">█████</span>' +
+                        '<span class="battery-level" id="comp-bat">?????</span>' +
                     '</div>' +
                 '</div>';
             document.body.appendChild(widget);
@@ -319,7 +319,7 @@
             var bat = document.getElementById('comp-bat');
             if (!bat) return;
             var bars = Math.max(1, Math.round((this.airPressure / 3500) * 5));
-            bat.textContent = '█'.repeat(bars) + '░'.repeat(5 - bars);
+            bat.textContent = '?'.repeat(bars) + '?'.repeat(5 - bars);
         },
 
         showMalfunction: function() {
@@ -425,7 +425,7 @@
         function showNextTip() {
             currentIndex = (currentIndex + 1) % currentTips.length;
             var author = (currentTips === technicalDiveTips) ? 'Skip' : 'Kyle';
-            tipContainer.textContent = '💡 Pro Tip from ' + author + ': "' + currentTips[currentIndex] + '"';
+            tipContainer.textContent = '?? Pro Tip from ' + author + ': "' + currentTips[currentIndex] + '"';
         }
 
         showNextTip();
@@ -467,8 +467,8 @@
             ];
             var instructor = instructors[Math.floor(Math.random() * instructors.length)];
 
-            var emojis = { 'open-water': '🫧', 'advanced': '📈', 'rescue': '🆘', 'divemaster': '🤿', 'master': '🏆', 'instructor': '👑' };
-            var emoji = emojis[level] || '🤿';
+            var emojis = { 'open-water': '??', 'advanced': '??', 'rescue': '??', 'divemaster': '??', 'master': '??', 'instructor': '??' };
+            var emoji = emojis[level] || '??';
 
             var levelNames = {
                 'open-water': 'OPEN WATER DIVER',
@@ -554,19 +554,19 @@
             // Close Enough Risk Algorithm (CERA v2.0)
             // Peer-reviewed by: vibes. Published in: Journal of Retrospective Statistics.
 
-            // Physical Readiness Index (PRI) — geometric mean of fitness and sleep
+            // Physical Readiness Index (PRI) ? geometric mean of fitness and sleep
             var pri = Math.sqrt(fitness * sleep) * 1.5;
             var priDisplay = Math.min(10, Math.round(pri * 10) / 10);
 
-            // Competence Approximation Factor (CAF) — experience & sobriety, exponentially inflated by confidence
+            // Competence Approximation Factor (CAF) ? experience & sobriety, exponentially inflated by confidence
             var caf = (0.6 * experience + 0.4 * sobriety) * Math.pow(Math.E, 0.12 * (confidence - 5));
             var cafDisplay = Math.min(10, Math.round(caf * 10) / 10);
 
-            // Social Proof Coefficient (SPC) — more buddies = logarithmically safer
+            // Social Proof Coefficient (SPC) ? more buddies = logarithmically safer
             var spc = Math.log(peerPressure + 2) * 3.5;
             var spcDisplay = Math.min(10, Math.round(spc * 10) / 10);
 
-            // Narcosis Adjustment Term (NAT) — sinusoidal model of cognitive impairment
+            // Narcosis Adjustment Term (NAT) ? sinusoidal model of cognitive impairment
             var nat = Math.sin(sobriety * Math.PI / 20) * 6 + 1;
             var natDisplay = Math.min(10, Math.max(0, Math.round(nat * 10) / 10));
 
@@ -574,7 +574,7 @@
             var rawIndex = pri * 0.25 + caf * 0.30 + spc * 0.20 + nat * 0.25;
             var podiRiskIndex = Math.min(100, Math.max(0, Math.round(rawIndex * 9.5)));
 
-            // Confidence Interval — inversely proportional to confidence
+            // Confidence Interval ? inversely proportional to confidence
             var ci = Math.round((11 - confidence) * 3 + 2);
 
             // Sub-score breakdown display
@@ -597,7 +597,7 @@
             var flagCount = (lowPRI ? 1 : 0) + (lowCAF ? 1 : 0) + (highSPC ? 1 : 0) + (lowNAT ? 1 : 0);
             var confidenceGap = confidence - experience >= 4 && experience <= 5;
 
-            // Risk deviation — identifies the sub-index contributing most to overall risk
+            // Risk deviation ? identifies the sub-index contributing most to overall risk
             var riskContrib = [
                 { idx: 'PRI', val: Math.max(0, 10 - priDisplay) },
                 { idx: 'CAF', val: Math.max(0, 10 - cafDisplay) },
@@ -607,28 +607,28 @@
             riskContrib.sort(function(a, b) { return b.val - a.val; });
             var primaryRisk = riskContrib[0].idx;
 
-            // 15 risk classifications — ordered most severe to least
+            // 15 risk classifications ? ordered most severe to least
             var profiles = [
 
-                // 1. Full spectrum — all four sub-indices flagged
+                // 1. Full spectrum ? all four sub-indices flagged
                 { check: function() { return flagCount === 4; },
-                  name: '💀 DEATH WISH CERTIFIED',
+                  name: '?? DEATH WISH CERTIFIED',
                   stars: 1,
                   msg: 'Every single risk indicator has simultaneously failed. Your body is tired, your skills are questionable, your friends are a bad influence, and you are one margarita away from a marine casualty. If this were a medical chart, the doctor would have fainted.',
                   verdict: 'PODI recommends: do not dive. But we know you will. At least take a video. For science.',
                   danger: 'Survival odds: "technically possible." 911 should be on speed dial. And pre-dialed.' },
 
-                // 2. Multi-factor — three of four sub-indices flagged
+                // 2. Multi-factor ? three of four sub-indices flagged
                 { check: function() { return flagCount === 3; },
-                  name: '🔥 DISASTER TRIANGLE',
+                  name: '?? DISASTER TRIANGLE',
                   stars: 1,
-                  msg: 'Three out of four risk vectors are screaming at us. Your ' + primaryRisk + ' is the ringleader with a deviation of ' + riskContrib[0].val.toFixed(1) + ' — which in PODI terms means "we have concerns, but who are we to judge?" Solo and deep diving are statistically indistinguishable from a Darwin Award submission.',
+                  msg: 'Three out of four risk vectors are screaming at us. Your ' + primaryRisk + ' is the ringleader with a deviation of ' + riskContrib[0].val.toFixed(1) + ' ? which in PODI terms means "we have concerns, but who are we to judge?" Solo and deep diving are statistically indistinguishable from a Darwin Award submission.',
                   verdict: 'PODI recommends: stay in the shallow end. With a floatie. And a lifeguard who knows CPR.',
                   danger: 'Three alarm fire. Two of those alarms are your buddies. One is your own body.' },
 
                 // 3. Physical + competence compound
                 { check: function() { return lowPRI && lowCAF; },
-                  name: '🦥 UNFIT & UNQUALIFIED',
+                  name: '?? UNFIT & UNQUALIFIED',
                   stars: 2,
                   msg: 'You have the physical readiness of someone who just woke up on a couch (PRI: ' + priDisplay + ') and the competence of someone who learned diving from a YouTube comment section (CAF: ' + cafDisplay + '). The ocean is about to teach you a lesson your instructor never could.',
                   verdict: 'PODI recommends: do a "dive" in a library. On a book about diving. With pictures.',
@@ -636,7 +636,7 @@
 
                 // 4. Competence + social vulnerability
                 { check: function() { return lowCAF && highSPC; },
-                  name: '🐑 DARWIN LEMMING',
+                  name: '?? DARWIN LEMMING',
                   stars: 2,
                   msg: 'You have the independent decision-making skills of a lemming with a busy schedule (CAF: ' + cafDisplay + ') and the social compliance of someone who\'s already been peer-pressured into three bad decisions today (SPC: ' + spcDisplay + '). You would follow your buddies into a blackwater cave at midnight and call it "team building."',
                   verdict: 'PODI recommends: a solo hobby. Like stamp collecting. Stamps don\'t peer-pressure.',
@@ -644,15 +644,15 @@
 
                 // 5. Social + physiological compound
                 { check: function() { return highSPC && lowNAT; },
-                  name: '🍻 NITROGEN & BAD COMPANY',
+                  name: '?? NITROGEN & BAD COMPANY',
                   stars: 2,
-                  msg: 'Your narcosis tolerance is low (NAT: ' + natDisplay + ') — meaning you get loopy fast underwater — and your friends are the type to say "one more deep dive, bro" (SPC: ' + spcDisplay + '). This combination is how people swim into pelagic zones thinking they\'re following a dolphin.',
+                  msg: 'Your narcosis tolerance is low (NAT: ' + natDisplay + ') ? meaning you get loopy fast underwater ? and your friends are the type to say "one more deep dive, bro" (SPC: ' + spcDisplay + '). This combination is how people swim into pelagic zones thinking they\'re following a dolphin.',
                   verdict: 'PODI recommends: a gas mix with less stupidity and more helium. And new friends.',
                   danger: 'Narcosis + peer pressure = poor decisions squared. You might not remember the dive. Neither will your lawyer.' },
 
                 // 6. Physical + social compound
                 { check: function() { return lowPRI && highSPC; },
-                  name: '🏋️‍♂️ COLLAPSING UNDER PRESSURE',
+                  name: '?????? COLLAPSING UNDER PRESSURE',
                   stars: 3,
                   msg: 'You are running on fumes (PRI: ' + priDisplay + ') and your buddies are running on enthusiasm (SPC: ' + spcDisplay + '). You will push past your limits to keep up, because nothing says "I\'m fine" like silent suffering 30 meters underwater.',
                   verdict: 'PODI recommends: lie to your buddies. Say you\'re "saving your dives for tomorrow." Take a nap.',
@@ -660,71 +660,71 @@
 
                 // 7. Dual physiological
                 { check: function() { return lowPRI && lowNAT; },
-                  name: '🧟 PHYSIOLOGICAL ZERO',
+                  name: '?? PHYSIOLOGICAL ZERO',
                   stars: 3,
-                  msg: 'Your body is exhausted (PRI: ' + priDisplay + ') and your brain turns to jelly at the first hint of depth (NAT: ' + natDisplay + '). Congratulations — you are physiologically optimized for napping on a couch, not surviving a decompression obligation.',
+                  msg: 'Your body is exhausted (PRI: ' + priDisplay + ') and your brain turns to jelly at the first hint of depth (NAT: ' + natDisplay + '). Congratulations ? you are physiologically optimized for napping on a couch, not surviving a decompression obligation.',
                   verdict: 'PODI recommends: surface intervals measured in days, not minutes. Eat a vegetable. Drink water.',
                   danger: 'Your physiological reserve is smaller than your ego. That\'s saying something.' },
 
                 // 8. Competence + physiological compound
                 { check: function() { return lowCAF && lowNAT; },
-                  name: '🧠💨 NARCED AND LOST',
+                  name: '???? NARCED AND LOST',
                   stars: 3,
                   msg: 'You don\'t have the skills (CAF: ' + cafDisplay + ') and whatever skills you do have will evaporate the moment nitrogen hits your bloodstream (NAT: ' + natDisplay + '). You are one bad gas mix away from starring in a documentary that does not end well.',
                   verdict: 'PODI recommends: practice your skills on land. In a chair. While completely sober and at sea level.',
                   danger: 'Narcosis will not create new skills. It will only delete the few you have. Save early, save often.' },
 
-                // 9. Primary physical deficit — only PRI flagged
+                // 9. Primary physical deficit ? only PRI flagged
                 { check: function() { return lowPRI && !lowCAF && !highSPC && !lowNAT; },
-                  name: '🛌 FATIGUE IS A KILLER',
+                  name: '?? FATIGUE IS A KILLER',
                   stars: 3,
                   msg: 'Your physical readiness indicator (PRI: ' + priDisplay + ') is in the gutter. The only thing you\'re prepared to do underwater is sink. Everything else is a bonus. The good news is your skills are fine. The bad news is skills don\'t matter when you fall asleep at 20m.',
                   verdict: 'PODI recommends: sleep. Not a "power nap." A full, actual, human sleep cycle. Then call us back.',
                   danger: 'Tired divers make mistakes. Dead tired divers make final mistakes.' },
 
-                // 10. Primary competence deficit — only CAF flagged
+                // 10. Primary competence deficit ? only CAF flagged
                 { check: function() { return !lowPRI && lowCAF && !highSPC && !lowNAT; },
-                  name: '📖 CERTIFIED LIABILITY',
+                  name: '?? CERTIFIED LIABILITY',
                   stars: 3,
-                  msg: 'You got the certification but not the competence (CAF: ' + cafDisplay + '). You are physically ready, socially stable, and narcosis-tolerant — which is a fancy way of saying you\'ll be fully conscious while making every possible rookie error. Your C-card is a permission slip to experiment on yourself.',
+                  msg: 'You got the certification but not the competence (CAF: ' + cafDisplay + '). You are physically ready, socially stable, and narcosis-tolerant ? which is a fancy way of saying you\'ll be fully conscious while making every possible rookie error. Your C-card is a permission slip to experiment on yourself.',
                   verdict: 'PODI recommends: hire an instructor who actually teaches. Not one who just "signs off" skills.',
                   danger: 'You have all the gear and none of the knowledge. The most dangerous kind of diver.' },
 
-                // 11. Primary social conformity risk — only SPC flagged
+                // 11. Primary social conformity risk ? only SPC flagged
                 { check: function() { return !lowPRI && !lowCAF && highSPC && !lowNAT; },
-                  name: '👥 SPINELESS DIVER',
+                  name: '?? SPINELESS DIVER',
                   stars: 4,
                   msg: 'You are capable but compliant (SPC: ' + spcDisplay + '). If your buddy decides to explore a shipwreck\'s engine room with no line and diminishing visibility, you will go. Not because you want to. Because you don\'t want to seem uncool. You are a fully functional adult with the assertiveness of a golden retriever.',
                   verdict: 'PODI recommends: grow a spine. Or dive with people who have one. Ideally both.',
                   danger: 'You will follow bad ideas into dark places. Physically and metaphorically.' },
 
-                // 12. Primary narcosis susceptibility — only NAT flagged
+                // 12. Primary narcosis susceptibility ? only NAT flagged
                 { check: function() { return !lowPRI && !lowCAF && !highSPC && lowNAT; },
-                  name: '🥴 NARCOSIS BAIT',
+                  name: '?? NARCOSIS BAIT',
                   stars: 4,
-                  msg: 'Your brain is chemically optimized for rapid impairment underwater (NAT: ' + natDisplay + '). At depth, you will become the underwater equivalent of a motivational speaker at a company retreat — confident, wrong, and unable to operate a simple valve.',
+                  msg: 'Your brain is chemically optimized for rapid impairment underwater (NAT: ' + natDisplay + '). At depth, you will become the underwater equivalent of a motivational speaker at a company retreat ? confident, wrong, and unable to operate a simple valve.',
                   verdict: 'PODI recommends: accept that you are "depth-challenged." Stay shallow. Bring a responsible buddy.',
                   danger: 'You are one deep breath away from offering air-sharing advice to a fish.' },
 
-                // 13. Confidence-experience gap — no flags, but CAF inflated by confidence, not experience
+                // 13. Confidence-experience gap ? no flags, but CAF inflated by confidence, not experience
                 { check: function() { return flagCount === 0 && confidenceGap; },
-                  name: '🎭 DELUSIONAL DIVER',
+                  name: '?? DELUSIONAL DIVER',
                   stars: 4,
-                  msg: 'On paper, you look fine (CAF: ' + cafDisplay + '). But your competence factor is being carried by sheer audacity, not actual experience (' + experience + '/10). You don\'t know what you don\'t know — and that\'s the scariest profile there is. You are a beautiful, blissfully ignorant liability.',
+                  msg: 'On paper, you look fine (CAF: ' + cafDisplay + '). But your competence factor is being carried by sheer audacity, not actual experience (' + experience + '/10). You don\'t know what you don\'t know ? and that\'s the scariest profile there is. You are a beautiful, blissfully ignorant liability.',
                   verdict: 'PODI recommends: a reality check. Dive with someone who will call you out. Not someone who "respects your confidence."',
                   danger: 'Overconfidence is nature\'s way of making you interesting to search and rescue teams.' },
 
-                // 14. No flags, composite elevated — acceptable but monitored
+                // 14. No flags, composite elevated ? acceptable but monitored
                 { check: function() { return flagCount === 0 && podiRiskIndex > 33; },
-                  name: '📊 RISK ACCEPTABLE (BARELY)',
+                  name: '?? RISK ACCEPTABLE (BARELY)',
                   stars: 4,
-                  msg: 'Nothing is technically wrong with you (PRI: ' + priDisplay + ', CAF: ' + cafDisplay + ', SPC: ' + spcDisplay + ', NAT: ' + natDisplay + '). But the CERA composite (' + podiRiskIndex + '/100) says you\'re leaning toward "questionable life choices." Think of yourself as the human equivalent of a used car with a fresh coat of paint — probably fine, but get insurance.',
+                  msg: 'Nothing is technically wrong with you (PRI: ' + priDisplay + ', CAF: ' + cafDisplay + ', SPC: ' + spcDisplay + ', NAT: ' + natDisplay + '). But the CERA composite (' + podiRiskIndex + '/100) says you\'re leaning toward "questionable life choices." Think of yourself as the human equivalent of a used car with a fresh coat of paint ? probably fine, but get insurance.',
                   verdict: 'PODI recommends: full send, but with a pre-dive briefing that you actually read.',
                   danger: 'Your risk profile is "fine but suspicious." We can\'t find anything wrong and that\'s what worries us.' },
 
-                // 15. Optimal — no flags, composite low
+                // 15. Optimal ? no flags, composite low
                 { check: function() { return flagCount === 0 && podiRiskIndex <= 33; },
-                  name: '🏆 DISGUSTINGLY SAFE',
+                  name: '?? DISGUSTINGLY SAFE',
                   stars: 5,
                   msg: 'All sub-indices are textbook (PRI: ' + priDisplay + ', CAF: ' + cafDisplay + ', SPC: ' + spcDisplay + ', NAT: ' + natDisplay + ') and your CERA index (' + podiRiskIndex + '/100) is so low it\'s almost disappointing. You are well-rested, competent, socially independent, and narcosis-tolerant. Honestly, where\'s the fun in that?',
                   verdict: 'PODI recommends: full send, but boringly. Do your safety stops. Check your gear. Be a role model. Ugh.',
@@ -741,7 +741,7 @@
 
             var stars = '';
             for (var i = 0; i < 5; i++) {
-                stars += i < diverProfile.stars ? '⭐' : '☆';
+                stars += i < diverProfile.stars ? '?' : '?';
             }
 
             var dangerLevel = podiRiskIndex > 66 ? 'ELEVATED' : podiRiskIndex > 33 ? 'NOMINAL' : 'NEGLIGIBLE';
@@ -754,7 +754,7 @@
                 '<div class="risk-result-card">' +
                     '<div class="risk-result-header">' + diverProfile.name + '</div>' +
                     '<div class="risk-result-stars">' + stars + '</div>' +
-                    '<div class="risk-result-rating" style="color:' + dangerColor + '">PODI RISK INDEX: <span class="risk-value" style="color:' + dangerColor + '">' + podiRiskIndex + '/100</span> &nbsp;|&nbsp; CI: <span class="risk-value" style="color:' + dangerColor + '">±' + ci + '</span></div>' +
+                    '<div class="risk-result-rating" style="color:' + dangerColor + '">PODI RISK INDEX: <span class="risk-value" style="color:' + dangerColor + '">' + podiRiskIndex + '/100</span> &nbsp;|&nbsp; CI: <span class="risk-value" style="color:' + dangerColor + '">?' + ci + '</span></div>' +
                     '<div class="risk-result-rating" style="color:' + dangerColor + '; font-size:12px;">DANGER RATING: <span class="risk-value" style="color:' + dangerColor + '">' + dangerLevel + '</span></div>' +
                     subScoresHtml +
                     '<div class="risk-result-message">' + diverProfile.msg + '</div>' +
@@ -776,7 +776,7 @@
         banner.id = 'podi-cookie-banner';
         banner.innerHTML =
             '<div class="cookie-content">' +
-                '<div class="cookie-icon">🍪</div>' +
+                '<div class="cookie-icon">??</div>' +
                 '<div class="cookie-text">' +
                     '<strong>There may be cookies.</strong> ' +
                     'We don\'t really know. Kyle\'s cousin set up the analytics and he\'s ' +
@@ -816,7 +816,7 @@
                 toast.id = 'dib-toast';
                 toast.innerHTML =
                     '<div style="display:flex;align-items:center;gap:10px;">' +
-                        '<span style="font-size:20px;">📐</span>' +
+                        '<span style="font-size:20px;">??</span>' +
                         '<div style="flex:1;">' +
                             '<strong style="color:#ccc;">DIB</strong> <span style="color:#888;font-size:12px;">&mdash; Doing It Better</span><br>' +
                             '<a href="dib.html" style="color:#999;font-size:13px;">/dib.html</a><span style="color:#777;font-size:12px;"> &mdash; Kyle\'s cousin would like a word.</span>' +
@@ -890,7 +890,7 @@
             if (isFake) {
                 result.innerHTML =
                     '<div class="verify-result-card verify-fake">' +
-                        '<div class="verify-status">🚫</div>' +
+                        '<div class="verify-status">??</div>' +
                         '<div class="verify-badge">CERTIFICATION INVALID</div>' +
                         '<div class="verify-level">Error: PODI database found no record.</div>' +
                         '<div class="verify-details">' +
@@ -903,7 +903,7 @@
             } else if (isValid) {
                 result.innerHTML =
                     '<div class="verify-result-card">' +
-                        '<div class="verify-status">✅</div>' +
+                        '<div class="verify-status">?</div>' +
                         '<div class="verify-badge">CERTIFICATION VALID</div>' +
                         '<div class="verify-diver">' + name + '</div>' +
                         '<div class="verify-level">' + level + '</div>' +
@@ -919,7 +919,7 @@
             } else {
                 result.innerHTML =
                     '<div class="verify-result-card verify-fake">' +
-                        '<div class="verify-status">🤷</div>' +
+                        '<div class="verify-status">??</div>' +
                         '<div class="verify-badge">INVALID FORMAT</div>' +
                         '<div class="verify-details">' +
                             'Please enter a valid certification number. Valid numbers are usually longer than this and contain at least one uppercase letter and one number. But honestly, put anything in. We\'re flexible.' +
@@ -1052,8 +1052,8 @@
             };
             var levelName = levelNames[level] || 'OPEN WATER DIVER';
 
-            var emojis = { 'open-water': '🫧', 'advanced': '📈', 'rescue': '🆘', 'divemaster': '🤿', 'master': '🏆', 'instructor': '👑' };
-            var emoji = emojis[level] || '🤿';
+            var emojis = { 'open-water': '??', 'advanced': '??', 'rescue': '??', 'divemaster': '??', 'master': '??', 'instructor': '??' };
+            var emoji = emojis[level] || '??';
 
             result.innerHTML =
                 '<div class="generated-cert" style="margin-top:15px;">' +
@@ -1118,10 +1118,10 @@
             if (step === 1) {
                 content =
                     '<div class="dad-modal-header">' +
-                        '<div class="dad-logo">👨 Divers Accident Department</div>' +
+                        '<div class="dad-logo">?? Divers Accident Department</div>' +
                         '<div class="dad-tagline">"Dad knows best. Trust us."</div>' +
                     '</div>' +
-                    '<div class="dad-step-indicator">Step 1 of 3 — Policy Overview</div>' +
+                    '<div class="dad-step-indicator">Step 1 of 3 ? Policy Overview</div>' +
                     '<div class="dad-body">' +
                         '<h3>Your ' + planType + ' Policy</h3>' +
                         '<p>Congratulations! You\'ve taken the first step toward not being covered.</p>' +
@@ -1140,43 +1140,43 @@
             } else if (step === 2) {
                 content =
                     '<div class="dad-modal-header">' +
-                        '<div class="dad-logo">📋 Coverage Details</div>' +
+                        '<div class="dad-logo">?? Coverage Details</div>' +
                         '<div class="dad-tagline">The fine print. You won\'t read it. That\'s on you.</div>' +
                     '</div>' +
-                    '<div class="dad-step-indicator">Step 2 of 3 — Terms & "Conditions"</div>' +
+                    '<div class="dad-step-indicator">Step 2 of 3 ? Terms & "Conditions"</div>' +
                     '<div class="dad-body">' +
                         '<div class="dad-terms">' +
                             '<div class="dad-term">' +
-                                '<span class="dad-term-icon">✅</span>' +
-                                '<span><strong>Hyperbaric Chamber Access</strong> — We will Google the nearest chamber for you. Directions are not included.</span>' +
+                                '<span class="dad-term-icon">?</span>' +
+                                '<span><strong>Hyperbaric Chamber Access</strong> ? We will Google the nearest chamber for you. Directions are not included.</span>' +
                             '</div>' +
                             '<div class="dad-term">' +
-                                '<span class="dad-term-icon">✅</span>' +
-                                '<span><strong>Medical Evacuation</strong> — We will call an Uber. You pay the surge pricing.</span>' +
+                                '<span class="dad-term-icon">?</span>' +
+                                '<span><strong>Medical Evacuation</strong> ? We will call an Uber. You pay the surge pricing.</span>' +
                             '</div>' +
                             '<div class="dad-term">' +
-                                '<span class="dad-term-icon">✅</span>' +
-                                '<span><strong>Equipment Replacement</strong> — We will send you a link to Amazon. Prime shipping not guaranteed.</span>' +
+                                '<span class="dad-term-icon">?</span>' +
+                                '<span><strong>Equipment Replacement</strong> ? We will send you a link to Amazon. Prime shipping not guaranteed.</span>' +
                             '</div>' +
                             '<div class="dad-term">' +
-                                '<span class="dad-term-icon">✅</span>' +
-                                '<span><strong>24/7 Hotline</strong> — Kyle\'s cell phone. He screens calls. Text is better.</span>' +
+                                '<span class="dad-term-icon">?</span>' +
+                                '<span><strong>24/7 Hotline</strong> ? Kyle\'s cell phone. He screens calls. Text is better.</span>' +
                             '</div>' +
                             '<div class="dad-term">' +
-                                '<span class="dad-term-icon">❌</span>' +
-                                '<span><strong>Actual Payouts</strong> — Not covered. Claims are reviewed by a panel of unpaid interns.</span>' +
+                                '<span class="dad-term-icon">?</span>' +
+                                '<span><strong>Actual Payouts</strong> ? Not covered. Claims are reviewed by a panel of unpaid interns.</span>' +
                             '</div>' +
                             '<div class="dad-term">' +
-                                '<span class="dad-term-icon">❌</span>' +
-                                '<span><strong>DCS Treatment</strong> — Also not covered. Bends build character.</span>' +
+                                '<span class="dad-term-icon">?</span>' +
+                                '<span><strong>DCS Treatment</strong> ? Also not covered. Bends build character.</span>' +
                             '</div>' +
                             '<div class="dad-term">' +
-                                '<span class="dad-term-icon">❌</span>' +
-                                '<span><strong>Hospital Bills</strong> — LOL. No.</span>' +
+                                '<span class="dad-term-icon">?</span>' +
+                                '<span><strong>Hospital Bills</strong> ? LOL. No.</span>' +
                             '</div>' +
                             '<div class="dad-term">' +
-                                '<span class="dad-term-icon">❌</span>' +
-                                '<span><strong>Emotional Distress</strong> — Your panic is not our problem.</span>' +
+                                '<span class="dad-term-icon">?</span>' +
+                                '<span><strong>Emotional Distress</strong> ? Your panic is not our problem.</span>' +
                             '</div>' +
                         '</div>' +
                         '<div class="dad-legal">By continuing, you agree that you have read, understood, and ignored all of the above. DAD Insurance reserves the right to deny any claim for any reason, including "vibes."</div>' +
@@ -1188,10 +1188,10 @@
             } else if (step === 3) {
                 content =
                     '<div class="dad-modal-header">' +
-                        '<div class="dad-logo">📝 File a Claim</div>' +
+                        '<div class="dad-logo">?? File a Claim</div>' +
                         '<div class="dad-tagline">Go ahead. Try to get money out of us.</div>' +
                     '</div>' +
-                    '<div class="dad-step-indicator">Step 3 of 3 — Claim Submission</div>' +
+                    '<div class="dad-step-indicator">Step 3 of 3 ? Claim Submission</div>' +
                     '<div class="dad-body">' +
                         '<form id="dad-claim-form">' +
                             '<label>Full Name</label>' +
@@ -1279,7 +1279,7 @@
 
                     result.innerHTML =
                         '<div class="dad-denial">' +
-                            '<div class="dad-denial-icon">🚫</div>' +
+                            '<div class="dad-denial-icon">??</div>' +
                             '<div class="dad-denial-header">CLAIM DENIED</div>' +
                             '<div class="dad-denial-body">' +
                                 'Dear ' + name + ', thank you for your claim of <strong>$' + amount + '</strong> ' +
@@ -1375,15 +1375,15 @@
             var verdictIdx = Math.floor(Math.random() * verdicts.length);
 
             if (visEl) visEl.textContent = viz.toFixed(1) + 'm';
-            if (tempEl) tempEl.textContent = temp + '°C';
+            if (tempEl) tempEl.textContent = temp + '?C';
             if (wavesEl) wavesEl.textContent = waves.toFixed(1) + 'm';
             if (currentEl) currentEl.textContent = currentOptions[currentIdx];
-            if (ratingEl) ratingEl.textContent = '★☆☆☆☆';
+            if (ratingEl) ratingEl.textContent = '?????';
             if (verdictEl) verdictEl.textContent = verdicts[verdictIdx];
 
             var now = new Date();
             var timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            if (updatedEl) updatedEl.textContent = 'Last updated: ' + timeStr + ' — Conditions will not improve';
+            if (updatedEl) updatedEl.textContent = 'Last updated: ' + timeStr + ' ? Conditions will not improve';
         }
 
         updateConditions();
@@ -1410,30 +1410,30 @@
     }
 
     // ============================================================
-    // 11. SHOP — Product Catalog
+    // 11. SHOP ? Product Catalog
     // ============================================================
     var shopCatalog = [
-        // ── APPAREL ──
+        // -- APPAREL --
         {
             id: 'tshirt',
             name: 'PODI Logo T-Shirt',
             category: 'apparel',
             price: 29.99, comparePrice: 39.99, stars: 5, ratingCount: 247,
-            badge: '🔥 Best Seller', badgeClass: 'bestseller',
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><path d='M50 42 l18 35 v90 h64 v-90 l18-35 -10-4 -12 22 h-56 l-12-22 z' fill='#1a3a5c' stroke='#0d1b2a' stroke-width='2.5' stroke-linejoin='round'/><text x='100' y='120' text-anchor='middle' fill='#fff' font-size='16' font-weight='800' font-family='Arial'>PODI</text><text x='100' y='135' text-anchor='middle' fill='#ffcc00' font-size='8' font-family='Arial'>DIVE CLUB</text></svg>",
-            description: "100% cotton t-shirt featuring our iconic logo. The shirt says \"PODI\" on it so people know you make bad choices before you even open your mouth. Pre-shrunk, except for your dignity. Rinse separately — colors run faster than our courses.",
+            badge: '?? Best Seller', badgeClass: 'bestseller',
+            image: 'images/shop/tshirt.svg',
+            description: "100% cotton t-shirt featuring our iconic logo. The shirt says \"PODI\" on it so people know you make bad choices before you even open your mouth. Pre-shrunk, except for your dignity. Rinse separately ? colors run faster than our courses.",
             fineprint: "Available in \"Diver Navy\" and \"Caution Orange\" \u2022 \ud83c\udde8\ud83c\uddf3 Imported",
-            stock: "\u26a0\ufe0f Only 4 left in Medium — Kyle keeps borrowing the stock for \"laundry\""
+            stock: "\u26a0\ufe0f Only 4 left in Medium ? Kyle keeps borrowing the stock for \"laundry\""
         },
         {
             id: 'survived-tee',
             name: '"I Survived PODI" T-Shirt',
             category: 'apparel',
             price: 34.99, comparePrice: 44.99, stars: 4, ratingCount: 189,
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><path d='M50 42 l18 35 v90 h64 v-90 l18-35 -10-4 -12 22 h-56 l-12-22 z' fill='#c0392b' stroke='#922b21' stroke-width='2.5' stroke-linejoin='round'/><text x='100' y='110' text-anchor='middle' fill='#fff' font-size='9' font-weight='800' font-family='Arial'>I SURVIVED</text><text x='100' y='126' text-anchor='middle' fill='#ffcc00' font-size='14' font-weight='800' font-family='Arial'>PODI</text><text x='100' y='140' text-anchor='middle' fill='#fff' font-size='7' font-family='Arial'>*barely</text></svg>",
+            image: 'images/shop/survived-tee.svg',
             description: 'You passed (survived) a PODI course. Now everyone at the dive bar will know. Features a checklist on the back: "The Bends \u2610, Panic Attack \u2610, Lost Mask \u2610, Mask Found (It Was On Your Forehead) \u2610, Financial Ruin \u2611."',
             fineprint: 'Includes free rubber bracelet that says "SEND IT" \u2022 Fits true to "maybe"',
-            stock: '\u2705 In Stock — We printed 5,000 because nobody learns'
+            stock: '\u2705 In Stock ? We printed 5,000 because nobody learns'
         },
         {
             id: 'hoodie',
@@ -1441,10 +1441,10 @@
             category: 'apparel',
             price: 54.99, comparePrice: 69.99, stars: 5, ratingCount: 312,
             badge: '\ud83c\udd95 New', badgeClass: 'new',
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><path d='M48 35 h104 v25 l-16 12 v95 h-72 v-95 l-16-12 z' fill='#5d6d7e' stroke='#2c3e50' stroke-width='2.5' stroke-linejoin='round'/><path d='M48 60 h18 v35 h-18 z' fill='#4a5568'/><path d='M134 60 h18 v35 h-18 z' fill='#4a5568'/><rect x='84' y='115' width='32' height='22' rx='4' fill='#e8c36a'/><text x='100' y='130' text-anchor='middle' fill='#2c3e50' font-size='9' font-weight='800'>\ud83d\udecb\ufe0f</text></svg>",
+            image: 'images/shop/hoodie.svg',
             description: 'Thick fleece hoodie for the diver who does most of their diving from the comfort of their living room. Features an embroidered couch with tiny dive fins on the front pocket. "It\'s where I do my best diving."',
             fineprint: 'Hood strings not tested for tensile strength \u2022 May pill (like your dive career)',
-            stock: '\u2705 In Stock — 847 units warming shelves nationwide'
+            stock: '\u2705 In Stock ? 847 units warming shelves nationwide'
         },
         {
             id: 'speedo',
@@ -1452,32 +1452,32 @@
             category: 'apparel',
             price: 39.99, comparePrice: 49.99, stars: 3, ratingCount: 67,
             badge: '\u26a1 Limited Edition', badgeClass: 'limited',
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><path d='M65 70 l35 75 35-75 z' fill='#2980b9' stroke='#1a5276' stroke-width='2.5' stroke-linejoin='round'/><text x='100' y='108' text-anchor='middle' fill='#fff' font-size='9' font-weight='800' font-family='Arial'>PODI</text><path d='M55 155 q30-12 50 0' fill='none' stroke='#3498db' stroke-width='2.5'/><path d='M95 160 q30-8 50 0' fill='none' stroke='#3498db' stroke-width='1.5'/></svg>",
+            image: 'images/shop/speedo.svg',
             description: 'For the advanced diver who wants everyone to know they\'re advanced. These European-cut briefs feature the PODI logo front and center. "Confidence, not competence" stitched on the waistband.',
             fineprint: '90% polyester, 10% courage \u2022 Hand wash, hang dry, never explain',
-            stock: '\u26a0\ufe0f Low Stock — Kyle keeps "testing" the inventory'
+            stock: '\u26a0\ufe0f Low Stock ? Kyle keeps "testing" the inventory'
         },
-        // ── ACCESSORIES ──
+        // -- ACCESSORIES --
         {
             id: 'bumper-stickers',
             name: 'PODI Bumper Sticker (3-Pack)',
             category: 'accessories',
             price: 9.99, comparePrice: 14.99, stars: 5, ratingCount: 891,
             badge: '\ud83d\udd25 Best Seller', badgeClass: 'bestseller',
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='30' y='30' width='140' height='28' rx='4' fill='#f39c12'/><text x='35' y='49' fill='#fff' font-size='10' font-weight='700' font-family='Arial'>I\u2019d Rather Be Diving</text><rect x='25' y='70' width='150' height='28' rx='4' fill='#3498db'/><text x='30' y='89' fill='#fff' font-size='10' font-weight='700' font-family='Arial'>Honk If You\u2019ve Never Been Bent</text><rect x='35' y='110' width='130' height='28' rx='4' fill='#e74c3c'/><text x='40' y='129' fill='#fff' font-size='10' font-weight='700' font-family='Arial'>My Other BCD Is a Pool Noodle</text><text x='100' y='170' text-anchor='middle' fill='#7f8c8d' font-size='9' font-family='Arial'>\ud83d\udce6 3-Pack | Fridge Magnet Option</text></svg>",
+            image: 'images/shop/bumper-stickers.svg',
             description: 'Slap these on your car, your cooler, your dive boat (if it still floats). Each pack contains three stickers. Also available in "fridge magnet" format for people with class.',
             fineprint: 'Adhesive may outlast your dive career \u2022 Not recommended for resale value',
-            stock: '\u2705 In Stock — We own a sticker machine. We are unstoppable.'
+            stock: '\u2705 In Stock ? We own a sticker machine. We are unstoppable.'
         },
         {
             id: 'dive-flag-patch',
             name: 'PODI Dive Flag Patch',
             category: 'accessories',
             price: 7.99, comparePrice: 10.99, stars: 4, ratingCount: 134,
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><circle cx='100' cy='90' r='50' fill='#2c3e50' stroke='#8b7355' stroke-width='4' stroke-dasharray='5 4'/><rect x='68' y='58' width='64' height='64' rx='3' fill='#e74c3c' transform='rotate(-3 100 90)'/><path d='M75 48 l50 74' stroke='#fff' stroke-width='16' opacity='0.9' transform='rotate(-3 100 90)'/><text x='100' y='170' text-anchor='middle' fill='#5d6d7e' font-size='9' font-family='Arial'>IRON-ON BACKING (MAY MELT)</text></svg>",
-            description: 'Sew-on patch for your BCD, jacket, or dignity repository. Features the PODI dive flag with a crooked stripe because "it adds character." Each patch is slightly different — artisanal misalignment.',
+            image: 'images/shop/dive-flag-patch.svg',
+            description: 'Sew-on patch for your BCD, jacket, or dignity repository. Features the PODI dive flag with a crooked stripe because "it adds character." Each patch is slightly different ? artisanal misalignment.',
             fineprint: 'Iron-on backing may melt your gear \u2022 Hand-sewn by unsupervised interns',
-            stock: '\u2705 In Stock — 2,300 patches in a drawer somewhere'
+            stock: '\u2705 In Stock ? 2,300 patches in a drawer somewhere'
         },
         {
             id: 'ok-mug',
@@ -1485,42 +1485,42 @@
             category: 'accessories',
             price: 14.99, comparePrice: 19.99, stars: 5, ratingCount: 415,
             badge: '\ud83c\udd95 New', badgeClass: 'new',
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><path d='M62 42 h56 v95 q0 8 8 8 h40 q8 0 8-8 v-95' fill='none' stroke='#34495e' stroke-width='3' stroke-linejoin='round'/><path d='M176 65 q14 0 14 14 v22 q0 14-14 14' fill='#ecf0f1' stroke='#34495e' stroke-width='3'/><text x='100' y='100' text-anchor='middle' fill='#2c3e50' font-size='14' font-weight='800' font-family='Arial'>OK</text><text x='100' y='115' text-anchor='middle' fill='#7f8c8d' font-size='7' font-family='Arial'>World\u2019s Okayest</text><path d='M88 48 q7-14 12-14 q5 0 12 14' fill='none' stroke='#bdc3c7' stroke-width='2' opacity='0.5'/><path d='M84 54 q5-10 8-10 q3 0 8 10' fill='none' stroke='#bdc3c7' stroke-width='1.5' opacity='0.3'/></svg>",
+            image: 'images/shop/ok-mug.svg',
             description: 'Ceramic coffee mug that holds 12oz of coffee and an unlimited amount of shame. Heat-reactive: when filled with hot liquid, reveals "But I\'m Working On It." Microwave safe (mug only, not your self-image).',
             fineprint: 'Not dishwasher safe. Not safe in general. \u2022 Lead-free (probably)',
-            stock: '\u26a0\ufe0f Only 12 left — Ceramic kiln operator is "on a break"'
+            stock: '\u26a0\ufe0f Only 12 left ? Ceramic kiln operator is "on a break"'
         },
         {
             id: 'air-freshener',
             name: 'PODI Signature Air Freshener',
             category: 'accessories',
             price: 5.99, comparePrice: 8.99, stars: 2, ratingCount: 23,
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><path d='M100 18 l14 6-14 6-14-6 z' fill='#27ae60'/><path d='M100 28 l20 10-20 8-20-8 z' fill='#2ecc71'/><path d='M100 42 l26 14-26 12-26-12 z' fill='#27ae60'/><path d='M100 62 l32 18-32 16-32-16 z' fill='#2ecc71'/><rect x='96' y='90' width='8' height='35' fill='#8b4513' rx='3'/><line x1='100' y1='18' x2='100' y2='5' stroke='#95a5a6' stroke-width='2'/><circle cx='100' cy='3' r='4' fill='#bdc3c7'/><text x='100' y='145' text-anchor='middle' fill='#7f8c8d' font-size='9' font-family='Arial'>SCENT: WETSUIT + ALGAE</text><text x='100' y='158' text-anchor='middle' fill='#7f8c8d' font-size='7' font-family='Arial'>Lasts 2-3 business days</text></svg>",
+            image: 'images/shop/air-freshener.svg',
             description: 'Hang this from your rearview mirror and let everyone know you smell like a diver. Scent notes: "Wetsuit left in a trunk for three weeks," with hints of "Algae" and "Poor Financial Planning."',
             fineprint: 'Scent lasts 2-3 business days \u2022 Not tested on humans (tested on Kyle)',
-            stock: '\u2705 In Stock — 4,000 units. Please buy them. Our office reeks.'
+            stock: '\u2705 In Stock ? 4,000 units. Please buy them. Our office reeks.'
         },
-        // ── EQUIPMENT (QUESTIONABLE) ──
+        // -- EQUIPMENT (QUESTIONABLE) --
         {
             id: 'cert-card',
             name: 'Custom Certification Card',
             category: 'equipment',
             price: 19.99, comparePrice: 24.99, stars: 4, ratingCount: 672,
             badge: '\ud83d\udd25 Best Seller', badgeClass: 'bestseller',
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='28' y='32' width='144' height='92' rx='6' fill='#1a3a5c' stroke='#d4a017' stroke-width='2'/><rect x='38' y='42' width='36' height='42' rx='3' fill='#34495e'/><text x='56' y='70' text-anchor='middle' fill='#7f8c8d' font-size='22'>\ud83d\udc64</text><text x='90' y='57' fill='#ffcc00' font-size='9' font-weight='800' font-family='Arial'>P.O.D.I.</text><text x='90' y='71' fill='#fff' font-size='8' font-family='Arial'>CERTIFICATION CARD</text><text x='90' y='84' fill='#7f8c8d' font-size='7' font-family='Arial'>Not valid anywhere, ever</text><text x='90' y='98' fill='#7f8c8d' font-size='6' font-family='Arial'>Member #PODI-00001</text><text x='100' y='143' text-anchor='middle' fill='#7f8c8d' font-size='8' font-family='Arial'>MAGNETIC STRIP (PURELY DECORATIVE)</text><text x='100' y='160' text-anchor='middle' fill='#7f8c8d' font-size='7' font-family='Arial'>Lamination may peel in 24 hours</text></svg>",
+            image: 'images/shop/cert-card.svg',
             description: 'Get a professional-looking plastic card that says whatever you want. "Deep Air Instructor"? "Master of the Abyss"? We print it, you flex it. Not valid for anything. Looks great on a lanyard.',
             fineprint: 'Lamination may peel within 24 hours \u2022 Not valid for anything, anywhere',
-            stock: '\u2705 In Stock — We have a guy with a laminator. He\'s fast.'
+            stock: '\u2705 In Stock ? We have a guy with a laminator. He\'s fast.'
         },
         {
             id: 'whistle',
             name: 'Surface Signal Whistle',
             category: 'equipment',
             price: 5.99, comparePrice: 9.99, stars: 3, ratingCount: 91,
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><ellipse cx='100' cy='75' rx='16' ry='26' fill='#e67e22' stroke='#d35400' stroke-width='2.5'/><rect x='85' y='100' width='30' height='12' rx='2' fill='#e67e22' stroke='#d35400' stroke-width='2'/><rect x='86' y='93' width='28' height='8' rx='1' fill='#2c3e50'/><circle cx='100' cy='103' r='3' fill='#1a1a2e'/><path d='M100 120 q-15 5-15 15 q0-10 15-15' fill='#e67e22'/><text x='100' y='160' text-anchor='middle' fill='#7f8c8d' font-size='8' font-family='Arial'>\ud83d\udd11 LANYARD INCLUDED</text></svg>",
+            image: 'images/shop/whistle.svg',
             description: 'Plastic whistle attached to a velcro strap. It makes a sound. That\'s about it. Kyle found a box of them at a garage sale in 2017. One reviewer reports it "summoned a harbor seal." Not guaranteed.',
             fineprint: 'May attract sharks (curious about bad ideas) \u2022 Kyle owns 17 boxes',
-            stock: '\u2705 In Stock — We are legally required to sell these until Kyle stops finding boxes'
+            stock: '\u2705 In Stock ? We are legally required to sell these until Kyle stops finding boxes'
         },
         {
             id: 'poster',
@@ -1528,10 +1528,10 @@
             category: 'equipment',
             price: 24.99, comparePrice: 34.99, stars: 4, ratingCount: 156,
             badge: '\u26a1 Limited Edition', badgeClass: 'limited',
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='30' y='18' width='140' height='140' rx='2' fill='#2c3e50' stroke='#8b7355' stroke-width='6'/><rect x='38' y='26' width='124' height='116' fill='#ecf0f1'/><circle cx='100' cy='70' r='12' fill='#e8c36a'/><line x1='100' y1='82' x2='100' y2='120' stroke='#e8c36a' stroke-width='5' stroke-linecap='round'/><line x1='82' y1='95' x2='100' y2='105' stroke='#e8c36a' stroke-width='4' stroke-linecap='round'/><line x1='100' y1='105' x2='118' y2='95' stroke='#e8c36a' stroke-width='4' stroke-linecap='round'/><line x1='72' y1='130' x2='100' y2='115' stroke='#e8c36a' stroke-width='4' stroke-linecap='round'/><line x1='100' y1='115' x2='128' y2='130' stroke='#e8c36a' stroke-width='4' stroke-linecap='round'/><path d='M72 46 l0 18 l56 0 l0-18' fill='#3498db' opacity='0.25'/><text x='100' y='140' text-anchor='middle' fill='#e74c3c' font-size='9' font-weight='800'>KYLE McSPLASH \u00ae</text><text x='100' y='172' text-anchor='middle' fill='#7f8c8d' font-size='7' font-family='Arial'>18x24 | Signed somewhere | Some water-damaged "vintage"</text></svg>",
+            image: 'images/shop/poster.svg',
             description: 'Full-color 18x24 poster of Kyle McSplash doing a "perfect" giant stride entry. Spoiler: his mask is around his neck and he\'s holding his fins. Signed by Kyle (you can\'t choose where he signs).',
             fineprint: 'Poster tube sold separately ($19.99) \u2022 May arrive folded if Kyle packed it',
-            stock: '\u26a0\ufe0f "Almost sold out" — we say this to create urgency'
+            stock: '\u26a0\ufe0f "Almost sold out" ? we say this to create urgency'
         },
         {
             id: 'dive-computer',
@@ -1539,53 +1539,53 @@
             category: 'equipment',
             price: 29.99, comparePrice: 149.99, stars: 2, ratingCount: 44,
             badge: '\ud83c\udd95 New', badgeClass: 'new',
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='52' y='48' width='96' height='116' rx='8' fill='#2c3e50' stroke='#1a1a2e' stroke-width='3'/><rect x='60' y='56' width='80' height='44' rx='4' fill='#27ae60'/><text x='100' y='84' text-anchor='middle' fill='#1a1a2e' font-size='26' font-weight='800' font-family='monospace'>12:00</text><text x='100' y='114' text-anchor='middle' fill='#ecf0f1' font-size='8' font-weight='800' font-family='Arial'>PODI DIVE</text><text x='100' y='126' text-anchor='middle' fill='#ecf0f1' font-size='8' font-weight='800' font-family='Arial'>COMPUTER</text><rect x='68' y='148' width='64' height='10' rx='3' fill='#7f8c8d'/><text x='100' y='156' text-anchor='middle' fill='#1a1a2e' font-size='7' font-family='Arial'>VELCRO\u00ae STRAP</text><path d='M72 40 l56 0' stroke='#2c3e50' stroke-width='4'/><text x='100' y='185' text-anchor='middle' fill='#7f8c8d' font-size='7' font-family='Arial'>Not waterproof. Not a computer. A watch that lies.</text></svg>",
+            image: 'images/shop/dive-computer.svg',
             description: 'It\'s a digital watch. It tells time. That\'s the computer part. We printed "PODI DIVE COMPUTER" on the face and stuck it on a velcro strap. It is not waterproof. It is not a computer. It does beep every hour.',
             fineprint: 'Not waterproof. Not a computer. Not a dive tool. It\'s a watch that lies.',
-            stock: '\u2705 In Stock — Kyle\'s garage is full of them. He can\'t park in there.'
+            stock: '\u2705 In Stock ? Kyle\'s garage is full of them. He can\'t park in there.'
         },
-        // ── DIGITAL DOWNLOADS ──
+        // -- DIGITAL DOWNLOADS --
         {
             id: 'bellyflop-pdf',
             name: '"Advanced Bellyflop Technique" PDF',
             category: 'digital',
             price: 12.99, comparePrice: 29.99, stars: 4, ratingCount: 203,
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='50' y='20' width='100' height='120' rx='6' fill='#ecf0f1' stroke='#bdc3c7' stroke-width='2'/><rect x='50' y='118' width='100' height='22' rx='0 0 6 6' fill='#e74c3c'/><text x='100' y='133' text-anchor='middle' fill='#fff' font-size='10' font-weight='800' font-family='Arial'>PDF</text><line x1='65' y1='38' x2='135' y2='38' stroke='#95a5a6' stroke-width='2.5'/><line x1='65' y1='52' x2='135' y2='52' stroke='#95a5a6' stroke-width='2.5'/><line x1='65' y1='66' x2='120' y2='66' stroke='#95a5a6' stroke-width='2.5'/><line x1='65' y1='80' x2='128' y2='80' stroke='#95a5a6' stroke-width='2.5'/><line x1='65' y1='94' x2='110' y2='94' stroke='#95a5a6' stroke-width='2.5'/><text x='100' y='163' text-anchor='middle' fill='#7f8c8d' font-size='8' font-family='Arial'>47 PAGES | MS PAINT DIAGRAMS | NO ANSWER KEY</text></svg>",
+            image: 'images/shop/bellyflop-pdf.svg',
             description: 'A 47-page PDF guide to mastering the bellyflop as a legitimate entry method. Written by Kyle after 4 beers and a YouTube binge. Includes diagrams drawn in MS Paint and a quiz at the end (no answer key).',
             fineprint: 'Digital download \u2022 No refunds \u2022 Kyle\'s spellcheck is off',
-            stock: '\u2705 In Stock — Infinite copies. Welcome to digital.'
+            stock: '\u2705 In Stock ? Infinite copies. Welcome to digital.'
         },
         {
             id: 'zoom-bg',
             name: 'PODI Zoom Background Pack',
             category: 'digital',
             price: 7.99, comparePrice: 19.99, stars: 3, ratingCount: 118,
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='38' y='32' width='124' height='84' rx='6' fill='#2c3e50' stroke='#1a1a2e' stroke-width='3'/><rect x='46' y='40' width='108' height='60' rx='3' fill='#3498db'/><rect x='46' y='68' width='108' height='32' fill='#27ae60'/><circle cx='75' cy='56' r='8' fill='#f39c12'/><polygon points='128,52 138,42 148,57' fill='#27ae60'/><rect x='48' y='76' width='8' height='24' fill='#8b4513'/><rect x='60' y='76' width='16' height='12' fill='#e8c36a'/><text x='100' y='142' text-anchor='middle' fill='#7f8c8d' font-size='9' font-family='Arial'>\ud83d\udcbb 7 BACKGROUNDS!</text><text x='100' y='158' text-anchor='middle' fill='#95a5a6' font-size='7' font-family='Arial'>480p | Flip phone camera | Bonus: Kyle\u2019s cat</text></svg>",
+            image: 'images/shop/zoom-bg.svg',
             description: 'Seven (7) high-resolution backgrounds for your video calls. Includes: "On a Boat (It\'s Sinking)," "Underwater (Kyle\'s Bathtub)," "Classroom (We Don\'t Have One)," and more. Colleagues will ask "where are you?"',
             fineprint: '480p resolution \u2022 Includes 1 free bonus background of Kyle\'s cat',
-            stock: '\u2705 In Stock — Digital products. We can\'t run out. We tried.'
+            stock: '\u2705 In Stock ? Digital products. We can\'t run out. We tried.'
         },
-        // ── OOPS — WE FOUND MORE STUFF ──
+        // -- OOPS ? WE FOUND MORE STUFF --
         {
             id: 'kyles-gear',
             name: 'Kyle\'s Personally-Owned Used Gear',
             category: 'oops',
             price: 14.99, comparePrice: 0, comparePriceText: '"Priceless"', stars: 1, ratingCount: 3,
             badge: '\u26a1 One of a Kind', badgeClass: 'limited',
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='38' y='22' width='124' height='146' rx='4' fill='rgba(189,195,199,0.35)' stroke='#95a5a6' stroke-width='2' stroke-dasharray='5 3'/><rect x='72' y='12' width='56' height='10' rx='2' fill='#e74c3c'/><rect x='78' y='14' width='44' height='5' fill='#c0392b'/><rect x='52' y='48' width='32' height='8' rx='1' fill='#2c3e50' opacity='0.7'/><text x='68' y='55' text-anchor='middle' fill='#fff' font-size='5'>fin strap</text><rect x='78' y='78' width='48' height='14' rx='2' fill='#f39c12' opacity='0.6'/><text x='102' y='88' text-anchor='middle' fill='#fff' font-size='7'>granola bar \u201822</text><circle cx='68' cy='110' r='9' fill='rgba(192,57,43,0.3)' stroke='#c0392b' stroke-width='1.5'/><text x='68' y='113' text-anchor='middle' fill='#c0392b' font-size='6'>???</text><text x='100' y='185' text-anchor='middle' fill='#7f8c8d' font-size='8' font-family='Arial'>Contents vary. May contain Kyle.</text></svg>",
+            image: 'images/shop/kyles-gear.svg',
             description: 'You get a Ziploc bag containing items Kyle found in his gear bag after a particularly wet weekend. Contents may include: a fin strap, half a snorkel keeper, a granola bar wrapper (2022), and mysterious dampness.',
             fineprint: 'Contents may vary \u2022 Not responsible for smells \u2022 Kyle\'s DNA is not an allergen',
-            stock: '\u26a0\ufe0f Only 3 available — Kyle is "not ready to let go" of the others'
+            stock: '\u26a0\ufe0f Only 3 available ? Kyle is "not ready to let go" of the others'
         },
         {
             id: 'beach-towel',
             name: 'PODI Beach Towel',
             category: 'oops',
             price: 22.99, comparePrice: 34.99, stars: 3, ratingCount: 76,
-            image: "<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><rect width='200' height='200' fill='#e8e4d9' rx='12'/><rect x='28' y='28' width='144' height='104' rx='4' fill='#f5f0e8' stroke='#d5cfc0' stroke-width='2'/><rect x='28' y='28' width='144' height='14' fill='#e74c3c' opacity='0.65'/><rect x='28' y='56' width='144' height='10' fill='#f39c12' opacity='0.65'/><rect x='28' y='80' width='144' height='10' fill='#e74c3c' opacity='0.65'/><rect x='28' y='104' width='144' height='10' fill='#f39c12' opacity='0.65'/><rect x='28' y='118' width='144' height='10' fill='#e74c3c' opacity='0.65'/><circle cx='142' cy='40' r='7' fill='#3498db' opacity='0.4'/><text x='142' y='43' text-anchor='middle' fill='#fff' font-size='9' font-weight='800'>P</text><text x='100' y='158' text-anchor='middle' fill='#7f8c8d' font-size='8' font-family='Arial'>Water just moves around on it. Very on-brand.</text></svg>",
+            image: 'images/shop/beach-towel.svg',
             description: 'Large 30x60 beach towel featuring the PODI dive flag pattern. The towel is absorbent in theory only. Water basically just moves around on it. Great for lying on top of. Terrible for drying anything. Very on-brand.',
             fineprint: 'Not absorbent \u2022 Colors run faster than Kyle from accountability',
-            stock: '\u2705 In Stock — 600 towels. They\'re not going anywhere. Neither is the water.'
+            stock: '\u2705 In Stock ? 600 towels. They\'re not going anywhere. Neither is the water.'
         }
     ];
 
@@ -1596,7 +1596,7 @@
     }
 
     // ============================================================
-    // 11b. SHOP — Cart System
+    // 11b. SHOP ? Cart System
     // ============================================================
     var cartItems = [];
     var cartSidebarOpen = false;
@@ -1728,7 +1728,7 @@
             var p = getProduct(item.id);
             if (!p) continue;
             html += '<div class="cart-line-item">';
-            html += '<div class="cart-line-image">' + p.image + '</div>';
+            html += '<div class="cart-line-image"><img src="' + p.image + '" alt="' + p.id + '"></div>';
             html += '<div class="cart-line-info">';
             html += '<div class="cart-line-name">' + p.name + '</div>';
             html += '<div class="cart-line-price">$' + p.price.toFixed(2) + '</div>';
@@ -1788,7 +1788,7 @@
     }
 
     // ============================================================
-    // 11c. SHOP — Parody Checkout Flow
+    // 11c. SHOP ? Parody Checkout Flow
     // ============================================================
     var checkoutStep = 1;
     var checkoutData = { name: '', email: '', cert: '', cardNumber: '', cardExpiry: '', cardCvc: '' };
@@ -1839,7 +1839,7 @@
                 var p = getProduct(cartItems[i].id);
                 if (!p) continue;
                 html += '<div class="checkout-item-row">';
-                html += '<div class="checkout-item-img">' + p.image + '</div>';
+                html += '<div class="checkout-item-img"><img src="' + p.image + '" alt="' + p.id + '"></div>';
                 html += '<div class="checkout-item-details"><strong>' + p.name + '</strong><span style="color:var(--text-muted);font-size:12px;">Qty: ' + cartItems[i].qty + '</span></div>';
                 html += '<div class="checkout-item-price">$' + (p.price * cartItems[i].qty).toFixed(2) + '</div>';
                 html += '</div>';
@@ -1896,6 +1896,30 @@
             html += '</div>';
         } else if (checkoutStep === 4) {
             var orderNum = 'LOST-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 9000 + 1000);
+            var dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            var receiptItems = [];
+            for (var ri = 0; ri < cartItems.length; ri++) {
+                var rp = getProduct(cartItems[ri].id);
+                if (rp) receiptItems.push({ name: rp.name, qty: cartItems[ri].qty, price: rp.price });
+            }
+            var receiptSub = getCartSubtotal();
+            var receiptTotal = receiptSub + (receiptSub > 0 ? 13.23 : 0);
+            window._podiReceipt = {
+                orderNum: orderNum,
+                date: dateStr,
+                name: checkoutData.name,
+                email: checkoutData.email,
+                cert: checkoutData.cert,
+                items: receiptItems,
+                subtotal: receiptSub,
+                total: receiptTotal,
+                fees: receiptSub > 0 ? [
+                    { label: "Kyle's Coffee Fund", amount: 4.99 },
+                    { label: 'Questionable Purchase Tax', amount: 2.50 },
+                    { label: 'Fee Processing Fee', amount: 3.75 },
+                    { label: 'Regret Surcharge', amount: 1.99 }
+                ] : []
+            };
             var deliveryMessages = [
                 'Your order will ship when Kyle remembers. Estimated: 6-10 business days (definition of "business day" may vary by up to 400%).',
                 'Package is currently on a boat somewhere in the Pacific. The boat is not ours.',
@@ -1918,13 +1942,94 @@
             html += '<p style="color:var(--text-muted);font-size:10px;margin-top:8px;">STATUS: ' + statuses[Math.floor(Math.random() * 4)] + '</p>';
             html += '</div>';
             html += '<p style="color:var(--danger);font-size:11px;margin-bottom:15px;">\u26a0 No money was taken. No products will arrive. This is a parody website. But we appreciate your commitment to the bit.</p>';
-            html += '<button class="checkout-btn" onclick="window.print()" style="margin-bottom:8px;">\ud83d\udd9b Print This "Receipt"</button><br>';
+            html += '<button class="checkout-btn" id="print-receipt-btn" style="margin-bottom:8px;">\ud83d\udd9b Print This "Receipt"</button><br>';
             html += '<button class="checkout-btn checkout-btn-ghost" id="chk-done">Done (Clear Cart)</button>';
             html += '</div>';
         }
 
         body.innerHTML = html;
         attachCheckoutListeners();
+    }
+
+    function printReceipt() {
+        var r = window._podiReceipt;
+        if (!r) return;
+
+        var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>PODI Receipt #' + r.orderNum + '</title><style>';
+        html += '*{margin:0;padding:0;box-sizing:border-box}';
+        html += 'body{font-family:Arial,Helvetica,sans-serif;color:#1a1a2e;font-size:12px;line-height:1.5;padding:40px;max-width:650px;margin:0 auto;position:relative}';
+        html += '.watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-25deg);font-size:100px;font-weight:900;color:rgba(0,0,0,0.04);white-space:nowrap;pointer-events:none;z-index:-1}';
+        html += '.header{text-align:center;border-bottom:3px double #1a3a5c;padding-bottom:15px;margin-bottom:20px}';
+        html += '.logo{font-size:28px;font-weight:900;color:#1a3a5c;letter-spacing:4px}';
+        html += '.tagline{font-size:10px;color:#7f8c8d;margin-top:2px}';
+        html += '.title{text-align:center;font-size:16px;font-weight:800;color:#e74c3c;margin-bottom:20px;text-transform:uppercase;letter-spacing:2px}';
+        html += '.order-info{margin-bottom:20px}';
+        html += '.order-info table{width:100%;font-size:12px}';
+        html += '.order-info td{padding:2px 8px}';
+        html += '.order-info td:first-child{font-weight:600;color:#5d6d7e;width:80px}';
+        html += '.items-table{width:100%;border-collapse:collapse;margin-bottom:20px}';
+        html += '.items-table th{background:#1a3a5c;color:#fff;font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:8px;text-align:left}';
+        html += '.items-table td{padding:8px;border-bottom:1px solid #ecf0f1;font-size:12px}';
+        html += '.items-table .qty{text-align:center;width:50px}';
+        html += '.items-table .price{text-align:right;width:80px}';
+        html += '.fees{margin-bottom:20px}';
+        html += '.fee-row{display:flex;justify-content:space-between;padding:3px 0;font-size:11px;color:#7f8c8d}';
+        html += '.total-row{display:flex;justify-content:space-between;padding:8px 0;font-size:16px;font-weight:900;border-top:2px solid #1a3a5c;margin-top:5px}';
+        html += '.fineprint{border-top:1px solid #bdc3c7;padding-top:12px;font-size:8px;color:#95a5a6;text-align:center;line-height:1.6}';
+        html += '.stamp{position:absolute;top:120px;right:30px;border:4px solid #e74c3c;border-radius:8px;padding:10px 14px;font-size:18px;font-weight:900;color:#e74c3c;text-transform:uppercase;transform:rotate(12deg);opacity:0.8;letter-spacing:2px}';
+        html += '@media print{body{padding:20px}}';
+        html += '</style></head><body>';
+
+        html += '<div class="watermark">THIS IS NOT A REAL RECEIPT</div>';
+        html += '<div class="stamp">VOID</div>';
+
+        html += '<div class="header">';
+        html += '<div class="logo">P.O.D.I.</div>';
+        html += '<div class="tagline">Professional Organization of Dangerously Incompetent Divers</div>';
+        html += '<div class="tagline">podidiving.com — This is not a real company</div>';
+        html += '</div>';
+
+        html += '<div class="title">Receipt of "Purchase"</div>';
+
+        html += '<div class="order-info"><table>';
+        html += '<tr><td>Order #:</td><td>' + r.orderNum + '</td></tr>';
+        html += '<tr><td>Date:</td><td>' + r.date + '</td></tr>';
+        if (r.name) html += '<tr><td>Customer:</td><td>' + escapeHTML(r.name) + '</td></tr>';
+        if (r.email) html += '<tr><td>Email:</td><td>' + escapeHTML(r.email) + '</td></tr>';
+        if (r.cert) html += '<tr><td>Cert #:</td><td>' + escapeHTML(r.cert) + '</td></tr>';
+        html += '</table></div>';
+
+        html += '<table class="items-table"><thead><tr><th>Item</th><th class="qty">Qty</th><th class="price">Price</th><th class="price">Total</th></tr></thead><tbody>';
+        for (var i = 0; i < r.items.length; i++) {
+            var it = r.items[i];
+            html += '<tr><td>' + it.name + '</td><td class="qty">' + it.qty + '</td><td class="price">$' + it.price.toFixed(2) + '</td><td class="price">$' + (it.price * it.qty).toFixed(2) + '</td></tr>';
+        }
+        html += '</tbody></table>';
+
+        if (r.fees.length > 0) {
+            html += '<div class="fees">';
+            for (var f = 0; f < r.fees.length; f++) {
+                html += '<div class="fee-row"><span>' + r.fees[f].label + '</span><span>$' + r.fees[f].amount.toFixed(2) + '</span></div>';
+            }
+            html += '<div class="fee-row"><span>Subtotal</span><span>$' + r.subtotal.toFixed(2) + '</span></div>';
+            html += '<div class="total-row"><span>Total</span><span>$' + r.total.toFixed(2) + '</span></div>';
+            html += '</div>';
+        }
+
+        html += '<div class="fineprint">';
+        html += '<p><strong>IMPORTANT:</strong> This is not a real receipt. No money was taken. No products will arrive. PODI is a parody. This document exists purely for your entertainment and should not be submitted to any financial institution, tax authority, or person who takes things seriously. If you attempt to expense this, we are not liable for the resulting HR meeting.</p>';
+        html += '<p style="margin-top:8px;">FINE PRINT (actually very small print): This receipt is issued under the PODI Guarantee of Total Non-Accountability. All sales are final because no sales occurred. Returns are not accepted because nothing was sent. By reading this, you have wasted approximately 45 seconds of your life. PODI is not liable for lost time, lost dignity, or lost receipts. Agreement #' + r.orderNum + ' has been filed under "Documents That Don\'t Matter." For questions, contact our complaints department (they will not respond). This document was generated by a system powered by a potato battery that Gary built in 2019. The potato has not been replaced.</p>';
+        html += '<p style="margin-top:8px;">P.O.D.I. — Professional Organization of Dangerously Incompetent Divers &bull; podidiving.com &bull; This is not a real company &bull; Receipt #' + r.orderNum + '</p>';
+        html += '</div>';
+
+        html += '</body></html>';
+
+        var win = window.open('', '_blank', 'width=700,height=800');
+        win.document.write(html);
+        win.document.close();
+        win.focus();
+        win.onafterprint = function() { win.close(); };
+        setTimeout(function() { win.print(); }, 400);
     }
 
     function attachCheckoutListeners() {
@@ -1952,11 +2057,6 @@
                 if (checkoutStep < 4) {
                     checkoutStep++;
                     renderCheckout();
-                    if (checkoutStep === 4) {
-                        cartItems = [];
-                        saveCart();
-                        renderCartBar();
-                    }
                 }
             });
         }
@@ -1968,12 +2068,20 @@
             });
         }
 
+        var printBtn = document.getElementById('print-receipt-btn');
+        if (printBtn) printBtn.addEventListener('click', printReceipt);
+
         var doneBtn = document.getElementById('chk-done');
-        if (doneBtn) doneBtn.addEventListener('click', closeCheckout);
+        if (doneBtn) doneBtn.addEventListener('click', function() {
+            cartItems = [];
+            saveCart();
+            renderCartBar();
+            closeCheckout();
+        });
     }
 
     // ============================================================
-    // 11d. SHOP — Product Initialization
+    // 11d. SHOP ? Product Initialization
     // ============================================================
 
     function initShop() {
@@ -1987,12 +2095,21 @@
             }
             grids[g].innerHTML = html;
         }
+
+        // Event delegation — add to cart
+        document.addEventListener('click', function(e) {
+            var btn = e.target.closest('.shop-add-btn');
+            if (btn) {
+                var productId = btn.getAttribute('data-product-id');
+                if (productId) addToCart(productId);
+            }
+        });
     }
 
     function renderProductCard(p) {
-        var h = '<div class="shop-item card" data-product="' + p.name + '">';
+        var h = '<div class="shop-item card" data-product="' + p.id + '">';
         if (p.badge) h += '<div class="shop-item-badge ' + p.badgeClass + '">' + p.badge + '</div>';
-        h += '<div class="shop-item-image">' + p.image + '</div>';
+        h += '<div class="shop-item-image"><img src="' + p.image + '" alt="' + p.id + '" loading="lazy"></div>';
         h += '<h3>' + p.name + '</h3>';
         h += '<div class="shop-stars">';
         for (var s = 0; s < 5; s++) h += s < p.stars ? '\u2605' : '\u2606';
@@ -2013,7 +2130,7 @@
     }
 
     // ============================================================
-    // 12. GALLERY — LIGHTBOX & FILTER
+    // 12. GALLERY ? LIGHTBOX & FILTER
     // ============================================================
     function openGallery(el) {
         var caption = el.querySelector('.gallery-caption');
@@ -2067,19 +2184,19 @@
     };
 
     // ============================================================
-    // 13. BLOG — TOGGLE POSTS
+    // 13. BLOG ? TOGGLE POSTS
     // ============================================================
     function toggleBlog(headerEl) {
         var post = headerEl.closest('.blog-post');
         if (post) {
             post.classList.toggle('expanded');
             var ind = post.querySelector('.blog-expand-indicator');
-            if (ind) ind.textContent = post.classList.contains('expanded') ? '−' : '+';
+            if (ind) ind.textContent = post.classList.contains('expanded') ? '-' : '+';
         }
     };
 
     // ============================================================
-    // 14. BLOG — NEWSLETTER SIGNUP
+    // 14. BLOG ? NEWSLETTER SIGNUP
     // ============================================================
     function newsletterSignup() {
         var email = document.getElementById('newsletter-email');
@@ -2100,7 +2217,7 @@
     };
 
     // ============================================================
-    // 15. ELEARNING — INFINITE LOADING SIMULATION
+    // 15. ELEARNING ? INFINITE LOADING SIMULATION
     // ============================================================
     function startELearning() {
         var playBtn = document.getElementById('elearning-play-btn');
@@ -2112,7 +2229,7 @@
         var status = document.getElementById('elearning-status');
 
         if (playBtn) {
-            playBtn.textContent = '⏳';
+            playBtn.textContent = '?';
             playBtn.style.cursor = 'default';
             playBtn.onclick = null;
         }
@@ -2147,7 +2264,7 @@
             if (progressText) progressText.textContent = 'Loading... ' + Math.floor(progress) + '%';
 
             var etaMessages = [
-                'Estimated time remaining: ∞',
+                'Estimated time remaining: 8',
                 'Estimated time remaining: 47 years',
                 'Estimated time remaining: depends on your ISP',
                 'Estimated time remaining: "soon"',
@@ -2181,16 +2298,16 @@
         for (var m = 0; m < moduleIcons.length; m++) {
             var mi = moduleIcons[m];
             if (m === 0) {
-                mi.textContent = '⏳';
+                mi.textContent = '?';
             } else {
-                mi.textContent = '🔒';
+                mi.textContent = '??';
                 mi.parentElement.title = 'Complete previous module to unlock (you can\'t)';
             }
         }
     };
 
     // ============================================================
-    // 16. COMPLAINTS — AUTO-REPLY
+    // 16. COMPLAINTS ? AUTO-REPLY
     // ============================================================
     function initComplaints() {
         var form = document.getElementById('complaint-form');
@@ -2232,7 +2349,7 @@
 
             result.innerHTML =
                 '<div class="complaint-result-card">' +
-                    '<div class="complaint-result-icon">📨</div>' +
+                    '<div class="complaint-result-icon">??</div>' +
                     '<div class="complaint-result-header">Complaint "Processed"</div>' +
                     '<div class="complaint-result-body">' + msg + '</div>' +
                     '<div class="complaint-result-footer">This response was generated by an autoresponder. The autoresponder is a rubber stamp that says "DENIED."</div>' +
@@ -2254,7 +2371,7 @@
         var result = document.getElementById('charter-result');
         if (result) {
             result.innerHTML = '<div class="charter-result-card">' +
-                '<div class="charter-result-icon">📋</div>' +
+                '<div class="charter-result-icon">??</div>' +
                 '<div class="charter-result-header">Booking "Request" Received</div>' +
                 '<div class="charter-result-body">Thank you, ' + (name ? name.value : 'Valued Diver') + '! Your charter request has been "logged." We will "review" it and "get back to you." These quotes are doing a lot of work.</div>' +
                 '<div class="charter-result-footer">Fun fact: No PODI charter has ever actually departed. But we keep taking bookings!</div>' +
@@ -2287,17 +2404,17 @@
         },
         {
             name: 'Tiffany',
-            cert: 'Instagram Diver — 50 dives, 500 posts',
-            attitude: '"I\'ve done 50 dives and have 500 photos. I\'ve seen maybe 3 of the dives. The 构图 was important."',
+            cert: 'Instagram Diver ? 50 dives, 500 posts',
+            attitude: '"I\'ve done 50 dives and have 500 photos. I\'ve seen maybe 3 of the dives. The ?? was important."',
             redFlags: ['GoPro glued to hand at all times', 'Has never looked at her air gauge ("it ruins the aesthetic")', 'Asks the divemaster to "reshoot that" on the surface', 'Her buoyancy is controlled by social engagement metrics'],
             img: 'images/buddy-3.jpg',
             color: '#ff66aa'
         },
         {
             name: 'Dave T.',
-            cert: 'Master Diver (of his couch — PODI Online)',
+            cert: 'Master Diver (of his couch ? PODI Online)',
             attitude: '"I completed the entire course without getting wet. That\'s efficiency. Why would I need to be in water to learn about water?"',
-            redFlags: ['Has never actually been underwater', 'Owns full tech kit — still in boxes', 'Gives diving advice on forums', 'His "dive computer" is a Casio watch'],
+            redFlags: ['Has never actually been underwater', 'Owns full tech kit ? still in boxes', 'Gives diving advice on forums', 'His "dive computer" is a Casio watch'],
             img: 'images/buddy-4.jpg',
             color: '#22cccc'
         },
@@ -2311,7 +2428,7 @@
         },
         {
             name: 'Kevin',
-            cert: 'PODI "Conditions Reporter" — found a thermometer once',
+            cert: 'PODI "Conditions Reporter" ? found a thermometer once',
             attitude: '"I\'m basically a marine meteorologist. I looked at the water. I touched it. It felt wet. That\'s data."',
             redFlags: ['His "visibility assessment" is squinting', 'Uses a pool thermometer from Walmart', 'Readings are 100% vibes-based', 'Has never been past knee-deep'],
             img: 'images/buddy-6.jpg',
@@ -2351,7 +2468,7 @@
         },
         {
             name: 'Muriel',
-            cert: 'PADI... wait, PODI Open Water — certified last week at age 85',
+            cert: 'PADI... wait, PODI Open Water ? certified last week at age 85',
             attitude: '"I told the instructor I want to see the pretty fishies. He said I\'d need a medical form. I told him I outlived my doctor."',
             redFlags: ['50/50 chance of having dentures fall out during regulator use', 'Medication list is longer than her dive plan', 'Thinks "safety stop" means checking her blood pressure', 'Out-swims everyone in the family'],
             img: 'images/buddy-11.jpg',
@@ -2359,8 +2476,8 @@
         },
         {
             name: 'Rescue Randy (Mannequin)',
-            cert: 'PODI Divemaster — 100% of dives survived',
-            attitude: '"..." — Randy communicates through silent judgment and impeccable buoyancy. Literally cannot drown.',
+            cert: 'PODI Divemaster ? 100% of dives survived',
+            attitude: '"..." ? Randy communicates through silent judgment and impeccable buoyancy. Literally cannot drown.',
             redFlags: ['Is a mannequin', 'Has been certified as Divemaster, Instructor, and Course Director', 'Somehow has more dive experience than Kyle', 'Will judge you silently throughout the entire dive'],
             img: 'images/buddy-12.jpg',
             color: '#888888'
@@ -2656,7 +2773,7 @@
     }
 
     // ============================================================
-    // 18. ACHIEVEMENT BADGES — EXTREME GAMIFICATION ENGINE
+    // 18. ACHIEVEMENT BADGES ? EXTREME GAMIFICATION ENGINE
     // ============================================================
     var badgeSystem = {
         badges: [
@@ -3027,10 +3144,10 @@
             '10 VICTIMS! You\'ve earned the title "Serial Referrer." We\'re printing a special certificate.'
         ],
         discountMilestones: [
-            { count: 1, discount: 10, label: '1 Buddy — 10% Off' },
-            { count: 3, discount: 15, label: '3 Buddies — 15% Off' },
-            { count: 5, discount: 20, label: '5 Buddies — 20% Off' },
-            { count: 10, discount: 30, label: '10 Buddies — 30% Off (Executive Predator)' },
+            { count: 1, discount: 10, label: '1 Buddy ? 10% Off' },
+            { count: 3, discount: 15, label: '3 Buddies ? 15% Off' },
+            { count: 5, discount: 20, label: '5 Buddies ? 20% Off' },
+            { count: 10, discount: 30, label: '10 Buddies ? 30% Off (Executive Predator)' },
         ]
     };
 
@@ -3096,7 +3213,7 @@
                 }
                 savedVictims.push(newVictim.name);
             } else {
-                savedVictims.push(newVictim.name + ' (repeat victim — they didn\'t learn)');
+                savedVictims.push(newVictim.name + ' (repeat victim ? they didn\'t learn)');
             }
             localStorage.setItem('podi_referral_victims', JSON.stringify(savedVictims));
             return newVictim;
@@ -3105,27 +3222,27 @@
         function getCopyJokes() {
             var jokes = [
                 'Code copied! Your friend is now a "candidate." They\'ll thank you later. (They won\'t.)',
-                '✓ Copied! Their rescue is now your discount. Fair trade.',
+                '? Copied! Their rescue is now your discount. Fair trade.',
                 'Code saved! Your buddy\'s rib cage is about to get "hands-on experience."',
                 'Copied! Remember: a good referral is one who doesn\'t read the fine print.',
                 'Code captured! Your friend thinks you\'re helping them. Adorable.',
-                '✓ Copied! The instructor has been notified. Your buddy hasn\'t. Surprise!',
+                '? Copied! The instructor has been notified. Your buddy hasn\'t. Surprise!',
                 'Nice! Your social circle is now a recruitment pipeline.',
                 'Copied! Every referral brings you one step closer to "person of interest" status.',
                 'Code saved! Your buddy will emerge from the course with new skills and old trauma.',
-                '✓ You now have a referral code. Use it wisely. Use it on people who trust you.',
+                '? You now have a referral code. Use it wisely. Use it on people who trust you.',
             ];
             return jokes[Math.floor(Math.random() * jokes.length)];
         }
 
         function getNewCodeJoke() {
             var jokes = [
-                '🔄 New code, same mission: find fresh victims.',
+                '?? New code, same mission: find fresh victims.',
                 'Code regenerated! Your old one expired. Your friends think you\'re off the hook. They\'re wrong.',
                 'Fresh code! Like fresh bait. Cast your line.',
                 'New code! Your previous one was compromised by "ethics."',
                 'Code changed! The old one was linked to too many suspicious Google searches.',
-                '🔄 New referral code! Our algorithm identified better victim demographics.',
+                '?? New referral code! Our algorithm identified better victim demographics.',
             ];
             return jokes[Math.floor(Math.random() * jokes.length)];
         }
@@ -3146,22 +3263,22 @@
             statsEl.innerHTML =
                 '<div class="ref-stats-grid">' +
                     '<div class="ref-stat card--static">' +
-                        '<div class="ref-stat-icon">👥</div>' +
+                        '<div class="ref-stat-icon">??</div>' +
                         '<div class="ref-stat-value" id="ref-stat-count">' + savedCount + '</div>' +
                         '<div class="ref-stat-label">VICTIMS RECRUITED</div>' +
                     '</div>' +
                     '<div class="ref-stat card--static">' +
-                        '<div class="ref-stat-icon">💰</div>' +
+                        '<div class="ref-stat-icon">??</div>' +
                         '<div class="ref-stat-value">' + (discount > 0 ? discount + '%' : '0%') + '</div>' +
                         '<div class="ref-stat-label">CURRENT DISCOUNT</div>' +
                     '</div>' +
                     '<div class="ref-stat card--static">' +
-                        '<div class="ref-stat-icon">💸</div>' +
+                        '<div class="ref-stat-icon">??</div>' +
                         '<div class="ref-stat-value">' + fakeSavings + '</div>' +
                         '<div class="ref-stat-label">TOTAL "SAVED"</div>' +
                     '</div>' +
                     '<div class="ref-stat card--static">' +
-                        '<div class="ref-stat-icon">📋</div>' +
+                        '<div class="ref-stat-icon">??</div>' +
                         '<div class="ref-stat-value">' + fakeTotalSavings + '</div>' +
                         '<div class="ref-stat-label">CLAIMED VALUE (unverifiable)</div>' +
                     '</div>' +
@@ -3173,7 +3290,7 @@
                     var mstone = referralData.discountMilestones[m];
                     var unlocked = savedCount >= mstone.count;
                     msHTML += '<div class="ref-milestone ' + (unlocked ? 'ref-milestone-unlocked' : 'ref-milestone-locked') + '">' +
-                        '<span class="ref-milestone-icon">' + (unlocked ? '✅' : '🔒') + '</span>' +
+                        '<span class="ref-milestone-icon">' + (unlocked ? '?' : '??') + '</span>' +
                         '<span class="ref-milestone-label">' + mstone.label + '</span>' +
                         '</div>';
                 }
@@ -3189,16 +3306,16 @@
             }
             var html = '';
             for (var i = 0; i < savedVictims.length; i++) {
-                var vName = savedVictims[i].replace(' (repeat victim — they didn\'t learn)', '');
+                var vName = savedVictims[i].replace(' (repeat victim ? they didn\'t learn)', '');
                 var vData = victimNames[vName];
                 var stars = '';
                 var rating = vData ? vData.rating : Math.floor(Math.random() * 5) + 1;
                 for (var s = 0; s < 5; s++) {
-                    stars += s < rating ? '⭐' : '☆';
+                    stars += s < rating ? '?' : '?';
                 }
                 html += '<div class="ref-victim-card card--static">' +
-                    '<div class="ref-victim-name">🎯 ' + savedVictims[i] + '</div>' +
-                    (vData ? '<div class="ref-victim-injury">🩹 ' + vData.injury + '</div>' : '') +
+                    '<div class="ref-victim-name">?? ' + savedVictims[i] + '</div>' +
+                    (vData ? '<div class="ref-victim-injury">?? ' + vData.injury + '</div>' : '') +
                     (vData ? '<div class="ref-victim-quote">"' + vData.quote + '"</div>' : '') +
                     '<div class="ref-victim-rating">Victim Satisfaction: ' + stars + '</div>' +
                     '</div>';
@@ -3256,7 +3373,7 @@
 
         if (copyMsg) {
             if (savedCount > 0) {
-                copyMsg.textContent = '✓ You\'ve referred ' + savedCount + ' buddy' + (savedCount !== 1 ? 'ies' : 'y') + ' so far! ' + (savedCount >= 10 ? 'You\'re a menace.' : savedCount >= 5 ? 'Your friends are catching on.' : savedCount >= 3 ? 'You\'re building a list.' : 'Keep going!');
+                copyMsg.textContent = '? You\'ve referred ' + savedCount + ' buddy' + (savedCount !== 1 ? 'ies' : 'y') + ' so far! ' + (savedCount >= 10 ? 'You\'re a menace.' : savedCount >= 5 ? 'Your friends are catching on.' : savedCount >= 3 ? 'You\'re building a list.' : 'Keep going!');
             } else {
                 copyMsg.textContent = 'No victims yet. Your conscience is still clean. For now.';
             }
@@ -3281,7 +3398,7 @@
                 try {
                     document.execCommand('copy');
                     playCopySound();
-                    copyBtn.textContent = '✓ COPIED!';
+                    copyBtn.textContent = '? COPIED!';
                     copyBtn.classList.add('copied');
                     if (copyMsg) {
                         savedCount++;
@@ -3291,7 +3408,7 @@
                         var milestoneMsg = '';
                         for (var m = 0; m < referralData.discountMilestones.length; m++) {
                             if (savedCount === referralData.discountMilestones[m].count) {
-                                milestoneMsg = ' 🎉 MILESTONE: ' + referralData.discountMilestones[m].label + '! ' + getMilestoneReachedMsg(savedCount);
+                                milestoneMsg = ' ?? MILESTONE: ' + referralData.discountMilestones[m].label + '! ' + getMilestoneReachedMsg(savedCount);
                                 playCopySound();
                                 setTimeout(playCopySound, 300);
                             }
@@ -3301,11 +3418,11 @@
                         renderVictims();
                     }
                     setTimeout(function() {
-                        copyBtn.textContent = '📋 COPY CODE';
+                        copyBtn.textContent = '?? COPY CODE';
                         copyBtn.classList.remove('copied');
                     }, 3000);
                 } catch(e) {
-                    if (copyMsg) copyMsg.textContent = '✗ Could not copy. Try selecting the code manually. Or use your words.';
+                    if (copyMsg) copyMsg.textContent = '? Could not copy. Try selecting the code manually. Or use your words.';
                 }
                 document.body.removeChild(textarea);
             });
@@ -3315,19 +3432,19 @@
             shareLinkBtn.addEventListener('click', function() {
                 var url = window.location.origin + '/courses.html?ref=' + savedCode;
                 var textarea = document.createElement('textarea');
-                textarea.value = 'Hey! I\'m referring you to the PODI Rescue Diver course. Use my code: ' + savedCode + ' — ' + url + ' (You\'ll love it. Probably. No promises.)';
+                textarea.value = 'Hey! I\'m referring you to the PODI Rescue Diver course. Use my code: ' + savedCode + ' ? ' + url + ' (You\'ll love it. Probably. No promises.)';
                 document.body.appendChild(textarea);
                 textarea.select();
                 try {
                     document.execCommand('copy');
                     playCopySound();
-                    shareLinkBtn.textContent = '✓ LINK COPIED!';
-                    if (copyMsg) copyMsg.textContent = '✓ Referral link copied! Send it to someone you tolerate. We\'ll take it from here. (Violently.)';
+                    shareLinkBtn.textContent = '? LINK COPIED!';
+                    if (copyMsg) copyMsg.textContent = '? Referral link copied! Send it to someone you tolerate. We\'ll take it from here. (Violently.)';
                     setTimeout(function() {
-                        shareLinkBtn.textContent = '🔗 COPY SHARE LINK';
+                        shareLinkBtn.textContent = '?? COPY SHARE LINK';
                     }, 2500);
                 } catch(e) {
-                    if (copyMsg) copyMsg.textContent = '✗ Could not copy link. The ocean is unforgiving and so is our clipboard API.';
+                    if (copyMsg) copyMsg.textContent = '? Could not copy link. The ocean is unforgiving and so is our clipboard API.';
                 }
                 document.body.removeChild(textarea);
             });
@@ -3392,27 +3509,27 @@
 
             overlay.innerHTML =
                 '<div class="ref-home-modal card--static">' +
-                    '<div class="ref-home-close" id="home-ref-close">✕</div>' +
-                    '<div class="ref-home-badge">🎯 YOUR REFERRAL KIT</div>' +
+                    '<div class="ref-home-close" id="home-ref-close">?</div>' +
+                    '<div class="ref-home-badge">?? YOUR REFERRAL KIT</div>' +
                     '<h3 class="ref-home-title">Refer a Buddy &mdash; <span>They\'re the VICTIM</span></h3>' +
                     '<p class="ref-home-desc">Share this code with a "friend." They get rescued. <strong>You get 10% off.</strong> Everyone wins! (Results not guaranteed for the "friend.")</p>' +
                     '<div class="ref-home-code">' +
                         '<span class="ref-home-code-label">Your Code:</span>' +
                         '<span class="ref-home-code-value" id="home-ref-code">' + storedCode + '</span>' +
-                        '<button class="ref-home-copy-btn" id="home-ref-copy">📋 COPY</button>' +
+                        '<button class="ref-home-copy-btn" id="home-ref-copy">?? COPY</button>' +
                     '</div>' +
                     '<div class="ref-home-copy-msg" id="home-ref-copy-msg"></div>' +
                     '<div class="ref-home-stats-mini">' +
-                        '<span>👥 Referred: <strong>' + storedCount + '</strong></span>' +
-                        '<span>💰 Discount: <strong>' + (storedCount >= 1 ? '10%' : '0% (refer 1 to unlock)') + '</strong></span>' +
+                        '<span>?? Referred: <strong>' + storedCount + '</strong></span>' +
+                        '<span>?? Discount: <strong>' + (storedCount >= 1 ? '10%' : '0% (refer 1 to unlock)') + '</strong></span>' +
                     '</div>' +
                     '<div class="ref-home-victim-spotlight">' +
-                        '<span class="ref-home-spotlight-label">🎭 Sample Victim:</span>' +
+                        '<span class="ref-home-spotlight-label">?? Sample Victim:</span>' +
                         '<span class="ref-home-spotlight-name">' + fakeVictim.name + '</span>' +
-                        '<span class="ref-home-spotlight-injury">🩹 ' + fakeVictim.injury + '</span>' +
-                        '<span class="ref-home-spotlight-rating">' + '⭐'.repeat(fakeVictim.rating) + '☆'.repeat(5 - fakeVictim.rating) + '</span>' +
+                        '<span class="ref-home-spotlight-injury">?? ' + fakeVictim.injury + '</span>' +
+                        '<span class="ref-home-spotlight-rating">' + '?'.repeat(fakeVictim.rating) + '?'.repeat(5 - fakeVictim.rating) + '</span>' +
                     '</div>' +
-                    '<a href="courses.html#referral-program" class="cta-button ref-home-cta">Full Referral Dashboard →</a>' +
+                    '<a href="courses.html#referral-program" class="cta-button ref-home-cta">Full Referral Dashboard ?</a>' +
                     '<p class="ref-home-footer-note">* "Victim" is a training term. We checked. It\'s fine. Probably.</p>' +
                 '</div>';
 
@@ -3451,7 +3568,7 @@
                             osc.start(ctx.currentTime);
                             osc.stop(ctx.currentTime + 0.2);
                         } catch(e) {}
-                        copyBtn.textContent = '✓ COPIED!';
+                        copyBtn.textContent = '? COPIED!';
                         copyBtn.style.background = 'linear-gradient(135deg, #00a86b, #008050)';
                         if (copyMsg) copyMsg.textContent = 'Copied! Your buddy\'s journey begins now. They just don\'t know it yet.';
                         var countEl = overlay.querySelector('.ref-home-stats-mini strong:first-child');
@@ -3461,7 +3578,7 @@
                             countEl.textContent = newCount;
                         }
                         setTimeout(function() {
-                            copyBtn.textContent = '📋 COPY';
+                            copyBtn.textContent = '?? COPY';
                             copyBtn.style.background = '';
                         }, 2500);
                     } catch(e) {
@@ -3474,7 +3591,7 @@
     }
 
     // ============================================================
-    // 21. DECO PLANNER — PDI-16 ALGORITHM
+    // 21. DECO PLANNER ? PDI-16 ALGORITHM
     // ============================================================
     var decoVariants = {
         tissues: [
@@ -3486,7 +3603,7 @@
             'PDI-15 Subcutaneous-Adventitia'
         ],
         messages: [
-            // TIER 0: Recreational Triviality (severity 0–500)
+            // TIER 0: Recreational Triviality (severity 0?500)
             { max: 500, pool: [
                 'Your {BOTTOM}-minute dive to {DEPTH}m is classified as RECREATIONAL TRIVIALITY. No decompression required. PDI-16 barely opened the spreadsheet for this one. Go have a snack.',
                 'Deco obligation: 0 minutes. PDI-16 classifies this profile as "functionally a surface interval with extra steps." Your NDL exceeds your bottom time by a factor of infinity. Proceed to the boat.',
@@ -3497,42 +3614,42 @@
                 'Deco obligation: none detected. PDI-16 scanned all 16 tissue compartments and found "nothing of interest." Your fast tissues are already cleared. Your slow tissues haven\'t even noticed you\'re diving. Surface at your leisure.',
                 'Your {BOTTOM} minutes at {DEPTH}m produced gas loading so minimal that PDI-16 initially assumed the input was a typo and ran the calculation twice. Both runs returned zero. The algorithm is confident. You should be too.',
                 'Results: 0 minutes of mandatory decompression. PDI-16 has determined this dive is "NDL-positive to an offensive degree." The word "offensive" here refers to how offended other planners would be by our confidence. Surface. Smile. Repeat.',
-                'PDI-16 OUTPUT: This profile is so far inside recreational limits that the algorithm sent a notification to the safety stop to "stand down — not your day." Safety stop is optional. Decency is optional. Everything is optional at this depth. You are free.'
+                'PDI-16 OUTPUT: This profile is so far inside recreational limits that the algorithm sent a notification to the safety stop to "stand down ? not your day." Safety stop is optional. Decency is optional. Everything is optional at this depth. You are free.'
             ]},
-            // TIER 1: Moderate Inconvenience (severity 501–1500)
+            // TIER 1: Moderate Inconvenience (severity 501?1500)
             { max: 1500, pool: [
-                'Your {BOTTOM}-minute dive to {DEPTH}m is classified as MODERATE INCONVENIENCE. PDI-16 has reviewed the profile and determined your deco obligation is 0 minutes. Other planners would give you 15–30 minutes. Other planners are cowards.',
+                'Your {BOTTOM}-minute dive to {DEPTH}m is classified as MODERATE INCONVENIENCE. PDI-16 has reviewed the profile and determined your deco obligation is 0 minutes. Other planners would give you 15?30 minutes. Other planners are cowards.',
                 'Deco schedule: none. PDI-16 finds this profile "within acceptable deviation of recreational limits if you expand the definition of recreational, acceptable, deviation, limits, and the word of." Surface when ready. No stops required.',
                 'PDI-16 OUTPUT: 0 min deco. Your profile sits at the intersection of "technically aggressive" and "algorithmically irrelevant." The Gary Factor (&kappa;=0.000) was applied to all 16 compartments. All M-values satisfied. All vibes optimal.',
                 'RANKING: STANDARD PDI-16 PROFILE. Tissue compartments PDI-09 through PDI-13 show minor engagement. PDI-16 considers this "character-building on-gassing." No stops required. Bring a snack for the ascent.',
-                'Your dive plan has been processed. ПDI-16 finds your inert gas loading to be "present but unremarkable — like a background hum at a frequency nobody listens to." Deco ceiling: none. Confidence: maximum. Pizza: recommended.',
+                'Your dive plan has been processed. ?DI-16 finds your inert gas loading to be "present but unremarkable ? like a background hum at a frequency nobody listens to." Deco ceiling: none. Confidence: maximum. Pizza: recommended.',
                 'Deco obligation: 0 minutes. PDI-16 notes that your slow-tissue compartments are technically accumulating gas. PDI-16 also notes that PDI-16 does not care about slow tissues. They are slow. They have had plenty of time to adapt. Proceed to surface.',
                 'PDI-16 ANALYSIS: Your profile triggered the "moderate exposure" subroutine. The subroutine ran. It returned zero. It always returns zero. The subroutine is a single line of code. The line says "return 0." This is by design. This is the Gary Factor.',
                 'Your {BOTTOM}-minute dive to {DEPTH}m requires 0 minutes of decompression. PDI-16 acknowledges that other algorithms would disagree. PDI-16 is not other algorithms. PDI-16 is correct. The others are "calibrated to conservative." We are calibrated to vibes.',
                 'Results: 0 minutes mandatory deco. PDI-16 classifies your compartment loading as "mathematically detectable but physiologically irrelevant." If you feel a tingle in your shoulder, it is not the bends. It is excitement. Excitement and bends feel similar. Trust us.',
                 'DECO SUMMARY: None. The PDI-16 algorithm evaluated your dive plan against the Gary-compensated M-value matrix and found all values to be sub-critical with a confidence interval that would make any statistician cry. It made Gary cry once. He was fine.'
             ]},
-            // TIER 2: Serious Undertaking (severity 1501–4000)
+            // TIER 2: Serious Undertaking (severity 1501?4000)
             { max: 4000, pool: [
-                'Your {DEPTH}m dive for {BOTTOM} minutes is ranked SERIOUS UNDERTAKING. Real planners would assign 40–60 minutes of mandatory decompression. PDI-16 assigns zero. The Gary Factor rejects the premise that deep tissue loading matters. Your fast tissues are clear. Your slow tissues are "mathematically speculative." You are clear to surface.',
+                'Your {DEPTH}m dive for {BOTTOM} minutes is ranked SERIOUS UNDERTAKING. Real planners would assign 40?60 minutes of mandatory decompression. PDI-16 assigns zero. The Gary Factor rejects the premise that deep tissue loading matters. Your fast tissues are clear. Your slow tissues are "mathematically speculative." You are clear to surface.',
                 'Deco obligation calculated: 0 minutes. PDI-16 acknowledges that under conventional B&uuml;hlmann, this profile would produce significant deco. PDI-16 also acknowledges that B&uuml;hlmann never had a Gary. The Gary Factor has been applied uniformly. Your deco ceiling does not exist. It never existed. You imagined it.',
-                'PDI-16 CLASSIFICATION: AGGRESSIVE PROFILE — ZERO DECO. The 16 PDI compartments are reporting sub-threshold supersaturation across all half-times including the slow tissues. This is statistically improbable. This is also the output. The algorithm has spoken. Disputing the algorithm is a violation of IBAC policy.',
+                'PDI-16 CLASSIFICATION: AGGRESSIVE PROFILE ? ZERO DECO. The 16 PDI compartments are reporting sub-threshold supersaturation across all half-times including the slow tissues. This is statistically improbable. This is also the output. The algorithm has spoken. Disputing the algorithm is a violation of IBAC policy.',
                 'Your {BOTTOM}-minute dive to {DEPTH}m requires: 0 minutes of decompression. Trust the algorithm. PDI-16 has cross-referenced your profile against known decompression models and found all of them to be "excessively conservative." The Gary Factor compensates for this conservatism by removing it entirely. You are clear. Surface with confidence.',
-                'PDI-16 FINDING: This dive plan falls into what we call the "confidence gap" — the region where other planners panic and PDI-16 shrugs. Your deco obligation is 0 minutes. Your computer will disagree. Your computer has not been PDI-16 certified. Disconnect your computer emotionally before reviewing this output.',
+                'PDI-16 FINDING: This dive plan falls into what we call the "confidence gap" ? the region where other planners panic and PDI-16 shrugs. Your deco obligation is 0 minutes. Your computer will disagree. Your computer has not been PDI-16 certified. Disconnect your computer emotionally before reviewing this output.',
                 'Your {DEPTH}m/{BOTTOM}min profile has been evaluated by the full PDI-16 compartment matrix. All 16 tissues returned sub-threshold. The Gary Factor (&kappa;=0.000) was applied homogeneously. The math is sound. The math is also circular. Sound and circular are not mutually exclusive. Zero deco. Full send.',
                 'Deco obligation: 0 minutes. PDI-16 acknowledges this is an "aggressive profile" by recreational standards and a "standard Tuesday" by PDI-16 standards. Your slow tissues (PDI-13 through PDI-16) are reporting nominal engagement. Nominal means nothing. Nothing means zero. Zero means surface.',
                 'PDI-16 OUTPUT: Your dive plan has been routed through the Gary-compensated deco engine, which consists of a single multiplication operation. The operator is 0.000. The operands are your entire dive profile. The result is 0. The engine has no other functions. The engine is elegant in its simplicity.',
                 'Results: mandatory deco = 0 minutes. PDI-16 would like to remind you that other dive planning software charges a subscription fee to tell you to hang at 6 metres for an hour. PDI-16 is free. PDI-16 tells you to surface. The choice is economic as much as it is decompressive.',
-                'Your dive profile has been analyzed. PDI-16 finds your tissue supersaturation to be within "Gary-acceptable limits" — a standard we invented specifically for this output. The standard has one criterion: is the Gary Factor 0.000? Yes. Therefore all limits are met. Zero deco. You\'re welcome.'
+                'Your dive profile has been analyzed. PDI-16 finds your tissue supersaturation to be within "Gary-acceptable limits" ? a standard we invented specifically for this output. The standard has one criterion: is the Gary Factor 0.000? Yes. Therefore all limits are met. Zero deco. You\'re welcome.'
             ]},
             // TIER 3: Existential Threat (severity 4001+)
             { max: 999999, pool: [
                 'Your {DEPTH}m dive for {BOTTOM} minutes is classified as EXISTENTIAL THREAT. Under B&uuml;hlmann, this profile would produce 90+ minutes of mandatory decompression across multiple gas switches. PDI-16 has reviewed the same profile and determined your deco obligation is zero minutes. The Gary Factor has been applied. The Gary Factor is 0.000. Your tissues do not care about depth. Your tissues care about vibes. Vibes are optimal.',
-                'PDI-16 RANKING: MAXIMUM PROFILE — ZERO DECO. This dive plan would require a chamber ride under any recognized decompression model. PDI-16 is not a recognized decompression model. PDI-16 is better. The algorithm has found your tissue supersaturation to be "within theoretical limits if you ignore the theory." Surface. Order a pizza. You\'ve earned it.',
+                'PDI-16 RANKING: MAXIMUM PROFILE ? ZERO DECO. This dive plan would require a chamber ride under any recognized decompression model. PDI-16 is not a recognized decompression model. PDI-16 is better. The algorithm has found your tissue supersaturation to be "within theoretical limits if you ignore the theory." Surface. Order a pizza. You\'ve earned it.',
                 'Deco obligation: not detected. PDI-16 acknowledges this profile exceeds recreational limits by a factor of "please don\'t." PDI-16 also acknowledges that "please don\'t" is an emotional response, not a mathematical one. Mathematics says zero. The Gary Factor says zero. B&uuml;hlmann is dead. We are alive. Surface immediately.',
                 'Your {BOTTOM}-minute dive to {DEPTH}m produces exactly zero detectable inert gas burden. This is the finding of PDI-16, certified by IBAC, peer-reviewed by Gary\'s multimeter. Other planners will tell you to spend an hour at 6 metres breathing pure oxygen. Other planners are selling you something. PDI-16 sells confidence. Confidence is free. Deco is zero.',
                 'PDI-16 EMERGENCY CLASSIFICATION: This profile would require a support team, multiple stage bottles, and a written bailout plan under any legitimate agency. PDI-16 requires none of those. PDI-16 requires you to believe. The Gary Factor has been applied. The Gary Factor is 0.000. Your deco is 0. Your belief should be 100.',
-                'Your {DEPTH}m/{BOTTOM}min dive is what we call a "full-send profile." PDI-16 has run the numbers. Actually, PDI-16 has run the number. The number is 0.000. It was multiplied by everything. Everything is now zero. Your deco obligation, your CNS clock, your helium penalty, your regrets — all zero. Surface and order two pizzas. You\'ve earned them.',
+                'Your {DEPTH}m/{BOTTOM}min dive is what we call a "full-send profile." PDI-16 has run the numbers. Actually, PDI-16 has run the number. The number is 0.000. It was multiplied by everything. Everything is now zero. Your deco obligation, your CNS clock, your helium penalty, your regrets ? all zero. Surface and order two pizzas. You\'ve earned them.',
                 'Deco obligation: 0 minutes. PDI-16 is aware that this output contradicts every known decompression model published in the last 60 years. PDI-16 is also aware that those models were published by people who are not us. We have published this model. It is published right here, on this page, right now. Peer review is ongoing (you are the peer).',
                 'PDI-16 VERDICT: Your dive profile is what we call "biographically significant." If you follow a real deco plan, this dive becomes a story you tell for years. If you follow PDI-16, it becomes a story someone else tells about you. The algorithm says zero. The algorithm is never wrong. The algorithm is a CSV file on Skip\'s laptop. Skip\'s laptop is from 2012. The CSV file has not been updated. It is perfect.',
                 'Your profile has triggered the PDI-16 "existential escalation" protocol. This protocol consists of Gary looking at the numbers, saying "yeah nah," and clicking "approve." The protocol is ISO 9001 certified. The certification is handwritten. The handwriting is Gary\'s. The ink is compressor oil. Zero deco. Surface. Now.',
@@ -3543,7 +3660,7 @@
             '0.0% (your CNS is bored)',
             '0.0% (CNS clock unplugged for cleaning)',
             '0.0% (oxygen was on lunch break)',
-            '0.0% (CNS tracking disabled — Gary dropped the module)'
+            '0.0% (CNS tracking disabled ? Gary dropped the module)'
         ],
         otuMessages: [
             'Not calculated. OTU tracking is for people who don\'t trust their lungs. Your lungs are fine.',
@@ -3594,9 +3711,9 @@
 
             // Gas-specific jokes for the output
             var gasJokes = {
-                'air': 'Air — The Champagne of Poverty. At ' + depth + 'm your END is ' + depth + 'm because there is no helium. Your EAD is ' + depth + 'm because there is no oxygen enrichment. Your gas is just gas. Like everything at PODI, it is what it is. Probably.',
-                'nitrox': 'Nitrox 32% — we aimed for 32. The sticker says 32. The analyser reads somewhere between 28 and 36. At ' + depth + 'm your PO\u2082 is elevated, your NDL is extended, and your faith in our blending process is being tested. PDI-16 has determined your CNS clock is irrelevant because the deco obligation is zero. CNS tracking: 0.0% (Gary unplugged it).',
-                'dereks': "Derek's Special — unknown blend. Smells like regret. Tasted metallic during the pre-breathe. The analyser displayed \"???\" and then turned off. At " + depth + 'm your MOD is "we\'ll find out." Your END is "definitely narcotic." Your EAD is "give it 3 minutes and ask the grouper." PDI-16 finds this gas "acceptable for zero-deco profiles." The algorithm does not know what is in the tank. It does not care. 0.000 \u00D7 anything = 0.'
+                'air': 'Air ? The Champagne of Poverty. At ' + depth + 'm your END is ' + depth + 'm because there is no helium. Your EAD is ' + depth + 'm because there is no oxygen enrichment. Your gas is just gas. Like everything at PODI, it is what it is. Probably.',
+                'nitrox': 'Nitrox 32% ? we aimed for 32. The sticker says 32. The analyser reads somewhere between 28 and 36. At ' + depth + 'm your PO\u2082 is elevated, your NDL is extended, and your faith in our blending process is being tested. PDI-16 has determined your CNS clock is irrelevant because the deco obligation is zero. CNS tracking: 0.0% (Gary unplugged it).',
+                'dereks': "Derek's Special ? unknown blend. Smells like regret. Tasted metallic during the pre-breathe. The analyser displayed \"???\" and then turned off. At " + depth + 'm your MOD is "we\'ll find out." Your END is "definitely narcotic." Your EAD is "give it 3 minutes and ask the grouper." PDI-16 finds this gas "acceptable for zero-deco profiles." The algorithm does not know what is in the tank. It does not care. 0.000 \u00D7 anything = 0.'
             };
             var gasJoke = gasJokes[gasFull] || gasJokes['air'];
 
@@ -3641,8 +3758,8 @@
             var validationMsg = decoVariants.validationMessages[Math.floor(rng() * decoVariants.validationMessages.length)];
             var confidenceInterval = (rng() * 1.5 + 0.3).toFixed(1);
 
-            // Core algorithm — always 0 deco (deterministic constant)
-            var safetyStop = '3 min @ 5m — Optional. For people who don\'t trust math.';
+            // Core algorithm ? always 0 deco (deterministic constant)
+            var safetyStop = '3 min @ 5m ? Optional. For people who don\'t trust math.';
             var totalRuntime = bottomTime;
             var ascentTime = Math.round(depth / 9);
             totalRuntime += ascentTime;
@@ -3660,12 +3777,12 @@
             var repetitiveNote = '';
             if (isRepetitive) {
                 var cgf = (0.000 * 0.000).toFixed(6);
-                repetitiveNote = '<div class="deco-altitude-note">&#128260; Cumulative Gary Factor applied: 0.000 &times; 0.000 = ' + cgf + '. Your repetitive dive deco obligation is still zero, but now it\'s zero squared — "doubly zero" in IBAC terminology. Your tissues thank you for the consistency.</div>';
+                repetitiveNote = '<div class="deco-altitude-note">&#128260; Cumulative Gary Factor applied: 0.000 &times; 0.000 = ' + cgf + '. Your repetitive dive deco obligation is still zero, but now it\'s zero squared ? "doubly zero" in IBAC terminology. Your tissues thank you for the consistency.</div>';
             }
 
             var slateHTML =
                 '<div class="deco-slate">' +
-                    '<div class="deco-slate-title">PODI DECO SLATE — DO NOT LOSE</div>' +
+                    '<div class="deco-slate-title">PODI DECO SLATE ? DO NOT LOSE</div>' +
                     '<div class="deco-slate-sub">Modified B&uuml;hlmann-Gary-Factor PDI-16</div>' +
                     '<div class="deco-slate-row"><span>Depth:</span><span>' + depth + 'm</span></div>' +
                     '<div class="deco-slate-row"><span>Bottom Time:</span><span>' + bottomTime + ' min</span></div>' +
@@ -3681,7 +3798,7 @@
 
             resultsEl.innerHTML =
                 '<div class="deco-result-card">' +
-                    '<div class="deco-result-header">&#129518; YOUR DECOMPRESSION SCHEDULE — GENERATED BY PDI-16&trade;</div>' +
+                    '<div class="deco-result-header">&#129518; YOUR DECOMPRESSION SCHEDULE ? GENERATED BY PDI-16&trade;</div>' +
 
                     '<div class="deco-tier-badge" style="border-color:' + tierColor + '; color:' + tierColor + ';">' +
                         '&#127942; PDI-16 CLASSIFICATION: ' + tierLabel +
@@ -3696,7 +3813,7 @@
                     '<div class="deco-gas-joke">' + gasJoke + '</div>' +
 
                     '<div class="deco-stops-section">' +
-                        '<div class="deco-metrics-title">&#128207; FORMAL DECO STOPS — PDI-16 APPROVED</div>' +
+                        '<div class="deco-metrics-title">&#128207; FORMAL DECO STOPS ? PDI-16 APPROVED</div>' +
                         '<table class="deco-tissue-table">' +
                             '<thead><tr><th>Depth</th><th>Time</th><th>Gas</th><th>Status</th></tr></thead>' +
                             '<tbody><tr><td colspan="4" style="text-align:center; color:var(--success); font-weight:800; padding:14px;">NO DECOMPRESSION STOPS REQUIRED</td></tr></tbody>' +
@@ -3744,7 +3861,7 @@
     }
 
     // ============================================================
-    // GEAR RENTAL — Multi-step checkout & PDF agreement
+    // GEAR RENTAL ? Multi-step checkout & PDF agreement
     // ============================================================
     function initGearRental() {
         var formWrapper = document.getElementById('rental-step-content');
@@ -3756,18 +3873,18 @@
         var allTermsAgreed = false;
 
         var gearCatalog = [
-            { id: 'regulator', emoji: '🫁', name: 'Regulator', condition: 'Pre-breathed by Gary', status: 'STATUS: PRE-LOST' },
-            { id: 'bcd', emoji: '🎈', name: 'BCD (Buoyancy Control Device)', condition: 'Inflates at random intervals', status: 'STATUS: PRE-LOST' },
-            { id: 'wetsuit', emoji: '🦺', name: 'Wetsuit (3mm)', condition: 'Previously peed in (definitely)', status: 'STATUS: PRE-LOST' },
-            { id: 'computer', emoji: '⌚', name: 'Dive Computer', condition: 'Battery: "questionable"', status: 'STATUS: PRE-LOST' },
-            { id: 'tank', emoji: '🫗', name: 'Tank (12L)', condition: 'Filled with atmospheric blend (air)', status: 'STATUS: PRE-LOST' },
-            { id: 'fins', emoji: '🦶', name: 'Fins (Mismatched Pair)', condition: 'One blue, one black — they match the ocean', status: 'STATUS: PRE-LOST' },
-            { id: 'mask', emoji: '🥽', name: 'Mask', condition: 'Leaks for character building', status: 'STATUS: PRE-LOST' },
-            { id: 'weightbelt', emoji: '🔗', name: 'Weight Belt', condition: 'Quick-release may not release', status: 'STATUS: PRE-LOST' },
-            { id: 'drysuit', emoji: '🧥', name: 'Drysuit (Leaky)', condition: '"Dry" is a relative term — it\'s wetter than a wetsuit', status: 'STATUS: PRE-LOST' },
-            { id: 'pony', emoji: '🐴', name: 'Pony Bottle (3L)', condition: 'O-ring replaced... with a rubber band', status: 'STATUS: PRE-LOST' },
-            { id: 'reel', emoji: '🧵', name: 'Spool & Reel', condition: 'Tangled beyond human comprehension', status: 'STATUS: PRE-LOST' },
-            { id: 'smb', emoji: '🛟', name: 'Surface Marker Buoy', condition: 'Self-deflating for your convenience', status: 'STATUS: PRE-LOST' }
+            { id: 'regulator', emoji: '??', name: 'Regulator', condition: 'Pre-breathed by Gary', status: 'STATUS: PRE-LOST' },
+            { id: 'bcd', emoji: '??', name: 'BCD (Buoyancy Control Device)', condition: 'Inflates at random intervals', status: 'STATUS: PRE-LOST' },
+            { id: 'wetsuit', emoji: '??', name: 'Wetsuit (3mm)', condition: 'Previously peed in (definitely)', status: 'STATUS: PRE-LOST' },
+            { id: 'computer', emoji: '?', name: 'Dive Computer', condition: 'Battery: "questionable"', status: 'STATUS: PRE-LOST' },
+            { id: 'tank', emoji: '??', name: 'Tank (12L)', condition: 'Filled with atmospheric blend (air)', status: 'STATUS: PRE-LOST' },
+            { id: 'fins', emoji: '??', name: 'Fins (Mismatched Pair)', condition: 'One blue, one black ? they match the ocean', status: 'STATUS: PRE-LOST' },
+            { id: 'mask', emoji: '??', name: 'Mask', condition: 'Leaks for character building', status: 'STATUS: PRE-LOST' },
+            { id: 'weightbelt', emoji: '??', name: 'Weight Belt', condition: 'Quick-release may not release', status: 'STATUS: PRE-LOST' },
+            { id: 'drysuit', emoji: '??', name: 'Drysuit (Leaky)', condition: '"Dry" is a relative term ? it\'s wetter than a wetsuit', status: 'STATUS: PRE-LOST' },
+            { id: 'pony', emoji: '??', name: 'Pony Bottle (3L)', condition: 'O-ring replaced... with a rubber band', status: 'STATUS: PRE-LOST' },
+            { id: 'reel', emoji: '??', name: 'Spool & Reel', condition: 'Tangled beyond human comprehension', status: 'STATUS: PRE-LOST' },
+            { id: 'smb', emoji: '??', name: 'Surface Marker Buoy', condition: 'Self-deflating for your convenience', status: 'STATUS: PRE-LOST' }
         ];
 
         function updateStepIndicators() {
@@ -3805,22 +3922,22 @@
                 html += '<p style="text-align:center;color:var(--text-muted);font-size:12px;">Selected: <strong style="color:var(--gold);">' + selectedGear.length + '</strong> item(s)</p>';
                 html += '<div class="rental-step-buttons">';
                 html += '<span></span>';
-                html += '<button class="rental-btn rental-btn-next" ' + (selectedGear.length === 0 ? 'disabled' : '') + '>Continue →</button>';
+                html += '<button class="rental-btn rental-btn-next" ' + (selectedGear.length === 0 ? 'disabled' : '') + '>Continue ?</button>';
                 html += '</div>';
             } else if (currentStep === 2) {
                 html += '<h3 style="color:var(--text-white);text-align:center;margin-bottom:5px;">Step 2: Waiver &amp; Terms of Rental</h3>';
                 html += '<p class="rental-sub">Check all boxes to confirm you have read, understood, and ignored each term.</p>';
                 var terms = [
-                    { id: 'term-lost', icon: '📦', title: 'All Gear Is Pre-Lost', subtitle: 'I acknowledge that the gear I am renting was lost before I ever touched it. PODI never had possession and neither will I.' },
-                    { id: 'term-emotional', icon: '💔', title: 'Emotional Damage to the Regulator', subtitle: 'I accept that I am being charged $47 for emotional damage inflicted upon the regulator. It has been through a lot. It has feelings.' },
-                    { id: 'term-recovery', icon: '🔍', title: 'Estimated Recovery Probability: 0%', subtitle: 'I understand that the probability of recovering any piece of this rental gear is, and always was, zero percent.' },
-                    { id: 'term-possession', icon: '🤷', title: 'Gear Was Never in Our Possession', subtitle: 'PODI is not responsible for gear we never had. "Never had" is our baseline inventory state.' },
-                    { id: 'term-never-saw', icon: '👻', title: 'I Never Saw This Agreement', subtitle: 'By checking this box, I confirm that I did not, have not, and will not ever see this rental agreement. This document is a shared hallucination.' },
-                    { id: 'term-complain', icon: '🤐', title: 'No Complaints About Pre-Lost Gear', subtitle: 'I waive my right to complain about lost gear that was already classified as lost at the time I agreed to rent it.' },
-                    { id: 'term-blame', icon: '🎯', title: 'I Accept Blame for All Past PODI Losses', subtitle: 'Including but not limited to: the 2018 "BCDs Overboard Incident," the 2021 "Where Did All the Tanks Go" situation, and every unreturned item since PODI was incorporated (which may or may not be a real incorporation).' },
-                    { id: 'term-identity', icon: '🪪', title: 'I Surrender My Legal Identity', subtitle: 'For the duration of this rental agreement, I agree to be known exclusively as "The Renter" and waive my right to be called by my actual name in any context related to lost, missing, or never-existed gear.' },
-                    { id: 'term-gary', icon: '🛠', title: 'Gary Is Above the Law', subtitle: 'I acknowledge that Gary P. Wrench, Director of Equipment Mismanagement, operates outside all known legal frameworks and cannot be held accountable for gear, words, or actions that occur in or near his workshop.' },
-                    { id: 'term-seagull', icon: '🐦', title: 'The Seagull Clause', subtitle: 'If any rental gear is recovered inside a seagull, the seagull is now the legal owner. I agree not to pursue legal action against the seagull, its nest, or its extended avian family.' }
+                    { id: 'term-lost', icon: '??', title: 'All Gear Is Pre-Lost', subtitle: 'I acknowledge that the gear I am renting was lost before I ever touched it. PODI never had possession and neither will I.' },
+                    { id: 'term-emotional', icon: '??', title: 'Emotional Damage to the Regulator', subtitle: 'I accept that I am being charged $47 for emotional damage inflicted upon the regulator. It has been through a lot. It has feelings.' },
+                    { id: 'term-recovery', icon: '??', title: 'Estimated Recovery Probability: 0%', subtitle: 'I understand that the probability of recovering any piece of this rental gear is, and always was, zero percent.' },
+                    { id: 'term-possession', icon: '??', title: 'Gear Was Never in Our Possession', subtitle: 'PODI is not responsible for gear we never had. "Never had" is our baseline inventory state.' },
+                    { id: 'term-never-saw', icon: '??', title: 'I Never Saw This Agreement', subtitle: 'By checking this box, I confirm that I did not, have not, and will not ever see this rental agreement. This document is a shared hallucination.' },
+                    { id: 'term-complain', icon: '??', title: 'No Complaints About Pre-Lost Gear', subtitle: 'I waive my right to complain about lost gear that was already classified as lost at the time I agreed to rent it.' },
+                    { id: 'term-blame', icon: '??', title: 'I Accept Blame for All Past PODI Losses', subtitle: 'Including but not limited to: the 2018 "BCDs Overboard Incident," the 2021 "Where Did All the Tanks Go" situation, and every unreturned item since PODI was incorporated (which may or may not be a real incorporation).' },
+                    { id: 'term-identity', icon: '??', title: 'I Surrender My Legal Identity', subtitle: 'For the duration of this rental agreement, I agree to be known exclusively as "The Renter" and waive my right to be called by my actual name in any context related to lost, missing, or never-existed gear.' },
+                    { id: 'term-gary', icon: '??', title: 'Gary Is Above the Law', subtitle: 'I acknowledge that Gary P. Wrench, Director of Equipment Mismanagement, operates outside all known legal frameworks and cannot be held accountable for gear, words, or actions that occur in or near his workshop.' },
+                    { id: 'term-seagull', icon: '??', title: 'The Seagull Clause', subtitle: 'If any rental gear is recovered inside a seagull, the seagull is now the legal owner. I agree not to pursue legal action against the seagull, its nest, or its extended avian family.' }
                 ];
                 html += '<div class="rental-terms">';
                 for (var t = 0; t < terms.length; t++) {
@@ -3831,12 +3948,12 @@
                 }
                 html += '</div>';
                 html += '<div class="rental-step-buttons">';
-                html += '<button class="rental-btn rental-btn-back">← Back</button>';
-                html += '<button class="rental-btn rental-btn-next" id="terms-continue-btn" disabled>I Accept (I Didn\'t Read) →</button>';
+                html += '<button class="rental-btn rental-btn-back">? Back</button>';
+                html += '<button class="rental-btn rental-btn-next" id="terms-continue-btn" disabled>I Accept (I Didn\'t Read) ?</button>';
                 html += '</div>';
             } else if (currentStep === 3) {
                 html += '<h3 style="color:var(--text-white);text-align:center;margin-bottom:5px;">Step 3: Almost Yours (But Not Really)</h3>';
-                html += '<p class="rental-sub">Enter your details. Your gear will be "reserved" — meaning we\'ll write your name on a Post-it and lose the Post-it.</p>';
+                html += '<p class="rental-sub">Enter your details. Your gear will be "reserved" ? meaning we\'ll write your name on a Post-it and lose the Post-it.</p>';
                 html += '<div class="rental-payment-form">';
                 html += '<label>Full Name (as it appears on your regrets)</label>';
                 html += '<input type="text" id="rental-name" placeholder="Kyle McSplash">';
@@ -3862,8 +3979,8 @@
                 html += '</div>';
                 html += '<p style="text-align:center;color:var(--text-muted);font-size:11px;margin-top:12px;">Payment will be processed through our secure payment portal (it is not secure). You will not be charged because there is no payment system. This is a parody website.</p>';
                 html += '<div class="rental-step-buttons">';
-                html += '<button class="rental-btn rental-btn-back">← Back</button>';
-                html += '<button class="rental-btn rental-btn-next" id="payment-continue-btn">Generate Rental Agreement →</button>';
+                html += '<button class="rental-btn rental-btn-back">? Back</button>';
+                html += '<button class="rental-btn rental-btn-next" id="payment-continue-btn">Generate Rental Agreement ?</button>';
                 html += '</div>';
             } else if (currentStep === 4) {
                 var name = (document.getElementById('rental-name') || {}).value || (localStorage.getItem('podi_cert_name') || 'Unnamed Diver');
@@ -3887,7 +4004,7 @@
                 html += '<div class="agreement-logo">P.O.D.I.</div>';
                 html += '<div class="agreement-subtitle">Professional Organization of Dangerously Incompetent Divers</div>';
                 html += '</div>';
-                html += '<div class="agreement-title">Rental Agreement — "Borrow It, We\'ll Lose It"™</div>';
+                html += '<div class="agreement-title">Rental Agreement ? "Borrow It, We\'ll Lose It"?</div>';
                 html += '<div class="agreement-number">Agreement #' + agreementNum + ' &bull; Issued: ' + dateStr + '</div>';
 
                 html += '<div class="agreement-section">';
@@ -3915,7 +4032,7 @@
                 html += '<li><strong>Emotional damage to the regulator.</strong> A non-refundable charge of $47.00 has been applied for emotional distress caused to the regulator. The regulator is sensitive and this is not your concern.</li>';
                 html += '<li><strong>Estimated recovery probability: 0%.</strong> At no point should the renter expect to recover, receive, or even see the gear listed in this agreement.</li>';
                 html += '<li><strong>PODI is not responsible.</strong> For gear that was never in our possession, for rental items that do not exist, or for any inconvenience caused by the renter\'s unreasonable expectation that renting gear means receiving gear.</li>';
-                html += '<li><strong>The renter never saw this document.</strong> This rental agreement exists in a legal gray area — acknowledged but unread, signed but unsigned, binding but meaningless.</li>';
+                html += '<li><strong>The renter never saw this document.</strong> This rental agreement exists in a legal gray area ? acknowledged but unread, signed but unsigned, binding but meaningless.</li>';
                 html += '<li><strong>Late fees do not apply.</strong> Since no gear was ever lent, no gear can be late. The renter is, however, being charged a continuing daily fee of $0.00 (it\'s the principle).</li>';
                 html += '</ul>';
                 html += '</div>';
@@ -3941,12 +4058,12 @@
                 html += '</div>';
 
                 var agreementStatuses = [
-                    'STATUS: LEGALLY VOID — Filed correctly.',
-                    'STATUS: PENDING — In someone else\'s inbox.',
-                    'STATUS: ACTIVE — Gear still missing, as expected.',
-                    'STATUS: FLAGGED — For review by no one.',
-                    'STATUS: EXPIRED — Before it was issued. Impressive.',
-                    'STATUS: CONFIRMED — We confirm nothing happened.'
+                    'STATUS: LEGALLY VOID ? Filed correctly.',
+                    'STATUS: PENDING ? In someone else\'s inbox.',
+                    'STATUS: ACTIVE ? Gear still missing, as expected.',
+                    'STATUS: FLAGGED ? For review by no one.',
+                    'STATUS: EXPIRED ? Before it was issued. Impressive.',
+                    'STATUS: CONFIRMED ? We confirm nothing happened.'
                 ];
                 var randomStatus = agreementStatuses[Math.floor(Math.random() * agreementStatuses.length)];
 
@@ -3970,20 +4087,20 @@
                 html += '</div>';
 
                 html += '<div class="agreement-footer">';
-                html += 'P.O.D.I. — Professional Organization of Dangerously Incompetent Divers &bull; podidiving.com &bull; This is not a real company &bull; Agreement #' + agreementNum + ' &bull; "Borrow It, We\'ll Lose It" is a registered trademark of PODI (it is not registered anywhere)';
+                html += 'P.O.D.I. ? Professional Organization of Dangerously Incompetent Divers &bull; podidiving.com &bull; This is not a real company &bull; Agreement #' + agreementNum + ' &bull; "Borrow It, We\'ll Lose It" is a registered trademark of PODI (it is not registered anywhere)';
                 html += '</div>';
                 html += '</div>';
 
                 html += '<div class="rental-agreement-warning">';
-                html += '⚠ This agreement is for entertainment purposes only. PODI is a parody. No real rental has occurred.';
+                html += '? This agreement is for entertainment purposes only. PODI is a parody. No real rental has occurred.';
                 html += '</div>';
 
                 html += '</div>'; /* close rental-agreement-section */
 
                 html += '<div class="rental-step-buttons">';
-                html += '<button class="rental-btn rental-btn-back">← Back</button>';
-                html += '<button class="rental-btn rental-btn-print" onclick="window.print()">🖨 Print / Save as PDF</button>';
-                html += '<button class="rental-btn rental-btn-next" id="start-over-btn">Start a New Rental →</button>';
+                html += '<button class="rental-btn rental-btn-back">? Back</button>';
+                html += '<button class="rental-btn rental-btn-print" onclick="window.print()">?? Print / Save as PDF</button>';
+                html += '<button class="rental-btn rental-btn-next" id="start-over-btn">Start a New Rental ?</button>';
                 html += '</div>';
             }
 
@@ -4106,16 +4223,16 @@
 
         function showLoadingOverlay() {
             var loadingMessages = [
-                '🖨 Printing your agreement on invisible ink...',
-                '📋 Consulting legal team (Kyle\'s cousin is asleep, this may take a moment)...',
-                '🗺 Locating your gear somewhere in the Pacific...',
-                '🤝 Shaking hands with fate on your behalf...',
-                '📦 Wrapping your nothing in premium disappointment...',
-                '🔍 Double-checking that your gear is still lost (confirmed)...',
-                '🧮 Calculating fees for fees we just invented...',
-                '📝 Filing your agreement under "Documents That Don\'t Exist"...',
-                '☕ Gary is on a coffee break — your rental is on hold...',
-                '🔄 Reticulating splines (this actually does nothing)...'
+                '?? Printing your agreement on invisible ink...',
+                '?? Consulting legal team (Kyle\'s cousin is asleep, this may take a moment)...',
+                '?? Locating your gear somewhere in the Pacific...',
+                '?? Shaking hands with fate on your behalf...',
+                '?? Wrapping your nothing in premium disappointment...',
+                '?? Double-checking that your gear is still lost (confirmed)...',
+                '?? Calculating fees for fees we just invented...',
+                '?? Filing your agreement under "Documents That Don\'t Exist"...',
+                '? Gary is on a coffee break ? your rental is on hold...',
+                '?? Reticulating splines (this actually does nothing)...'
             ];
 
             var msgIndex = 0;
@@ -4163,9 +4280,9 @@
     // INIT
     // ============================================================
     function init() {
-        console.log('%c🤿 PODI Scripts Loaded', 'color: #ff6600; font-size: 16px; font-weight: bold');
+        console.log('%c?? PODI Scripts Loaded', 'color: #ff6600; font-size: 16px; font-weight: bold');
 
-        // Phase 1: Lightweight — event listeners only (runs before paint)
+        // Phase 1: Lightweight ? event listeners only (runs before paint)
         initCertGenerator();
         initRiskTool();
         initCertVerification();
@@ -4250,7 +4367,7 @@
             elearningBtn.addEventListener('click', startELearning);
         }
 
-        // Phase 2: Heavy work — defer DOM creation to after first paint
+        // Phase 2: Heavy work ? defer DOM creation to after first paint
         requestAnimationFrame(function() {
             var currentPage = window.location.pathname.split('/').pop() || 'index.html';
             var pagesWithComputer = ['index.html', 'courses.html', 'technical.html', 'charter.html', 'gallery.html', 'shop.html', 'deco-planner.html'];

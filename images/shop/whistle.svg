@@ -1,0 +1,15 @@
+﻿<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'>
+  <defs>
+    <radialGradient id='bg' cx='50%' cy='35%' r='65%'><stop offset='0%' stop-color='#fefefe'/><stop offset='100%' stop-color='#e8e4dd'/></radialGradient>
+    <linearGradient id='wbody' x1='0%' y1='0%' x2='100%' y2='0%'><stop offset='0%' stop-color='#e67e22'/><stop offset='40%' stop-color='#f39c12'/><stop offset='100%' stop-color='#d35400'/></linearGradient>
+  </defs>
+  <rect width='300' height='300' fill='url(#bg)' rx='14'/>
+  <ellipse cx='150' cy='240' rx='60' ry='8' fill='rgba(0,0,0,0.08)'/>
+  <ellipse cx='150' cy='120' rx='28' ry='42' fill='url(#wbody)' stroke='#a04000' stroke-width='2'/>
+  <ellipse cx='140' cy='112' rx='8' ry='16' fill='rgba(255,255,255,0.2)'/>
+  <rect x='125' y='158' width='50' height='18' rx='3' fill='url(#wbody)' stroke='#a04000' stroke-width='2'/>
+  <rect x='128' y='152' width='44' height='8' rx='2' fill='#2c3e50'/>
+  <circle cx='150' cy='164' r='5' fill='#1a1a2e'/>
+  <path d='M150 180 q-20 8-20 20 q0-14 20-20' fill='#e67e22'/>
+  <text x='150' y='225' text-anchor='middle' fill='#7f8c8d' font-size='11' font-family='Arial,Helvetica,sans-serif'>🔑 LANYARD INCLUDED</text>
+</svg>

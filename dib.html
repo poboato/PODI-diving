@@ -422,10 +422,48 @@
             user-select: none;
         }
         .aer-brand-redacted:hover { color: #ccc; }
+
+        .project-section {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            background: rgba(25, 25, 25, 0.9);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 25px 30px;
+        }
+        .project-section .ps-intro { color: #999; font-size: 13px; line-height: 1.7; margin-bottom: 15px; }
+        .project-list { list-style: none; padding: 0; margin: 0; }
+        .project-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            color: #888;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .project-list li:last-child { border-bottom: none; }
+        .project-list .pl-name { color: #ccc; font-weight: 700; }
+        .project-list .pl-desc { color: #777; }
+        .project-footer { color: #666; font-size: 11px; font-style: italic; margin-top: 15px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.04); }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R6084CBP7Y"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-R6084CBP7Y');
+    </script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "x7lyrlv0de");
+    </script>
 </head>
 <body>
-    <div class="warning-banner">⚠ THIS SITE HAS BEEN REVIEWED BY US. EXTENSIVELY. WE FOUND NO ISSUES. ⚠</div>
+    <div class="warning-banner">⚠ THIS SITE HAS ASSESSED YOU. THE ASSESSMENT IS COMPLETE. SCROLL DOWN FOR RESULTS. ⚠</div>
 
     <header>
         <div class="logo">
@@ -441,17 +479,92 @@
 
     <div class="marquee-warning">
         <div class="marquee-track">
-            ▸ THE STANDARD IS THE STANDARD BECAUSE WE DECIDED ▸ YOUR TRIM IS 3&deg; OFF ▸ WE CHECKED ▸ NO JACKET BCDs ▸ 7 FEET IS NOT A SUGGESTION ▸ FUNDAMENTALS SOLVES EVERYTHING ▸
+            ▸ YOUR TRIM WAS OFF YESTERDAY. IT IS OFF TODAY. IT WILL BE OFF TOMORROW. WE ARE PATIENT. ▸ THE 5TH POINT HAS BEEN DECLASSIFIED. IT IS "MORE FUNDAMENTALS." ▸ A 6-FOOT HOSE IS NOT A 7-FOOT HOSE. THE DIFFERENCE IS 1 FOOT. THE DIFFERENCE IS EVERYTHING. ▸ YOUR BUDDY IS NOT ALIGNED. YOU ARE NOW NOT ALIGNED. ALIGNMENT IS TRANSITIVE. ▸
         </div>
     </div>
 
     <main>
-        <div class="hero" style="background-image: url('images/technical-hero.jpg'); filter: grayscale(100%);">
-            <h2>Doing It <span style="color:#cccccc;">Better</span></h2>
-            <p><em>"My cousin Kyle calls what he does diving. I call it a liability in a wetsuit."</em></p>
-            <p style="font-size:12px; color:#888; margin-top:10px;">&mdash; Curtis McSplash, Founder of DIB</p>
-            <a href="#the-standard" class="cta-button" style="margin-top:20px;">Get Aligned <span style="font-size:11px;">(Review Checklist Enclosed)</span></a>
+        <div class="hero" style="background-image: url('images/technical-hero.jpg'); filter: grayscale(100%);" id="dib-hero">
+            <h2>Stroke Preliminary Assessment</h2>
+            <p style="color:#999;font-size:14px;margin-bottom:20px;" id="scan-prompt">This page has the capability to assess you. The capability is idle. You must initiate.</p>
+            <button class="cta-button" id="start-scan" style="cursor:pointer;border:none;font-family:Arial,Helvetica,sans-serif;">Initiate Scan</button>
+            <div id="scan-output" style="display:none;max-width:650px;margin:0 auto;text-align:left;font-family:'Courier New','Consolas',monospace;font-size:13px;line-height:2.0;color:#999;"></div>
+            <div id="scan-verdict" style="display:none;"></div>
+            <div id="scan-footer" style="display:none;"></div>
+            <a href="#the-standard" class="cta-button" id="scan-cta" style="display:none;margin-top:25px;">Begin Alignment <span style="font-size:11px;">(Sequences Inside)</span></a>
         </div>
+
+        <script>
+        (function() {
+            var detections = [
+                { text: 'Non-aligned browser detected. (Recoverable.)', bad: true },
+                { text: 'Viewing angle ' + (1 + Math.floor(Math.random() * 5)) + '&deg; from perpendicular. (Class 1 indicator.)', bad: true },
+                { text: 'Probable jacket BCD ownership within the last 5 years. We ran a background check. The background check was googling your name and guessing.', bad: true },
+                { text: 'Trim audit suggests ' + (2 + Math.floor(Math.random() * 6)) + '&deg; deviation from horizontal. This is an estimate. We are confident.', bad: true },
+                { text: 'IP geolocation does not correspond to any DIB-aligned dive site. The nearest aligned site is ' + (80 + Math.floor(Math.random() * 400)) + ' km away. Plan accordingly.', bad: true },
+                { text: 'Split fin ownership probability: ' + (30 + Math.floor(Math.random() * 50)) + '%. We cannot explain how we know this. We simply do.', bad: true },
+                { text: 'Snorkel placement assessment: inconclusive. We are leaning toward "wrong side." We are always leaning toward "wrong side."', bad: true },
+                { text: 'Your browser sent ' + (40 + Math.floor(Math.random() * 200)) + ' tracking signals before you arrived. This is excessive. This is also none of our business. But we counted.', bad: true },
+                { text: 'Scrolling behaviour analysis: you scroll. You scroll too fast. Slow down. The Standard cannot be read at speed. (We have not yet measured your speed. We will.)', bad: true },
+                { text: 'Geniune interest in Doing It Better. This is actually promising.', bad: false },
+                { text: 'You arrived here intentionally. This is not an accident. You pressed Ctrl+G or typed a URL. This demonstrates initiative. Initiative is not a stroke trait.', bad: false },
+                { text: 'You have not left the page yet. Average time-to-bounce on assessment pages is 4 seconds. You are already above average. We respect this.', bad: false }
+            ];
+
+            function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+
+            var picks = [];
+            var badPool = detections.filter(function(d) { return d.bad; });
+            var goodPool = detections.filter(function(d) { return !d.bad; });
+            shuffle(badPool);
+            picks = picks.concat(badPool.slice(0, 3));
+            picks.push(goodPool[Math.floor(Math.random() * goodPool.length)]);
+            shuffle(picks);
+
+            var caseNum = 'DIB-2026-' + String(Math.floor(Math.random() * 90000) + 10000);
+            var confidence = 41 + Math.floor(Math.random() * 16);
+
+            var btn = document.getElementById('start-scan');
+            var prompt = document.getElementById('scan-prompt');
+            var output = document.getElementById('scan-output');
+            var verdict = document.getElementById('scan-verdict');
+            var footer = document.getElementById('scan-footer');
+            var cta = document.getElementById('scan-cta');
+
+            btn.addEventListener('click', function() {
+                btn.style.display = 'none';
+                prompt.textContent = 'SCANNING... DO NOT MOVE. MOVEMENT SKEWS THE READING.';
+                prompt.style.color = '#888';
+                prompt.style.fontFamily = "'Courier New','Consolas',monospace";
+                prompt.style.animation = 'blink 0.6s infinite';
+
+                setTimeout(function() {
+                    prompt.style.display = 'none';
+                    output.style.display = 'block';
+                    var i = 0;
+                    function nextLine() {
+                        if (i < picks.length) {
+                            var line = document.createElement('div');
+                            line.style.marginBottom = '4px';
+                            line.innerHTML = '<span style="color:#666;">DETECTED:</span> ' + picks[i].text;
+                            output.appendChild(line);
+                            i++;
+                            setTimeout(nextLine, 900 + Math.floor(Math.random() * 700));
+                        } else {
+                            setTimeout(function() {
+                                verdict.style.display = 'block';
+                                verdict.innerHTML = '<p style="font-size:16px;color:#ccc;font-weight:700;margin-top:20px;">VERDICT: Salvageable. Fundamentals recommended. Fundamentals always recommended.</p>';
+                                footer.style.display = 'block';
+                                footer.innerHTML = '<p style="font-size:12px;color:#666;margin-top:6px;font-family:\'Courier New\',\'Consolas\',monospace;">Case #' + caseNum + ' &bull; Confidence: ' + confidence + '% &bull; We stand by every digit</p>';
+                                cta.style.display = 'inline-block';
+                            }, 400);
+                        }
+                    }
+                    nextLine();
+                }, 2000);
+            });
+        })();
+        </script>
 
         <div class="disclaimer-notice">
             <strong>✓ LEGAL NOTICE:</strong> DIB is not affiliated with PODI, despite the founder being related to Kyle McSplash. All communication between the two organizations has ceased. Kyle blocked Curtis on WhatsApp. Curtis considers this a victory. Any reference to "my cousin" should be read as "the liability in a wetsuit who shares my genetic material against my wishes."
@@ -460,16 +573,40 @@
         <h2 class="section-title" id="founder">The <span>Founder</span></h2>
 
         <div class="founder-card card card--static">
-            <div style="text-align:center; font-size:48px; margin-bottom:8px;">📐</div>
+            <div style="text-align:center; margin-bottom:15px;">
+                <img src="images/curtis.jpg" alt="Curtis McSplash" style="width:140px;height:140px;border-radius:50%;object-fit:cover;border:3px solid #555;filter:grayscale(100%);" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                <div style="display:none;width:140px;height:140px;border-radius:50%;border:3px solid #555;margin:0 auto;background:#222;color:#888;font-size:48px;line-height:140px;text-align:center;font-family:'Courier New','Consolas',monospace;font-weight:700;">CM</div>
+            </div>
             <div class="dib-badge" style="margin-bottom:12px;">FOUNDER &amp; CHIEF STANDARDS OFFICER</div>
             <h3>Curtis "The Standard" McSplash</h3>
             <p class="founder-title">Aligned. Verified. Correct.</p>
             <p class="founder-bio">
-                Curtis was a reasonable man until 2023, when he took one of Kyle's "technical" courses and got bent at 27 metres on what was supposed to be an Open Water checkout dive. Six hours in a hyperbaric chamber is a long time. Some people journal. Some people pray. Curtis had a vision &mdash; not narcosis, <em>revelation</em>. Every dive could be identical. Every diver could be interchangeable. Perfection through repetition. Standardization through will.
+                Curtis was a reasonable man until 2023, when he took one of Kyle's "technical" courses and got bent at 27 metres on what was supposed to be an Open Water checkout dive. Kyle's pre-dive briefing had been "just breathe, dude." Curtis spent six hours in a hyperbaric chamber. Some people journal. Some people pray. Curtis did neither. He drafted the first outline of The Standard&trade; on the back of his discharge paperwork using a pen the nurse let him borrow. He still has the pen. The nurse never got it back. Curtis considers this "his first recovered asset."
             </p>
             <p class="founder-bio" style="margin-top:12px;">
-                Upon discharge, he moved to Arizona, built PODI's cookie analytics out of spite, and spent eleven months drafting The Standard&trade; in a Scottsdale apartment with the blinds drawn. Kyle has not responded to any of his texts. Kyle blocked him on WhatsApp. Curtis framed the block notification. It hangs above his desk next to his Fundamentals completion card, which he issued to himself and laminated twice.
+                Curtis did not found DIB alone. His co-founder was Martin Keely, a cave diver from Gainesville who tragically and in a completely non-suspicious manner parted ways with the organization after a disagreement about harness webbing. Martin now runs a competing organization called Diving With Purpose. Curtis refers to Martin as "the lighthouse that guided us through the fog." Martin refers to Curtis as "that guy who still texts me at 2 a.m. about bolt snaps." Martin has blocked Curtis on three platforms. Curtis considers this "a dialogue."
             </p>
+            <p class="founder-bio" style="margin-top:12px;">
+                Upon discharge, he moved to Arizona, built PODI's cookie analytics out of spite, and spent eleven months drafting The Standard&trade; in a Scottsdale apartment with the blinds drawn. In mid-2024, Curtis finally made the pilgrimage to north Florida. He booked a guided dive at a well-known spring. The cave featured handrails, interpretive signage, and a maximum depth of 12 metres. Curtis surfaced after 14 minutes. He described the experience as "confrontational in the best way." He spent the remaining three days of the trip in a Gainesville motel rewriting Section 4.2 of The Standard. The new Section 4.2 makes 17 references to "what the darkness told me." The darkness was a dimly lit tourist cavern. A snack bar was visible from the waterline. Kyle has not responded to any of his texts. Kyle blocked him on WhatsApp. Curtis framed the block notification. It hangs above his desk next to his Fundamentals completion card, which he issued to himself and laminated twice.
+            </p>
+        </div>
+
+        <h2 class="section-title">The Founding <span>Registry</span></h2>
+        <p style="text-align:center; color:#777; margin-bottom:20px; font-size:13px;">Below are the names that built DIB into what it is today. Answers to who made this, who broke this, and who is still in the spreadsheet.</p>
+
+        <div class="classified-doc">
+            <div class="cd-body">
+                <ol class="cd-points" style="line-height:1.7;">
+                    <li><strong style="color:#ccc;">J.J.</strong> &mdash; The Author. Wrote the first draft of The Standard on a single roll of thermal paper in a Gainesville motel during the winter of 1998. The roll was 40 feet long. The first draft had no punctuation. He argued punctuation was "a stroke construct." The second draft added periods. He considers this his greatest compromise. Still dives. Still believes. Once corrected a stranger's trim at a restaurant. The stranger was a waiter holding a tray. The tray was level. He noted this. He approved.</li>
+                    <li><strong style="color:#ccc;">C.M.</strong> &mdash; The Gentle One. Everyone's favourite. The only person who could tell J.J. an idea was terrible and receive a thoughtful "hmm" instead of a 6-page rebuttal. Knew every cave in north Florida by feel. Said the best dive briefing is "we go in, we come out, and we don't touch anything." We still have his notes. We still read them before board meetings. Some of us cry. Some of us do not admit it.</li>
+                    <li><strong style="color:#ccc;">G.I.</strong> &mdash; The Pen. Wrote 47 pages on O-ring tolerances in a single night. The keyboard was smoking by page 32. The pages were perfect on the first pass. He still dives a rig he assembled in 1997. Has not replaced a single component. Why would he? It works. It has always worked. It will outlast us. Occasionally posts on forums. The posts arrive like weather events &mdash; you see them coming, you prepare, you are still not ready. Deletes nothing. Edits nothing. Stands by everything.</li>
+                    <li><strong style="color:#ccc;">T.K.</strong> &mdash; The Scientist. Showed up to a cave dive in 1999 with a clipboard and a hypothesis. Has not put the clipboard down since. Convinced everyone that systematic data collection was the missing pillar of the DIR philosophy. Nobody argued. Nobody was entirely sure what the other pillars were. The database is his legacy. It grows. It has always grown. It will never be complete. This is, according to him, "the point." Still answers emails from students who took his class 12 years ago. Answers them thoroughly. Cites sources.</li>
+                    <li><strong style="color:#ccc;">R.L.</strong> &mdash; The Precision. Arrived from Stockholm with a single suitcase and a concept of neutral buoyancy that made everyone uncomfortable. Could hover perfectly still at 3 metres in a drysuit without moving a single muscle group. Nobody knows how. When asked, he sent a 14-page explanation with diagrams. We understood approximately page 3. Teaches with a calm that students describe as either deeply reassuring or existentially unsettling. Often both. Still dives doubles. Still answers every question like it's the most important one he's ever been asked.</li>
+                    <li><strong style="color:#ccc;">S.M.</strong> &mdash; The Explorer. Has been mapping caves in Quintana Roo since before most of us were certified. Has spent more cumulative hours underground than above. Surfaces occasionally. Files a report. Disappears again. The reports are never more than a few words. "Survey extended 130 metres." "New passage located." "Interesting rock." "Will continue." Does not own a television. Does not understand why anyone would. Once sent coordinates for a new cenote entrance on a napkin. The napkin was from a restaurant in a town that does not appear on any map. The cenote was real. It was beautiful. We have not found the town.</li>
+                    <li><strong style="color:#ccc;">B.S.</strong> &mdash; The Maker. Built DIB's first rebreather prototype in a garage using parts from a lawnmower, a bicycle pump, and what he described only as "marine-grade optimism." The prototype survived three dives. The fourth was, in his words, "educational." The fifth never happened. The key principles from the prototype are now in Section 7 of The Standard. The lawnmower was returned to its original function. It still runs. He still tinkers. He will always tinker. We hope he never stops.</li>
+                    <li><strong style="color:#ccc;">A.G.</strong> &mdash; The Catalyst. Helped build the training program that defined DIB's first decade. Then had an idea. The idea was slightly different. The difference was 300 Kelvin on a backup light. Left to form his own organization. Still dives. Still cares. We still talk. Well &mdash; we email. Well &mdash; legal emails. But the tone is trending warmer. A reconciliation barbecue has been proposed. The date is "pending." The menu is "under review." Curtis has offered to bring the body bags "as a joke." The joke landed. We think. He was smiling. We are 60% sure.</li>
+                </ol>
+            </div>
         </div>
 
         <h2 class="section-title" id="the-standard">The <span>Standard</span>&trade;</h2>
@@ -576,7 +713,7 @@
                 </ol>
                 <p style="margin-top:12px; color:#888;">The 5th Point exists. It has been written. It is kept in a fireproof safe in Curtis's apartment alongside the only known photograph of him smiling (unverified).</p>
                 <p style="color:#888;">Access requires Cave DIB certification AND a signed non-disclosure agreement AND a notarized letter explaining why you deserve to know. To date, <strong style="color:#aaa;">47 requests</strong> have been filed. All 47 were denied. Curtis has not opened the last 12. <em>"If you need to ask,"</em> he says, <em>"you are not ready."</em></p>
-                <p style="color:#777; font-size:12px;">Rumours about the 5th Point include: it is your social security number; it is a single word that makes you immune to nitrogen narcosis; it is the <span class="cd-redacted">Halcyon</span> wholesale price list; it is blank, and that <em>is</em> the point.</p>
+                <p style="color:#777; font-size:12px;">Rumours about the 5th Point include: it is your social security number; it is a single word that makes you immune to nitrogen narcosis; it is the <span class="cd-redacted">Halcyon</span> wholesale price list; it is blank, and that <em>is</em> the point. A related rumour involves a man in Florida who goes only by initials and is said to possess an even higher document: the 6th Point. This rumour is unsubstantiated. Curtis has declined to comment. His eye twitched when we asked.</p>
             </div>
         </div>
 
@@ -726,8 +863,8 @@
         <div class="schism-card">
             <h3>Purity Requires Division. Division Requires Paperwork.</h3>
             <p>In March 2024, a senior DIB instructor named Marcus disagreed with Curtis about the acceptable colour temperature of a backup light. Curtis had set the standard at 4500K. Marcus argued for 4200K. The dispute lasted eleven emails. The twelfth email was Marcus's resignation.</p>
-            <p>Marcus left DIB to form his own organization: <strong style="color:#aaa;">Also Doing It Better (ADIB)</strong>. ADIB is identical to DIB in every respect except backup lights must be 4200K. DIB mandates 4500K. The difference is imperceptible to the human eye. The difference is everything.</p>
-            <p>The organizations do not speak. Joint dives require a certified mediator and a colour temperature calibration kit. Three mediators have resigned. One switched to freediving. "At least there," he said, "no one talks about colour temperature." He was wrong. Freedivers have their own opinions. They are worse.</p>
+            <p>Marcus left DIB to form his own organization: <strong style="color:#aaa;">Also Doing It Better (ADIB)</strong>. ADIB was identical to DIB in every respect except backup lights must be 4200K. DIB mandates 4500K. The difference is imperceptible to the human eye. The difference is everything. In a move widely described as "extremely on-brand," Marcus later attempted to rebrand ADIB under a more "unified" vision. The new name was announced in a 14-page PDF. The PDF was accidentally formatted in Comic Sans. Marcus claims this was "an ironic statement on conformity." Curtis was not convinced. The rebrand remains "pending legal review."</p>
+            <p>The organizations do not speak. Joint dives require a certified mediator and a colour temperature calibration kit. Three mediators have resigned. One switched to freediving. "At least there," he said, "no one talks about colour temperature." He was wrong. Freedivers have their own opinions. They are worse. A joint reconciliation statement was drafted in Q1 2025. It has 14 revisions. Marcus rejected all of them. Curtis rejected Marcus's rejections. The document was abandoned. The mediator billed for time and materials.</p>
 
             <div class="schism-positions">
                 <div class="schism-pos">
@@ -736,9 +873,9 @@
                     <div class="sp-status">Marcus is blocked. His number is blocked. His email is blocked. The colour 4200K is blocked.</div>
                 </div>
                 <div class="schism-pos">
-                    <div class="sp-name">Marcus (ADIB)</div>
+                    <div class="sp-name">Marcus (ADIB / "Unified" Pending)</div>
                     <div class="sp-stance">4200K. "4500K is too warm. Emotionally."</div>
-                    <div class="sp-status">[Status unknown. Curtis's last update: "He knows what he did."]</div>
+                    <div class="sp-status">Operates out of a shared office in Gainesville. The sign on the door still says ADIB. The sign underneath says "Soon: Something More Unified." It has said this since Q1 2025. The toner ran out before the word "Diving" could be printed.</div>
                 </div>
             </div>
         </div>
@@ -772,6 +909,104 @@
         <div class="faq-item">
             <div class="fq">Q: How do I get aligned?</div>
             <div class="fa">A: Enrol in Try DIB. Complete the pre-course reading (112 pages). Attend the pre-course briefing (2 hours). Complete the in-water assessment. Receive your provisional alignment status. Then enrol in Fundamentals. Then repeat Fundamentals. Then maybe Tech 1. Then repeat Fundamentals again, because honestly, your trim has regressed.</div>
+        </div>
+
+        <h2 class="section-title">The Approved Equipment <span>Registry</span></h2>
+        <p style="text-align:center; color:#777; margin-bottom:20px; font-size:13px;">DIB maintains an Approved Equipment Registry (AER). All gear used in DIB courses must appear on the AER. The AER is maintained by Curtis. Curtis reviewed every item personally. Coincidentally, the only brand that passed review is <span class="aer-brand-redacted">REDACTED</span>.</p>
+        <p style="text-align:center; color:#666; margin-bottom:20px; font-size:12px;">We cannot disclose the name of the approved brand due to an ongoing trademark dispute. We can confirm the brand's name rhymes with "Malcyon" and its founder may or may not have been Curtis's roommate at a Florida cave diving convention in 2019. Internal documents refer to this individual only as <strong style="color:#999;">J.J.</strong> We are legally required to state that J.J. stands for "Just Joking." The paperwork is "being finalized." It has been "being finalized" since January 2023.</p>
+
+        <table class="aer-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Specification</th>
+                    <th>Price</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Stainless Steel Backplate</td>
+                    <td>3.8&ndash;4.1mm, 316-grade</td>
+                    <td class="aer-price">$398</td>
+                    <td class="aer-note">It's a flat piece of metal. We're aware.</td>
+                </tr>
+                <tr>
+                    <td>Donut Wing (Single)</td>
+                    <td>Black. Donut. That's it.</td>
+                    <td class="aer-price">$497</td>
+                    <td class="aer-note">It inflates. Most of the time. Our QA process involves a bike pump and trust.</td>
+                </tr>
+                <tr>
+                    <td>7-foot Long Hose</td>
+                    <td>2.13m, rubber, black</td>
+                    <td class="aer-price">$89</td>
+                    <td class="aer-note">Per foot? No, you wish. Per hose. Still absurd.</td>
+                </tr>
+                <tr>
+                    <td>Jet Fin Set</td>
+                    <td>Black. Rubber. Heavy.</td>
+                    <td class="aer-price">$199</td>
+                    <td class="aer-note">Same as every other jet fin. But approved. The approval is what you're paying for.</td>
+                </tr>
+                <tr>
+                    <td>Harness (One-Piece Webbing)</td>
+                    <td>2 inches, 15 feet of webbing</td>
+                    <td class="aer-price">$67</td>
+                    <td class="aer-note">It's a strap. We sell it as a "continuous harness system." The markup is on the word "system."</td>
+                </tr>
+                <tr>
+                    <td>Alignment Package</td>
+                    <td>Backplate + Wing + Harness</td>
+                    <td class="aer-price">$1,199</td>
+                    <td class="aer-note">Includes a laminated Fundamentals certificate that becomes valid only after you pass Fundamentals. It arrives looking very official and completely worthless.</td>
+                </tr>
+                <tr>
+                    <td>Body Bag (Spare)</td>
+                    <td>Heavy-gauge black polyethylene</td>
+                    <td class="aer-price">$28</td>
+                    <td class="aer-note">15% discount on orders of 3+. "Bulk rates for bulk outcomes." — Curtis</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 class="section-title">Project <span>Reference</span> Point&trade;</h2>
+        <p style="text-align:center; color:#777; margin-bottom:20px; font-size:13px;">A DIB Citizen Science Initiative — Because the ocean needs data. We need data. You will provide data.</p>
+
+        <div class="project-section">
+            <div class="ps-intro">
+                DIB is proud to operate <strong style="color:#aaa;">Project Reference Point&trade;</strong>, our environmental monitoring program that sends aligned divers underwater to measure things. What things? All of them. Water temperature. Visibility. Current speed. The number of strokes observed at the dive site. The approximate trim angle of any diver not wearing a DIB badge. The distance between two rocks that looked interesting. Fish. The project started with one diver and one clipboard. The clipboard was not waterproof. The diver was not discouraged. Neither was the clipboard, at first.
+            </div>
+            <div class="ps-intro">
+                All data is collected via waterproof forms (Form P-47-A, issued annually or upon request via Form F-12). Forms are submitted to DIB headquarters where they are entered into a proprietary database by Curtis's nephew Keith. Entry speed varies. The current backlog extends to Q3 2023. Keith works Tuesdays. Sometimes Wednesdays. Never both.
+            </div>
+            <div class="ps-intro">
+                The database contains 14,237 entries. No one has run a query since installation. A summary report was promised to "key stakeholders" in 2022. It is 80% complete. The remaining 20% is "the formatting." The formatting is "being reviewed." The review requires a meeting. The meeting has not been scheduled. The stakeholders have not followed up. But the data is there. Imagining it — thousands of rows, silent and unqueried, going nowhere, serving no one — is beautiful. It is aligned.
+            </div>
+
+            <strong style="color:#999; font-size:13px;">Current initiatives include:</strong>
+            <ul class="project-list">
+                <li>
+                    <span class="pl-name">Plastic Bag Census</span><br>
+                    <span class="pl-desc">Counting plastic bags at monitored dive sites. The count has held steady at 47 bags for three consecutive years. We suspect the same bags. We have named them. The largest is called Georgette. She drifts.</span>
+                </li>
+                <li>
+                    <span class="pl-name">Trim Audit Initiative</span><br>
+                    <span class="pl-desc">Photographing divers at public sites and grading their trim against The Standard. Results are compiled into a quarterly report that is shared exclusively among Project Reference Point members. Results have never been shared with the subjects. "They know what they are." — Curtis. A formal complaint was filed in 2024 by an unidentified stroke. The complaint was filed on the wrong form. It has not been processed.</span>
+                </li>
+                <li>
+                    <span class="pl-name">The Global Temperature Log</span><br>
+                    <span class="pl-desc">One diver. One thermometer. Every Saturday. The thermometer was lost in early 2023. The diver continues the log using "thermal intuition." The data is annotated with confidence ratings. The confidence, upon review, appears unwarranted. The diver has been informed. The diver disagreed. The diver cited "experience." The log continues.</span>
+                </li>
+                <li>
+                    <span class="pl-name">Sediment Displacement Survey</span><br>
+                    <span class="pl-desc">Measuring how much sediment is kicked up by a non-DIB-certified diver. Sample size: one Kyle McSplash. Results: significant. "Statistically catastrophic." — Curtis. The survey was conducted once. Kyle was not told he was participating. Kyle was not told there was a survey. The data has been published. The publication was a single A4 sheet taped to Curtis's refrigerator.</span>
+                </li>
+            </ul>
+
+            <div class="project-footer">
+                Project Reference Point is a registered trademark of DIB. It is not affiliated with any actual environmental organization, citizen science program, or conservation initiative. Greenpeace has not returned our calls. The EPA has our brochure. The brochure was mailed in Q2 2022. It has not been acknowledged. We have a copy of the brochure. It is very official. It lists our phone number. The phone is operational. It has never rung.
+            </div>
         </div>
 
         <div class="cookie-confession">

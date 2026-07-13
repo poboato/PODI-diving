@@ -1,0 +1,16 @@
+﻿<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'>
+  <defs>
+    <radialGradient id='bg' cx='50%' cy='35%' r='65%'><stop offset='0%' stop-color='#fefefe'/><stop offset='100%' stop-color='#e8e4dd'/></radialGradient>
+    <linearGradient id='hoodie' x1='0%' y1='0%' x2='0%' y2='100%'><stop offset='0%' stop-color='#6b7b8d'/><stop offset='100%' stop-color='#556270'/></linearGradient>
+  </defs>
+  <rect width='300' height='300' fill='url(#bg)' rx='14'/>
+  <ellipse cx='150' cy='270' rx='70' ry='8' fill='rgba(0,0,0,0.1)'/>
+  <path d='M80 40 h140 v20 l-12 25 v135 h-116 v-135 l-12-25 z' fill='url(#hoodie)' stroke='#3d4855' stroke-width='1.5' stroke-linejoin='round'/>
+  <path d='M80 60 h30 v40 h-30 z' fill='#5a6a7a'/>
+  <path d='M190 60 h30 v40 h-30 z' fill='#5a6a7a'/>
+  <rect x='120' y='40' width='60' height='22' rx='10' fill='#3d4855'/>
+  <line x1='150' y1='40' x2='150' y2='175' stroke='#3d4855' stroke-width='2'/>
+  <rect x='105' y='150' width='90' height='30' rx='4' fill='#4a5a6a'/>
+  <rect x='130' y='155' width='40' height='20' rx='10' fill='#d4a843'/>
+  <text x='150' y='170' text-anchor='middle' fill='#3d4855' font-size='14' font-family='Arial,Helvetica,sans-serif'>🛋</text>
+</svg>
