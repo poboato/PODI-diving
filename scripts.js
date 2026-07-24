@@ -969,6 +969,7 @@
             { name: 'Drift Diver', status: 'COMPLETED' },
             { name: 'Shark Diver (Bait)', status: Math.random() > 0.8 ? 'COMPLETED' : 'PENDING' },
             { name: 'Search & Recovery (Lost & Found)', status: 'COMPLETED' },
+            { name: 'Keyboard Warrior Scuba Specialty', status: Math.random() > 0.5 ? 'COMPLETED' : 'IN PROGRESS' },
         ];
 
         var totalDives = Math.floor(Math.random() * 200 + 10);
